@@ -211,7 +211,12 @@
 
         #ladoEsquerdo {
           height: 50vh;
-          width: 100vw;
+          width: 100%;
+        }
+
+        div#accordion {
+          width: 100%;
+          font-size: 1.2rem;
         }
 
         #superBody {
@@ -219,6 +224,10 @@
           grid-template-rows: 1fr 9fr;
           height: 100vh;
           width: 100%;
+          gap: 1.8rem;
+        }
+        .ui-accordion .ui-accordion-header .ui-accordion-content {
+          width: 98vw;
         }
       }
 
@@ -367,7 +376,7 @@
             </button>
             <button
               class="ui-button ui-widget ui-corner-all"
-              name="cadastros"
+              name="cadastroDeFuncao"
               onclick="chamaTemplate(this.name)"
             >
               Função
@@ -1079,18 +1088,185 @@
             </form>
           </div>
         </template>
-
         <template id="cadastroDeFuncao">
-          <div id="forms-funcao">
-            <div class="card">
-              <div class="card-body"></div>
-              <h1>Cadastro de Função</h1>
-            </div>
-
-            <div class="card">
-              <div class="container mt-4">
-
+          <div class="card">
+            <div class="card-body">
+              <h1 class="card-title">Cadastro de Função</h1>
+              <div class="row">
+                <div class="col">
+                  <div class="card mt-4">
+                    <div class="card-header">
+                      <h5>Informações de Funções</h5>
+                    </div>
+                    <div class="card-body">
+                      <div class="container">
+                        <div class="row g-4">
+                          <div class="col-md-6 mb-3">
+                            <div class="form-group">
+                              <label for="txt-funcaoColaborador">Função</label>
+                              <input
+                                type="text"
+                                class="form-control"
+                                id="txt-funcaoColaborador"
+                                name="txt-funcaoColaborador"
+                              />
+                            </div>
+                          </div>
+                          <div class="col-md-6 mb-3">
+                            <div class="form-group">
+                              <label for="txt-FuncaoDescricao">Descrição</label>
+                              <input
+                                type="text"
+                                class="form-control"
+                                id="txt-FuncaoDescricao"
+                                name="txt-FuncaoDescricao"
+                              />
+                            </div>
+                          </div>
+                          <div class="row g-4">
+                            <div class="col-md-6 mb-3">
+                              <a
+                                class="btn btn-primary btn-sm"
+                                href="#"
+                                role="button"
+                              >
+                                Enviar</a
+                              >
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="card mt-4">
+                    <div class="card-header">
+                      <h5>Registro de Funções</h5>
+                    </div>
+                    <div class="card-body">
+                      <div class="container">
+                        <div class="row g-4">
+                          <div class="col-md-6 mb-3">
+                            <div class="form-group">
+                              <table
+                                class="table table-striped table-inverse table-responsive"
+                              >
+                                <thead class="thead-inverse">
+                                  <tr>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <tr>
+                                    <td scope="row"></td>
+                                    <td></td>
+                                    <td></td>
+                                  </tr>
+                                  <tr>
+                                    <td scope="row"></td>
+                                    <td></td>
+                                    <td></td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
+              <div class="row">
+                <div class="col">
+                  <div class="card mt-4">
+                    <div class="card-header">
+                      <h5>Funções de colaboradores</h5>
+                    </div>
+                    <div class="card-body">
+                      <div class="container">
+                        <div class="row g-4">
+                          <div class="col-md-6 mb-3">
+                            <div class="form-group">
+                              <label for="txt-nomecolaboradorFuncao"
+                                >Colaborador</label
+                              >
+                              <select id="nomecolaboradorFuncao">
+                                <option></option>
+                              </select>
+                            </div>
+                          </div>
+                          <div class="col-md-6 mb-3">
+                            <div class="form-group">
+                              <label for="FunçãocolaboradorFuncao"
+                                >Função</label
+                              >
+                              <select id="FunçãocolaboradorFuncao">
+                                <option></option>
+                              </select>
+                            </div>
+                          </div>
+                          <div class="row g-4">
+                            <div class="col-md-6 mb-3">
+                              <a
+                                class="btn btn-primary btn-sm"
+                                href="#"
+                                role="button"
+                              >
+                                Alterar</a
+                              >
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="card mt-4">
+                    <div class="card-header">
+                      <h5>Colaboradores Funções</h5>
+                    </div>
+                    <div class="card-body">
+                      <div class="container">
+                        <div class="row g-4">
+                          <div class="col-md-6 mb-3">
+                            <div class="form-group">
+                              <table
+                                class="table table-striped table-inverse table-responsive"
+                              >
+                                <thead class="thead-inverse">
+                                  <tr>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <tr>
+                                    <td scope="row"></td>
+                                    <td></td>
+                                    <td></td>
+                                  </tr>
+                                  <tr>
+                                    <td scope="row"></td>
+                                    <td></td>
+                                    <td></td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </template>
 
