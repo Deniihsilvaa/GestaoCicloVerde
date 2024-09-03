@@ -136,12 +136,9 @@
       }
 
       #ladoEsquerdo {
-        grid-row: 2 / 3;
-
         background: var(--cor-branco);
-        width: 190px;
-        max-width: 300px;
-        font-size: 0.8rem;
+        font-size: 1.1rem;
+        padding: 1rem;
       }
 
       #ladoDireito,
@@ -341,6 +338,7 @@
             >
               Registro de Documentação
             </button>
+
             <button
               class="ui-button ui-widget ui-corner-all"
               name="ferias"
@@ -465,6 +463,228 @@
             </div>
           </div>
         </template>
+        <template id="registrosDOC">
+          <div class="card">
+            <div class="card text-bg-light mb-3" style="max-width: 100%">
+              <div class="card-header">Registro de Documentação</div>
+              <div class="card-body mb-3" id="fmr-registros">
+                <div class="row">
+                  <div class="col-md-3">
+                    <label for="idRegistro" class="form-label">ID</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="idRegistro"
+                      placeholder="00"
+                    />
+                  </div>
+                  <div class="col-md-3">
+                    <label for="nomeColaboradorREGISTRO" class="form-label"
+                      >Nome</label
+                    >
+                    <select
+                      class="form-select"
+                      id="nomeColaboradorREGISTRO"
+                      aria-label="Colaborador"
+                    >
+                      <option selected>Selecionar</option>
+                      <option value="1">1</option>
+                    </select>
+                  </div>
+                  <div class="col-md-3">
+                    <label for="dataREGISTRO" class="form-label">Data</label>
+                    <input type="date" class="form-control" id="dataREGISTRO" />
+                  </div>
+                </div>
+
+                <div class="row mt-3">
+                  <div class="col-md-6">
+                    <div class="card">
+                      <h5 class="card-header">Upload Documentação</h5>
+                      <div class="card-body">
+                        <div class="row">
+                          <div class="col-md-6">
+                            <button id="opener" onclick="dlTipoDocumentacao()">
+                              <span
+                                class="material-symbols-outlined icon-tipoDoC"
+                                >add_task</span
+                              >
+                            </button>
+                            <label for="tipoDocumentacao" class="form-label"
+                              >Tipo de Documentação</label
+                            >
+                            <select
+                              class="form-select"
+                              id="tipoDocumentacao"
+                              aria-label="Tipo de Documentação"
+                            >
+                              <option selected>Selecionar</option>
+                              <option value="1">Ficha de registro</option>
+                              <option value="2">Two</option>
+                              <option value="3">Three</option>
+                            </select>
+                          </div>
+                          <div class="col-md-6">
+                            <input type="text" class="form-control mb-2" />
+                          </div>
+                        </div>
+                        <div class="input-group mt-3">
+                          <input
+                            type="file"
+                            class="form-control"
+                            id="inputDocumentacaoFile"
+                            aria-describedby="inputGroupFileAddon04"
+                            aria-label="Upload"
+                          />
+                          <button
+                            class="btn btn-outline-secondary"
+                            type="button"
+                            onclick="uploadFile()"
+                          >
+                            Enviar
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-md-6">
+                    <div class="card">
+                      <h5 class="card-header">Upload Exame</h5>
+                      <div class="card-body">
+                        <div class="row">
+                          <div class="col-md-6">
+                            <button id="opener2" onclick="dlTipoExame()">
+                              <span
+                                class="material-symbols-outlined icon-tipoDoC"
+                                >add_task</span
+                              >
+                            </button>
+                            <select
+                              class="form-select"
+                              id="tipodeExame"
+                              aria-label="Tipo de Exame"
+                            >
+                              <option selected>Selecionar</option>
+                              <!-- <option value="1">ASO</option>
+                              <option value="2">Atestado</option>
+                              <option value="3">Outro</option> -->
+                            </select>
+                          </div>
+                          <div class="col-md-6">
+                            <input type="text" class="form-control mb-2" />
+                          </div>
+                        </div>
+                        <div class="input-group mt-3">
+                          <input
+                            type="file"
+                            class="form-control"
+                            id="inputExameFile"
+                            aria-describedby="inputGroupFileAddon04"
+                            aria-label="Upload"
+                          />
+                          <button
+                            class="btn btn-outline-secondary"
+                            type="button"
+                            onclick="uploadFile()"
+                          >
+                            Enviar
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row mt-3">
+                  <div class="col-md-12">
+                    <button
+                      type="button"
+                      class="btn btn-success"
+                      style="max-width: 18vh"
+                    >
+                      Registrar
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="card text-bg-light mb-3" style="max-width: 100%">
+                <div class="card-header">Documentação</div>
+                <div class="card-body mb-3">
+                  <div class="row mt-3">
+                    <div class="col-md-6">
+                      <div class="card">
+                        <h5 class="card-header">Atestado Medico</h5>
+                        <div class="card-body">
+                          <div class="row">
+                            <div class="col-md-6">
+                              <label for="inputDataAtestado"
+                                >Data de Atestado</label
+                              >
+                              <input
+                                type="date"
+                                class="form-control mb-2"
+                                id="inputDataAtestado"
+                              />
+                            </div>
+                            <div class="col-md-6">
+                              <label for="input-sumOfDays"
+                                >Total de dias Afastado</label
+                              >
+                              <input
+                                type="number"
+                                name="input-sumOfDays"
+                                id="input-sumOfDays"
+                              />
+                            </div>
+                            <div class="col-md-6">
+                              <label for="inputDataAtestadoretorno"
+                                >Data de retorno</label
+                              >
+                              <input
+                                type="date"
+                                class="form-control mb-2"
+                                id="inputDataAtestadoretorno"
+                              />
+                            </div>
+                          </div>
+                          <div class="input-group mt-3">
+                            <input
+                              type="file"
+                              class="form-control"
+                              id="inputExameFile"
+                              aria-describedby="inputGroupFileAddon04"
+                              aria-label="Upload"
+                            />
+                            <button
+                              class="btn btn-outline-secondary"
+                              type="button"
+                              onclick="uploadFile()"
+                            >
+                              Enviar
+                            </button>
+                          </div>
+                          <div class="col-md-6 p-2">
+                            <a
+                              class="btn btn-primary btn-sm"
+                              href="#"
+                              role="button"
+                              >Enviar</a
+                            >
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </template>
+
         <!--areaDecolaboradores-->
         <template id="areaDecolaboradores">
           <div class="card cd-select">
@@ -1288,16 +1508,7 @@
           activeHeader: "ui-icon-circle-minus", // Ícone para cabeçalhos abertos
         },
       });
-    </script>
 
-    <script>
-      function enviarDados() {
-        let dados = document.getElementById("inputTeste").value;
-        dispararPost(dados, urlAjax);
-      }
-    </script>
-
-    <script>
       // Função para chamar o template
       const inserirTemplate = (templateId) => {
         const formularioID = document.getElementById(templateId);
@@ -1313,12 +1524,6 @@
         if (pagina == "cadastroDeFuncao") {
           console.log("cadastroDeFuncao");
         }
-      }
-
-      // Exemplo de função para logout
-      function chamarLogout() {
-        // Implementação do logout aqui
-        console.log("Logout chamado");
       }
     </script>
     <script id="login">
