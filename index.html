@@ -207,7 +207,7 @@
         }
 
         #ladoEsquerdo {
-          height: 50vh;
+          /* height: 50vh; */
           width: 100%;
         }
 
@@ -218,7 +218,7 @@
 
         #superBody {
           grid-template-columns: 1fr;
-          grid-template-rows: 1fr 9fr;
+          grid-template-rows: auto 1fr auto;
           height: 100vh;
           width: 100%;
           gap: 1.8rem;
@@ -252,23 +252,12 @@
   <body>
     <div id="superBody">
       <div
-        class="container-fluid shadow p-3 mb-1 bg-body rounded"
+        class="container-fluid shadow w-100 p-3 mb-1 bg-body rounded"
         id="barTop"
         style="display: none"
       >
         <nav class="navbar navbar-expand-lg bg-body-tertiary">
           <div class="container-fluid">
-            <div class="menu">
-              <a
-                class="navbar-brand menu__item active"
-                href="#"
-                onclick="chamaTemplate('tpl-CadastroProduto')"
-                >Início</a
-              >
-              <a class="navbar-brand menu__item" href="#">Documentos</a>
-              <a class="navbar-brand menu__item" href="#">Portal</a>
-              <div class="menu__border"></div>
-            </div>
             <button
               class="navbar-toggler"
               type="button"
@@ -294,16 +283,13 @@
                 </button>
               </form>
             </div>
-            <a
-              class="navbar-brand"
-              href="#"
-              onclick="chamaTemplate('tpl-login')"
-            >
+            <a class="navbar-brand" href="#" onclick="chamarLogout()">
               <span class="material-icons">logout</span>
             </a>
           </div>
         </nav>
       </div>
+
       <div id="ladoEsquerdo" style="display: none">
         <div id="accordion">
           <!-- Menu -->
@@ -360,6 +346,20 @@
             >
               Registro de Adintamento
             </button>
+            <button
+              class="ui-button ui-widget ui-corner-all"
+              name="registroColaboradores"
+              onclick="chamaTemplate(this.name)"
+            >
+              Registros de pagamentos
+            </button>
+            <button
+            class="ui-button ui-widget ui-corner-all"
+            name="registroRelogioDePonto"
+            onclick="chamaTemplate(this.name)"
+          >
+          Relogio De Ponto
+          </button>
           </div>
 
           <!-- Cadastro -->
@@ -393,10 +393,16 @@
             >
               Cursos
             </button>
+
+
+
+
+
+            
           </div>
 
           <!-- Acesso Colaborador -->
-          <h3>Acesso Colaborador</h3>
+          <!-- <h3>Acesso Colaborador</h3>
           <div>
             <button
               class="ui-button ui-widget ui-corner-all"
@@ -405,8 +411,65 @@
             >
               Menu
             </button>
-          </div>
+          </div> -->
+          <!-- Acesso Colaborador -->
+          <h3>Acesso Colaborador</h3>
+          <div>
+            <!-- Card 1 -->
+            <button
+              type="button"
+              class="btn btn-secondary"
+              name="fichaDeregistros"
+              onclick="chamaTemplate(this.name)"
+            >
+              <span class="material-symbols-outlined">view_agenda</span>
+              Ficha de registro/docs
+            </button>
 
+            <!-- Card 2 -->
+            <button
+              type="button"
+              class="btn btn-secondary"
+              name="solicitacaoValeColaborador"
+              onclick="chamaTemplate(this.name)"
+            >
+              <span class="material-symbols-outlined">view_agenda</span>
+              Extrato de Pagamento
+            </button>
+            <!-- Card 3 -->
+            <button
+              type="button"
+              class="btn btn-secondary"
+              name="solicitacaoValeColaborador"
+              onclick="chamaTemplate(this.name)"
+            >
+              <span class="material-symbols-outlined">view_agenda</span>
+              Extrato de Adiantamento
+            </button>
+
+            <!-- Card 4 -->
+            <button
+              type="button"
+              class="btn btn-secondary"
+              name="listaFerias"
+              onclick="chamaTemplate(this.name)"
+            >
+              <span class="material-symbols-outlined">view_agenda</span>
+              Ferias
+            </button>
+
+            <!-- Card 5 -->
+            <button type="button" class="btn btn-secondary">
+              <span class="material-symbols-outlined">view_agenda</span>
+              Plano de Saude
+            </button>
+
+            <!-- Card 6 -->
+            <button type="button" class="btn btn-secondary">
+              <span class="material-symbols-outlined">view_agenda</span>
+              Exames
+            </button>
+          </div>
           <!-- Logout -->
           <h3>Logout<span class="material-icons outlined"></span></h3>
           <div>
@@ -527,9 +590,8 @@
                           <div class="col-md-6">
                             <label for="">Colaborador</label>
                             <select
-                              class="form-control"
-                              name="scColaborador sc-Colaborador"
-                              id="scColaborador"
+                              class="form-control scColaborador"
+                              name="scColaborador"
                             >
                               <option></option>
                               <option></option>
@@ -594,9 +656,8 @@
                           <div class="col-md-6">
                             <label for="">Colaborador</label>
                             <select
-                              class="form-control sc-Colaborador"
+                              class="form-control scColaborador"
                               name="scColaborador"
-                              id="scColaborador"
                             >
                               <option></option>
                               <option></option>
@@ -681,9 +742,8 @@
                             <div class="col-md-6">
                               <label for="">Colaborador</label>
                               <select
-                                class="form-control sc-Colaborador"
+                                class="form-control scColaborador"
                                 name="scColaborador"
-                                id="scColaborador"
                               >
                                 <option></option>
                                 <option></option>
@@ -728,80 +788,249 @@
           </div>
         </template>
 
-        <!--areaDecolaboradores-->
-        <template id="areaDecolaboradores">
-          <div class="card cd-select">
-            <button
-              type="button"
-              class="btn btn-secondary"
-              name="fichaDeregistros"
-              onclick="chamaTemplate(this.name)"
-            >
-              <div class="car-colab">
-                <span class="material-symbols-outlined">view_agenda</span> Ficha
-                de registro/docs
-              </div>
-            </button>
-          </div>
-          <div class="card cd-select">
-            <button
-              type="button"
-              class="btn btn-secondary"
-              name="solicitacaoValeColaborador"
-              onclick="chamaTemplate(this.name)"
-            >
-              <div class="car-colab">
-                <span class="material-symbols-outlined">view_agenda</span>
-                Extrato de Pagamento
-              </div>
-            </button>
-          </div>
+        <template id="registroColaboradores">
+          <div class="card">
+            <div class="card text-bg-light mb-3" style="max-width: 100%">
+              <div class="card-header">Pagamento - Ciclo Verde</div>
+              <div class="card-body mb-3" id="fmr-registros">
+                <div class="row">
+                  <div class="row mt-3">
+                    <div class="col-md-6">
+                      <div class="card">
+                        <h5 class="card-header"></h5>
+                        <div class="card-body">
+                          <div class="row">
+                            <div class="col-md-6">
+                              <label for="">Colaborador</label>
+                              <select
+                                class="form-control scColaborador"
+                                name="scColaborador"
+                              >
+                                <option></option>
+                                <option></option>
+                                <option></option>
+                              </select>
+                            </div>
+                            <div class="col-md-6">
+                              <label for="">Tipo de pagamento</label>
+                              <select
+                                class="form-control"
+                                name="sctipoPagamento sc-tipoPagamento"
+                                id="sctipoPagamento"
+                              >
+                                <option></option>
+                                <option></option>
+                                <option></option>
+                              </select>
+                            </div>
 
-          <div class="card cd-select">
-            <button
-              type="button"
-              class="btn btn-secondary"
-              name="solicitacaoValeColaborador"
-              onclick="chamaTemplate(this.name)"
-            >
-              <div class="car-colab">
-                <span class="material-symbols-outlined">view_agenda</span>
-                Extrato de Adiantamento
-              </div>
-            </button>
-          </div>
+                            <div class="col-md-6 p-3">
+                              <label for="">Valor</label>
+                              <input type="number" name="" id="" />
+                            </div>
+                            <div class="col-md-6 p3">
+                              <label for="">Situação</label>
+                              <select
+                                class="form-control"
+                                name="sctiposituacao sc-situacao"
+                                id="sctiposituacao"
+                              >
+                                <option>Pago</option>
+                                <option>Pendente</option>
+                                <option>Cancelado</option>
+                                <option>Negado</option>
+                              </select>
+                            </div>
+                          </div>
 
-          <div class="card cd-select">
-            <button
-              type="button"
-              class="btn btn-secondary"
-              name="listaFerias"
-              onclick="chamaTemplate(this.name)"
-            >
-              <div class="car-colab">
-                <span class="material-symbols-outlined">view_agenda</span>
-                Ferias
-              </div>
-            </button>
-          </div>
+                          <div class="row mt-3">
+                            <div class="col-md-12">
+                              <button
+                                type="button"
+                                class="btn btn-success"
+                                style="max-width: 18vh"
+                              >
+                                Registrar
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
 
-          <div class="card cd-select">
-            <button type="button" class="btn btn-secondary">
-              <div class="car-colab">
-                <span class="material-symbols-outlined">view_agenda</span> Plano
-                de Saude
+                    <div class="col-md-6">
+                      <div class="card">
+                        <h5 class="card-header">Demostrativos</h5>
+                        <div class="card-body">
+                          <div class="row">
+                            <p class="placeholder-glow">
+                              <span class="placeholder col-12"></span>
+                            </p>
+                            <p class="placeholder-glow">
+                              <span class="placeholder col-12"></span>
+                            </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
-            </button>
-          </div>
-          <div class="card cd-select">
-            <button type="button" class="btn btn-secondary">
-              <div class="car-colab">
-                <span class="material-symbols-outlined">view_agenda</span>
-                Exames
-              </div>
-            </button>
+            </div>
           </div>
         </template>
+        
+        <template id="registroRelogioDePonto">
+          <div class="card text-bg-light mb-3" style="max-width: 100%;">
+            <div class="card-header">Extrato de Relógio de Ponto</div>
+            <div class="card-body mb-3" id="fmr-registros">
+              <div class="row">
+                <div class="card shadow p-3 mb-2 bg-body-tertiary rounded">
+                  <div class="col-md-12">
+                    <div class="row">
+                      <div class="col-md-3">
+                        <label for="scColaborador">Colaborador</label>
+                        <select class="form-control scColaborador" name="scColaborador" id="scColaborador">
+                          <!-- Options preenchidas pelo JavaScript -->
+                        </select>
+                      </div>
+                      <div class="col-md-3">
+                        <label for="dataExtratoPonto">Data</label>
+                        <input type="date" class="form-control" name="dataExtratoPonto" id="dataExtratoPonto">
+                      </div>
+                      <div class="col-md-3">
+                        <label for="diaSemana">Dia</label>
+                        <input type="text" class="form-control" name="diaSemana" id="diaSemana">
+                      </div>
+                      <div class="col-md-3">
+                        <label for="trab">Trabalhou?</label>
+                        <select class="form-control" name="trab" id="trab">
+                          <option value="S">Sim</option>
+                          <option value="N">Não</option>
+                        </select>
+                      </div>
+                      <div class="col-md-5 mt-3">
+                        <label for="obs">Observações</label>
+                        <input type="text" class="form-control" name="obs" id="obs">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+        
+                  <div class="card shadow p-3 mb-2 bg-body-tertiary rounded">
+                    <div class="row">
+                      <div class="col-md-6">
+                        <label for="entrada1Periodo">Entrada 1º Período</label>
+                        <input type="time" class="form-control" name="entrada1Periodo" id="entrada1Periodo">
+                      </div>
+                      <div class="col-md-6">
+                        <label for="saida1Periodo">Saída 1º Período</label>
+                        <input type="time" class="form-control" name="saida1Periodo" id="saida1Periodo">
+                      </div>
+                    </div>
+        
+                    <div class="row">
+                      <div class="col-md-6">
+                        <label for="entrada2Periodo">Entrada 2º Período</label>
+                        <input type="time" class="form-control" name="entrada2Periodo" id="entrada2Periodo">
+                      </div>
+                      <div class="col-md-6">
+                        <label for="saida2Periodo">Saída 2º Período</label>
+                        <input type="time" class="form-control" name="saida2Periodo" id="saida2Periodo">
+                      </div>
+                    </div>
+        
+                    <div class="row">
+                      <div class="col-md-3">
+                        <label for="horasTrab">Horas Trabalhadas</label>
+                        <input type="text" class="form-control" name="horasTrab" id="horasTrab">
+                      </div>
+                      <div class="col-md-3">
+                        <label for="horasDevidas">Horas Devidas</label>
+                        <input type="text" class="form-control" name="horasDevidas" id="horasDevidas">
+                      </div>
+                      <div class="col-md-3">
+                        <label for="horasDebito">Horas Débito</label>
+                        <input type="text" class="form-control" name="horasDebito" id="horasDebito">
+                      </div>
+                      <div class="col-md-3">
+                        <label for="horasExtras">Horas Extras</label>
+                        <input type="text" class="form-control" name="horasExtras" id="horasExtras">
+                      </div>
+                    </div>
+        
+                    <div class="row">
+                      <div class="col-md-6">
+                        <label for="acima2Horas">Acima de 2 horas</label>
+                        <input type="text" class="form-control" name="acima2Horas" id="acima2Horas">
+                      </div>
+                      <div class="col-md-6">
+                        <label for="adicNoturno">Adicional Noturno</label>
+                        <input type="text" class="form-control" name="adicNoturno" id="adicNoturno">
+                      </div>
+                    </div>
+                  </div>
+        
+                  <div class="row mt-2">
+                    <div class="col-sm-1 m-3">
+                      <button type="button" class="btn btn-success">Registrar</button>
+                    </div>
+                    <div class="col-sm-1 m-3">
+                      <button type="button" class="btn btn-success">Arquivar</button>
+                    </div>
+                    <div class="col-sm-1 m-3">
+                      <button type="button" class="btn btn-success">Excluir Horário</button>
+                    </div>
+                    <div class="col-sm-1 m-3">
+                      <button type="button" class="btn btn-success">Alterar</button>
+                    </div>
+                  </div>
+                
+        
+                <div class="row">
+                  <div class="col-md-12 mt-5">
+                    <div class="card">
+                      <h5 class="card-header">Demonstrativos</h5>
+                      <div class="card-body">
+                        <div class="row">
+                          <div class="col-md-12">
+                            <table class="table table-striped">
+                              <thead>
+                                <tr>
+                                  <th>Data</th>
+                                  <th>Dia</th>
+                                  <th>Trabalhou?</th>
+                                  <th>Entrada 1º Período</th>
+                                  <th>Saída 1º Período</th>
+                                  <th>Entrada 2º Período</th>
+                                  <th>Saída 2º Período</th>
+                                  <th>Horas Trabalhadas</th>
+                                  <th>Horas Devidas</th>
+                                  <th>Horas Débito</th>
+                                  <th>Horas Extras</th>
+                                  <th>Acima de 2 horas</th>
+                                  <th>Adicional Noturno</th>
+                                  <th>Observações</th>
+                                </tr>
+                              </thead>
+                              <tbody id="tabelaDemonstrativos">
+                                <!-- Linhas preenchidas pelo JavaScript -->
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </template>
+        
+      
+      
+
+
 
         <template id="div-ferias">
           <div class="card">
@@ -1454,10 +1683,10 @@
                         <div class="row g-4">
                           <div class="col-md-6 mb-3">
                             <div class="form-group">
-                              <label for="txt-nomecolaboradorFuncao"
+                              <label for="nomecolaboradorFuncao"
                                 >Colaborador</label
                               >
-                              <select id="nomecolaboradorFuncao">
+                              <select id="nomecolaboradorFuncao" class="scColaborador">
                                 <option></option>
                               </select>
                             </div>
@@ -1534,9 +1763,12 @@
         </template>
 
         <!-- Conteúdo que será carregado dinamicamente -->
-        <div id="conteudo"></div>
+        <div id="conteudo">
       </div>
-    </div>
+      <!-- Div Auxiliares -->
+
+
+
 
     <script id="MetodoPost">
       let urlAjax =
@@ -1564,9 +1796,26 @@
 
       function chamaTemplate(pagina) {
         const formularioID = inserirTemplate(pagina);
-        if (pagina == "cadastroDeFuncao") {
-          console.log("cadastroDeFuncao");
+        const paginaB = pagina;
+        switch (paginaB) {
+          case "registrosDOC":
+          carregarColaboradores();
+          case "registroColaboradores":
+          carregarColaboradores();
+          case "registroRelogioDePonto":
+          carregarColaboradores();
+          case "cadastroDeFuncao":
+          carregarColaboradores();
+          
+          
+            
+            break;
+        
+          default:
+            break;
         }
+
+        
       }
     </script>
     <script id="login">
@@ -1925,5 +2174,67 @@
           .fmrRegistroColabor();
       }
     </script>
+<script id="function aux">
+  function carregarColaboradores() {
+    $.ajax({
+      type: "POST",
+      url: urlAjax,
+      data: {
+        qualFuncao: "carregarColaboradores",
+      }, // Envia os dados diretamente
+      success: function (response) {
+        console.log("Sucesso", JSON.stringify(response));
+        if (response.situacao) {
+          
+          const colaboradores = response.colaboradores;
+
+          // Seleciona todos os <select> com a classe 'scColaborador'
+          const selects = document.querySelectorAll('.scColaborador');
+
+          // Limpa as opções existentes
+          selects.forEach(select => {
+            select.innerHTML = '';
+          });
+
+          // Adiciona uma opção vazia no início
+          selects.forEach(select => {
+            let option = document.createElement('option');
+            option.text = '';
+            option.value = '';
+            select.add(option);
+          });
+
+          // Preenche os selects com as novas opções
+          colaboradores.forEach(colaborador => {
+            selects.forEach(select => {
+              let option = document.createElement('option');
+              option.text = colaborador.nome; // Supondo que 'nome' seja uma propriedade do colaborador
+              option.value = colaborador.id; // Supondo que 'id' seja uma propriedade do colaborador
+              select.add(option);
+            });
+          });
+        } else {
+          alert("Erro de retorno");
+        }
+      },
+      error: function (error) {
+        console.error("Erro ==>", error);
+      },
+    });
+  }
+
+function toast() {
+  const toastTrigger = document.getElementById('liveToastBtn')
+  const toastLiveExample = document.getElementById('liveToast')
+
+  if (toastTrigger) {
+    const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample)
+    toastTrigger.addEventListener('click', () => {
+      toastBootstrap.show()
+    })
+  }
+  }
+</script>
+
   </body>
 </html>
