@@ -1,0 +1,1504 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
+      charset="UTF-8"
+    />
+
+    <!-- Estilo copiado da internet -->
+    <!-- Google Fonts -->
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Icons"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"
+      rel="stylesheet"
+    />
+
+    <!-- Estilo copiado da internet -->
+
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous"
+    />
+
+    <!-- d -->
+    <!-- Bootstrap JS -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-pZ+QWtYfELzgy58GfbGLAfnQ1SzKpAaOVPfT+c6b5YvZJQW9Fk84Jr0+P1+pSydA" crossorigin="anonymous">
+  </script> -->
+
+    <!-- d -->
+    <!-- Bootstrap Icons CSS -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://code.jquery.com/ui/1.13.3/themes/smoothness/jquery-ui.css"
+    />
+    <!-- DataTables CSS -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.datatables.net/2.0.8/css/dataTables.dataTables.css"
+    />
+    <!-- Flags css -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/gh/lafeber/world-flags-sprite/stylesheets/flags32-both.css"
+    />
+    <!-- Scroller CSS -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.datatables.net/scroller/2.2.0/css/scroller.dataTables.min.css"
+    />
+
+    <!-- jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+    <!-- jQuery UI (if needed) -->
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <!-- DataTables JS -->
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <!-- Scroller JS -->
+    <script src="https://cdn.datatables.net/scroller/2.4.3/js/scroller.dataTables.js"></script>
+    <script src="https://cdn.datatables.net/2.0.8/js/dataTables.js"></script>
+    <script src="https://cdn.datatables.net/scroller/2.4.3/js/dataTables.scroller.js"></script>
+    <style>
+      :root {
+        /* Paleta de cores */
+        --cor-primaria: #fafafa;
+        --cor-secundaria: #07637a;
+        --cor-terciaria: #ffffff;
+        --cor-quaternaria: #e5e5e5;
+        --cor-acento: #ff5733;
+        --cor-branco: #ffffff;
+        --cor-subFundo: linear-gradient(74deg, #ff0066, #bb00ff, #b358c3);
+        --cor-Fundo: #e3ac98;
+        /* Exemplo de cor de acento */
+      }
+
+      body {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100vh;
+        font-family: "Raleway", sans-serif;
+        font-size: 0.8rem;
+      }
+
+      #superBody {
+        display: grid;
+        grid-template-rows: auto 1fr;
+        grid-template-columns: auto 1fr auto;
+        background: var(--cor-branco);
+        height: 100%;
+        width: 100%;
+      }
+
+      div#tpl-body {
+        display: grid;
+        grid-template-rows: auto 1fr;
+        grid-template-columns: auto 1fr auto;
+        background: var(--cor-branco);
+        height: 100%;
+        width: 100%;
+      }
+
+      #barTop {
+        grid-column: 1 / -1;
+        /* Ocupa toda a largura do grid */
+        background: var(--cor-terciaria);
+        color: #070606;
+        padding: 1em;
+        text-align: center;
+        width: 97vw;
+      }
+
+      #ladoEsquerdo {
+        grid-row: 2 / 3;
+
+        background: var(--cor-branco);
+        width: 190px;
+        max-width: 300px;
+        font-size: 0.8rem;
+      }
+
+      #ladoDireito,
+      conteudo {
+        max-width: 100vw;
+        margin-left: 0.8vh;
+        background: var(--cor-Fundo);
+        padding: 1em;
+      }
+
+      button {
+        border: none;
+      }
+
+      .ui-accordion .ui-accordion-content {
+        display: grid;
+      }
+
+      button.btn.btn-light.btn-acc {
+        width: 100%;
+        text-align: center;
+        border: none;
+      }
+
+      /* Overlay que cobre toda a tela */
+      .spinner-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(255, 255, 255, 0.7);
+        /* Cor de fundo com transparência */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+        /* Certifique-se de que o overlay esteja acima de outros conteúdos */
+      }
+
+      /* Classe para mostrar/ocultar o overlay */
+      .d-none {
+        display: none;
+      }
+
+      .accordion-control {
+        text-align: left;
+        font-size: 1.2rem;
+        font-family: "Montserrat";
+        background: #000;
+        color: white;
+        border: none;
+        padding: 0.8em 1em;
+        cursor: pointer;
+      }
+
+      /* Classe para mostrar/ocultar o overlay */
+      .d-none {
+        display: none;
+      }
+
+      @media (max-width: 400px) {
+        #ladoDireito {
+          height: 100vh;
+          max-width: 93vw;
+        }
+
+        #ladoEsquerdo {
+          height: 50vh;
+          width: 100vw;
+        }
+
+        #superBody {
+          grid-template-columns: 1fr;
+          grid-template-rows: 1fr 9fr;
+          height: 100vh;
+          width: 100%;
+        }
+      }
+
+      .menu {
+        position: relative;
+      }
+
+      .menu__item {
+        position: relative;
+        padding: 0.5em 1em;
+      }
+
+      .menu__border {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        height: 4px;
+        background-color: #ff5733;
+        /* Cor da borda */
+        transition: transform 0.3s ease;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="superBody">
+      <div
+        class="container-fluid shadow p-3 mb-1 bg-body rounded"
+        id="barTop"
+        style="display: none"
+      >
+        <nav class="navbar navbar-expand-lg bg-body-tertiary">
+          <div class="container-fluid">
+            <div class="menu">
+              <a
+                class="navbar-brand menu__item active"
+                href="#"
+                onclick="chamaTemplate('tpl-CadastroProduto')"
+                >Início</a
+              >
+              <a class="navbar-brand menu__item" href="#">Documentos</a>
+              <a class="navbar-brand menu__item" href="#">Portal</a>
+              <div class="menu__border"></div>
+            </div>
+            <button
+              class="navbar-toggler"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#navbarSupportedContent"
+              aria-controls="navbarSupportedContent"
+              aria-expanded="false"
+              aria-label="Toggle navigation"
+            >
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul class="navbar-nav me-auto mb-2 mb-lg-0"></ul>
+              <form class="d-flex" role="search">
+                <input
+                  class="form-control me-2"
+                  type="search"
+                  placeholder="Search"
+                  aria-label="Search"
+                />
+                <button class="btn btn-outline-success" type="submit">
+                  Search
+                </button>
+              </form>
+            </div>
+            <a
+              class="navbar-brand"
+              href="#"
+              onclick="chamaTemplate('tpl-login')"
+            >
+              <span class="material-icons">logout</span>
+            </a>
+          </div>
+        </nav>
+      </div>
+      <div id="ladoEsquerdo" style="display: none">
+        <div id="accordion">
+          <!-- Menu -->
+          <h3><span class="material-icons outlined">menu</span></h3>
+          <div>Menu</div>
+          <!-- Analise -->
+          <h3><i class="bi bi-clipboard2-data-fill"></i> Analise</h3>
+          <div>
+            <button
+              class="ui-button ui-widget ui-corner-all"
+              name="ferias"
+              onclick="chamaTemplate(this.name)"
+            >
+              Analise de Ferias
+            </button>
+            <button
+              class="ui-button ui-widget ui-corner-all"
+              name="analise"
+              onclick="chamaTemplate(this.name)"
+            >
+              Analise de Registros
+            </button>
+          </div>
+
+          <!-- Registros -->
+          <h3><i class="bi bi-plus-lg"></i> Registros</h3>
+          <div>
+            <button
+              class="ui-button ui-widget ui-corner-all"
+              name="registrosDOC"
+              onclick="chamaTemplate(this.name)"
+            >
+              Registro de Documentação
+            </button>
+            <button
+              class="ui-button ui-widget ui-corner-all"
+              name="ferias"
+              onclick="chamaTemplate(this.name)"
+            >
+              Ferias
+            </button>
+            <button
+              class="ui-button ui-widget ui-corner-all"
+              name="driver"
+              onclick="chamaTemplate(this.name)"
+            >
+              Driver
+            </button>
+            <button
+              class="ui-button ui-widget ui-corner-all"
+              name="solicitacaoVale"
+              onclick="chamaTemplate(this.name)"
+            >
+              Registro de Adintamento
+            </button>
+          </div>
+
+          <!-- Cadastro -->
+          <h3><i class="bi bi-file-plus"></i> Cadastro</h3>
+          <div>
+            <button
+              class="ui-button ui-widget ui-corner-all"
+              name="cadastroDeColaboradores"
+              onclick="chamaTemplate(this.name)"
+            >
+              Colaboradores
+            </button>
+            <button
+              class="ui-button ui-widget ui-corner-all"
+              name="cadastros"
+              onclick="chamaTemplate(this.name)"
+            >
+              Função
+            </button>
+            <button
+              class="ui-button ui-widget ui-corner-all"
+              name="cadastros"
+              onclick="chamaTemplate(this.name)"
+            >
+              Exames
+            </button>
+            <button
+              class="ui-button ui-widget ui-corner-all"
+              name="cadastros"
+              onclick="chamaTemplate(this.name)"
+            >
+              Cursos
+            </button>
+          </div>
+
+          <!-- Acesso Colaborador -->
+          <h3>Acesso Colaborador</h3>
+          <div>
+            <button
+              class="ui-button ui-widget ui-corner-all"
+              name="areaDecolaboradores"
+              onclick="chamaTemplate(this.name)"
+            >
+              Menu
+            </button>
+          </div>
+
+          <!-- Logout -->
+          <h3>Logout<span class="material-icons outlined"></span></h3>
+          <div>
+            <button
+              class="ui-button ui-widget ui-corner-all"
+              name="Logout"
+              onclick="chamarLogout()"
+            >
+              Logout
+            </button>
+          </div>
+          <!-- login -->
+          <h3><span class="material-icons outlined">login</span></h3>
+          <div>
+            <button
+              class="ui-button ui-widget ui-corner-all"
+              name="car-logar"
+              onclick="chamaTemplate(this.name)"
+            >
+              Login
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div id="ladoDireito">
+        <template id="car-logar">
+          <div class="card">
+            <div class="card-body text-dark">
+              <div id="login">
+                <div class="div-login">
+                  <label>Login</label>
+                  <input id="input-user-login" type="text" placeholder="User" />
+                </div>
+                <div class="div-login">
+                  <label>Senha</label>
+                  <input
+                    id="input-senha-login"
+                    type="password"
+                    placeholder="****"
+                  />
+                  <div class="div-login">
+                    <button
+                      class="btt"
+                      id="btt-login"
+                      type="button"
+                      onclick="chamarLogin()"
+                    >
+                      <span class="material-symbols-outlined">login</span>Login
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </template>
+        <!--areaDecolaboradores-->
+        <template id="areaDecolaboradores">
+          <div class="card cd-select">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              name="fichaDeregistros"
+              onclick="chamaTemplate(this.name)"
+            >
+              <div class="car-colab">
+                <span class="material-symbols-outlined">view_agenda</span> Ficha
+                de registro/docs
+              </div>
+            </button>
+          </div>
+          <div class="card cd-select">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              name="solicitacaoValeColaborador"
+              onclick="chamaTemplate(this.name)"
+            >
+              <div class="car-colab">
+                <span class="material-symbols-outlined">view_agenda</span>
+                Extrato de Pagamento
+              </div>
+            </button>
+          </div>
+
+          <div class="card cd-select">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              name="solicitacaoValeColaborador"
+              onclick="chamaTemplate(this.name)"
+            >
+              <div class="car-colab">
+                <span class="material-symbols-outlined">view_agenda</span>
+                Extrato de Adiantamento
+              </div>
+            </button>
+          </div>
+
+          <div class="card cd-select">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              name="listaFerias"
+              onclick="chamaTemplate(this.name)"
+            >
+              <div class="car-colab">
+                <span class="material-symbols-outlined">view_agenda</span>
+                Ferias
+              </div>
+            </button>
+          </div>
+
+          <div class="card cd-select">
+            <button type="button" class="btn btn-secondary">
+              <div class="car-colab">
+                <span class="material-symbols-outlined">view_agenda</span> Plano
+                de Saude
+              </div>
+            </button>
+          </div>
+          <div class="card cd-select">
+            <button type="button" class="btn btn-secondary">
+              <div class="car-colab">
+                <span class="material-symbols-outlined">view_agenda</span>
+                Exames
+              </div>
+            </button>
+          </div>
+        </template>
+
+        <template id="div-ferias">
+          <div class="card">
+            <div class="card-body">
+              <div id="feris-box">
+                <label>Relatorio de ferias</label>
+                <div class="box-ferias-cabecalho">
+                  <span>Agendar ferias prevista</span>
+                  <div>
+                    <label for="input-DataAdmissao-AgFerias"
+                      >Data Admissão</label
+                    >
+                    <input
+                      type="text"
+                      id="input-DataAdmissao-AgFerias"
+                      name="input-DataAdmissao-AgFerias"
+                    />
+                  </div>
+
+                  <div class="inat" style="display: none">
+                    <label for="input-ID-AgFerias">ID:</label>
+                    <input type="text" id="input-ID-AgFerias" />
+                  </div>
+                  <div>
+                    <label for="inputAgFerias">Colaborador</label>
+                    <input
+                      type="text"
+                      id="inputAgFerias"
+                      name="inputAgFerias"
+                    />
+                  </div>
+                  <div>
+                    <label for="input-dataFerias-AgFerias"
+                      >Data agendamento</label
+                    >
+                    <input
+                      type="date"
+                      id="input-dataFerias-AgFerias"
+                      name="input-dataFerias-AgFerias"
+                    />
+                  </div>
+
+                  <div>
+                    <button id="bttAgFerias" onclick="agendarFerias()">
+                      Agendar
+                    </button>
+                  </div>
+                </div>
+                <div id="div-ferias" class="box"></div>
+                <table
+                  id="tb-extrato-ferias"
+                  class="display nowrap"
+                  style="width: 100%"
+                >
+                  <thead>
+                    <tr>
+                      <th>IDregistros</th>
+                      <th>Nome</th>
+                      <th>CPF</th>
+                      <th>Data de Admissao</th>
+                      <th>Cargo</th>
+                      <th>Salario</th>
+                      <th>Data prevista</th>
+                    </tr>
+                  </thead>
+                  <tbody></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </template>
+
+        <template id="cadastroDeColaboradores">
+          <div id="forms">
+            <div class="card">
+              <div class="card-body"></div>
+              <h1>Cadastro de usuario</h1>
+              <ul class="nav nav-pills card-header-pills">
+                <li class="nav-item">
+                  <a
+                    class="nav-link"
+                    aria-current="true"
+                    href="https://drive.google.com/drive/folders/1liqnDAeM1LK-pKN9Rz_B_S0M7Z2V7gdR?usp=drive_link"
+                    >Pasta Doscs Registros</a
+                  >
+                </li>
+
+                <li class="nav-item">
+                  <a
+                    class="nav-link"
+                    aria-current="true"
+                    href="https://drive.google.com/drive/folders/1liqnDAeM1LK-pKN9Rz_B_S0M7Z2V7gdR?usp=drive_link"
+                    >Pasta Doscs ASOS</a
+                  >
+                </li>
+              </ul>
+            </div>
+
+            <form class="card">
+              <div class="container mt-4">
+                <!-- Informações Gerais -->
+                <div class="card text-bg-light mb-3">
+                  <div class="card-header">
+                    <h5>Informações Gerais</h5>
+                  </div>
+                  <div class="card-body">
+                    <div class="row g-4">
+                      <div class="col-md-1 mb-3">
+                        <div class="form-group">
+                          <label for="txt-idColaborador">ID Registros</label>
+                          <input
+                            type="text"
+                            class="form-control"
+                            id="txt-idColaborador"
+                            name="txt-idColaborador"
+                          />
+                        </div>
+                      </div>
+                      <div class="col-md-3 mb-3">
+                        <div class="form-group">
+                          <label for="txt-nome">Nome</label>
+                          <input
+                            type="text"
+                            class="form-control"
+                            id="txt-nome"
+                            name="txt-nome"
+                            placeholder="Nome"
+                            required
+                          />
+                        </div>
+                      </div>
+                      <div class="col-md-3 mb-3">
+                        <div class="form-group">
+                          <label for="txt-cpf">CPF</label>
+                          <input
+                            type="text"
+                            class="form-control"
+                            id="txt-cpf"
+                            name="txt-cpf"
+                            placeholder="000.000.000-00"
+                            required
+                          />
+                        </div>
+                      </div>
+                      <div class="col-md-2 mb-3">
+                        <div class="form-group">
+                          <label for="txt-dataNascimento"
+                            >Data de Nascimento</label
+                          >
+                          <input
+                            type="date"
+                            class="form-control"
+                            id="txt-dataNascimento"
+                            name="txt-dataNascimento"
+                          />
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="row g-4">
+                      <div class="col-md-3 mb-3">
+                        <div class="form-group">
+                          <label for="txt-LocalNasci"
+                            >Local de Nascimento</label
+                          >
+                          <input
+                            type="text"
+                            class="form-control"
+                            id="txt-LocalNasci"
+                            name="txt-LocalNasci"
+                            placeholder="Local de Nascimento"
+                          />
+                        </div>
+                      </div>
+                      <div class="col-md-2 mb-3">
+                        <div class="form-group">
+                          <label for="sc-EstadoCivil">Estado Civil</label>
+                          <select
+                            id="sc-EstadoCivil"
+                            name="sc-EstadoCivil"
+                            class="form-select"
+                          >
+                            <option>SOLTEIRO</option>
+                            <option>CASADO</option>
+                            <option>DIVORCIADO</option>
+                            <option>SEPARADO</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="col-md-3 mb-3">
+                        <div class="form-group">
+                          <label for="txt-nomePai">Nome do Pai</label>
+                          <input
+                            type="text"
+                            class="form-control"
+                            id="txt-nomePai"
+                            name="txt-nomePai"
+                            placeholder="Nome do Pai"
+                          />
+                        </div>
+                      </div>
+                      <div class="col-md-3 mb-3">
+                        <div class="form-group">
+                          <label for="txt-nomeMae">Nome da Mãe</label>
+                          <input
+                            type="text"
+                            class="form-control"
+                            id="txt-nomeMae"
+                            name="txt-nomeMae"
+                            placeholder="Nome da Mãe"
+                          />
+                        </div>
+                      </div>
+                      <div class="col-md-2 mb-3">
+                        <div class="form-group">
+                          <label for="sc-Sexo">Sexo</label>
+                          <select
+                            id="sc-Sexo"
+                            name="sc-Sexo"
+                            class="form-select"
+                          >
+                            <option>Feminino</option>
+                            <option>Masculino</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Informações de Endereço -->
+                <div class="card text-bg-light mb-3">
+                  <div class="card-header">
+                    <h5>Informações de Endereço</h5>
+                  </div>
+                  <div class="card-body">
+                    <div class="row g-4">
+                      <div class="col-md-3 mb-3">
+                        <div class="form-group">
+                          <label for="txt-endereco">Endereço</label>
+                          <input
+                            type="text"
+                            class="form-control"
+                            id="txt-endereco"
+                            name="txt-endereco"
+                            placeholder="Endereço"
+                          />
+                        </div>
+                      </div>
+                      <div class="col-md-3 mb-3">
+                        <div class="form-group">
+                          <label for="txt-numeroEndereco">Número</label>
+                          <input
+                            type="text"
+                            class="form-control"
+                            id="txt-numeroEndereco"
+                            name="txt-numeroEndereco"
+                            placeholder="Número"
+                          />
+                        </div>
+                      </div>
+                      <div class="col-md-3 mb-3">
+                        <div class="form-group">
+                          <label for="txt-complemento">Complemento</label>
+                          <input
+                            type="text"
+                            class="form-control"
+                            id="txt-complemento"
+                            name="txt-complemento"
+                            placeholder="Complemento"
+                          />
+                        </div>
+                      </div>
+                      <div class="col-md-3 mb-3">
+                        <div class="form-group">
+                          <label for="txt-bairro">Bairro</label>
+                          <input
+                            type="text"
+                            class="form-control"
+                            id="txt-bairro"
+                            name="txt-bairro"
+                            placeholder="Bairro"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row g-4">
+                      <div class="col-md-3 mb-3">
+                        <div class="form-group">
+                          <label for="txt-cidade">Cidade</label>
+                          <input
+                            type="text"
+                            class="form-control"
+                            id="txt-cidade"
+                            name="txt-cidade"
+                            placeholder="Cidade"
+                          />
+                        </div>
+                      </div>
+                      <div class="col-md-3 mb-3">
+                        <div class="form-group">
+                          <label for="txt-cep">CEP</label>
+                          <input
+                            type="text"
+                            class="form-control"
+                            id="txt-cep"
+                            name="txt-cep"
+                            placeholder="CEP"
+                          />
+                        </div>
+                      </div>
+                      <div class="col-md-3 mb-3">
+                        <div class="form-group">
+                          <label for="txt-uf">UF</label>
+                          <input
+                            type="text"
+                            class="form-control"
+                            id="txt-uf"
+                            name="txt-uf"
+                            placeholder="UF"
+                          />
+                        </div>
+                      </div>
+                      <div class="col-md-3 mb-3">
+                        <div class="form-group">
+                          <label for="txt-email">E-mail</label>
+                          <input
+                            type="email"
+                            class="form-control"
+                            id="txt-email"
+                            name="txt-email"
+                            placeholder="E-mail"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Informações de Trabalho -->
+                <div class="card text-bg-light mb-3">
+                  <div class="card-header">
+                    <h5>Informações de Trabalho</h5>
+                  </div>
+                  <div class="card-body">
+                    <div class="row g-4">
+                      <div class="col-md-2 mb-3">
+                        <div class="form-group">
+                          <label for="txt-dataAdmissao">Data de Admissão</label>
+                          <input
+                            type="date"
+                            class="form-control"
+                            id="txt-dataAdmissao"
+                            name="txt-dataAdmissao"
+                          />
+                        </div>
+                      </div>
+                      <div class="col-md-3 mb-3">
+                        <div class="form-group">
+                          <label for="txt-salario">Salário</label>
+                          <input
+                            type="text"
+                            class="form-control"
+                            id="txt-salario"
+                            name="txt-salario"
+                            placeholder="Salário"
+                          />
+                        </div>
+                      </div>
+                      <div class="col-md-3 mb-3">
+                        <div class="form-group">
+                          <label for="txt-cargo">Cargo</label>
+                          <input
+                            type="text"
+                            class="form-control"
+                            id="txt-cargo"
+                            name="txt-cargo"
+                            placeholder="Cargo"
+                          />
+                        </div>
+                      </div>
+                      <div class="col-md-3 mb-3">
+                        <div class="form-group">
+                          <label for="txt-ajudaTransporte"
+                            >Ajuda de Transporte</label
+                          >
+                          <input
+                            type="text"
+                            class="form-control"
+                            id="txt-ajudaTransporte"
+                            name="txt-ajudaTransporte"
+                            placeholder="Ajuda de Transporte"
+                          />
+                        </div>
+                      </div>
+                      <div class="col-md-3 mb-3">
+                        <div class="form-group">
+                          <label for="txt-ajudaCusto">Ajuda de Custo</label>
+                          <input
+                            type="text"
+                            class="form-control"
+                            id="txt-ajudaCusto"
+                            name="txt-ajudaCusto"
+                            placeholder="Ajuda de Custo"
+                          />
+                        </div>
+                      </div>
+                      <div class="col-md-3 mb-3">
+                        <div class="form-group">
+                          <label for="txt-bonificacao">Bonificação</label>
+                          <input
+                            type="text"
+                            class="form-control"
+                            id="txt-bonificacao"
+                            name="txt-bonificacao"
+                            placeholder="Bonificação"
+                          />
+                        </div>
+                      </div>
+                      <div class="col-md-3 mb-3">
+                        <div class="form-group">
+                          <label for="txt-descontos">Descontos</label>
+                          <input
+                            type="text"
+                            class="form-control"
+                            id="txt-descontos"
+                            name="txt-descontos"
+                            placeholder="Descontos"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Informações Bancárias -->
+                <div class="card text-bg-light mb-3">
+                  <div class="card-header">
+                    <h5>Informações Bancárias</h5>
+                  </div>
+                  <div class="card-body">
+                    <div class="row g-4">
+                      <div class="col-md-3 mb-3">
+                        <div class="form-group">
+                          <label for="txt-banco">Banco</label>
+                          <input
+                            type="text"
+                            class="form-control"
+                            id="txt-banco"
+                            name="txt-banco"
+                            placeholder="Banco"
+                          />
+                        </div>
+                      </div>
+                      <div class="col-md-3 mb-3">
+                        <div class="form-group">
+                          <label for="txt-agencia">Agência</label>
+                          <input
+                            type="text"
+                            class="form-control"
+                            id="txt-agencia"
+                            name="txt-agencia"
+                            placeholder="Agência"
+                          />
+                        </div>
+                      </div>
+                      <div class="col-md-3 mb-3">
+                        <div class="form-group">
+                          <label for="txt-conta">Conta</label>
+                          <input
+                            type="text"
+                            class="form-control"
+                            id="txt-conta"
+                            name="txt-conta"
+                            placeholder="Conta"
+                          />
+                        </div>
+                      </div>
+                      <div class="col-md-3 mb-3">
+                        <div class="form-group">
+                          <label for="txt-tipoConta">Tipo de Conta</label>
+                          <input
+                            type="text"
+                            class="form-control"
+                            id="txt-tipoConta"
+                            name="txt-tipoConta"
+                            placeholder="Tipo de Conta"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Informações de Contato -->
+                <div class="card text-bg-light mb-3">
+                  <div class="card-header">
+                    <h5>Informações de Contato</h5>
+                  </div>
+                  <div class="card-body">
+                    <div class="row g-4">
+                      <div class="col-md-3 mb-3">
+                        <div class="form-group">
+                          <label for="txt-telefone">Telefone</label>
+                          <input
+                            type="text"
+                            class="form-control"
+                            id="txt-telefone"
+                            name="txt-telefone"
+                            placeholder="Telefone"
+                          />
+                        </div>
+                      </div>
+                      <div class="col-md-3 mb-3">
+                        <div class="form-group">
+                          <label for="txt-celular">Celular</label>
+                          <input
+                            type="text"
+                            class="form-control"
+                            id="txt-celular"
+                            name="txt-celular"
+                            placeholder="Celular"
+                          />
+                        </div>
+                      </div>
+                      <div class="col-md-3 mb-3">
+                        <div class="form-group">
+                          <label for="txt-email">E-mail</label>
+                          <input
+                            type="email"
+                            class="form-control"
+                            id="txt-email"
+                            name="txt-email"
+                            placeholder="E-mail"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Botão de Envio -->
+                <div class="mb-3">
+                  <button type="submit" class="btn btn-primary">Enviar</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </template>
+
+        <template id="cadastroDeFuncao">
+          <div id="forms-funcao">
+            <div class="card">
+              <div class="card-body"></div>
+              <h1>Cadastro de Função</h1>
+            </div>
+
+            <div class="card">
+              <div class="container mt-4">
+
+              </div>
+          </div>
+        </template>
+
+        <!-- Conteúdo que será carregado dinamicamente -->
+        <div id="conteudo"></div>
+      </div>
+    </div>
+
+    <script id="MetodoPost">
+      let urlAjax =
+        "https://script.google.com/macros/s/AKfycbwrfbMFYCkSAQ-rZdxuYBX_TUlFevl-SBk2c_8qM4BnLgqwEcJa5mbRTkMxtspf9tXRfg/exec";
+
+      $("#accordion").accordion({
+        active: false,
+        collapsible: true,
+        heightStyle: "content",
+        icons: {
+          header: "ui-icon-circle-plus", // Ícone para cabeçalhos fechados
+          activeHeader: "ui-icon-circle-minus", // Ícone para cabeçalhos abertos
+        },
+      });
+    </script>
+
+    <script>
+      function enviarDados() {
+        let dados = document.getElementById("inputTeste").value;
+        dispararPost(dados, urlAjax);
+      }
+    </script>
+
+    <script>
+      // Função para chamar o template
+      const inserirTemplate = (templateId) => {
+        const formularioID = document.getElementById(templateId);
+        const paginanova = document.getElementById("conteudo");
+        paginanova.innerHTML = "";
+        const clone = document.importNode(formularioID.content, true);
+        paginanova.appendChild(clone);
+        return formularioID;
+      };
+
+      function chamaTemplate(pagina) {
+        const formularioID = inserirTemplate(pagina);
+        if (pagina == "car-logar") {
+        }
+      }
+
+      // Exemplo de função para logout
+      function chamarLogout() {
+        // Implementação do logout aqui
+        console.log("Logout chamado");
+      }
+    </script>
+    <script id="login">
+      function chamarLogout() {
+        localStorage.removeItem("usuarioLogado"); // Remove o usuário logado do Local Storage
+        alert("Logout realizado com sucesso");
+        controlarExibicaoAccordion(3);
+      }
+
+      function chamarLogin() {
+        let meuLogin = document.getElementById("input-user-login").value;
+        let minhasenha = document.getElementById("input-senha-login").value;
+
+        let usergrup = { login: meuLogin, password: minhasenha };
+        localStorage.setItem("usuarioLogado", JSON.stringify(usergrup));
+
+        // Chamar a função de verificação de credenciais
+        verificarCredenciais();
+      }
+
+      function verificarCredenciais() {
+        let userData = JSON.parse(localStorage.getItem("usuarioLogado"));
+
+        if (!userData) {
+          alert("Usuário não encontrado. Por favor, faça o login novamente.");
+          return;
+        }
+
+        let userName = userData.login;
+        let password = userData.password;
+
+        if (!urlAjax) {
+          alert("URL para a requisição AJAX não definida.");
+          return;
+        }
+
+        $.ajax({
+          type: "POST",
+          url: urlAjax,
+          data: {
+            userName: userName,
+            qualFuncao: "verificarCredenciais",
+            password: password,
+          }, // Envia os dados diretamente
+          success: function (response) {
+            console.log("Sucesso", JSON.stringify(response));
+
+            if (response.usuarioAutenticado) {
+              alert("Usuário autenticado com sucesso.");
+              // Atualize o localStorage com as informações retornadas
+              userData.id = response.id;
+              userData.nivel = response.loginResult;
+              localStorage.setItem("usuarioLogado", JSON.stringify(userData));
+              controlarExibicaoAccordion(response.loginResult);
+
+              document.getElementById("input-user-login").value = "";
+              document.getElementById("input-senha-login").value = "";
+            } else {
+              alert("Erro de login: credenciais inválidas.");
+            }
+          },
+          error: function (error) {
+            console.error("Erro ao autenticar", error);
+          },
+        });
+      }
+
+      function controlarExibicaoAccordion() {
+        let userData = JSON.parse(localStorage.getItem("usuarioLogado"));
+
+        if (userData) {
+          let user = userData.login;
+          let nivelUsuario = userData.nivel;
+
+          // Inicializa o accordion com todas as seções
+          $("#accordion").accordion({
+            active: false,
+            collapsible: true,
+            heightStyle: "content",
+            icons: {
+              header: "ui-icon-circle-plus", // Ícone para cabeçalhos fechados
+              activeHeader: "ui-icon-circle-minus", // Ícone para cabeçalhos abertos
+            },
+          });
+
+          // Oculta todas as seções inicialmente
+          $("#accordion h3").hide();
+          $("#accordion div").hide();
+
+          let ladoesquerdo = document.getElementById("ladoEsquerdo");
+          let bartop = document.getElementById("barTop");
+
+          if (user && nivelUsuario) {
+            ladoesquerdo.style.display = "flex";
+            bartop.style.display = "flex";
+
+            // Se o nível do usuário for 1, exibe todas as seções
+            if (nivelUsuario === 1) {
+              // Mostrar todos os cabeçalhos
+              $("#accordion h3").show();
+
+              // Esconder todo o conteúdo dos accordions
+              $("#accordion h3").next().hide();
+
+              // Expandir apenas o accordion de login
+              $("#accordion h3:contains('menu')").next().show();
+              chamaTemplate("menu");
+            } else if (nivelUsuario === 2) {
+              // Se o nível do usuário for 2, exibe apenas "Acesso Colaborador" e "Logout"
+              // Exibir apenas os cabeçalhos desejados
+              $("#accordion h3:contains('Acesso Colaborador')").show();
+              $("#accordion h3:contains('Logout')").show();
+
+              // Esconder o conteúdo associado aos cabeçalhos
+              $("#accordion h3:contains('Acesso Colaborador')").next().hide();
+              $("#accordion h3:contains('Logout')").next().hide();
+
+              chamaTemplate("areaColaborador");
+              bartop.style.display = "none";
+            } else if (!nivelUsuario) {
+              $("#accordion h3:contains('login')").show();
+              $("#accordion h3:contains('login')").next().show();
+            }
+          } else {
+            // O usuário não está autenticado, redirecione para a página de login ou faça algo apropriado
+            console.log("Usuário não autenticado");
+            // Oculta todas as seções inicialmente
+            $("#accordion h3").hide();
+            $("#accordion div").hide();
+            document.getElementById("barTop").style.display = "none";
+            chamaTemplate("car-logar");
+          }
+        } else {
+          // Se não houver dados de usuário no localStorage, redirecione para a página de login
+          console.log("Usuário não autenticado");
+          // Oculta todas as seções inicialmente
+          $("#accordion h3").hide();
+          $("#accordion div").hide();
+          chamaTemplate("car-logar");
+          document.getElementById("barTop").style.display = "none";
+        }
+      }
+
+      controlarExibicaoAccordion();
+    </script>
+    <script id="CadastroDeColaborador">
+      /////////////////////////////////Registro de colaborador////////////////////////////////////////////
+      function salvarDadosCadastrado() {
+        try {
+          let id = document.getElementById("txt-idColaborador").value;
+          if (id) {
+            let idColab = document.getElementById("txt-idColaborador").value;
+          } else {
+            idColab = "";
+          }
+          const dados = {
+            idColab: idColab,
+            nome: document.getElementById("txt-nome").value,
+            cpf: document.getElementById("txt-cpf").value,
+            dataNascimento: document.getElementById("txt-dataNascimento").value,
+            localNascimento: document.getElementById("txt-LocalNasci").value,
+            estadoCivil: document.getElementById("sc-EstadoCivil").value,
+            nomePai: document.getElementById("txt-nomePai").value,
+            nomeMae: document.getElementById("txt-nomeMae").value,
+            sexo: document.getElementById("sc-Sexo").value,
+            telefone: document.getElementById("txt-telefone").value,
+            dataAdmissao: document.getElementById("txt-dataAdmissao").value,
+            salario: document.getElementById("txt-salario").value,
+            cargo: document.getElementById("txt-cargo").value,
+            ajudaTransporte: document.getElementById("txt-ajudaTransporte")
+              .value,
+            ajudaCusto: document.getElementById("txt-ajudaCusto").value,
+            bonificacao: document.getElementById("txt-bonificacao").value,
+            cestaBasica: document.getElementById("txt-cestaBasica").value,
+            rg: document.getElementById("txt-rg").value,
+            dataEmissaoRg: document.getElementById("txt-dataEmissaoRg").value,
+            orgaoEmissor: document.getElementById("txt-orgaoEmissor").value,
+            tituloEleitoral: document.getElementById("txt-tituloEleitoral")
+              .value,
+            zonaEleitoral: document.getElementById("txt-zonaEleitoral").value,
+            secaoEleitoral: document.getElementById("txt-secaoEleitoral").value,
+            ctps: document.getElementById("txt-ctps").value,
+            serieCtps: document.getElementById("txt-serieCtps").value,
+            pis: document.getElementById("txt-pis").value,
+            bairro: document.getElementById("txt-bairro").value,
+            cidade: document.getElementById("txt-cidade").value,
+            cep: document.getElementById("txt-cep").value,
+            endereco: document.getElementById("txt-endereco").value,
+            uf: document.getElementById("txt-uf").value,
+            matricula: document.getElementById("txt-matricula").value,
+            cor: document.getElementById("txt-cor").value,
+            escolaridade: document.getElementById("txt-escolaridade").value,
+            tipoCarteira: document.getElementById("txt-tipoCarteira").value,
+            dependente: document.getElementById("txt-dependente").value,
+            situacao: document.getElementById("txt-situacao").value,
+            pix: document.getElementById("txt-pix").value,
+            dataSaida: document.getElementById("txt-dataSaida").value,
+            // Adicione os outros campos conforme necessário
+          };
+          // alert('Passando Dados: ' + JSON.stringify(dados))
+          document.getElementById("btt-cadastro-calab").disabled = true;
+          console.log("Cheguei aki");
+
+          $.ajax({
+            type: "POST",
+            url: urlAjax,
+            data: {
+              dados: JSON.stringify(dados),
+              qualFuncao: "salvarDadosNoSheet",
+            }, // Envia os dados diretamente
+            success: function (response) {
+              console.log("Sucesso", JSON.stringify(response));
+
+              if (response) {
+                alert("Dados salvos com sucesso");
+              } else {
+                alert("Erro de retorno");
+              }
+            },
+            error: function (error) {
+              console.error("Erro ao autenticar", error);
+            },
+          });
+        } catch (e) {
+          alert("Erro: " + e);
+        }
+      }
+
+      function carregarDadosColaborador() {
+        try {
+          google.script.run
+            .withSuccessHandler(function (response) {
+              if (response) {
+                let dados = response;
+                if (dados) {
+                  // Inicializando o DataTable com os dados recebidos
+                  $("#tb-extrato-complt").DataTable({
+                    data: dados,
+                    deferRender: true,
+                    scrollCollapse: true,
+                    scroller: true,
+                    scrollY: 350,
+                    columnDefs: [
+                      {
+                        target: 0,
+                        visible: false,
+                        searchable: false,
+                      },
+                    ],
+                    order: [[1, "asc"]],
+                  });
+                }
+              } else {
+                alert("Erro ao salvar");
+              }
+            })
+            .withFailureHandler(function (error) {
+              console.error("Erro ao salvar dados:", error);
+              alert("Erro ao salvar dados: " + error.message);
+            })
+            .puxardados();
+        } catch (e) {
+          alert("Erro: " + e);
+        }
+      }
+      function formularioREgistro() {
+        google.script.run
+          .withSuccessHandler(function (response) {
+            let colaboradores = JSON.parse(response);
+            let formContainer = $("#fmr-registros");
+            formContainer.empty(); // Clear existing content
+
+            let fields = [
+              { label: "IDregistros", type: "number" },
+              { label: "Nome", type: "text" },
+              { label: "CPF", type: "text" },
+              { label: "DataNascimento", type: "date" },
+              { label: "LocalNascimento", type: "text" },
+              { label: "EstadoCivil", type: "text" },
+              { label: "NomePai", type: "text" },
+              { label: "NomeMae", type: "text" },
+              {
+                label: "Sexo",
+                type: "select",
+                options: ["Masculino", "Feminino", "Outro"],
+              },
+              { label: "Telefone", type: "text" },
+              { label: "DataAdmissao", type: "date" },
+              { label: "Salario", type: "text" },
+              { label: "Cargo", type: "select", options: ["Cargo1", "Cargo2"] },
+              { label: "AjudaTranporte", type: "text" },
+              { label: "AjudaCusto", type: "text" },
+              { label: "Bonificacao", type: "text" },
+              { label: "CestaBasica", type: "text" },
+              { label: "RG", type: "text" },
+              { label: "DTAEMIRG", type: "text" },
+              { label: "ORGAO", type: "text" },
+              { label: "TituloEleitor", type: "text" },
+              { label: "Zona", type: "text" },
+              { label: "Secao", type: "text" },
+              { label: "CTPS", type: "text" },
+              { label: "Serie", type: "text" },
+              { label: "PIS", type: "text" },
+              { label: "Bairro", type: "text" },
+              {
+                label: "Cidade",
+                type: "select",
+                options: ["Cidade1", "Cidade2"],
+              },
+              { label: "CEP", type: "text" },
+              { label: "Endereco", type: "text" },
+              { label: "UF", type: "text" },
+              { label: "Matricula", type: "text" },
+              { label: "Cor", type: "text" },
+              { label: "Escolaridade", type: "text" },
+              { label: "TipoCarteira", type: "text" },
+              { label: "Dependente", type: "text" },
+              {
+                label: "SITUACAO",
+                type: "select",
+                options: ["Ativo", "Inativo"],
+              },
+              { label: "Pix", type: "text" },
+              { label: "DataSaida", type: "date" },
+            ];
+
+            let formHtml = "<form>";
+
+            fields.forEach((field) => {
+              formHtml += `<label for="${field.label}">${field.label}</label>`;
+              if (field.type === "select") {
+                formHtml += `<select id="${field.label}" name="${field.label}">`;
+                field.options.forEach((option) => {
+                  formHtml += `<option value="${option}">${option}</option>`;
+                });
+                formHtml += `</select>`;
+              } else {
+                formHtml += `<input type="${field.type}" id="${field.label}" name="${field.label}"/>`;
+              }
+            });
+
+            formHtml += "</form>";
+
+            formContainer.append(formHtml);
+
+            // Populate collaborator dropdown
+            let select = $("#sc-colaborador");
+            select.empty(); // Clear existing options
+            select.append("<option selected>Colaborador</option>");
+            colaboradores.forEach((colaborador) => {
+              select.append(
+                `<option value="${colaborador.id}">${colaborador.nome}</option>`
+              );
+            });
+          })
+          .fmrRegistroColabor();
+      }
+    </script>
+  </body>
+</html>
