@@ -145,7 +145,7 @@
       conteudo {
         max-width: 100vw;
         margin-left: 0.8vh;
-        background: var(--cor-Fundo);
+        background: var(--cor-terciaria);
         padding: 1em;
       }
 
@@ -199,35 +199,6 @@
       .d-none {
         display: none;
       }
-
-      @media (max-width: 400px) {
-        #ladoDireito {
-          height: 100vh;
-          max-width: 93vw;
-        }
-
-        #ladoEsquerdo {
-          /* height: 50vh; */
-          width: 100%;
-        }
-
-        div#accordion {
-          width: 100%;
-          font-size: 1.2rem;
-        }
-
-        #superBody {
-          grid-template-columns: 1fr;
-          grid-template-rows: auto 1fr auto;
-          height: 100vh;
-          width: 100%;
-          gap: 1.8rem;
-        }
-        .ui-accordion .ui-accordion-header .ui-accordion-content {
-          width: 98vw;
-        }
-      }
-
       .menu {
         position: relative;
       }
@@ -264,6 +235,56 @@
       /* Classe para mostrar/ocultar o overlay */
       .d-none {
         display: none;
+      }
+      .card.loginstilo {
+        align-items: center;
+        font-size: 1.2rem;
+        text-align: justify;
+        width: 96vw;
+        height: 96vh;
+      }
+      div#login {
+        display: flex;
+        flex-flow: column wrap;
+        gap: 1rem;
+        width: 100%;
+        height: 100%;
+        justify-content: center;
+      }
+
+      @media (max-width: 400px) {
+        #ladoDireito {
+          height: 100vh;
+          max-width: 93vw;
+        }
+
+        #ladoEsquerdo {
+          /* height: 50vh; */
+          width: 100%;
+        }
+
+        div#accordion {
+          width: 100%;
+          font-size: 1.2rem;
+        }
+
+        #superBody {
+          grid-template-columns: 1fr;
+          grid-template-rows: auto 1fr auto;
+          height: 100vh;
+          width: 100%;
+          gap: 1.8rem;
+        }
+        .ui-accordion .ui-accordion-header .ui-accordion-content {
+          width: 98vw;
+        }
+        .card.loginstilo {
+          align-items: center;
+          font-size: 1.2rem;
+          text-align: justify;
+          width: 80vw;
+          height: 50vh;
+        }
       }
     </style>
   </head>
@@ -378,6 +399,17 @@
               onclick="chamaTemplate(this.name)"
             >
               Relógio De Ponto
+            </button>
+          </div>
+          <!-- RegistrosNivel3 -->
+          <h3><i class="bi bi-plus-lg"></i> Supervisao</h3>
+          <div>
+            <button
+              class="ui-button ui-widget ui-corner-all"
+              name="registrosDOC"
+              onclick="chamaTemplate(this.name)"
+            >
+              Registro de Documentação
             </button>
           </div>
 
@@ -517,18 +549,29 @@
 
       <div id="ladoDireito">
         <template id="car-logar">
-          <div class="card">
+          <!-- TODO Lofin -->
+          <div class="card loginstilo">
             <div class="card-body text-dark">
-              <div id="login">
+              <div id="login" class="shadow p-3 mb-5 bg-body-tertiary rounded">
                 <div class="div-login">
-                  <label for="input-user-login">Login</label>
-                  <input id="input-user-login" type="text" placeholder="User" />
+                  <label for="input-user-login" class="input-group-text"
+                    >Login</label
+                  >
+                  <input
+                    id="input-user-login"
+                    type="text"
+                    placeholder="User"
+                    class="form-control"
+                  />
                 </div>
                 <div class="div-login">
-                  <label for="input-senha-login">Senha</label>
+                  <label for="input-senha-login" class="input-group-text"
+                    >Senha</label
+                  >
                   <input
                     id="input-senha-login"
                     type="password"
+                    class="form-control"
                     placeholder="Digite sua senha"
                   />
                 </div>
@@ -1098,24 +1141,28 @@
                         />
                       </div>
                       <div class="col-md-3 mt-3">
-                        <label for="trab" class="input-group-text"
+                        <label for="trabalhouSelect" class="input-group-text"
                           >Trabalhou?</label
                         >
-                        <select class="form-control" name="trab" id="trab">
+                        <select
+                          class="form-control"
+                          name="trabalhouSelect"
+                          id="trabalhouSelect"
+                        >
                           <option value="S">Sim</option>
                           <option value="N">Não</option>
                         </select>
                       </div>
                       <div class="col-md-3 mt-3">
-                        <spam for="obs" class="input-group-text"
+                        <spam for="observacoesTextarea" class="input-group-text"
                           >Observações</spam
                         >
                         <textarea
                           type="textarea"
                           class="form-control"
                           aria-label="With textarea"
-                          name="obs"
-                          id="obs"
+                          name="observacoesTextarea"
+                          id="observacoesTextarea"
                         ></textarea>
                       </div>
                     </div>
@@ -1222,12 +1269,12 @@
 
                   <div class="row">
                     <div class="col-md-3">
-                      <label for="horasTrab">Horas Trabalhadas</label>
+                      <label for="horasTrabalhadas">Horas Trabalhadas</label>
                       <input
                         type="text"
                         class="form-control"
-                        name="horasTrab"
-                        id="horasTrab"
+                        name="horasTrabalhadas"
+                        id="horasTrabalhadas"
                       />
                     </div>
                     <div class="col-md-3">
@@ -1283,7 +1330,12 @@
 
                 <div class="row mt-2">
                   <div class="col-sm-1 m-3">
-                    <button type="button" class="btn btn-success">
+                    <button
+                      type="button"
+                      class="btn btn-success"
+                      name="bttSalvarRelogioPonto"
+                      onclick="enviarRegistroExtratoRelogioPonto()"
+                    >
                       Registrar
                     </button>
                   </div>
@@ -2192,6 +2244,11 @@
           </div>
         </div>
       </div>
+
+      <template>
+        <div id="menuLogin"></div>
+        <!-- Conteudo sera exebido aqui -->
+      </template>
       <!-- Spinner Overlay -->
       <div id="spinner-overlay" class="spinner-overlay d-none">
         <div class="d-flex justify-content-center align-items-center h-100">
@@ -2217,32 +2274,52 @@
       });
 
       // Função para chamar o template
-      const inserirTemplate = (templateId) => {
-        const formularioID = document.getElementById(templateId);
-        const paginanova = document.getElementById("conteudo");
-        paginanova.innerHTML = "";
-        const clone = document.importNode(formularioID.content, true);
-        paginanova.appendChild(clone);
-        return formularioID;
+      const inserirTemplate = (templateId, destino) => {
+        try {
+          const formularioID = document.getElementById(templateId);
+          const paginanova = document.getElementById(destino);
+          paginanova.innerHTML = "";
+          const clone = document.importNode(formularioID.content, true);
+          paginanova.appendChild(clone);
+          return formularioID;
+        } catch (error) {
+          return null;
+        }
       };
 
       function chamaTemplate(pagina) {
-        const formularioID = inserirTemplate(pagina);
+        let x;
+        if (pagina === "car-logar21") {
+          x = "menuLogin";
+        } else {
+          x = "conteudo";
+        }
+
+        const formularioID = inserirTemplate(pagina, x);
+        if (!formularioID) return;
+
+        // const formularioID = inserirTemplate(pagina);
         const paginaB = pagina;
         switch (paginaB) {
           case "registrosDOC":
             carregarColaboradores();
+            break;
           case "registroPagamentosColaboradores":
             carregarColaboradores();
+            break;
           case "registroRelogioDePonto":
             carregarColaboradores();
             carregaEscala();
+            break;
           case "cadastroDeFuncao":
             carregarColaboradores();
+            break;
           case "registroferias":
             carregarColaboradores();
+            break;
           case "registroPagamentosAdiantamento":
             carregarColaboradores();
+            break;
           case "CadastroEscala":
             carregarColaboradores();
             carregarFuncao();
@@ -2273,6 +2350,7 @@
       }
 
       function verificarCredenciais() {
+        mostrarSpinner();
         let userData = JSON.parse(localStorage.getItem("usuarioLogado"));
 
         if (!userData) {
@@ -2297,6 +2375,7 @@
             password: password,
           }, // Envia os dados diretamente
           success: function (response) {
+            esconderSpinner();
             // console.log("Sucesso", JSON.stringify(response));
 
             if (response.usuarioAutenticado) {
@@ -2314,6 +2393,7 @@
             }
           },
           error: function (error) {
+            esconderSpinner();
             console.error("Erro ao autenticar", error);
           },
         });
@@ -2343,10 +2423,10 @@
 
           let ladoesquerdo = document.getElementById("ladoEsquerdo");
           let bartop = document.getElementById("barTop");
+          var elemento = document.getElementById("superBody");
 
           if (user && nivelUsuario) {
             ladoesquerdo.style.display = "flex";
-            bartop.style.display = "flex";
 
             // Se o nível do usuário for 1, exibe todas as seções
             if (nivelUsuario === 1) {
@@ -2359,6 +2439,7 @@
               // Expandir apenas o accordion de login
               $("#accordion h3:contains('menu')").next().show();
               chamaTemplate("menu");
+              bartop.style.display = "flex";
             } else if (nivelUsuario === 2) {
               // Se o nível do usuário for 2, exibe apenas "Acesso Colaborador" e "Logout"
               // Exibir apenas os cabeçalhos desejados
@@ -2371,30 +2452,43 @@
 
               chamaTemplate("areaColaborador");
               bartop.style.display = "none";
+              // Remove a classe 'grid-template-rows: auto 1fr;'
+              elemento.style.gridTemplateRows = "";
+            } else if (nivelUsuario === 3) {
+              // Se o nível do usuário for 2, exibe apenas "Acesso Colaborador" e "Logout"
+              // Exibir apenas os cabeçalhos desejados
+              $("#accordion h3:contains('Acesso Colaborador')").show();
+              $("#accordion h3:contains('Logout')").show();
+              $("#accordion h3:contains('Supervisao')").show();
+
+              // Esconder o conteúdo associado aos cabeçalhos
+              $("#accordion h3:contains('Acesso Colaborador')").next().hide();
+              $("#accordion h3:contains('Logout')").next().hide();
+              $("#accordion h3:contains('Supervisao')").next().hide();
+              chamaTemplate("areaColaborador");
+              bartop.style.display = "none ";
+              elemento.style.gridTemplateRows = " ";
             } else if (!nivelUsuario) {
-              $("#accordion h3:contains('login')").show();
-              $("#accordion h3:contains('login')").next().show();
+              desativarAccodion();
             }
           } else {
             // O usuário não está autenticado, redirecione para a página de login ou faça algo apropriado
             console.log("Usuário não autenticado");
-            // Oculta todas as seções inicialmente
-            $("#accordion h3").hide();
-            $("#accordion div").hide();
-            document.getElementById("barTop").style.display = "none";
-            chamaTemplate("car-logar");
+            desativarAccodion();
           }
         } else {
           // Se não houver dados de usuário no localStorage, redirecione para a página de login
           console.log("Usuário não autenticado");
-          // Oculta todas as seções inicialmente
-          $("#accordion h3").hide();
-          $("#accordion div").hide();
-          chamaTemplate("car-logar");
-          document.getElementById("barTop").style.display = "none";
+          desativarAccodion();
         }
       }
-
+      function desativarAccodion() {
+        // Oculta todas as seções inicialmente
+        $("#accordion h3").hide();
+        $("#accordion div").hide();
+        chamaTemplate("car-logar");
+        document.getElementById("barTop").style.display = "none";
+      }
       controlarExibicaoAccordion();
     </script>
     <script id="CadastroDeColaborador">
@@ -2633,35 +2727,36 @@
             esconderSpinner();
             if (response.situacao) {
               let colaboradores = response.colaboradores;
+              try {
+                // Ordena colaboradores por nome em ordem alfabética
+                colaboradores.sort((a, b) => a.nome.localeCompare(b.nome));
 
-              // Ordena colaboradores por nome em ordem alfabética
-              colaboradores.sort((a, b) => a.nome.localeCompare(b.nome));
+                // Seleciona todos os <select> com a classe 'scColaborador'
+                const selects = document.querySelectorAll(".scColaborador");
 
-              // Seleciona todos os <select> com a classe 'scColaborador'
-              const selects = document.querySelectorAll(".scColaborador");
+                // Limpa as opções existentes
+                selects.forEach((select) => {
+                  select.innerHTML = "";
+                });
 
-              // Limpa as opções existentes
-              selects.forEach((select) => {
-                select.innerHTML = "";
-              });
-
-              // Adiciona uma opção vazia no início
-              selects.forEach((select) => {
-                let option = document.createElement("option");
-                option.text = "";
-                option.value = "";
-                select.add(option);
-              });
-
-              // Preenche os selects com as novas opções
-              colaboradores.forEach((colaborador) => {
+                // Adiciona uma opção vazia no início
                 selects.forEach((select) => {
                   let option = document.createElement("option");
-                  option.text = colaborador.nome; // Supondo que 'nome' seja uma propriedade do colaborador
-                  option.value = colaborador.id; // Supondo que 'id' seja uma propriedade do colaborador
+                  option.text = "";
+                  option.value = "";
                   select.add(option);
                 });
-              });
+
+                // Preenche os selects com as novas opções
+                colaboradores.forEach((colaborador) => {
+                  selects.forEach((select) => {
+                    let option = document.createElement("option");
+                    option.text = colaborador.nome; // Supondo que 'nome' seja uma propriedade do colaborador
+                    option.value = colaborador.id; // Supondo que 'id' seja uma propriedade do colaborador
+                    select.add(option);
+                  });
+                });
+              } catch (error) {}
             } else {
               alert("Erro de retorno");
             }
@@ -2685,35 +2780,37 @@
             esconderSpinner();
             // console.log("Sucesso", JSON.stringify(response));
             if (response.situacao) {
-              const funcoes = response.colaboradores;
+              try {
+                const funcoes = response.colaboradores;
 
-              // Seleciona todos os <select> com a classe 'scColaborador'
-              const selects = document.querySelectorAll(
-                ".FuncaocolaboradorFuncao"
-              );
+                // Seleciona todos os <select> com a classe 'scColaborador'
+                const selects = document.querySelectorAll(
+                  ".FuncaocolaboradorFuncao"
+                );
 
-              // Limpa as opções existentes
-              selects.forEach((select) => {
-                select.innerHTML = "";
-              });
+                // Limpa as opções existentes
+                selects.forEach((select) => {
+                  select.innerHTML = "";
+                });
 
-              // Adiciona uma opção vazia no início
-              selects.forEach((select) => {
-                let option = document.createElement("option");
-                option.text = "";
-                option.value = "";
-                select.add(option);
-              });
-
-              // Preenche os selects com as novas opções
-              colaboradores.forEach((colaborador) => {
+                // Adiciona uma opção vazia no início
                 selects.forEach((select) => {
                   let option = document.createElement("option");
-                  option.text = colaborador.descricao; // Supondo que 'nome' seja uma propriedade do colaborador
-                  option.value = colaborador.id; // Supondo que 'id' seja uma propriedade do colaborador
+                  option.text = "";
+                  option.value = "";
                   select.add(option);
                 });
-              });
+
+                // Preenche os selects com as novas opções
+                colaboradores.forEach((colaborador) => {
+                  selects.forEach((select) => {
+                    let option = document.createElement("option");
+                    option.text = colaborador.descricao; // Supondo que 'nome' seja uma propriedade do colaborador
+                    option.value = colaborador.id; // Supondo que 'id' seja uma propriedade do colaborador
+                    select.add(option);
+                  });
+                });
+              } catch (error) {}
             } else {
               alert("Erro de retorno");
             }
@@ -2988,7 +3085,7 @@
         const minutosTrabalhados =
           calcularMinutos(saida1, entrada1) + calcularMinutos(saida2, entrada2);
         const horasTrabalhadas = converterMinutosParaHoras(minutosTrabalhados);
-        document.getElementById("horasTrab").value = horasTrabalhadas;
+        document.getElementById("horasTrabalhadas").value = horasTrabalhadas;
 
         const cargaHorariaPadrao =
           document.getElementById("entrada1totalCargaHorarioPeriodo").value ||
@@ -3011,8 +3108,12 @@
       }
 
       function converterHorasParaMinutos(horario) {
-        const [hh, mm] = horario.split(":").map(Number);
-        return hh * 60 + mm;
+        try {
+          const [hh, mm] = horario.split(":").map(Number);
+          return hh * 60 + mm;
+        } catch (error) {
+          return null;
+        }
       }
 
       function converterMinutosParaHoras(minutos) {
@@ -3076,6 +3177,88 @@
 
         return inicioMax < fimMin ? (fimMin - inicioMax) / 1000 / 60 / 60 : 0;
       }
+
+      // Função para coletar os dados do formulário e enviar ao servidor
+      function enviarRegistroExtratoRelogioPonto() {
+        mostrarSpinner();
+        // Capturando valores dos inputs do formulário
+        const colaborador = document.getElementById("scColaboradorRP").value;
+        const funcao = document.getElementById("funcaoColab").value;
+        const dataExtrato = document.getElementById("dataExtratoPonto").value;
+        const diaSemana = document.getElementById("diaSemana").value;
+        const trabalhou = document.getElementById("trabalhouSelect").value;
+        const observacoes = document.getElementById(
+          "observacoesTextarea"
+        ).value;
+        const cargaHoraria = document.getElementById(
+          "entrada1totalCargaHorarioPeriodo"
+        ).value;
+        const cargaFimDeSemana = document.getElementById(
+          "entrada1totalCargaHorarioSabado"
+        ).value;
+        const entrada1Periodo =
+          document.getElementById("entrada1Periodo").value;
+        const saida1Periodo = document.getElementById("saida1Periodo").value;
+        const entrada2Periodo =
+          document.getElementById("entrada2Periodo").value;
+
+        const saida2Periodo = document.getElementById("saida2Periodo").value;
+        const horasTrabalhadas =
+          document.getElementById("horasTrabalhadas").value;
+        const horasDevidas = document.getElementById("horasDevidas").value;
+        const horasDebito = document.getElementById("horasDebito").value;
+        const horasExtras = document.getElementById("horasExtras").value;
+        let mod = "new";
+        // Criar um objeto com todos os valores para envio
+        const dadosRegistro = {
+          colaborador: colaborador,
+          funcao: funcao,
+          dataExtrato: dataExtrato,
+          diaSemana: diaSemana,
+          trabalhou: trabalhou,
+          observacoes: observacoes,
+          cargaHoraria: cargaHoraria,
+          cargaFimDeSemana: cargaFimDeSemana,
+          entrada1Periodo: entrada1Periodo,
+          saida1Periodo: saida1Periodo,
+          entrada2Periodo: entrada2Periodo,
+          saida2Periodo: saida2Periodo,
+          horasTrabalhadas: horasTrabalhadas,
+          horasDevidas: horasDevidas,
+          horasDebito: horasDebito,
+          horasExtras: horasExtras,
+        };
+        $.ajax({
+          type: "POST",
+          url: urlAjax,
+          data: {
+            tarefa: mod,
+            qualFuncao: "outputRelogioDePonto",
+            dados: JSON.stringify(dadosRegistro),
+          },
+          success: function (response) {
+            esconderSpinner();
+
+            console.log("Dados de retorno response:", response);
+
+            if (response.situacao) {
+              alert("Registro salvo com sucesso!");
+
+              dadosRegistro.forEach((registro) => {
+                console.log("dadosRegistro==>", registro);
+              });
+            } else {
+              alert("Erro de retorno");
+            }
+          },
+          error: function (error) {
+            esconderSpinner();
+            console.error("Erro ==>", error);
+          },
+        });
+      }
+
+      // TODO nOVO
     </script>
   </body>
 </html>
