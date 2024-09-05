@@ -246,14 +246,33 @@
         /* Cor da borda */
         transition: transform 0.3s ease;
       }
+      .spinner-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(255, 255, 255, 0.7);
+        /* Cor de fundo com transparência */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+        /* Certifique-se de que o overlay esteja acima de outros conteúdos */
+      }
+
+      /* Classe para mostrar/ocultar o overlay */
+      .d-none {
+        display: none;
+      }
     </style>
   </head>
 
   <body>
     <div id="superBody">
       <div
-        class="container-fluid shadow w-100 p-3 mb-1 bg-body rounded"
         id="barTop"
+        class="container-fluid shadow w-100 p-3 mb-1 bg-body rounded"
         style="display: none"
       >
         <nav class="navbar navbar-expand-lg bg-body-tertiary">
@@ -293,24 +312,25 @@
       <div id="ladoEsquerdo" style="display: none">
         <div id="accordion">
           <!-- Menu -->
-          <h3><span class="material-icons outlined">menu</span></h3>
+          <h3><span class="material-icons outlined">menu</span> Menu</h3>
           <div>Menu</div>
-          <!-- Analise -->
-          <h3><i class="bi bi-clipboard2-data-fill"></i> Analise</h3>
+
+          <!-- Análise -->
+          <h3><i class="bi bi-clipboard2-data-fill"></i> Análise</h3>
           <div>
             <button
               class="ui-button ui-widget ui-corner-all"
               name="ferias"
               onclick="chamaTemplate(this.name)"
             >
-              Analise de Ferias
+              Análise de Férias
             </button>
             <button
               class="ui-button ui-widget ui-corner-all"
               name="analise"
               onclick="chamaTemplate(this.name)"
             >
-              Analise de Registros
+              Análise de Registros
             </button>
           </div>
 
@@ -324,13 +344,12 @@
             >
               Registro de Documentação
             </button>
-
             <button
               class="ui-button ui-widget ui-corner-all"
-              name="ferias"
+              name="registroferias"
               onclick="chamaTemplate(this.name)"
             >
-              Ferias
+              Férias
             </button>
             <button
               class="ui-button ui-widget ui-corner-all"
@@ -341,25 +360,25 @@
             </button>
             <button
               class="ui-button ui-widget ui-corner-all"
-              name="solicitacaoVale"
+              name="registroPagamentosAdiantamento"
               onclick="chamaTemplate(this.name)"
             >
-              Registro de Adintamento
+              Registro de Adiantamento
             </button>
             <button
               class="ui-button ui-widget ui-corner-all"
-              name="registroColaboradores"
+              name="registroPagamentosColaboradores"
               onclick="chamaTemplate(this.name)"
             >
-              Registros de pagamentos
+              Registros de Pagamentos
             </button>
             <button
-            class="ui-button ui-widget ui-corner-all"
-            name="registroRelogioDePonto"
-            onclick="chamaTemplate(this.name)"
-          >
-          Relogio De Ponto
-          </button>
+              class="ui-button ui-widget ui-corner-all"
+              name="registroRelogioDePonto"
+              onclick="chamaTemplate(this.name)"
+            >
+              Relógio De Ponto
+            </button>
           </div>
 
           <!-- Cadastro -->
@@ -381,37 +400,27 @@
             </button>
             <button
               class="ui-button ui-widget ui-corner-all"
-              name="cadastros"
+              name="exames"
               onclick="chamaTemplate(this.name)"
             >
               Exames
             </button>
             <button
               class="ui-button ui-widget ui-corner-all"
-              name="cadastros"
+              name="cursos"
               onclick="chamaTemplate(this.name)"
             >
               Cursos
             </button>
-
-
-
-
-
-            
-          </div>
-
-          <!-- Acesso Colaborador -->
-          <!-- <h3>Acesso Colaborador</h3>
-          <div>
             <button
               class="ui-button ui-widget ui-corner-all"
-              name="areaDecolaboradores"
+              name="CadastroEscala"
               onclick="chamaTemplate(this.name)"
             >
-              Menu
+              Escala
             </button>
-          </div> -->
+          </div>
+
           <!-- Acesso Colaborador -->
           <h3>Acesso Colaborador</h3>
           <div>
@@ -422,29 +431,30 @@
               name="fichaDeregistros"
               onclick="chamaTemplate(this.name)"
             >
-              <span class="material-symbols-outlined">view_agenda</span>
-              Ficha de registro/docs
+              <span class="material-symbols-outlined">view_agenda</span> Ficha
+              de Registro/Docs
             </button>
 
             <!-- Card 2 -->
             <button
               type="button"
               class="btn btn-secondary"
-              name="solicitacaoValeColaborador"
+              name="extratoPagamento"
               onclick="chamaTemplate(this.name)"
             >
-              <span class="material-symbols-outlined">view_agenda</span>
-              Extrato de Pagamento
+              <span class="material-symbols-outlined">view_agenda</span> Extrato
+              de Pagamento
             </button>
+
             <!-- Card 3 -->
             <button
               type="button"
               class="btn btn-secondary"
-              name="solicitacaoValeColaborador"
+              name="extratoAdiantamento"
               onclick="chamaTemplate(this.name)"
             >
-              <span class="material-symbols-outlined">view_agenda</span>
-              Extrato de Adiantamento
+              <span class="material-symbols-outlined">view_agenda</span> Extrato
+              de Adiantamento
             </button>
 
             <!-- Card 4 -->
@@ -454,24 +464,33 @@
               name="listaFerias"
               onclick="chamaTemplate(this.name)"
             >
-              <span class="material-symbols-outlined">view_agenda</span>
-              Ferias
+              <span class="material-symbols-outlined">view_agenda</span> Férias
             </button>
 
             <!-- Card 5 -->
-            <button type="button" class="btn btn-secondary">
-              <span class="material-symbols-outlined">view_agenda</span>
-              Plano de Saude
+            <button
+              type="button"
+              class="btn btn-secondary"
+              name="planoDeSaude"
+              onclick="chamaTemplate(this.name)"
+            >
+              <span class="material-symbols-outlined">view_agenda</span> Plano
+              de Saúde
             </button>
 
             <!-- Card 6 -->
-            <button type="button" class="btn btn-secondary">
-              <span class="material-symbols-outlined">view_agenda</span>
-              Exames
+            <button
+              type="button"
+              class="btn btn-secondary"
+              name="exames"
+              onclick="chamaTemplate(this.name)"
+            >
+              <span class="material-symbols-outlined">view_agenda</span> Exames
             </button>
           </div>
+
           <!-- Logout -->
-          <h3>Logout<span class="material-icons outlined"></span></h3>
+          <h3><span class="material-icons outlined">logout</span> Logout</h3>
           <div>
             <button
               class="ui-button ui-widget ui-corner-all"
@@ -481,8 +500,9 @@
               Logout
             </button>
           </div>
-          <!-- login -->
-          <h3><span class="material-icons outlined">login</span></h3>
+
+          <!-- Login -->
+          <h3><span class="material-icons outlined">login</span> Login</h3>
           <div>
             <button
               class="ui-button ui-widget ui-corner-all"
@@ -501,31 +521,32 @@
             <div class="card-body text-dark">
               <div id="login">
                 <div class="div-login">
-                  <label>Login</label>
+                  <label for="input-user-login">Login</label>
                   <input id="input-user-login" type="text" placeholder="User" />
                 </div>
                 <div class="div-login">
-                  <label>Senha</label>
+                  <label for="input-senha-login">Senha</label>
                   <input
                     id="input-senha-login"
                     type="password"
-                    placeholder="****"
+                    placeholder="Digite sua senha"
                   />
-                  <div class="div-login">
-                    <button
-                      class="btt"
-                      id="btt-login"
-                      type="button"
-                      onclick="chamarLogin()"
-                    >
-                      <span class="material-symbols-outlined">login</span>Login
-                    </button>
-                  </div>
+                </div>
+                <div class="div-login">
+                  <button
+                    class="btt"
+                    id="btt-login"
+                    type="button"
+                    onclick="chamarLogin()"
+                  >
+                    <span class="material-symbols-outlined">login</span>Login
+                  </button>
                 </div>
               </div>
             </div>
           </div>
         </template>
+
         <template id="registrosDOC">
           <div class="card">
             <div class="card text-bg-light mb-3" style="max-width: 100%">
@@ -550,7 +571,7 @@
                       id="nomeColaboradorREGISTRO"
                       aria-label="Colaborador"
                     >
-                      <option selected>Selecionar</option>
+                      <option selected>Selecione um colaborador</option>
                       <option value="1">1</option>
                     </select>
                   </div>
@@ -581,20 +602,22 @@
                               id="tipoDocumentacao"
                               aria-label="Tipo de Documentação"
                             >
-                              <option selected>Selecionar</option>
+                              <option selected>Selecione o tipo</option>
                               <option value="1">Ficha de registro</option>
                               <option value="2">Two</option>
                               <option value="3">Three</option>
                             </select>
                           </div>
                           <div class="col-md-6">
-                            <label for="">Colaborador</label>
+                            <label for="scColaboradorDoc" class="form-label"
+                              >Colaborador</label
+                            >
                             <select
                               class="form-control scColaborador"
                               name="scColaborador"
+                              id="scColaboradorDoc"
                             >
-                              <option></option>
-                              <option></option>
+                              <option selected>Selecione um colaborador</option>
                               <option></option>
                             </select>
                           </div>
@@ -642,25 +665,30 @@
                                 >add_task</span
                               >
                             </button>
+                            <label for="tipodeExame" class="form-label"
+                              >Tipo de Exame</label
+                            >
                             <select
                               class="form-select"
                               id="tipodeExame"
                               aria-label="Tipo de Exame"
                             >
-                              <option selected>Selecionar</option>
+                              <option selected>Selecione o tipo</option>
                               <!-- <option value="1">ASO</option>
-                              <option value="2">Atestado</option>
-                              <option value="3">Outro</option> -->
+                                <option value="2">Atestado</option>
+                                <option value="3">Outro</option> -->
                             </select>
                           </div>
                           <div class="col-md-6">
-                            <label for="">Colaborador</label>
+                            <label for="scColaboradorExame" class="form-label"
+                              >Colaborador</label
+                            >
                             <select
                               class="form-control scColaborador"
                               name="scColaborador"
+                              id="scColaboradorExame"
                             >
-                              <option></option>
-                              <option></option>
+                              <option selected>Selecione um colaborador</option>
                               <option></option>
                             </select>
                           </div>
@@ -706,11 +734,11 @@
                   <div class="row mt-3">
                     <div class="col-md-6">
                       <div class="card">
-                        <h5 class="card-header">Atestado Medico</h5>
+                        <h5 class="card-header">Atestado Médico</h5>
                         <div class="card-body">
                           <div class="row">
                             <div class="col-md-6">
-                              <label for="inputDataAtestado"
+                              <label for="inputDataAtestado" class="form-label"
                                 >Data de Atestado</label
                               >
                               <input
@@ -720,17 +748,20 @@
                               />
                             </div>
                             <div class="col-md-6">
-                              <label for="input-sumOfDays"
+                              <label for="input-sumOfDays" class="form-label"
                                 >Total de dias Afastado</label
                               >
                               <input
                                 type="number"
                                 name="input-sumOfDays"
                                 id="input-sumOfDays"
+                                class="form-control"
                               />
                             </div>
                             <div class="col-md-6">
-                              <label for="inputDataAtestadoretorno"
+                              <label
+                                for="inputDataAtestadoretorno"
+                                class="form-label"
                                 >Data de retorno</label
                               >
                               <input
@@ -740,13 +771,19 @@
                               />
                             </div>
                             <div class="col-md-6">
-                              <label for="">Colaborador</label>
+                              <label
+                                for="scColaboradorAtestado"
+                                class="form-label"
+                                >Colaborador</label
+                              >
                               <select
                                 class="form-control scColaborador"
                                 name="scColaborador"
+                                id="scColaboradorAtestado"
                               >
-                                <option></option>
-                                <option></option>
+                                <option selected>
+                                  Selecione um colaborador
+                                </option>
                                 <option></option>
                               </select>
                             </div>
@@ -755,7 +792,7 @@
                             <input
                               type="file"
                               class="form-control"
-                              id="inputExameFile"
+                              id="inputAtestadoFile"
                               aria-describedby="inputGroupFileAddon04"
                               aria-label="Upload"
                             />
@@ -788,7 +825,7 @@
           </div>
         </template>
 
-        <template id="registroColaboradores">
+        <template id="registroPagamentosColaboradores">
           <div class="card">
             <div class="card text-bg-light mb-3" style="max-width: 100%">
               <div class="card-header">Pagamento - Ciclo Verde</div>
@@ -860,7 +897,7 @@
 
                     <div class="col-md-6">
                       <div class="card">
-                        <h5 class="card-header">Demostrativos</h5>
+                        <h5 class="card-header">Extrato</h5>
                         <div class="card-body">
                           <div class="row">
                             <p class="placeholder-glow">
@@ -869,6 +906,7 @@
                             <p class="placeholder-glow">
                               <span class="placeholder col-12"></span>
                             </p>
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -878,9 +916,132 @@
             </div>
           </div>
         </template>
-        
+
+        <template id="registroPagamentosAdiantamento">
+          <div class="card">
+            <div class="card text-bg-light mb-3" style="max-width: 100%">
+              <div class="card-header">
+                Pagamento de Adiantamento - Ciclo Verde
+              </div>
+              <div class="card-body mb-3" id="fmr-registros">
+                <div class="row">
+                  <div class="row mt-3">
+                    <div class="col-md-6">
+                      <div class="card">
+                        <h5 class="card-header"></h5>
+                        <div class="card-body">
+                          <div class="row">
+                            <div class="col-md-6">
+                              <label for="">Colaborador</label>
+                              <select
+                                class="form-control scColaborador"
+                                name="scColaborador"
+                              >
+                                <option></option>
+                                <option></option>
+                                <option></option>
+                              </select>
+                            </div>
+                            <div class="col-md-6">
+                              <label for="dataAdiantamento">Data</label>
+                              <input
+                                type="date"
+                                class="form-group"
+                                name="dataAdiantamento"
+                                id="dataAdiantamento"
+                              />
+                            </div>
+
+                            <div class="col-md-6 p-3">
+                              <label for="">Valor</label>
+                              <input type="number" name="" id="" />
+                            </div>
+                            <div class="col-md-6 p3">
+                              <label for="">Situação</label>
+                              <select
+                                class="form-control"
+                                name="sctiposituacao sc-situacao"
+                                id="sctiposituacao"
+                              >
+                                <option>Pago</option>
+                                <option>Pendente</option>
+                                <option>Cancelado</option>
+                                <option>Negado</option>
+                              </select>
+                            </div>
+                          </div>
+
+                          <div class="row mt-3">
+                            <div class="col-md-12">
+                              <button
+                                type="button"
+                                class="btn btn-success"
+                                style="max-width: 18vh"
+                              >
+                                Registrar
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="col-md-6">
+                      <div class="card">
+                        <div class="card-header">Lista Atrasados</div>
+                        <div class="card-body">
+                          <div class="row">
+                            <p class="placeholder-glow">
+                              <span class="placeholder col-12"></span>
+                            </p>
+                            <p class="placeholder-glow">
+                              <span class="placeholder col-12"></span>
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row mt-3">
+                    <div class="col-md-6">
+                      <div class="card">
+                        <div class="card-header">Lista Pendente</div>
+                        <div class="card-body">
+                          <div class="row">
+                            <p class="placeholder-glow">
+                              <span class="placeholder col-12"></span>
+                            </p>
+                            <p class="placeholder-glow">
+                              <span class="placeholder col-12"></span>
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="card">
+                        <div class="card-header">Lista Concluido</div>
+                        <div class="card-body">
+                          <div class="row">
+                            <p class="placeholder-glow">
+                              <span class="placeholder col-12"></span>
+                            </p>
+                            <p class="placeholder-glow">
+                              <span class="placeholder col-12"></span>
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </template>
+
         <template id="registroRelogioDePonto">
-          <div class="card text-bg-light mb-3" style="max-width: 100%;">
+          <div class="card text-bg-light mb-3" style="max-width: 100%">
             <div class="card-header">Extrato de Relógio de Ponto</div>
             <div class="card-body mb-3" id="fmr-registros">
               <div class="row">
@@ -888,18 +1049,43 @@
                   <div class="col-md-12">
                     <div class="row">
                       <div class="col-md-3">
-                        <label for="scColaborador">Colaborador</label>
-                        <select class="form-control scColaborador" name="scColaborador" id="scColaborador">
+                        <label for="scColaboradorRP">Colaborador</label>
+                        <select
+                          class="form-control scColaborador"
+                          name="scColaborador"
+                          onchange="extratirFuncao(this.id)"
+                          id="scColaboradorRP"
+                        >
                           <!-- Options preenchidas pelo JavaScript -->
                         </select>
                       </div>
                       <div class="col-md-3">
+                        <label for="dataExtratoPonto">Função</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="funcaoColab"
+                        />
+                      </div>
+
+                      <div class="col-md-3">
                         <label for="dataExtratoPonto">Data</label>
-                        <input type="date" class="form-control" name="dataExtratoPonto" id="dataExtratoPonto">
+                        <input
+                          type="date"
+                          class="form-control"
+                          onchange="verificarDataExtratoPonto()"
+                          name="dataExtratoPonto"
+                          id="dataExtratoPonto"
+                        />
                       </div>
                       <div class="col-md-3">
                         <label for="diaSemana">Dia</label>
-                        <input type="text" class="form-control" name="diaSemana" id="diaSemana">
+                        <input
+                          type="text"
+                          class="form-control"
+                          name="diaSemana"
+                          id="diaSemana"
+                        />
                       </div>
                       <div class="col-md-3">
                         <label for="trab">Trabalhou?</label>
@@ -910,82 +1096,204 @@
                       </div>
                       <div class="col-md-5 mt-3">
                         <label for="obs">Observações</label>
-                        <input type="text" class="form-control" name="obs" id="obs">
+                        <input
+                          type="textarea"
+                          class="form-control"
+                          name="obs"
+                          id="obs"
+                        />
                       </div>
                     </div>
                   </div>
                 </div>
-        
+
+                <div class="card shadow p-3 mb-2 bg-body-tertiary rounded">
+                  <div class="card shadow p-3 mb-2 bg-body-tertiary rounded">
+                    <div class="row">
+                      <div class="col-md-6">
+                        <label for="cargaHorario"> Carga Horária</label>
+                        <input
+                          type="time"
+                          class="form-control"
+                          name="totalCargaHorario"
+                          id="entrada1totalCargaHorarioPeriodo"
+                        />
+                      </div>
+                      <div class="col-md-6">
+                        <label for="totalCargaHorarioSabado">
+                          Carga Horária Sábado</label
+                        >
+                        <input
+                          type="time"
+                          class="form-control"
+                          name="totalCargaHorarioSabado"
+                          id="entrada1totalCargaHorarioSabado"
+                        />
+                      </div>
+                      <div class="col-md-2 mb-3">
+                        <label for="escalaRelogiodePonto">Escala</label>
+                        <select
+                          id="escalaRelogiodePonto"
+                          class="form-select scEscala"
+                          onchange="chamarEscala()"
+                        ></select>
+                      </div>
+                      <div class="col-md-2 mb-3">
+                        <label for="CargaRelogiodePonto">Carga horario</label>
+                        <select
+                          id="CargaRelogiodePonto"
+                          class="form-select"
+                        ></select>
+                      </div>
+                      <div class="col-md-2 mb-3">
+                        <label for="intervaloRelogiodePonto">Intervalo</label>
+                        <select
+                          id="intervaloRelogiodePonto"
+                          class="form-select"
+                        ></select>
+                      </div>
+                    </div>
+                  </div>
                   <div class="card shadow p-3 mb-2 bg-body-tertiary rounded">
                     <div class="row">
                       <div class="col-md-6">
                         <label for="entrada1Periodo">Entrada 1º Período</label>
-                        <input type="time" class="form-control" name="entrada1Periodo" id="entrada1Periodo">
+                        <input
+                          type="time"
+                          class="form-control"
+                          name="entrada1Periodo"
+                          id="entrada1Periodo"
+                        />
                       </div>
                       <div class="col-md-6">
                         <label for="saida1Periodo">Saída 1º Período</label>
-                        <input type="time" class="form-control" name="saida1Periodo" id="saida1Periodo">
+                        <input
+                          type="time"
+                          class="form-control"
+                          name="saida1Periodo"
+                          id="saida1Periodo"
+                        />
                       </div>
                     </div>
-        
+
                     <div class="row">
                       <div class="col-md-6">
                         <label for="entrada2Periodo">Entrada 2º Período</label>
-                        <input type="time" class="form-control" name="entrada2Periodo" id="entrada2Periodo">
+                        <input
+                          type="time"
+                          class="form-control"
+                          name="entrada2Periodo"
+                          id="entrada2Periodo"
+                        />
                       </div>
+
                       <div class="col-md-6">
                         <label for="saida2Periodo">Saída 2º Período</label>
-                        <input type="time" class="form-control" name="saida2Periodo" id="saida2Periodo">
-                      </div>
-                    </div>
-        
-                    <div class="row">
-                      <div class="col-md-3">
-                        <label for="horasTrab">Horas Trabalhadas</label>
-                        <input type="text" class="form-control" name="horasTrab" id="horasTrab">
-                      </div>
-                      <div class="col-md-3">
-                        <label for="horasDevidas">Horas Devidas</label>
-                        <input type="text" class="form-control" name="horasDevidas" id="horasDevidas">
-                      </div>
-                      <div class="col-md-3">
-                        <label for="horasDebito">Horas Débito</label>
-                        <input type="text" class="form-control" name="horasDebito" id="horasDebito">
-                      </div>
-                      <div class="col-md-3">
-                        <label for="horasExtras">Horas Extras</label>
-                        <input type="text" class="form-control" name="horasExtras" id="horasExtras">
-                      </div>
-                    </div>
-        
-                    <div class="row">
-                      <div class="col-md-6">
-                        <label for="acima2Horas">Acima de 2 horas</label>
-                        <input type="text" class="form-control" name="acima2Horas" id="acima2Horas">
-                      </div>
-                      <div class="col-md-6">
-                        <label for="adicNoturno">Adicional Noturno</label>
-                        <input type="text" class="form-control" name="adicNoturno" id="adicNoturno">
+                        <input
+                          type="time"
+                          class="form-control"
+                          name="saida2Periodo"
+                          id="saida2Periodo"
+                        />
                       </div>
                     </div>
                   </div>
-        
-                  <div class="row mt-2">
-                    <div class="col-sm-1 m-3">
-                      <button type="button" class="btn btn-success">Registrar</button>
+
+                  <div class="row">
+                    <div class="col-md-3">
+                      <label for="horasTrab">Horas Trabalhadas</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        name="horasTrab"
+                        id="horasTrab"
+                      />
                     </div>
-                    <div class="col-sm-1 m-3">
-                      <button type="button" class="btn btn-success">Arquivar</button>
+                    <div class="col-md-3">
+                      <label for="horasDevidas">Horas Devidas</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        name="horasDevidas"
+                        id="horasDevidas"
+                      />
                     </div>
-                    <div class="col-sm-1 m-3">
-                      <button type="button" class="btn btn-success">Excluir Horário</button>
+                    <div class="col-md-3">
+                      <label for="horasDebito">Horas Débito</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        name="horasDebito"
+                        id="horasDebito"
+                      />
                     </div>
-                    <div class="col-sm-1 m-3">
-                      <button type="button" class="btn btn-success">Alterar</button>
+                    <div class="col-md-3">
+                      <label for="horasExtras">Horas Extras</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        name="horasExtras"
+                        id="horasExtras"
+                      />
                     </div>
                   </div>
-                
-        
+
+                  <div class="row">
+                    <div class="col-md-6">
+                      <label for="acima2Horas">Acima de 2 horas</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        name="acima2Horas"
+                        id="acima2Horas"
+                      />
+                    </div>
+                    <div class="col-md-6">
+                      <label for="adicNoturno">Adicional Noturno</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        name="adicNoturno"
+                        id="adicNoturno"
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row mt-2">
+                  <div class="col-sm-1 m-3">
+                    <button type="button" class="btn btn-success">
+                      Registrar
+                    </button>
+                  </div>
+                  <div class="col-sm-1 m-3">
+                    <button type="button" class="btn btn-success">
+                      Arquivar
+                    </button>
+                  </div>
+                  <div class="col-sm-1 m-3">
+                    <button type="button" class="btn btn-success">
+                      Excluir Horário
+                    </button>
+                  </div>
+                  <div class="col-sm-1 m-3">
+                    <button type="button" class="btn btn-success">
+                      Alterar
+                    </button>
+                  </div>
+                  <div class="col-sm-1 m-3">
+                    <button
+                      type="button"
+                      id="openModalBtn"
+                      class="btn btn-primary"
+                      data-bs-toggle="modal"
+                      data-bs-target="#exampleModal"
+                    >
+                      Open modal
+                    </button>
+                  </div>
+                </div>
+
                 <div class="row">
                   <div class="col-md-12 mt-5">
                     <div class="card">
@@ -1026,74 +1334,74 @@
             </div>
           </div>
         </template>
-        
-      
-      
 
-
-
-        <template id="div-ferias">
+        <template id="registroferias">
           <div class="card">
             <div class="card-body">
-              <div id="feris-box">
-                <label>Relatorio de ferias</label>
-                <div class="box-ferias-cabecalho">
-                  <span>Agendar ferias prevista</span>
-                  <div>
-                    <label for="input-DataAdmissao-AgFerias"
+              <div id="ferias-box">
+                <h2 class="mb-4">Relatório de Férias</h2>
+
+                <div class="row mb-4">
+                  <span class="fw-bold">Agendar Férias</span>
+
+                  <div class="col-md-4 mb-3">
+                    <label for="input-DataAdmissao-AgFerias" class="form-label"
                       >Data Admissão</label
                     >
                     <input
                       type="text"
+                      class="form-control"
                       id="input-DataAdmissao-AgFerias"
                       name="input-DataAdmissao-AgFerias"
                     />
                   </div>
+                  <div class="col-md-4 mb-3">
+                    <label for="nomecolaboradorFuncao">Colaborador</label>
+                    <select
+                      id="nomecolaboradorRegFerias"
+                      class="form-select scColaborador"
+                    >
+                      <option></option>
+                    </select>
+                  </div>
 
-                  <div class="inat" style="display: none">
-                    <label for="input-ID-AgFerias">ID:</label>
-                    <input type="text" id="input-ID-AgFerias" />
-                  </div>
-                  <div>
-                    <label for="inputAgFerias">Colaborador</label>
-                    <input
-                      type="text"
-                      id="inputAgFerias"
-                      name="inputAgFerias"
-                    />
-                  </div>
-                  <div>
-                    <label for="input-dataFerias-AgFerias"
-                      >Data agendamento</label
+                  <div class="col-md-4 mb-3">
+                    <label for="input-dataFerias-AgFerias" class="form-label"
+                      >Data Agendamento</label
                     >
                     <input
                       type="date"
+                      class="form-control"
                       id="input-dataFerias-AgFerias"
                       name="input-dataFerias-AgFerias"
                     />
                   </div>
 
-                  <div>
-                    <button id="bttAgFerias" onclick="agendarFerias()">
+                  <div class="col-md-4 mb-3">
+                    <button
+                      id="bttAgFerias"
+                      class="btn btn-primary mt-4"
+                      onclick="agendarFerias()"
+                    >
                       Agendar
                     </button>
                   </div>
                 </div>
-                <div id="div-ferias" class="box"></div>
+
                 <table
                   id="tb-extrato-ferias"
-                  class="display nowrap"
+                  class="table table-striped table-bordered display nowrap"
                   style="width: 100%"
                 >
                   <thead>
                     <tr>
-                      <th>IDregistros</th>
+                      <th>ID Registros</th>
                       <th>Nome</th>
                       <th>CPF</th>
-                      <th>Data de Admissao</th>
+                      <th>Data de Admissão</th>
                       <th>Cargo</th>
-                      <th>Salario</th>
-                      <th>Data prevista</th>
+                      <th>Salário</th>
+                      <th>Data Prevista</th>
                     </tr>
                   </thead>
                   <tbody></tbody>
@@ -1107,7 +1415,7 @@
           <div id="forms">
             <div class="card">
               <div class="card-body"></div>
-              <h1>Cadastro de usuario</h1>
+              <h1>Cadastro de Usuario</h1>
               <ul class="nav nav-pills card-header-pills">
                 <li class="nav-item">
                   <a
@@ -1117,7 +1425,6 @@
                     >Pasta Doscs Registros</a
                   >
                 </li>
-
                 <li class="nav-item">
                   <a
                     class="nav-link"
@@ -1172,6 +1479,7 @@
                             name="txt-cpf"
                             placeholder="000.000.000-00"
                             required
+                            pattern="\d{3}\.\d{3}\.\d{3}-\d{2}"
                           />
                         </div>
                       </div>
@@ -1379,101 +1687,101 @@
                     <div class="row g-4">
                       <div class="col-md-2 mb-3">
                         <div class="form-group">
-                          <label for="txt-dataAdmissao">Data de Admissão</label>
+                          <label for="txt-matricula">Matricula</label>
+                          <input
+                            type="text"
+                            class="form-control"
+                            id="txt-matricula"
+                            name="txt-matricula"
+                            placeholder="Matricula"
+                          />
+                        </div>
+                      </div>
+                      <div class="col-md-2 mb-3">
+                        <div class="form-group">
+                          <label for="txt-funcao">Função</label>
+                          <input
+                            type="text"
+                            class="form-control"
+                            id="txt-funcao"
+                            name="txt-funcao"
+                            placeholder="Função"
+                          />
+                        </div>
+                      </div>
+                      <div class="col-md-2 mb-3">
+                        <div class="form-group">
+                          <label for="txt-admissao">Admissão</label>
                           <input
                             type="date"
                             class="form-control"
-                            id="txt-dataAdmissao"
-                            name="txt-dataAdmissao"
+                            id="txt-admissao"
+                            name="txt-admissao"
                           />
                         </div>
                       </div>
-                      <div class="col-md-3 mb-3">
+                      <div class="col-md-2 mb-3">
                         <div class="form-group">
-                          <label for="txt-salario">Salário</label>
+                          <label for="txt-demitido">Demissão</label>
                           <input
-                            type="text"
+                            type="date"
                             class="form-control"
-                            id="txt-salario"
-                            name="txt-salario"
-                            placeholder="Salário"
+                            id="txt-demitido"
+                            name="txt-demitido"
                           />
                         </div>
                       </div>
-                      <div class="col-md-3 mb-3">
+                      <div class="col-md-2 mb-3">
                         <div class="form-group">
-                          <label for="txt-cargo">Cargo</label>
+                          <label for="txt-nis">NIS</label>
                           <input
                             type="text"
                             class="form-control"
-                            id="txt-cargo"
-                            name="txt-cargo"
-                            placeholder="Cargo"
+                            id="txt-nis"
+                            name="txt-nis"
+                            placeholder="NIS"
                           />
                         </div>
                       </div>
-                      <div class="col-md-3 mb-3">
+                      <div class="col-md-2 mb-3">
                         <div class="form-group">
-                          <label for="txt-ajudaTransporte"
-                            >Ajuda de Transporte</label
-                          >
+                          <label for="txt-serieCtps">CTPS Serie</label>
                           <input
                             type="text"
                             class="form-control"
-                            id="txt-ajudaTransporte"
-                            name="txt-ajudaTransporte"
-                            placeholder="Ajuda de Transporte"
-                          />
-                        </div>
-                      </div>
-                      <div class="col-md-3 mb-3">
-                        <div class="form-group">
-                          <label for="txt-ajudaCusto">Ajuda de Custo</label>
-                          <input
-                            type="text"
-                            class="form-control"
-                            id="txt-ajudaCusto"
-                            name="txt-ajudaCusto"
-                            placeholder="Ajuda de Custo"
-                          />
-                        </div>
-                      </div>
-                      <div class="col-md-3 mb-3">
-                        <div class="form-group">
-                          <label for="txt-bonificacao">Bonificação</label>
-                          <input
-                            type="text"
-                            class="form-control"
-                            id="txt-bonificacao"
-                            name="txt-bonificacao"
-                            placeholder="Bonificação"
-                          />
-                        </div>
-                      </div>
-                      <div class="col-md-3 mb-3">
-                        <div class="form-group">
-                          <label for="txt-descontos">Descontos</label>
-                          <input
-                            type="text"
-                            class="form-control"
-                            id="txt-descontos"
-                            name="txt-descontos"
-                            placeholder="Descontos"
+                            id="txt-serieCtps"
+                            name="txt-serieCtps"
+                            placeholder="Serie"
                           />
                         </div>
                       </div>
                     </div>
-                  </div>
-                </div>
-
-                <!-- Informações Bancárias -->
-                <div class="card text-bg-light mb-3">
-                  <div class="card-header">
-                    <h5>Informações Bancárias</h5>
-                  </div>
-                  <div class="card-body">
                     <div class="row g-4">
-                      <div class="col-md-3 mb-3">
+                      <div class="col-md-2 mb-3">
+                        <div class="form-group">
+                          <label for="txt-numeroCtps">CTPS Numero</label>
+                          <input
+                            type="text"
+                            class="form-control"
+                            id="txt-numeroCtps"
+                            name="txt-numeroCtps"
+                            placeholder="CTPS Numero"
+                          />
+                        </div>
+                      </div>
+                      <div class="col-md-2 mb-3">
+                        <div class="form-group">
+                          <label for="txt-pisPasep">PIS PASEP</label>
+                          <input
+                            type="text"
+                            class="form-control"
+                            id="txt-pisPasep"
+                            name="txt-pisPasep"
+                            placeholder="PIS PASEP"
+                          />
+                        </div>
+                      </div>
+                      <div class="col-md-2 mb-3">
                         <div class="form-group">
                           <label for="txt-banco">Banco</label>
                           <input
@@ -1485,19 +1793,7 @@
                           />
                         </div>
                       </div>
-                      <div class="col-md-3 mb-3">
-                        <div class="form-group">
-                          <label for="txt-agencia">Agência</label>
-                          <input
-                            type="text"
-                            class="form-control"
-                            id="txt-agencia"
-                            name="txt-agencia"
-                            placeholder="Agência"
-                          />
-                        </div>
-                      </div>
-                      <div class="col-md-3 mb-3">
+                      <div class="col-md-2 mb-3">
                         <div class="form-group">
                           <label for="txt-conta">Conta</label>
                           <input
@@ -1509,15 +1805,15 @@
                           />
                         </div>
                       </div>
-                      <div class="col-md-3 mb-3">
+                      <div class="col-md-2 mb-3">
                         <div class="form-group">
-                          <label for="txt-tipoConta">Tipo de Conta</label>
+                          <label for="txt-agencia">Agencia</label>
                           <input
                             type="text"
                             class="form-control"
-                            id="txt-tipoConta"
-                            name="txt-tipoConta"
-                            placeholder="Tipo de Conta"
+                            id="txt-agencia"
+                            name="txt-agencia"
+                            placeholder="Agencia"
                           />
                         </div>
                       </div>
@@ -1525,61 +1821,23 @@
                   </div>
                 </div>
 
-                <!-- Informações de Contato -->
-                <div class="card text-bg-light mb-3">
-                  <div class="card-header">
-                    <h5>Informações de Contato</h5>
+                <div class="row mb-4">
+                  <div class="col-md-12 text-end">
+                    <button type="submit" class="btn btn-primary">
+                      Enviar
+                      <span
+                        class="spinner-border spinner-border-sm d-none"
+                        role="status"
+                        aria-hidden="true"
+                      ></span>
+                    </button>
                   </div>
-                  <div class="card-body">
-                    <div class="row g-4">
-                      <div class="col-md-3 mb-3">
-                        <div class="form-group">
-                          <label for="txt-telefone">Telefone</label>
-                          <input
-                            type="text"
-                            class="form-control"
-                            id="txt-telefone"
-                            name="txt-telefone"
-                            placeholder="Telefone"
-                          />
-                        </div>
-                      </div>
-                      <div class="col-md-3 mb-3">
-                        <div class="form-group">
-                          <label for="txt-celular">Celular</label>
-                          <input
-                            type="text"
-                            class="form-control"
-                            id="txt-celular"
-                            name="txt-celular"
-                            placeholder="Celular"
-                          />
-                        </div>
-                      </div>
-                      <div class="col-md-3 mb-3">
-                        <div class="form-group">
-                          <label for="txt-email">E-mail</label>
-                          <input
-                            type="email"
-                            class="form-control"
-                            id="txt-email"
-                            name="txt-email"
-                            placeholder="E-mail"
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <!-- Botão de Envio -->
-                <div class="mb-3">
-                  <button type="submit" class="btn btn-primary">Enviar</button>
                 </div>
               </div>
             </form>
           </div>
         </template>
+
         <template id="cadastroDeFuncao">
           <div class="card">
             <div class="card-body">
@@ -1686,17 +1944,113 @@
                               <label for="nomecolaboradorFuncao"
                                 >Colaborador</label
                               >
-                              <select id="nomecolaboradorFuncao" class="scColaborador">
+                              <select
+                                id="nomecolaboradorFuncao"
+                                class="scColaborador"
+                              >
                                 <option></option>
                               </select>
                             </div>
                           </div>
                           <div class="col-md-6 mb-3">
                             <div class="form-group">
-                              <label for="FunçãocolaboradorFuncao"
+                              <label for="FuncaocolaboradorFuncao"
                                 >Função</label
                               >
-                              <select id="FunçãocolaboradorFuncao">
+                              <select id="FuncaocolaboradorFuncao">
+                                <option></option>
+                              </select>
+                            </div>
+                          </div>
+                          <div class="row g-4">
+                            <div class="col-md-6 mb-3">
+                              <a
+                                class="btn btn-primary btn-sm"
+                                href="#"
+                                role="button"
+                              >
+                                Alterar</a
+                              >
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="card mt-4">
+                    <div class="card-header">
+                      <h5>Colaboradores Funções</h5>
+                    </div>
+                    <div class="card-body">
+                      <div class="container">
+                        <div class="row g-4">
+                          <div class="col-md-6 mb-3">
+                            <div class="form-group">
+                              <table
+                                class="table table-striped table-inverse table-responsive"
+                              >
+                                <thead class="thead-inverse">
+                                  <tr>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <tr>
+                                    <td scope="row"></td>
+                                    <td></td>
+                                    <td></td>
+                                  </tr>
+                                  <tr>
+                                    <td scope="row"></td>
+                                    <td></td>
+                                    <td></td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </template>
+        <template id="CadastroEscala">
+          <div class="card">
+            <div class="card-body">
+              <h1 class="card-title">Cadastro de Escalas</h1>
+              <div class="row">
+                <div class="col">
+                  <div class="card mt-4">
+                    <div class="card-body">
+                      <div class="container">
+                        <div class="row g-4">
+                          <div class="col-md-6 mb-3">
+                            <div class="form-group">
+                              <label for="nomecolaboradorEscala"
+                                >Colaborador</label
+                              >
+                              <select
+                                id="nomecolaboradorEscala"
+                                class="scColaborador"
+                              >
+                                <option></option>
+                              </select>
+                            </div>
+                          </div>
+                          <div class="col-md-6 mb-3">
+                            <div class="form-group">
+                              <label for="FuncaocolaboradorFuncao"
+                                >Função</label
+                              >
+                              <select class="FuncaocolaboradorFuncao">
                                 <option></option>
                               </select>
                             </div>
@@ -1763,12 +2117,69 @@
         </template>
 
         <!-- Conteúdo que será carregado dinamicamente -->
-        <div id="conteudo">
+        <div id="conteudo"></div>
       </div>
       <!-- Div Auxiliares -->
-
-
-
+      <div
+        class="modal fade"
+        id="exampleModal"
+        tabindex="-1"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="exampleModalLabel">
+                New message
+              </h1>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body">
+              <form>
+                <div class="mb-3">
+                  <label for="recipient-name" class="col-form-label"
+                    >Recipient:</label
+                  >
+                  <input type="text" class="form-control" id="recipient-name" />
+                </div>
+                <div class="mb-3">
+                  <label for="message-text" class="col-form-label"
+                    >Message:</label
+                  >
+                  <textarea class="form-control" id="message-text"></textarea>
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >
+                Close
+              </button>
+              <button type="button" class="btn btn-primary">
+                Send message
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Spinner Overlay -->
+      <div id="spinner-overlay" class="spinner-overlay d-none">
+        <div class="d-flex justify-content-center align-items-center h-100">
+          <div class="spinner-border" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <script id="MetodoPost">
       let urlAjax =
@@ -1799,23 +2210,27 @@
         const paginaB = pagina;
         switch (paginaB) {
           case "registrosDOC":
-          carregarColaboradores();
-          case "registroColaboradores":
-          carregarColaboradores();
+            carregarColaboradores();
+          case "registroPagamentosColaboradores":
+            carregarColaboradores();
           case "registroRelogioDePonto":
-          carregarColaboradores();
+            carregarColaboradores();
+            carregaEscala();
           case "cadastroDeFuncao":
-          carregarColaboradores();
-          
-          
-            
+            carregarColaboradores();
+          case "registroferias":
+            carregarColaboradores();
+          case "registroPagamentosAdiantamento":
+            carregarColaboradores();
+          case "CadastroEscala":
+            carregarColaboradores();
+            carregarFuncao();
+
             break;
-        
+
           default:
             break;
         }
-
-        
       }
     </script>
     <script id="login">
@@ -1861,7 +2276,7 @@
             password: password,
           }, // Envia os dados diretamente
           success: function (response) {
-            console.log("Sucesso", JSON.stringify(response));
+            // console.log("Sucesso", JSON.stringify(response));
 
             if (response.usuarioAutenticado) {
               alert("Usuário autenticado com sucesso.");
@@ -2027,7 +2442,7 @@
               qualFuncao: "salvarDadosNoSheet",
             }, // Envia os dados diretamente
             success: function (response) {
-              console.log("Sucesso", JSON.stringify(response));
+              // console.log("Sucesso", JSON.stringify(response));
 
               if (response) {
                 alert("Dados salvos com sucesso");
@@ -2174,67 +2589,370 @@
           .fmrRegistroColabor();
       }
     </script>
-<script id="function aux">
-  function carregarColaboradores() {
-    $.ajax({
-      type: "POST",
-      url: urlAjax,
-      data: {
-        qualFuncao: "carregarColaboradores",
-      }, // Envia os dados diretamente
-      success: function (response) {
-        console.log("Sucesso", JSON.stringify(response));
-        if (response.situacao) {
-          
-          const colaboradores = response.colaboradores;
+    <script id="function aux">
+      // Função para mostrar o spinner
+      function mostrarSpinner() {
+        document.getElementById("spinner-overlay").classList.remove("d-none");
+      }
 
-          // Seleciona todos os <select> com a classe 'scColaborador'
-          const selects = document.querySelectorAll('.scColaborador');
+      // Função para esconder o spinner
+      function esconderSpinner() {
+        document.getElementById("spinner-overlay").classList.add("d-none");
+      }
 
-          // Limpa as opções existentes
-          selects.forEach(select => {
-            select.innerHTML = '';
-          });
+      function carregarColaboradores() {
+        mostrarSpinner();
+        $.ajax({
+          type: "POST",
+          url: urlAjax,
+          data: {
+            qualFuncao: "carregarColaboradores",
+          },
+          success: function (response) {
+            esconderSpinner();
+            if (response.situacao) {
+              let colaboradores = response.colaboradores;
 
-          // Adiciona uma opção vazia no início
-          selects.forEach(select => {
-            let option = document.createElement('option');
-            option.text = '';
-            option.value = '';
-            select.add(option);
-          });
+              // Ordena colaboradores por nome em ordem alfabética
+              colaboradores.sort((a, b) => a.nome.localeCompare(b.nome));
 
-          // Preenche os selects com as novas opções
-          colaboradores.forEach(colaborador => {
-            selects.forEach(select => {
-              let option = document.createElement('option');
-              option.text = colaborador.nome; // Supondo que 'nome' seja uma propriedade do colaborador
-              option.value = colaborador.id; // Supondo que 'id' seja uma propriedade do colaborador
-              select.add(option);
-            });
-          });
-        } else {
-          alert("Erro de retorno");
+              // Seleciona todos os <select> com a classe 'scColaborador'
+              const selects = document.querySelectorAll(".scColaborador");
+
+              // Limpa as opções existentes
+              selects.forEach((select) => {
+                select.innerHTML = "";
+              });
+
+              // Adiciona uma opção vazia no início
+              selects.forEach((select) => {
+                let option = document.createElement("option");
+                option.text = "";
+                option.value = "";
+                select.add(option);
+              });
+
+              // Preenche os selects com as novas opções
+              colaboradores.forEach((colaborador) => {
+                selects.forEach((select) => {
+                  let option = document.createElement("option");
+                  option.text = colaborador.nome; // Supondo que 'nome' seja uma propriedade do colaborador
+                  option.value = colaborador.id; // Supondo que 'id' seja uma propriedade do colaborador
+                  select.add(option);
+                });
+              });
+            } else {
+              alert("Erro de retorno");
+            }
+          },
+          error: function (error) {
+            esconderSpinner();
+            console.error("Erro ==>", error);
+          },
+        });
+      }
+
+      function carregarFuncao() {
+        mostrarSpinner();
+        $.ajax({
+          type: "POST",
+          url: urlAjax,
+          data: {
+            qualFuncao: "carregarFuncao",
+          }, // Envia os dados diretamente
+          success: function (response) {
+            esconderSpinner();
+            // console.log("Sucesso", JSON.stringify(response));
+            if (response.situacao) {
+              const funcoes = response.colaboradores;
+
+              // Seleciona todos os <select> com a classe 'scColaborador'
+              const selects = document.querySelectorAll(
+                ".FuncaocolaboradorFuncao"
+              );
+
+              // Limpa as opções existentes
+              selects.forEach((select) => {
+                select.innerHTML = "";
+              });
+
+              // Adiciona uma opção vazia no início
+              selects.forEach((select) => {
+                let option = document.createElement("option");
+                option.text = "";
+                option.value = "";
+                select.add(option);
+              });
+
+              // Preenche os selects com as novas opções
+              colaboradores.forEach((colaborador) => {
+                selects.forEach((select) => {
+                  let option = document.createElement("option");
+                  option.text = colaborador.descricao; // Supondo que 'nome' seja uma propriedade do colaborador
+                  option.value = colaborador.id; // Supondo que 'id' seja uma propriedade do colaborador
+                  select.add(option);
+                });
+              });
+            } else {
+              alert("Erro de retorno");
+            }
+          },
+          error: function (error) {
+            esconderSpinner();
+            console.error("Erro ==>", error);
+          },
+        });
+      }
+
+      function extratirFuncao(input) {
+        mostrarSpinner();
+        // Selecionar o elemento select pelo ID
+        let selectElement = document.getElementById(input);
+
+        // Obter o valor selecionado
+        let nomeInput = selectElement.value;
+
+        // Verificar se nenhum valor foi selecionado
+        if (!nomeInput) {
+          // Limpar os campos se nenhum valor estiver selecionado
+          if (input === "scColaboradorRP") {
+            const funcaoInput = document.getElementById("funcaoColab");
+            const scalaInput = document.getElementById("escalaRelogiodePonto");
+
+            const cHorario = document.getElementById("CargaRelogiodePonto");
+            const cHorariointer = document.getElementById(
+              "intervaloRelogiodePonto"
+            );
+
+            // Limpar os valores dos campos
+            funcaoInput.value = "";
+            scalaInput.value = "";
+            cHorario.value = "";
+            cHorariointer.value = "";
+          }
+          return; // Saia da função se não houver valor
         }
-      },
-      error: function (error) {
-        console.error("Erro ==>", error);
-      },
-    });
-  }
 
-function toast() {
-  const toastTrigger = document.getElementById('liveToastBtn')
-  const toastLiveExample = document.getElementById('liveToast')
+        // Fazer a requisição AJAX se um valor foi selecionado
+        $.ajax({
+          type: "POST",
+          url: urlAjax,
+          data: {
+            qualFuncao: "carregarExtrairFuncao",
+            nome: nomeInput,
+          },
+          success: function (response) {
+            esconderSpinner();
+            if (response.situacao) {
+              const funcao = response.funcao;
+              const scala = response.scala;
 
-  if (toastTrigger) {
-    const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample)
-    toastTrigger.addEventListener('click', () => {
-      toastBootstrap.show()
-    })
-  }
-  }
-</script>
+              if (input === "scColaboradorRP") {
+                const funcaoInput = document.getElementById("funcaoColab");
+                const scalaInput = document.getElementById(
+                  "escalaRelogiodePonto"
+                );
 
+                // Atualiza o valor do input com a função do colaborador
+                funcaoInput.value = funcao;
+                scalaInput.value = scala;
+                chamarEscala();
+              }
+            } else {
+              alert("Erro de retorno");
+            }
+          },
+          error: function (error) {
+            esconderSpinner();
+            console.error("Erro ==>", error);
+          },
+        });
+      }
+
+      // function executarAcaoComData(data, inputId) {
+      //   const diasDaSemana = [
+      //     "Domingo",
+      //     "Segunda-feira",
+      //     "Terça-feira",
+      //     "Quarta-feira",
+      //     "Quinta-feira",
+      //     "Sexta-feira",
+      //     "Sábado",
+      //   ];
+      //   document.getElementById(inputId).value = diasDaSemana[data.getDay()];
+      // }
+
+      function executarAcaoComData(data, inputId) {
+        // Obter o dia da semana atual
+        const diasDaSemana = [
+          "Domingo",
+          "Segunda-feira",
+          "Terça-feira",
+          "Quarta-feira",
+          "Quinta-feira",
+          "Sexta-feira",
+          "Sábado",
+        ];
+
+        // Fazer a requisição AJAX para obter os dados
+        $.ajax({
+          type: "POST",
+          url: urlAjax,
+          data: {
+            qualFuncao: "carregarScalaDias",
+          },
+          success: function (response) {
+            if (response.situacao) {
+              // TODO FICAR
+              // Parsear dados JSON se necessário
+              const dados = response.dados; // Supondo que response.dados é o JSON
+              console.log("response==>", dados["semanal"]);
+              console.log("response data==>", data);
+              console.log("response inputId==>", inputId);
+              // processarDadosSemanal(userData)
+              // Definir o valor no input correto
+              if (
+                [
+                  "Segunda-feira",
+                  "Terça-feira",
+                  "Quarta-feira",
+                  "Quinta-feira",
+                  "Sexta-feira",
+                ].includes(diaAtual)
+              ) {
+                document.getElementById(inputId).value = valorHora;
+              } else if (["Sábado", "Domingo"].includes(diaAtual)) {
+                document.getElementById(inputId).value = valorHora;
+              }
+            } else {
+              alert("Erro de retorno");
+            }
+          },
+          error: function (error) {
+            console.error("Erro Escala ==>", error);
+          },
+        });
+      }
+    </script>
+
+    <!-- Extrato de Relógio de Ponto -->
+    <script>
+      function verificarDataExtratoPonto() {
+        const inputData = document.getElementById("dataExtratoPonto");
+        const dataSelecionada = new Date(inputData.value + "T12:00:00");
+        if (inputData.value) {
+          executarAcaoComData(dataSelecionada, "diaSemana");
+        }
+      }
+      function carregaEscala() {
+        $.ajax({
+          type: "POST",
+          url: urlAjax,
+          data: {
+            qualFuncao: "carregarEscala",
+          }, // Envia os dados diretamente
+          success: function (response) {
+            if (response.situacao) {
+              // const escala = response.escala;
+              const escala = response.dados;
+              localStorage.setItem("listaEscala", JSON.stringify(escala));
+              // Seleciona <select> com ao id 'escalaRelogiodePonto'
+              const select = document.getElementById("escalaRelogiodePonto");
+              // Adiciona uma opção vazia no início
+              let option = document.createElement("option");
+              option.text = "";
+              option.value = "";
+              select.add(option);
+
+              // Preenche o select com as novas opções
+              escala.forEach((escalaItem) => {
+                let option = document.createElement("option");
+                option.text = escalaItem.nome;
+                option.value = escalaItem.id;
+                select.add(option);
+              });
+            } else {
+              alert("Erro de retorno");
+            }
+          },
+          error: function (error) {
+            console.error("Erro Escala ==>", error);
+          },
+        });
+      }
+
+      function chamarEscala() {
+        let userData = JSON.parse(localStorage.getItem("listaEscala"));
+
+        if (!userData) {
+          alert("Lista não encontrada");
+          return;
+        }
+        processarDadosSemanal(userData);
+
+        // Obtém o valor selecionado no select escalaRelogiodePonto
+        const escalaSelect = document.getElementById("escalaRelogiodePonto");
+        const selectedValue = escalaSelect.value;
+
+        // Encontra o item correspondente no userData
+        const selectedEscala = userData.find(
+          (escala) => escala.id == selectedValue
+        );
+
+        if (selectedEscala) {
+          // Preenche o select de CargaRelogiodePonto
+          const cargaSelect = document.getElementById("CargaRelogiodePonto");
+          cargaSelect.innerHTML = ""; // Limpa as opções anteriores
+          let optionCarga = document.createElement("option");
+          optionCarga.text = selectedEscala.horario;
+          optionCarga.value = selectedEscala.horario;
+          cargaSelect.add(optionCarga);
+
+          // Preenche o select de intervaloRelogiodePonto
+          const intervaloSelect = document.getElementById(
+            "intervaloRelogiodePonto"
+          );
+          intervaloSelect.innerHTML = ""; // Limpa as opções anteriores
+          let optionIntervalo = document.createElement("option");
+          optionIntervalo.text = selectedEscala.horarioIntervalo;
+          optionIntervalo.value = selectedEscala.horarioIntervalo;
+          intervaloSelect.add(optionIntervalo);
+        } else {
+          alert("Escala não encontrada");
+        }
+      }
+
+      function processarDadosSemanal(dados) {
+        // Itera sobre os dados recebidos
+        dados.forEach((dado) => {
+          // Faz o parsing da string JSON em um objeto JavaScript
+          try {
+            // Corrige o formato da string JSON
+            let jsonString = dado["semanal"].replace(/""/g, '"'); // Corrige as aspas duplicadas
+            jsonString = jsonString.replace(/(\w+):/g, '"$1":'); // Adiciona aspas às chaves
+            jsonString = jsonString.replace(/(\d{2}:\d{2})/g, '"$1"'); // Adiciona aspas aos valores de horário
+
+            // Remove espaços e quebras de linha extras, e faz o parse
+            let semanalData = JSON.parse(jsonString);
+
+            console.log("Dados semanais:", semanalData);
+
+            // Verifica se o parsing foi bem-sucedido e se semanalData é um objeto
+            if (typeof semanalData === "object") {
+              console.log(`Dados semanais para ID ${dado.id}:`);
+              for (const [dia, horario] of Object.entries(semanalData)) {
+                console.log(`${dia}: ${horario}`);
+              }
+            } else {
+              console.error("Formato inválido para a coluna semanal.");
+            }
+          } catch (e) {
+            console.error("Erro ao processar dados semanais:", e);
+          }
+        });
+      }
+    </script>
+
+    <!-- Eliminar ListaEscala no LocalStore -->
   </body>
 </html>
