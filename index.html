@@ -1529,7 +1529,7 @@
           </div>
         </div>
       </template>
-      <!-- <template id="registroVT"> -->
+      <template id="registroVT">
       <div class="card">
         <div class="card-body">
           <h1 class="card-title">Registro de Pagamento VT</h1>
@@ -1611,7 +1611,7 @@
             <!-- Tabela de Pagamentos Salvos -->
             <div class="col-md-6">
               <div class="card mt-4">
-                <div class="card-body w-100" >
+                <div class="card-body w-100">
                   <h4 class="card-title">Pagamentos Salvos</h4>
                   <table class="table table-striped table-bordered nowrap" width="100%" id="tablePagamentos">
                     <thead>
@@ -1634,7 +1634,7 @@
         </div>
       </div>
 
-      <!-- </template> -->
+      </template>
 
       <!-- Conteúdo que será carregado dinamicamente -->
       <div id="conteudo"></div>
@@ -2757,192 +2757,192 @@
     }
 
     function toFiilIntabePGVT(tabela) { // Preencher tabela PG VT
-  mostrarSpinner();
-  let tabelaID;
+      mostrarSpinner();
+      let tabelaID;
 
-  switch (tabela) {
-    case "tabelaPagamentos":
-      tabelaID = "tabelaPagamentos";
-      break;
-    default:
-      tabelaID = "tabelaPagamentos";
-  }
-  new DataTable(tabelaID);
+      switch (tabela) {
+        case "tabelaPagamentos":
+          tabelaID = "tabelaPagamentos";
+          break;
+        default:
+          tabelaID = "tabelaPagamentos";
+      }
+      new DataTable(tabelaID);
 
-  const tableBody = document.getElementById(tabelaID);
+      const tableBody = document.getElementById(tabelaID);
 
-  $.ajax({
-    type: "POST",
-    url: urlAjax,
-    data: {
-      qualFuncao: "carregarPGVT",
-    },
-    success: function (response) {
-      esconderSpinner();
-      if (response.situacao) {
-        // Limpar tabela antes de preencher
-        tableBody.innerHTML = "";
+      $.ajax({
+        type: "POST",
+        url: urlAjax,
+        data: {
+          qualFuncao: "carregarPGVT",
+        },
+        success: function (response) {
+          esconderSpinner();
+          if (response.situacao) {
+            // Limpar tabela antes de preencher
+            tableBody.innerHTML = "";
 
-        // Preencher tabela com os dados retornados
-        response.dados.forEach(dado => {
-          const row = document.createElement("tr");
+            // Preencher tabela com os dados retornados
+            response.dados.forEach(dado => {
+              const row = document.createElement("tr");
 
-          const cellID = document.createElement("td");
+              const cellID = document.createElement("td");
               cellID.textContent = dado.id;
               row.appendChild(cellID);
 
-          const cellNome = document.createElement("td");
-          cellNome.textContent = dado.nomecolaboradorvt;
-          row.appendChild(cellNome);
+              const cellNome = document.createElement("td");
+              cellNome.textContent = dado.nomecolaboradorvt;
+              row.appendChild(cellNome);
 
-          const cellCartao = document.createElement("td");
-          cellCartao.textContent = dado.inputcartaoVT;
-          row.appendChild(cellCartao);
+              const cellCartao = document.createElement("td");
+              cellCartao.textContent = dado.inputcartaoVT;
+              row.appendChild(cellCartao);
 
-          const cellValor = document.createElement("td");
-          cellValor.textContent = dado.valorPagamento;
-          row.appendChild(cellValor);
+              const cellValor = document.createElement("td");
+              cellValor.textContent = dado.valorPagamento;
+              row.appendChild(cellValor);
 
-          const cellDataPagamento = document.createElement("td");
-          cellDataPagamento.textContent = dado.dataPagamento;
-          row.appendChild(cellDataPagamento);
+              const cellDataPagamento = document.createElement("td");
+              cellDataPagamento.textContent = dado.dataPagamento;
+              row.appendChild(cellDataPagamento);
 
-          
 
-          tableBody.appendChild(row);
-        });
 
-        // Adicionar botões de edição e exclusão
-        response.dados.forEach(function(linha) {
-          const row = tableBody.insertRow();
+              tableBody.appendChild(row);
+            });
 
-          Object.values(linha).forEach(function(cell) {
-            const td = row.insertCell();
-            td.textContent = cell;
-          });
+            // Adicionar botões de edição e exclusão
+            response.dados.forEach(function (linha) {
+              const row = tableBody.insertRow();
 
-          // Adicionar botões de edição e exclusão
-          const td = row.insertCell();
-          const editButton = document.createElement('button');
-          editButton.type = 'button';
-          editButton.className = 'btn btn-warning p-1';
-          editButton.innerHTML = '<span class="material-symbols-outlined">edit</span>';
-          editButton.dataset.id = linha.id; // Assumindo que o ID está na propriedade 'id'
-          editButton.onclick = function() {
-            editarLinha(this);
-          };
+              Object.values(linha).forEach(function (cell) {
+                const td = row.insertCell();
+                td.textContent = cell;
+              });
 
-          const deleteButton = document.createElement('button');
-          deleteButton.type = 'button';
-          deleteButton.className = 'btn btn-danger p-1';
-          deleteButton.innerHTML = '<span class="material-symbols-outlined">delete</span>';
-          deleteButton.dataset.id = linha.id; // Assumindo que o ID está na propriedade 'id'
-          deleteButton.onclick = function() {
-            excluirLinha(this);
-          };
+              // Adicionar botões de edição e exclusão
+              const td = row.insertCell();
+              const editButton = document.createElement('button');
+              editButton.type = 'button';
+              editButton.className = 'btn btn-warning p-1';
+              editButton.innerHTML = '<span class="material-symbols-outlined">edit</span>';
+              editButton.dataset.id = linha.id; // Assumindo que o ID está na propriedade 'id'
+              editButton.onclick = function () {
+                editarLinha(this);
+              };
 
-          td.appendChild(editButton);
-          td.appendChild(deleteButton);
-        });
+              const deleteButton = document.createElement('button');
+              deleteButton.type = 'button';
+              deleteButton.className = 'btn btn-danger p-1';
+              deleteButton.innerHTML = '<span class="material-symbols-outlined">delete</span>';
+              deleteButton.dataset.id = linha.id; // Assumindo que o ID está na propriedade 'id'
+              deleteButton.onclick = function () {
+                excluirLinha(this);
+              };
 
-        $(document).ready(function() {
-        // Inicialize o DataTables apenas se não estiver inicializado
-        if (!$.fn.DataTable.isDataTable('#tablePagamentos')) {
-          $('#tablePagamentos').DataTable({
-            destroy: true,
-            deferRender: true,
-            scrollCollapse: true,
-            scroller: true,
-            scrollY: 350,
-            scrollX: true, // Ativa rolagem horizontal
-            autoWidth: false, // Desativa o ajuste automático da largura
-            order: [[0, "desc"]],
-            columnDefs: [{
-              targets: 1,
-              className: 'dt-body-center'
-            }]
-          });
+              td.appendChild(editButton);
+              td.appendChild(deleteButton);
+            });
+
+            $(document).ready(function () {
+              // Inicialize o DataTables apenas se não estiver inicializado
+              if (!$.fn.DataTable.isDataTable('#tablePagamentos')) {
+                $('#tablePagamentos').DataTable({
+                  destroy: true,
+                  deferRender: true,
+                  scrollCollapse: true,
+                  scroller: true,
+                  scrollY: 350,
+                  scrollX: true, // Ativa rolagem horizontal
+                  autoWidth: false, // Desativa o ajuste automático da largura
+                  order: [[0, "desc"]],
+                  columnDefs: [{
+                    targets: 1,
+                    className: 'dt-body-center'
+                  }]
+                });
+              }
+
+              // Escutar cliques nas linhas da tabela
+              $('#tablePagamentos tbody').on('click', 'tr', function () {
+                const table = $('#tablePagamentos').DataTable();
+                const data = table.row(this).data();
+
+                if (data) {
+                  const id = data[0]; // ID da linha
+                  console.log(id);
+                }
+              });
+            });
+
+
+          } else {
+            alert("Erro de retorno: " + response.mensagem);
+          }
+        },
+        error: function (error) {
+          esconderSpinner();
+          console.error("Erro ==>", error);
+        },
+      });
+    }
+
+    function editarLinha(button) {
+      try {
+        mostrarSpinner();
+
+        // Obtém a linha (tr) que contém o botão clicado
+        const row = button.closest('tr');
+
+        // Verifica se a linha foi encontrada
+        if (!row) {
+          throw new Error('Linha não encontrada');
         }
 
-  // Escutar cliques nas linhas da tabela
-  $('#tablePagamentos tbody').on('click', 'tr', function () {
-    const table = $('#tablePagamentos').DataTable();
-    const data = table.row(this).data();
+        // Limpar os campos antes de preenchê-los
+        const idPGVT = document.getElementById("idcolaboradorvt");
+        const nomeColaborador = document.getElementById("nomecolaboradorvt");
+        const cartaoVT = document.getElementById("inputcartaoVT");
+        const meioPagamento = document.getElementById("inputMeioPGVT");
+        const valorPagamento = document.getElementById("inputvalorVT");
+        const dataPagamento = document.getElementById("inputDataPagamento");
+        // idnomecolaboradorvt inputcartaoVT inputvalorVT inputDataPagamento inputMeioPGVT
+        idPGVT.value = "";
+        nomeColaborador.value = "";
+        cartaoVT.value = "";
+        meioPagamento.value = "";
+        valorPagamento.value = "";
+        dataPagamento.value = "";
 
-    if (data) {
-      const id = data[0]; // ID da linha
-      console.log(id);
-    }
-  });
-});
+        // Pegar os dados da linha
+        const cells = Array.from(row.getElementsByTagName('td'));
 
+        // Verificar se as células foram encontradas e preencher os campos
+        if (cells.length >= 6) {
+          idPGVT.value = cells[0].textContent;
+          nomeColaborador.value = cells[1].textContent;
+          cartaoVT.value = cells[2].textContent;
+          meioPagamento.value = cells[3].textContent;
+          valorPagamento.value = cells[4].textContent;
+          dataPagamento.value = cells[5].textContent;
 
-      } else {
-        alert("Erro de retorno: " + response.mensagem);
+          console.log("nome", cells[1].textContent);
+          console.log("cartao", cells[2].textContent);
+          console.log("meioPG", cells[3].textContent);
+          console.log("valor", cells[4].textContent);
+          console.log("data", cells[5].textContent);
+        } else {
+          throw new Error("Número insuficiente de células na linha.");
+        }
+      } catch (error) {
+        console.error('Erro: ' + error.message);
+      } finally {
+        esconderSpinner();
       }
-    },
-    error: function (error) {
-      esconderSpinner();
-      console.error("Erro ==>", error);
-    },
-  });
-}
-
-function editarLinha(button) {
-  try {
-    mostrarSpinner();
-
-    // Obtém a linha (tr) que contém o botão clicado
-    const row = button.closest('tr');
-
-    // Verifica se a linha foi encontrada
-    if (!row) {
-      throw new Error('Linha não encontrada');
     }
 
-    // Limpar os campos antes de preenchê-los
-    const idPGVT = document.getElementById("idcolaboradorvt");
-    const nomeColaborador = document.getElementById("nomecolaboradorvt");
-    const cartaoVT = document.getElementById("inputcartaoVT");
-    const meioPagamento = document.getElementById("inputMeioPGVT");
-    const valorPagamento = document.getElementById("inputvalorVT");
-    const dataPagamento = document.getElementById("inputDataPagamento");
-    // idnomecolaboradorvt inputcartaoVT inputvalorVT inputDataPagamento inputMeioPGVT
-    idPGVT.value = "";
-    nomeColaborador.value = "";
-    cartaoVT.value = "";
-    meioPagamento.value = "";
-    valorPagamento.value = "";
-    dataPagamento.value = "";
-
-    // Pegar os dados da linha
-    const cells = Array.from(row.getElementsByTagName('td'));
-
-    // Verificar se as células foram encontradas e preencher os campos
-    if (cells.length >= 6) {
-      idPGVT.value = cells[0].textContent;
-      nomeColaborador.value = cells[1].textContent;
-      cartaoVT.value = cells[2].textContent;
-      meioPagamento.value = cells[3].textContent;
-      valorPagamento.value = cells[4].textContent;
-      dataPagamento.value = cells[5].textContent;
-
-      console.log("nome", cells[1].textContent);
-      console.log("cartao", cells[2].textContent);
-      console.log("meioPG", cells[3].textContent);
-      console.log("valor", cells[4].textContent);
-      console.log("data", cells[5].textContent);
-    } else {
-      throw new Error("Número insuficiente de células na linha.");
-    }
-  } catch (error) {
-    console.error('Erro: ' + error.message);
-  } finally {
-    esconderSpinner();
-  }
-}
-
-  carregarColaboradores();
+    carregarColaboradores();
     toFiilIntabePGVT("tabelaPagamentos");
   </script>
 </body>
