@@ -230,9 +230,18 @@
         align-items: center;
         font-size: 1.2rem;
         text-align: justify;
-        width: 80vw;
-        height: 50vh;
         border: none;
+        height: 66vh;
+      }
+
+      div#login {
+        display: flex;
+        flex-flow: column wrap;
+        gap: 1.2rem;
+        justify-content: center;
+        margin-top: 2rem;
+        width: 100%;
+        height: 51vh;
       }
     }
   </style>
@@ -273,12 +282,16 @@
         <!-- Análise -->
         <h3><i class="bi bi-clipboard2-data-fill"></i> Análise</h3>
         <div>
-          <button class="ui-button ui-widget ui-corner-all" name="ferias" onclick="chamaTemplate(this.name)">
+          <button class="ui-button ui-widget ui-corner-all" name="analiseDeRegistroFerias" onclick="chamaTemplate(this.name)">
             Análise de Férias
           </button>
-          <button class="ui-button ui-widget ui-corner-all" name="analise" onclick="chamaTemplate(this.name)">
+          <button class="ui-button ui-widget ui-corner-all" name="analiseDeRegistroColaboradores" onclick="chamaTemplate(this.name)">
             Análise de Registros
           </button>
+          <button class="ui-button ui-widget ui-corner-all" name="analiseDeRegistroVT"
+          onclick="chamaTemplate(this.name)">
+          Analise de VT
+        </button>
         </div>
 
         <!-- Registros -->
@@ -312,9 +325,21 @@
         <!-- RegistrosNivel3 -->
         <h3><i class="bi bi-plus-lg"></i> Supervisao</h3>
         <div>
-          <button class="ui-button ui-widget ui-corner-all" name="analiseVT" onclick="chamaTemplate(this.name)">
+          <button class="ui-button ui-widget ui-corner-all" name="analiseDeRegistroVT"
+            onclick="chamaTemplate(this.name)">
             Analise de VT
           </button>
+          <button class="ui-button ui-widget ui-corner-all" name="analiseDeRegistroFerias" onclick="chamaTemplate(this.name)">
+            Análise de Férias
+          </button>
+          <button class="ui-button ui-widget ui-corner-all" name="analiseDeRegistroColaboradores" onclick="chamaTemplate(this.name)">
+            Análise de Registros
+          </button>
+          <p></p>
+          <button class="ui-button ui-widget ui-corner-all" name="cadastroDeHorasExtras" onclick="chamaTemplate(this.name)">
+            Cadastro de Hora extras
+          </button>
+
         </div>
 
         <!-- Cadastro -->
@@ -397,9 +422,9 @@
     <div id="ladoDireito">
       <template id="car-logar">
         <!-- TODO Lofin -->
-        <div class="card loginstilo">
-          <div class="card-body text-dark">
-            <div id="login" class="shadow p-3 mb-5 bg-body-tertiary rounded">
+        <div class="card loginstilo cardlogar shadow">
+          <div class="card-body text-dark shadow">
+            <div id="login" class=" p-3 mb-5 bg-body-tertiary rounded">
               <div class="div-login">
                 <label for="input-user-login" class="input-group-text">Login</label>
                 <input id="input-user-login" type="text" placeholder="User" class="form-control" />
@@ -1083,6 +1108,15 @@
                         <input type="date" class="form-control" id="txt-dataNascimento" name="txt-dataNascimento" />
                       </div>
                     </div>
+                    <div class="col-md-2 mb-3">
+                      <div class="form-group">
+                        <label for="sc-Sexo">Sexo</label>
+                        <select id="sc-Sexo" name="sc-Sexo" class="form-select">
+                          <option>Feminino</option>
+                          <option>Masculino</option>
+                        </select>
+                      </div>
+                    </div>
                   </div>
 
                   <div class="row g-4">
@@ -1118,15 +1152,7 @@
                           placeholder="Nome da Mãe" />
                       </div>
                     </div>
-                    <div class="col-md-2 mb-3">
-                      <div class="form-group">
-                        <label for="sc-Sexo">Sexo</label>
-                        <select id="sc-Sexo" name="sc-Sexo" class="form-select">
-                          <option>Feminino</option>
-                          <option>Masculino</option>
-                        </select>
-                      </div>
-                    </div>
+
                   </div>
                 </div>
               </div>
@@ -1530,1421 +1556,1689 @@
         </div>
       </template>
       <template id="registroVT">
-      <div class="card">
-        <div class="card-body">
-          <h1 class="card-title">Registro de Pagamento VT</h1>
-          <div class="row">
-            <!-- Formulário de Registro de Pagamento -->
-            <div class="col-md-6">
-              <div class="card mt-4">
-                <div class="card-body">
-                  <div class="container">
-                    <div class="row g-2">
-                      <div class="card">
-                        <div class="row">
-                          <!-- ID -->
-                          <div class="col-md-2 mb-3">
-                            <div class="form-group">
-                              <label for="idcolaboradorvt" class="input-group-text">ID</label>
-                              <input id="idcolaboradorvt" type="text" class="form-control rGVT" disabled>
+        <div class="card">
+          <div class="card-body">
+            <h1 class="card-title">Registro de Pagamento VT</h1>
+            <div class="row">
+              <!-- Formulário de Registro de Pagamento -->
+              <div class="col-md-6">
+                <div class="card mt-4">
+                  <div class="card-body">
+                    <div class="container">
+                      <div class="row g-2">
+                        <div class="card">
+                          <div class="row">
+                            <!-- ID -->
+                            <div class="col-md-2 mb-3">
+                              <div class="form-group">
+                                <label for="idcolaboradorvt" class="input-group-text">ID</label>
+                                <input id="idcolaboradorvt" type="text" class="form-control rGVT" disabled>
 
-                              </input>
+                                </input>
+                              </div>
                             </div>
-                          </div>
-                          <!-- Colaborador -->
-                          <div class="col-md-6 mb-3">
-                            <div class="form-group">
-                              <label for="nomecolaboradorvt" class="input-group-text">Colaborador</label>
-                              <select id="nomecolaboradorvt" class="form-control scColaborador rGVT"
-                                onchange="dadosvt()">
-                                <option></option>
-                              </select>
+                            <!-- Colaborador -->
+                            <div class="col-md-6 mb-3">
+                              <div class="form-group">
+                                <label for="nomecolaboradorvt" class="input-group-text">Colaborador</label>
+                                <select id="nomecolaboradorvt" class="form-control scColaborador rGVT"
+                                  onchange="dadosvt()">
+                                  <option></option>
+                                </select>
+                              </div>
                             </div>
-                          </div>
 
-                          <!-- Cartão -->
-                          <div class="col-md-6 mb-3">
-                            <div class="form-group">
-                              <label for="inputcartaoVT" class="input-group-text">Cartão</label>
-                              <input type="text" id="inputcartaoVT" class="form-control rGVT" disabled />
+                            <!-- Cartão -->
+                            <div class="col-md-6 mb-3">
+                              <div class="form-group">
+                                <label for="inputcartaoVT" class="input-group-text">Cartão</label>
+                                <input type="text" id="inputcartaoVT" class="form-control rGVT" disabled />
+                              </div>
                             </div>
-                          </div>
 
-                          <!-- Valor -->
-                          <div class="col-md-6 mb-3">
-                            <div class="form-group">
-                              <label for="inputvalorVT" class="input-group-text">Valor do Pagamento</label>
-                              <input type="number" id="inputvalorVT" class="form-control rGVT" />
+                            <!-- Valor -->
+                            <div class="col-md-6 mb-3">
+                              <div class="form-group">
+                                <label for="inputvalorVT" class="input-group-text">Valor do Pagamento</label>
+                                <input type="number" id="inputvalorVT" class="form-control rGVT" />
+                              </div>
                             </div>
-                          </div>
 
-                          <!-- Data de Pagamento -->
-                          <div class="col-md-6 mb-3">
-                            <div class="form-group">
-                              <label for="inputDataPagamento" class="input-group-text">Data de Pagamento</label>
-                              <input type="date" id="inputDataPagamento" class="form-control rGVT" />
+                            <!-- Data de Pagamento -->
+                            <div class="col-md-6 mb-3">
+                              <div class="form-group">
+                                <label for="inputDataPagamento" class="input-group-text">Data de Pagamento</label>
+                                <input type="date" id="inputDataPagamento" class="form-control rGVT" />
+                              </div>
                             </div>
-                          </div>
 
-                          <!-- Meio de Pagamento -->
-                          <div class="col-md-6 mb-3">
-                            <div class="form-group">
-                              <label for="inputMeioPGVT" class="input-group-text">Meio de Pagamento</label>
-                              <input type="text" id="inputMeioPGVT" class="form-control rGVT" />
+                            <!-- Meio de Pagamento -->
+                            <div class="col-md-6 mb-3">
+                              <div class="form-group">
+                                <label for="inputMeioPGVT" class="input-group-text">Meio de Pagamento</label>
+                                <input type="text" id="inputMeioPGVT" class="form-control rGVT" />
+                              </div>
                             </div>
                           </div>
                         </div>
                       </div>
-                    </div>
 
-                    <div class="row g-4 p-1">
-                      <div class="col-md-6 mb-3">
-                        <a class="btn btn-primary btn-sm" href="#" role="button" onclick="salvarPagamentoVT()">
-                          Salvar Pagamento</a>
+                      <div class="row g-4 p-1">
+                        <div class="col-md-6 mb-3">
+                          <a class="btn btn-primary btn-sm" href="#" role="button" onclick="salvarPagamentoVT()">
+                            Salvar Pagamento</a>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
 
-            <!-- Tabela de Pagamentos Salvos -->
-            <div class="col-md-6">
-              <div class="card mt-4">
-                <div class="card-body w-100">
-                  <h4 class="card-title">Pagamentos Salvos</h4>
-                  <table class="table table-striped table-bordered nowrap" width="100%" id="tablePagamentos">
-                    <thead>
-                      <tr>
-                        <th>ID</th>
-                        <th>Colaborador</th>
-                        <th>Cartão</th>
-                        <th>Valor</th>
-                        <th>Data de Pagamento</th>
-                      </tr>
-                    </thead>
-                    <tbody id="tabelaPagamentos">
-                      <!-- Os pagamentos serão inseridos aqui dinamicamente -->
-                    </tbody>
-                  </table>
+              <!-- Tabela de Pagamentos Salvos -->
+              <div class="col-md-6">
+                <div class="card mt-4">
+                  <div class="card-body w-100">
+                    <h4 class="card-title">Pagamentos Salvos</h4>
+                    <table class="table table-striped table-bordered nowrap" width="100%" id="tablePagamentos">
+                      <thead>
+                        <tr>
+                          <th>ID</th>
+                          <th>Colaborador</th>
+                          <th>Cartão</th>
+                          <th>Valor</th>
+                          <th>Data de Pagamento</th>
+                          <th>Data de Pagamento</th>
+                        </tr>
+                      </thead>
+                      <tbody id="tabelaPagamentos">
+                        <!-- Os pagamentos serão inseridos aqui dinamicamente -->
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
 
       </template>
 
-      <!-- Conteúdo que será carregado dinamicamente -->
+      <template id="analiseDeRegistroVT">
+        <div class="card">
+          <div class="card-body">
+            <h1 class="card-title">Descrição de Pagamento VT</h1>
+            <div class="row">
+              <!-- Formulário de Registro de Pagamento -->
+
+              <div class="col-md-12">
+                <div class="card mt-4">
+                  <div class="card-body w-100">
+                    <table class="table table-striped table-bordered nowrap" width="100%" id="tableAnaliseVTPagamentos">
+                      <thead>
+                        <tr>
+                          <th>ID</th>
+                          <th>Colaborador</th>
+                          <th>Cartão</th>
+                          <th>Valor</th>
+                          <th>Data de Pagamento</th>
+                        </tr>
+                      </thead>
+                      <tbody id="tabelaAnaliseVTPagamentos">
+                        <!-- Os pagamentos serão inseridos aqui dinamicamente -->
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Conteúdo que será carregado dinamicamente -->
+      </template>
+      <template id="analiseDeRegistroColaboradores">
+        <div class="card">
+          <div class="card-body">
+            <h1 class="card-title">Extrato de Colaboradores - Ciclo Verde</h1>
+            <div class="row">
+              <!-- Formulário de Registro de Pagamento -->
+
+              <div class="col-md-12">
+                <div class="card mt-4">
+                  <div class="card-body w-100">
+                    
+                    <table class="table table-striped table-inverse table-responsive">
+                      <thead class="thead-default">
+                        <tr>
+                          <th></th>
+                          <th></th>
+                          <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td scope="row"></td>
+                            <td></td>
+                            <td></td>
+                          </tr>
+                          <tr>
+                            <td scope="row"></td>
+                            <td></td>
+                            <td></td>
+                          </tr>
+                        </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Conteúdo que será carregado dinamicamente -->
+      </template>
+      <template id="analiseDeRegistroFerias">
+        <div class="card">
+          <div class="card-body">
+            <h1 class="card-title">Extrato de Férias - Ciclo Verde</h1>
+            <div class="row">
+              <!-- Formulário de Registro de Pagamento -->
+
+              <div class="col-md-12">
+                <div class="card mt-4">
+                  <div class="card-body w-100">
+                    
+                    <table class="table table-striped table-inverse table-responsive">
+                      <thead class="thead-default">
+                        <tr>
+                          <th>ID Registros</th>
+                          <th>Nome</th>
+                          <th>CPF</th>
+                          <th>Data de Admissão</th>
+                          <th>Cargo</th>
+                          <th>Salário</th>
+                          <th>Data Prevista</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td scope="row"></td>
+                            <td></td>
+                            <td></td>
+                          </tr>
+                          <tr>
+                            <td scope="row"></td>
+                            <td></td>
+                            <td></td>
+                          </tr>
+                        </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Conteúdo que será carregado dinamicamente -->
+      </template>
+      
+      <!-- Cadastro de horas extras -->
+      
+      <template id="cadastroDeHorasExtras">
+        <div class="card">
+          <div class="card-body">
+            <h1 class="card-title">Cadastro de horas extras - Ciclo Verde</h1>
+            <div class="row">
+              <!-- Formulário de Registro de Pagamento -->
+
+              <div class="col-md-12">
+                <div class="card mt-4">
+                  <div class="card-body w-100">
+                    
+                    <table class="table table-striped table-inverse table-responsive">
+                      <thead class="thead-default">
+                        <tr>
+                          <th>ID Registros</th>
+                          <th>Nome</th>
+                          <th>CPF</th>
+                          <th>Data de Admissão</th>
+                          <th>Cargo</th>
+                          <th>Salário</th>
+                          <th>Data Prevista</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td scope="row"></td>
+                            <td></td>
+                            <td></td>
+                          </tr>
+                          <tr>
+                            <td scope="row"></td>
+                            <td></td>
+                            <td></td>
+                          </tr>
+                        </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Conteúdo que será carregado dinamicamente -->
+      </template>
+
+
+
       <div id="conteudo"></div>
-    </div>
-    <!-- Div Auxiliares -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h1 class="modal-title fs-5" id="exampleModalLabel">
-              New message
-            </h1>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      <!-- Div Auxiliares -->
+       
+      <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="exampleModalLabel">
+                New message
+              </h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <form>
+                <div class="mb-3">
+                  <label for="recipient-name" class="col-form-label">Recipient:</label>
+                  <input type="text" class="form-control" id="recipient-name" />
+                </div>
+                <div class="mb-3">
+                  <label for="message-text" class="col-form-label">Message:</label>
+                  <textarea class="form-control" id="message-text"></textarea>
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                Close
+              </button>
+              <button type="button" class="btn btn-primary">
+                Send message
+              </button>
+            </div>
           </div>
-          <div class="modal-body">
-            <form>
-              <div class="mb-3">
-                <label for="recipient-name" class="col-form-label">Recipient:</label>
-                <input type="text" class="form-control" id="recipient-name" />
-              </div>
-              <div class="mb-3">
-                <label for="message-text" class="col-form-label">Message:</label>
-                <textarea class="form-control" id="message-text"></textarea>
-              </div>
-            </form>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-              Close
-            </button>
-            <button type="button" class="btn btn-primary">
-              Send message
-            </button>
+        </div>
+      </div>
+
+      <template>
+        <div id="menuLogin"></div>
+        <!-- Conteudo sera exebido aqui -->
+      </template>
+      <!-- Spinner Overlay -->
+      <div id="spinner-overlay" class="spinner-overlay d-none">
+        <div class="d-flex justify-content-center align-items-center h-100">
+          <div class="spinner-border" role="status">
+            <span class="visually-hidden">Loading...</span>
           </div>
         </div>
       </div>
     </div>
 
-    <template>
-      <div id="menuLogin"></div>
-      <!-- Conteudo sera exebido aqui -->
-    </template>
-    <!-- Spinner Overlay -->
-    <div id="spinner-overlay" class="spinner-overlay d-none">
-      <div class="d-flex justify-content-center align-items-center h-100">
-        <div class="spinner-border" role="status">
-          <span class="visually-hidden">Loading...</span>
-        </div>
-      </div>
-    </div>
-  </div>
+    <script id="MetodoPost">
+      let urlAjax =
+        "https://script.google.com/macros/s/AKfycbwrfbMFYCkSAQ-rZdxuYBX_TUlFevl-SBk2c_8qM4BnLgqwEcJa5mbRTkMxtspf9tXRfg/exec";
 
-  <script id="MetodoPost">
-    let urlAjax =
-      "https://script.google.com/macros/s/AKfycbwrfbMFYCkSAQ-rZdxuYBX_TUlFevl-SBk2c_8qM4BnLgqwEcJa5mbRTkMxtspf9tXRfg/exec";
-
-    $("#accordion").accordion({
-      active: false,
-      collapsible: true,
-      heightStyle: "content",
-      icons: {
-        header: "ui-icon-circle-plus", // Ícone para cabeçalhos fechados
-        activeHeader: "ui-icon-circle-minus", // Ícone para cabeçalhos abertos
-      },
-    });
-
-    // Função para chamar o template
-    const inserirTemplate = (templateId, destino) => {
-      try {
-        const formularioID = document.getElementById(templateId);
-        const paginanova = document.getElementById(destino);
-        paginanova.innerHTML = "";
-        const clone = document.importNode(formularioID.content, true);
-        paginanova.appendChild(clone);
-        return formularioID;
-      } catch (error) {
-        return null;
-      }
-    };
-
-    function chamaTemplate(pagina) {
-      let x;
-      if (pagina === "car-logar21") {
-        x = "menuLogin";
-      } else {
-        x = "conteudo";
-      }
-
-      const formularioID = inserirTemplate(pagina, x);
-      if (!formularioID) return;
-
-      // const formularioID = inserirTemplate(pagina);
-      const paginaB = pagina;
-      switch (paginaB) {
-        case "registrosDOC":
-          carregarColaboradores();
-          break;
-        case "registroPagamentosColaboradores":
-          carregarColaboradores();
-          break;
-        case "registroRelogioDePonto":
-          carregarColaboradores();
-          carregaEscala();
-          break;
-        case "cadastroDeFuncao":
-          carregarColaboradores();
-          break;
-        case "registroferias":
-          carregarColaboradores();
-          break;
-        case "registroPagamentosAdiantamento":
-          carregarColaboradores();
-          break;
-        case "CadastroEscala":
-          carregarColaboradores();
-          carregarFuncao();
-
-          break;
-        case "registroVT":
-          carregarColaboradores();
-
-          break;
-
-        default:
-          break;
-      }
-    }
-  </script>
-  <script id="login">
-    function chamarLogout() {
-      localStorage.removeItem("usuarioLogado"); // Remove o usuário logado do Local Storage
-      alert("Logout realizado com sucesso");
-      controlarExibicaoAccordion(3);
-    }
-
-    function chamarLogin() {
-      let meuLogin = document.getElementById("input-user-login").value;
-      let minhasenha = document.getElementById("input-senha-login").value;
-
-      let usergrup = { login: meuLogin, password: minhasenha };
-      localStorage.setItem("usuarioLogado", JSON.stringify(usergrup));
-
-      // Chamar a função de verificação de credenciais
-      verificarCredenciais();
-    }
-
-    function verificarCredenciais() {
-      mostrarSpinner();
-      let userData = JSON.parse(localStorage.getItem("usuarioLogado"));
-
-      if (!userData) {
-        alert("Usuário não encontrado. Por favor, faça o login novamente.");
-        return;
-      }
-
-      let userName = userData.login;
-      let password = userData.password;
-
-      if (!urlAjax) {
-        alert("URL para a requisição AJAX não definida.");
-        return;
-      }
-
-      $.ajax({
-        type: "POST",
-        url: urlAjax,
-        data: {
-          userName: userName,
-          qualFuncao: "verificarCredenciais",
-          password: password,
-        }, // Envia os dados diretamente
-        success: function (response) {
-          esconderSpinner();
-
-          if (response.usuarioAutenticado) {
-            alert("Usuário autenticado com sucesso.");
-            // Atualize o localStorage com as informações retornadas
-            userData.id = response.id;
-            userData.nivel = response.loginResult;
-            localStorage.setItem("usuarioLogado", JSON.stringify(userData));
-            controlarExibicaoAccordion(response.loginResult);
-
-            document.getElementById("input-user-login").value = "";
-            document.getElementById("input-senha-login").value = "";
-          } else {
-            alert("Erro de login: credenciais inválidas.");
-          }
-        },
-        error: function (error) {
-          esconderSpinner();
-          console.error("Erro ao autenticar", error);
+      $("#accordion").accordion({
+        active: false,
+        collapsible: true,
+        heightStyle: "content",
+        icons: {
+          header: "ui-icon-circle-plus", // Ícone para cabeçalhos fechados
+          activeHeader: "ui-icon-circle-minus", // Ícone para cabeçalhos abertos
         },
       });
-    }
 
-    function controlarExibicaoAccordion() {
-      let userData = JSON.parse(localStorage.getItem("usuarioLogado"));
-
-      if (userData) {
-        let user = userData.login;
-        let nivelUsuario = userData.nivel;
-
-        // Inicializa o accordion com todas as seções
-        $("#accordion").accordion({
-          active: false,
-          collapsible: true,
-          heightStyle: "content",
-          icons: {
-            header: "ui-icon-circle-plus", // Ícone para cabeçalhos fechados
-            activeHeader: "ui-icon-circle-minus", // Ícone para cabeçalhos abertos
-          },
-        });
-
-        // Oculta todas as seções inicialmente
-        $("#accordion h3").hide();
-        $("#accordion div").hide();
-
-        let ladoesquerdo = document.getElementById("ladoEsquerdo");
-        let bartop = document.getElementById("barTop");
-        var elemento = document.getElementById("superBody");
-
-        if (user && nivelUsuario) {
-          ladoesquerdo.style.display = "flex";
-
-          // Se o nível do usuário for 1, exibe todas as seções
-          if (nivelUsuario === 1) {
-            // Mostrar todos os cabeçalhos
-            $("#accordion h3").show();
-
-            // Esconder todo o conteúdo dos accordions
-            $("#accordion h3").next().hide();
-
-            // Expandir apenas o accordion de login
-            $("#accordion h3:contains('menu')").next().show();
-            chamaTemplate("menu");
-            bartop.style.display = "flex";
-          } else if (nivelUsuario === 2) {
-            // Se o nível do usuário for 2, exibe apenas "Acesso Colaborador" e "Logout"
-            // Exibir apenas os cabeçalhos desejados
-            $("#accordion h3:contains('Acesso Colaborador')").show();
-            $("#accordion h3:contains('Logout')").show();
-
-            // Esconder o conteúdo associado aos cabeçalhos
-            $("#accordion h3:contains('Acesso Colaborador')").next().hide();
-            $("#accordion h3:contains('Logout')").next().hide();
-
-            chamaTemplate("areaColaborador");
-            bartop.style.display = "none";
-            // Remove a classe 'grid-template-rows: auto 1fr;'
-            elemento.style.gridTemplateRows = "";
-          } else if (nivelUsuario === 3) {
-            // Se o nível do usuário for 2, exibe apenas "Acesso Colaborador" e "Logout"
-            // Exibir apenas os cabeçalhos desejados
-            $("#accordion h3:contains('Acesso Colaborador')").show();
-            $("#accordion h3:contains('Logout')").show();
-            $("#accordion h3:contains('Supervisao')").show();
-
-            // Esconder o conteúdo associado aos cabeçalhos
-            $("#accordion h3:contains('Acesso Colaborador')").next().hide();
-            $("#accordion h3:contains('Logout')").next().hide();
-            $("#accordion h3:contains('Supervisao')").next().hide();
-            chamaTemplate("areaColaborador");
-            bartop.style.display = "none ";
-            elemento.style.gridTemplateRows = " ";
-          } else if (!nivelUsuario) {
-            desativarAccodion();
-          }
-        } else {
-          // O usuário não está autenticado, redirecione para a página de login ou faça algo apropriado
-          console.log("Usuário não autenticado");
-          desativarAccodion();
+      // Função para chamar o template
+      const inserirTemplate = (templateId, destino) => {
+        try {
+          const formularioID = document.getElementById(templateId);
+          const paginanova = document.getElementById(destino);
+          paginanova.innerHTML = "";
+          const clone = document.importNode(formularioID.content, true);
+          paginanova.appendChild(clone);
+          return formularioID;
+        } catch (error) {
+          return null;
         }
-      } else {
-        // Se não houver dados de usuário no localStorage, redirecione para a página de login
-        console.log("Usuário não autenticado");
-        desativarAccodion();
+      };
+
+      function chamaTemplate(pagina) {
+        let x;
+        if (pagina === "car-logar21") {
+          x = "menuLogin";
+        } else {
+          x = "conteudo";
+        }
+        console.log('pagina', pagina)
+        const formularioID = inserirTemplate(pagina, x);
+        if (!formularioID) return;
+
+        // const formularioID = inserirTemplate(pagina);
+        const paginaB = pagina;
+        switch (paginaB) {
+          case "registrosDOC":
+            carregarColaboradores();
+            break;
+          case "registroPagamentosColaboradores":
+            carregarColaboradores();
+            break;
+          case "registroRelogioDePonto":
+            carregarColaboradores();
+            carregaEscala();
+            break;
+          case "cadastroDeFuncao":
+            carregarColaboradores();
+            break;
+          case "registroferias":
+            carregarColaboradores();
+            break;
+          case "registroPagamentosAdiantamento":
+            carregarColaboradores();
+            break;
+          case "CadastroEscala":
+            carregarColaboradores();
+            carregarFuncao();
+
+            break;
+          case "registroVT":
+            carregarColaboradores();
+            toFiilIntabePGVT("tabelaPagamentos");
+
+            break;
+          case "analiseDeRegistroVT":
+            toFiilIntabeDescVT("tabelaAnaliseVTPagamentos");
+
+            break;
+            case "analiseDeRegistroColaboradores":
+
+            break;
+            case "analiseDeRegistroFerias":
+
+            break;
+
+
+            
+
+
+
+
+          default:
+            break;
+        }
       }
-    }
-    function desativarAccodion() {
-      // Oculta todas as seções inicialmente
-      $("#accordion h3").hide();
-      $("#accordion div").hide();
-      chamaTemplate("car-logar");
-      document.getElementById("barTop").style.display = "none";
-    }
-    controlarExibicaoAccordion();
-  </script>
-  <script id="CadastroDeColaborador">
-    /////////////////////////////////Registro de colaborador////////////////////////////////////////////
-    function salvarDadosCadastrado() {
-      try {
-        let id = document.getElementById("txt-idColaborador").value;
-        if (id) {
-          let idColab = document.getElementById("txt-idColaborador").value;
-        } else {
-          idColab = "";
+    </script>
+    <script id="login">
+      function chamarLogout() {
+        localStorage.removeItem("usuarioLogado"); // Remove o usuário logado do Local Storage
+        alert("Logout realizado com sucesso");
+        controlarExibicaoAccordion(3);
+      }
+
+      function chamarLogin() {
+        let meuLogin = document.getElementById("input-user-login").value;
+        let minhasenha = document.getElementById("input-senha-login").value;
+
+        let usergrup = { login: meuLogin, password: minhasenha };
+        localStorage.setItem("usuarioLogado", JSON.stringify(usergrup));
+
+        // Chamar a função de verificação de credenciais
+        verificarCredenciais();
+      }
+
+      function verificarCredenciais() {
+        mostrarSpinner();
+        let userData = JSON.parse(localStorage.getItem("usuarioLogado"));
+
+        if (!userData) {
+          alert("Usuário não encontrado. Por favor, faça o login novamente.");
+          return;
         }
-        const dados = {
-          idColab: idColab,
-          nome: document.getElementById("txt-nome").value,
-          cpf: document.getElementById("txt-cpf").value,
-          dataNascimento: document.getElementById("txt-dataNascimento").value,
-          localNascimento: document.getElementById("txt-LocalNasci").value,
-          estadoCivil: document.getElementById("sc-EstadoCivil").value,
-          nomePai: document.getElementById("txt-nomePai").value,
-          nomeMae: document.getElementById("txt-nomeMae").value,
-          sexo: document.getElementById("sc-Sexo").value,
-          telefone: document.getElementById("txt-telefone").value,
-          dataAdmissao: document.getElementById("txt-dataAdmissao").value,
-          salario: document.getElementById("txt-salario").value,
-          cargo: document.getElementById("txt-cargo").value,
-          ajudaTransporte: document.getElementById("txt-ajudaTransporte")
-            .value,
-          ajudaCusto: document.getElementById("txt-ajudaCusto").value,
-          bonificacao: document.getElementById("txt-bonificacao").value,
-          cestaBasica: document.getElementById("txt-cestaBasica").value,
-          rg: document.getElementById("txt-rg").value,
-          dataEmissaoRg: document.getElementById("txt-dataEmissaoRg").value,
-          orgaoEmissor: document.getElementById("txt-orgaoEmissor").value,
-          tituloEleitoral: document.getElementById("txt-tituloEleitoral")
-            .value,
-          zonaEleitoral: document.getElementById("txt-zonaEleitoral").value,
-          secaoEleitoral: document.getElementById("txt-secaoEleitoral").value,
-          ctps: document.getElementById("txt-ctps").value,
-          serieCtps: document.getElementById("txt-serieCtps").value,
-          pis: document.getElementById("txt-pis").value,
-          bairro: document.getElementById("txt-bairro").value,
-          cidade: document.getElementById("txt-cidade").value,
-          cep: document.getElementById("txt-cep").value,
-          endereco: document.getElementById("txt-endereco").value,
-          uf: document.getElementById("txt-uf").value,
-          matricula: document.getElementById("txt-matricula").value,
-          cor: document.getElementById("txt-cor").value,
-          escolaridade: document.getElementById("txt-escolaridade").value,
-          tipoCarteira: document.getElementById("txt-tipoCarteira").value,
-          dependente: document.getElementById("txt-dependente").value,
-          situacao: document.getElementById("txt-situacao").value,
-          pix: document.getElementById("txt-pix").value,
-          dataSaida: document.getElementById("txt-dataSaida").value,
-          // Adicione os outros campos conforme necessário
-        };
-        // alert('Passando Dados: ' + JSON.stringify(dados))
-        document.getElementById("btt-cadastro-calab").disabled = true;
+
+        let userName = userData.login;
+        let password = userData.password;
+
+        if (!urlAjax) {
+          alert("URL para a requisição AJAX não definida.");
+          return;
+        }
 
         $.ajax({
           type: "POST",
           url: urlAjax,
           data: {
-            dados: JSON.stringify(dados),
-            qualFuncao: "salvarDadosNoSheet",
+            userName: userName,
+            qualFuncao: "verificarCredenciais",
+            password: password,
           }, // Envia os dados diretamente
           success: function (response) {
+            esconderSpinner();
 
-            if (response) {
-              alert("Dados salvos com sucesso");
+            if (response.usuarioAutenticado) {
+              alert("Usuário autenticado com sucesso.");
+              // Atualize o localStorage com as informações retornadas
+              userData.id = response.id;
+              userData.nivel = response.loginResult;
+              localStorage.setItem("usuarioLogado", JSON.stringify(userData));
+              controlarExibicaoAccordion(response.loginResult);
+
+              // document.getElementById("input-user-login").value = "";
+              // document.getElementById("input-senha-login").value = "";
+            } else {
+              alert("Erro de login: credenciais inválidas.");
+            }
+          },
+          error: function (error) {
+            esconderSpinner();
+            console.error("Erro ao autenticar", error);
+          },
+        });
+      }
+
+      function controlarExibicaoAccordion() {
+        let userData = JSON.parse(localStorage.getItem("usuarioLogado"));
+
+        if (userData) {
+          let user = userData.login;
+          let nivelUsuario = userData.nivel;
+
+          // Inicializa o accordion com todas as seções
+          $("#accordion").accordion({
+            active: false,
+            collapsible: true,
+            heightStyle: "content",
+            icons: {
+              header: "ui-icon-circle-plus", // Ícone para cabeçalhos fechados
+              activeHeader: "ui-icon-circle-minus", // Ícone para cabeçalhos abertos
+            },
+          });
+
+          // Oculta todas as seções inicialmente
+          $("#accordion h3").hide();
+          $("#accordion div").hide();
+
+          let ladoesquerdo = document.getElementById("ladoEsquerdo");
+          let bartop = document.getElementById("barTop");
+          var elemento = document.getElementById("superBody");
+
+          if (user && nivelUsuario) {
+            ladoesquerdo.style.display = "flex";
+
+            // Se o nível do usuário for 1, exibe todas as seções
+            if (nivelUsuario === 1) {
+              // Mostrar todos os cabeçalhos
+              $("#accordion h3").show();
+
+              // Esconder todo o conteúdo dos accordions
+              $("#accordion h3").next().hide();
+
+              // Expandir apenas o accordion de login
+              $("#accordion h3:contains('menu')").next().show();
+              chamaTemplate("menu");
+              bartop.style.display = "flex";
+            } else if (nivelUsuario === 2) {
+              // Se o nível do usuário for 2, exibe apenas "Acesso Colaborador" e "Logout"
+              // Exibir apenas os cabeçalhos desejados
+              $("#accordion h3:contains('Acesso Colaborador')").show();
+              $("#accordion h3:contains('Logout')").show();
+
+              // Esconder o conteúdo associado aos cabeçalhos
+              $("#accordion h3:contains('Acesso Colaborador')").next().hide();
+              $("#accordion h3:contains('Logout')").next().hide();
+
+              chamaTemplate("areaColaborador");
+              bartop.style.display = "none";
+              // Remove a classe 'grid-template-rows: auto 1fr;'
+              elemento.style.gridTemplateRows = "";
+            } else if (nivelUsuario === 3) {
+              // Se o nível do usuário for 2, exibe apenas "Acesso Colaborador" e "Logout"
+              // Exibir apenas os cabeçalhos desejados
+              $("#accordion h3:contains('Acesso Colaborador')").show();
+              $("#accordion h3:contains('Logout')").show();
+              $("#accordion h3:contains('Supervisao')").show();
+
+              // Esconder o conteúdo associado aos cabeçalhos
+              $("#accordion h3:contains('Acesso Colaborador')").next().hide();
+              $("#accordion h3:contains('Logout')").next().hide();
+              $("#accordion h3:contains('Supervisao')").next().hide();
+              chamaTemplate("areaColaborador");
+              bartop.style.display = "none ";
+              elemento.style.gridTemplateRows = " ";
+            } else if (!nivelUsuario) {
+              desativarAccodion();
+            }
+          } else {
+            // O usuário não está autenticado, redirecione para a página de login ou faça algo apropriado
+            console.log("Usuário não autenticado");
+            desativarAccodion();
+          }
+        } else {
+          // Se não houver dados de usuário no localStorage, redirecione para a página de login
+          console.log("Usuário não autenticado");
+          desativarAccodion();
+        }
+      }
+      function desativarAccodion() {
+        // Oculta todas as seções inicialmente
+        $("#accordion h3").hide();
+        $("#accordion div").hide();
+        chamaTemplate("car-logar");
+        document.getElementById("barTop").style.display = "none";
+      }
+      controlarExibicaoAccordion();
+    </script>
+    <script id="CadastroDeColaborador">
+      /////////////////////////////////Registro de colaborador////////////////////////////////////////////
+      function salvarDadosCadastrado() {
+        try {
+          let id = document.getElementById("txt-idColaborador").value;
+          if (id) {
+            let idColab = document.getElementById("txt-idColaborador").value;
+          } else {
+            idColab = "";
+          }
+          const dados = {
+            idColab: idColab,
+            nome: document.getElementById("txt-nome").value,
+            cpf: document.getElementById("txt-cpf").value,
+            dataNascimento: document.getElementById("txt-dataNascimento").value,
+            localNascimento: document.getElementById("txt-LocalNasci").value,
+            estadoCivil: document.getElementById("sc-EstadoCivil").value,
+            nomePai: document.getElementById("txt-nomePai").value,
+            nomeMae: document.getElementById("txt-nomeMae").value,
+            sexo: document.getElementById("sc-Sexo").value,
+            telefone: document.getElementById("txt-telefone").value,
+            dataAdmissao: document.getElementById("txt-dataAdmissao").value,
+            salario: document.getElementById("txt-salario").value,
+            cargo: document.getElementById("txt-cargo").value,
+            ajudaTransporte: document.getElementById("txt-ajudaTransporte")
+              .value,
+            ajudaCusto: document.getElementById("txt-ajudaCusto").value,
+            bonificacao: document.getElementById("txt-bonificacao").value,
+            cestaBasica: document.getElementById("txt-cestaBasica").value,
+            rg: document.getElementById("txt-rg").value,
+            dataEmissaoRg: document.getElementById("txt-dataEmissaoRg").value,
+            orgaoEmissor: document.getElementById("txt-orgaoEmissor").value,
+            tituloEleitoral: document.getElementById("txt-tituloEleitoral")
+              .value,
+            zonaEleitoral: document.getElementById("txt-zonaEleitoral").value,
+            secaoEleitoral: document.getElementById("txt-secaoEleitoral").value,
+            ctps: document.getElementById("txt-ctps").value,
+            serieCtps: document.getElementById("txt-serieCtps").value,
+            pis: document.getElementById("txt-pis").value,
+            bairro: document.getElementById("txt-bairro").value,
+            cidade: document.getElementById("txt-cidade").value,
+            cep: document.getElementById("txt-cep").value,
+            endereco: document.getElementById("txt-endereco").value,
+            uf: document.getElementById("txt-uf").value,
+            matricula: document.getElementById("txt-matricula").value,
+            cor: document.getElementById("txt-cor").value,
+            escolaridade: document.getElementById("txt-escolaridade").value,
+            tipoCarteira: document.getElementById("txt-tipoCarteira").value,
+            dependente: document.getElementById("txt-dependente").value,
+            situacao: document.getElementById("txt-situacao").value,
+            pix: document.getElementById("txt-pix").value,
+            dataSaida: document.getElementById("txt-dataSaida").value,
+            // Adicione os outros campos conforme necessário
+          };
+          // alert('Passando Dados: ' + JSON.stringify(dados))
+          document.getElementById("btt-cadastro-calab").disabled = true;
+
+          $.ajax({
+            type: "POST",
+            url: urlAjax,
+            data: {
+              dados: JSON.stringify(dados),
+              qualFuncao: "salvarDadosNoSheet",
+            }, // Envia os dados diretamente
+            success: function (response) {
+
+              if (response) {
+                alert("Dados salvos com sucesso");
+              } else {
+                alert("Erro de retorno");
+              }
+            },
+            error: function (error) {
+              console.error("Erro ao autenticar", error);
+            },
+          });
+        } catch (e) {
+          alert("Erro: " + e);
+        }
+      }
+
+      function carregarDadosColaborador() {
+        try {
+          google.script.run
+            .withSuccessHandler(function (response) {
+              if (response) {
+                let dados = response;
+                if (dados) {
+                  // Inicializando o DataTable com os dados recebidos
+                  $("#tb-extrato-complt").DataTable({
+                    data: dados,
+                    deferRender: true,
+                    scrollCollapse: true,
+                    scroller: true,
+                    scrollY: 350,
+                    columnDefs: [
+                      {
+                        target: 0,
+                        visible: false,
+                        searchable: false,
+                      },
+                    ],
+                    order: [[1, "asc"]],
+                  });
+                }
+              } else {
+                alert("Erro ao salvar");
+              }
+            })
+            .withFailureHandler(function (error) {
+              console.error("Erro ao salvar dados:", error);
+              alert("Erro ao salvar dados: " + error.message);
+            })
+            .puxardados();
+        } catch (e) {
+          alert("Erro: " + e);
+        }
+      }
+      function formularioREgistro() {
+        google.script.run
+          .withSuccessHandler(function (response) {
+            let colaboradores = JSON.parse(response);
+            let formContainer = $("#fmr-registros");
+            formContainer.empty(); // Clear existing content
+
+            let fields = [
+              { label: "IDregistros", type: "number" },
+              { label: "Nome", type: "text" },
+              { label: "CPF", type: "text" },
+              { label: "DataNascimento", type: "date" },
+              { label: "LocalNascimento", type: "text" },
+              { label: "EstadoCivil", type: "text" },
+              { label: "NomePai", type: "text" },
+              { label: "NomeMae", type: "text" },
+              {
+                label: "Sexo",
+                type: "select",
+                options: ["Masculino", "Feminino", "Outro"],
+              },
+              { label: "Telefone", type: "text" },
+              { label: "DataAdmissao", type: "date" },
+              { label: "Salario", type: "text" },
+              { label: "Cargo", type: "select", options: ["Cargo1", "Cargo2"] },
+              { label: "AjudaTranporte", type: "text" },
+              { label: "AjudaCusto", type: "text" },
+              { label: "Bonificacao", type: "text" },
+              { label: "CestaBasica", type: "text" },
+              { label: "RG", type: "text" },
+              { label: "DTAEMIRG", type: "text" },
+              { label: "ORGAO", type: "text" },
+              { label: "TituloEleitor", type: "text" },
+              { label: "Zona", type: "text" },
+              { label: "Secao", type: "text" },
+              { label: "CTPS", type: "text" },
+              { label: "Serie", type: "text" },
+              { label: "PIS", type: "text" },
+              { label: "Bairro", type: "text" },
+              {
+                label: "Cidade",
+                type: "select",
+                options: ["Cidade1", "Cidade2"],
+              },
+              { label: "CEP", type: "text" },
+              { label: "Endereco", type: "text" },
+              { label: "UF", type: "text" },
+              { label: "Matricula", type: "text" },
+              { label: "Cor", type: "text" },
+              { label: "Escolaridade", type: "text" },
+              { label: "TipoCarteira", type: "text" },
+              { label: "Dependente", type: "text" },
+              {
+                label: "SITUACAO",
+                type: "select",
+                options: ["Ativo", "Inativo"],
+              },
+              { label: "Pix", type: "text" },
+              { label: "DataSaida", type: "date" },
+            ];
+
+            let formHtml = "<form>";
+
+            fields.forEach((field) => {
+              formHtml += `<label for="${field.label}">${field.label}</label>`;
+              if (field.type === "select") {
+                formHtml += `<select id="${field.label}" name="${field.label}">`;
+                field.options.forEach((option) => {
+                  formHtml += `<option value="${option}">${option}</option>`;
+                });
+                formHtml += `</select>`;
+              } else {
+                formHtml += `<input type="${field.type}" id="${field.label}" name="${field.label}"/>`;
+              }
+            });
+
+            formHtml += "</form>";
+
+            formContainer.append(formHtml);
+
+            // Populate collaborator dropdown
+            let select = $("#sc-colaborador");
+            select.empty(); // Clear existing options
+            select.append("<option selected>Colaborador</option>");
+            colaboradores.forEach((colaborador) => {
+              select.append(
+                `<option value="${colaborador.id}">${colaborador.nome}</option>`
+              );
+            });
+          })
+          .fmrRegistroColabor();
+      }
+    </script>
+    <script id="function aux">
+      // Função para mostrar o spinner
+      function mostrarSpinner() {
+        document.getElementById("spinner-overlay").classList.remove("d-none");
+      }
+
+      // Função para esconder o spinner
+      function esconderSpinner() {
+        document.getElementById("spinner-overlay").classList.add("d-none");
+      }
+
+      function carregarColaboradores() {
+        mostrarSpinner();
+        $.ajax({
+          type: "POST",
+          url: urlAjax,
+          data: {
+            qualFuncao: "carregarColaboradores",
+          },
+          success: function (response) {
+            esconderSpinner();
+            if (response.situacao) {
+              let colaboradores = response.colaboradores;
+              try {
+                // Ordena colaboradores por nome em ordem alfabética
+                colaboradores.sort((a, b) => a.nome.localeCompare(b.nome));
+
+                // Seleciona todos os <select> com a classe 'scColaborador'
+                const selects = document.querySelectorAll(".scColaborador");
+
+                // Limpa as opções existentes
+                selects.forEach((select) => {
+                  select.innerHTML = "";
+                });
+
+                // Adiciona uma opção vazia no início
+                selects.forEach((select) => {
+                  let option = document.createElement("option");
+                  option.text = "";
+                  option.value = "";
+                  select.add(option);
+                });
+
+                // Preenche os selects com as novas opções
+                colaboradores.forEach((colaborador) => {
+                  selects.forEach((select) => {
+                    let option = document.createElement("option");
+                    option.text = colaborador.nome; // Supondo que 'nome' seja uma propriedade do colaborador
+                    option.value = colaborador.id; // Supondo que 'id' seja uma propriedade do colaborador
+                    select.add(option);
+                  });
+                });
+              } catch (error) { }
             } else {
               alert("Erro de retorno");
             }
           },
           error: function (error) {
-            console.error("Erro ao autenticar", error);
+            esconderSpinner();
+            console.error("Erro ==>", error);
           },
         });
-      } catch (e) {
-        alert("Erro: " + e);
-      }
-    }
-
-    function carregarDadosColaborador() {
-      try {
-        google.script.run
-          .withSuccessHandler(function (response) {
-            if (response) {
-              let dados = response;
-              if (dados) {
-                // Inicializando o DataTable com os dados recebidos
-                $("#tb-extrato-complt").DataTable({
-                  data: dados,
-                  deferRender: true,
-                  scrollCollapse: true,
-                  scroller: true,
-                  scrollY: 350,
-                  columnDefs: [
-                    {
-                      target: 0,
-                      visible: false,
-                      searchable: false,
-                    },
-                  ],
-                  order: [[1, "asc"]],
-                });
-              }
-            } else {
-              alert("Erro ao salvar");
-            }
-          })
-          .withFailureHandler(function (error) {
-            console.error("Erro ao salvar dados:", error);
-            alert("Erro ao salvar dados: " + error.message);
-          })
-          .puxardados();
-      } catch (e) {
-        alert("Erro: " + e);
-      }
-    }
-    function formularioREgistro() {
-      google.script.run
-        .withSuccessHandler(function (response) {
-          let colaboradores = JSON.parse(response);
-          let formContainer = $("#fmr-registros");
-          formContainer.empty(); // Clear existing content
-
-          let fields = [
-            { label: "IDregistros", type: "number" },
-            { label: "Nome", type: "text" },
-            { label: "CPF", type: "text" },
-            { label: "DataNascimento", type: "date" },
-            { label: "LocalNascimento", type: "text" },
-            { label: "EstadoCivil", type: "text" },
-            { label: "NomePai", type: "text" },
-            { label: "NomeMae", type: "text" },
-            {
-              label: "Sexo",
-              type: "select",
-              options: ["Masculino", "Feminino", "Outro"],
-            },
-            { label: "Telefone", type: "text" },
-            { label: "DataAdmissao", type: "date" },
-            { label: "Salario", type: "text" },
-            { label: "Cargo", type: "select", options: ["Cargo1", "Cargo2"] },
-            { label: "AjudaTranporte", type: "text" },
-            { label: "AjudaCusto", type: "text" },
-            { label: "Bonificacao", type: "text" },
-            { label: "CestaBasica", type: "text" },
-            { label: "RG", type: "text" },
-            { label: "DTAEMIRG", type: "text" },
-            { label: "ORGAO", type: "text" },
-            { label: "TituloEleitor", type: "text" },
-            { label: "Zona", type: "text" },
-            { label: "Secao", type: "text" },
-            { label: "CTPS", type: "text" },
-            { label: "Serie", type: "text" },
-            { label: "PIS", type: "text" },
-            { label: "Bairro", type: "text" },
-            {
-              label: "Cidade",
-              type: "select",
-              options: ["Cidade1", "Cidade2"],
-            },
-            { label: "CEP", type: "text" },
-            { label: "Endereco", type: "text" },
-            { label: "UF", type: "text" },
-            { label: "Matricula", type: "text" },
-            { label: "Cor", type: "text" },
-            { label: "Escolaridade", type: "text" },
-            { label: "TipoCarteira", type: "text" },
-            { label: "Dependente", type: "text" },
-            {
-              label: "SITUACAO",
-              type: "select",
-              options: ["Ativo", "Inativo"],
-            },
-            { label: "Pix", type: "text" },
-            { label: "DataSaida", type: "date" },
-          ];
-
-          let formHtml = "<form>";
-
-          fields.forEach((field) => {
-            formHtml += `<label for="${field.label}">${field.label}</label>`;
-            if (field.type === "select") {
-              formHtml += `<select id="${field.label}" name="${field.label}">`;
-              field.options.forEach((option) => {
-                formHtml += `<option value="${option}">${option}</option>`;
-              });
-              formHtml += `</select>`;
-            } else {
-              formHtml += `<input type="${field.type}" id="${field.label}" name="${field.label}"/>`;
-            }
-          });
-
-          formHtml += "</form>";
-
-          formContainer.append(formHtml);
-
-          // Populate collaborator dropdown
-          let select = $("#sc-colaborador");
-          select.empty(); // Clear existing options
-          select.append("<option selected>Colaborador</option>");
-          colaboradores.forEach((colaborador) => {
-            select.append(
-              `<option value="${colaborador.id}">${colaborador.nome}</option>`
-            );
-          });
-        })
-        .fmrRegistroColabor();
-    }
-  </script>
-  <script id="function aux">
-    // Função para mostrar o spinner
-    function mostrarSpinner() {
-      document.getElementById("spinner-overlay").classList.remove("d-none");
-    }
-
-    // Função para esconder o spinner
-    function esconderSpinner() {
-      document.getElementById("spinner-overlay").classList.add("d-none");
-    }
-
-    function carregarColaboradores() {
-      mostrarSpinner();
-      $.ajax({
-        type: "POST",
-        url: urlAjax,
-        data: {
-          qualFuncao: "carregarColaboradores",
-        },
-        success: function (response) {
-          esconderSpinner();
-          if (response.situacao) {
-            let colaboradores = response.colaboradores;
-            try {
-              // Ordena colaboradores por nome em ordem alfabética
-              colaboradores.sort((a, b) => a.nome.localeCompare(b.nome));
-
-              // Seleciona todos os <select> com a classe 'scColaborador'
-              const selects = document.querySelectorAll(".scColaborador");
-
-              // Limpa as opções existentes
-              selects.forEach((select) => {
-                select.innerHTML = "";
-              });
-
-              // Adiciona uma opção vazia no início
-              selects.forEach((select) => {
-                let option = document.createElement("option");
-                option.text = "";
-                option.value = "";
-                select.add(option);
-              });
-
-              // Preenche os selects com as novas opções
-              colaboradores.forEach((colaborador) => {
-                selects.forEach((select) => {
-                  let option = document.createElement("option");
-                  option.text = colaborador.nome; // Supondo que 'nome' seja uma propriedade do colaborador
-                  option.value = colaborador.id; // Supondo que 'id' seja uma propriedade do colaborador
-                  select.add(option);
-                });
-              });
-            } catch (error) { }
-          } else {
-            alert("Erro de retorno");
-          }
-        },
-        error: function (error) {
-          esconderSpinner();
-          console.error("Erro ==>", error);
-        },
-      });
-    }
-
-    function carregarFuncao() {
-      mostrarSpinner();
-      $.ajax({
-        type: "POST",
-        url: urlAjax,
-        data: {
-          qualFuncao: "carregarFuncao",
-        }, // Envia os dados diretamente
-        success: function (response) {
-          esconderSpinner();
-          if (response.situacao) {
-            try {
-              const funcoes = response.colaboradores;
-
-              // Seleciona todos os <select> com a classe 'scColaborador'
-              const selects = document.querySelectorAll(
-                ".FuncaocolaboradorFuncao"
-              );
-
-              // Limpa as opções existentes
-              selects.forEach((select) => {
-                select.innerHTML = "";
-              });
-
-              // Adiciona uma opção vazia no início
-              selects.forEach((select) => {
-                let option = document.createElement("option");
-                option.text = "";
-                option.value = "";
-                select.add(option);
-              });
-
-              // Preenche os selects com as novas opções
-              colaboradores.forEach((colaborador) => {
-                selects.forEach((select) => {
-                  let option = document.createElement("option");
-                  option.text = colaborador.descricao; // Supondo que 'nome' seja uma propriedade do colaborador
-                  option.value = colaborador.id; // Supondo que 'id' seja uma propriedade do colaborador
-                  select.add(option);
-                });
-              });
-            } catch (error) { }
-          } else {
-            alert("Erro de retorno");
-          }
-        },
-        error: function (error) {
-          esconderSpinner();
-          console.error("Erro ==>", error);
-        },
-      });
-    }
-
-    function extratirFuncao(input) {
-      mostrarSpinner();
-      // Selecionar o elemento select pelo ID
-      let selectElement = document.getElementById(input);
-
-      // Obter o valor selecionado
-      let nomeInput = selectElement.value;
-
-      // Verificar se nenhum valor foi selecionado
-      if (!nomeInput) {
-        // Limpar os campos se nenhum valor estiver selecionado
-        if (input === "scColaboradorRP") {
-          const funcaoInput = document.getElementById("funcaoColab");
-          const scalaInput = document.getElementById("escalaRelogiodePonto");
-
-          const cHorario = document.getElementById("CargaRelogiodePonto");
-          const cHorariointer = document.getElementById(
-            "intervaloRelogiodePonto"
-          );
-
-          // Limpar os valores dos campos
-          funcaoInput.value = "";
-          scalaInput.value = "";
-          cHorario.value = "";
-          cHorariointer.value = "";
-        }
-        return; // Saia da função se não houver valor
       }
 
-      // Fazer a requisição AJAX se um valor foi selecionado
-      $.ajax({
-        type: "POST",
-        url: urlAjax,
-        data: {
-          qualFuncao: "carregarExtrairFuncao",
-          nome: nomeInput,
-        },
-        success: function (response) {
-          esconderSpinner();
-
-          if (response.situacao) {
-            const funcao = response.funcao;
-            const scala = response.scala;
-            // TODO Aqui
-            if (input === "scColaboradorRP") {
-              const funcaoInput = document.getElementById("funcaoColab");
-              const scalaInput = document.getElementById(
-                "escalaRelogiodePonto"
-              );
-
-              // Atualiza o valor do input com a função do colaborador
-              funcaoInput.value = funcao;
-              scalaInput.value = scala;
-
-              chamarEscala();
-            }
-          } else {
+      function carregarFuncao() {
+        mostrarSpinner();
+        $.ajax({
+          type: "POST",
+          url: urlAjax,
+          data: {
+            qualFuncao: "carregarFuncao",
+          }, // Envia os dados diretamente
+          success: function (response) {
             esconderSpinner();
-            alert("Erro de retorno");
-          }
-        },
-        error: function (error) {
-          esconderSpinner();
-          console.error("Erro ==>", error);
-        },
-      });
-    }
+            if (response.situacao) {
+              try {
+                const funcoes = response.colaboradores;
 
-    // function executarAcaoComData(data, inputId) {
-    //   const diasDaSemana = [
-    //     "Domingo",
-    //     "Segunda-feira",
-    //     "Terça-feira",
-    //     "Quarta-feira",
-    //     "Quinta-feira",
-    //     "Sexta-feira",
-    //     "Sábado",
-    //   ];
-    //   document.getElementById(inputId).value = diasDaSemana[data.getDay()];
-    // }
+                // Seleciona todos os <select> com a classe 'scColaborador'
+                const selects = document.querySelectorAll(
+                  ".FuncaocolaboradorFuncao"
+                );
 
-    function executarAcaoComData(data, inputId) {
-      // Obter o dia da semana atual
-      const diasDaSemana = [
-        "Domingo",
-        "Segunda-feira",
-        "Terça-feira",
-        "Quarta-feira",
-        "Quinta-feira",
-        "Sexta-feira",
-        "Sábado",
-      ];
-
-      // Fazer a requisição AJAX para obter os dados
-      $.ajax({
-        type: "POST",
-        url: urlAjax,
-        data: {
-          qualFuncao: "carregarScalaDias",
-        },
-        success: function (response) {
-          if (response.situacao) {
-            // TODO FICAR
-            // Parsear dados JSON se necessário
-            const dados = response.dados; // Supondo que response.dados é o JSON
-            // processarDadosSemanal(userData)
-            // Definir o valor no input correto
-            if (
-              [
-                "Segunda-feira",
-                "Terça-feira",
-                "Quarta-feira",
-                "Quinta-feira",
-                "Sexta-feira",
-              ].includes(diaAtual)
-            ) {
-              document.getElementById(inputId).value = valorHora;
-            } else if (["Sábado", "Domingo"].includes(diaAtual)) {
-              document.getElementById(inputId).value = valorHora;
-            }
-          } else {
-            alert("Erro de retorno");
-          }
-        },
-        error: function (error) {
-          console.error("Erro Escala ==>", error);
-        },
-      });
-    }
-  </script>
-
-  <!-- Extrato de Relógio de Ponto -->
-  <script>
-    function verificarDataExtratoPonto() {
-      const inputData = document.getElementById("dataExtratoPonto");
-      const dataSelecionada = new Date(inputData.value + "T12:00:00");
-
-      if (inputData.value) {
-        executarAcaoComData(dataSelecionada, "diaSemana");
-        chamarEscala(); // Preenche o dia da semana no input
-      }
-    }
-
-    // Função usada para preencher o input com o dia da semana
-    function executarAcaoComData(data, inputId) {
-      const diasDaSemana = [
-        "Domingo",
-        "Segunda-feira",
-        "Terça-feira",
-        "Quarta-feira",
-        "Quinta-feira",
-        "Sexta-feira",
-        "Sábado",
-      ];
-      document.getElementById(inputId).value = diasDaSemana[data.getDay()]; // Preenche o input com o dia da semana
-    }
-
-    function carregaEscala() {
-      $.ajax({
-        type: "POST",
-        url: urlAjax,
-        data: {
-          qualFuncao: "carregarEscala",
-        }, // Envia os dados diretamente
-        success: function (response) {
-          if (response.situacao) {
-            // const escala = response.escala;
-            const escala = response.dados;
-            localStorage.setItem("listaEscala", JSON.stringify(escala));
-            // Seleciona <select> com ao id 'escalaRelogiodePonto'
-            const select = document.getElementById("escalaRelogiodePonto");
-            // Adiciona uma opção vazia no início
-            let option = document.createElement("option");
-            option.text = "";
-            option.value = "";
-            select.add(option);
-
-            // Preenche o select com as novas opções
-            escala.forEach((escalaItem) => {
-              let option = document.createElement("option");
-              option.text = escalaItem.descricao;
-              option.value = escalaItem.id;
-              select.add(option);
-            });
-          } else {
-            alert("Erro de retorno");
-          }
-        },
-        error: function (error) {
-          console.error("Erro Escala ==>", error);
-        },
-      });
-    }
-    function chamarEscala() {
-      let userData = JSON.parse(localStorage.getItem("listaEscala"));
-      if (!userData) return alert("Lista não encontrada");
-
-      const escalaSelect = document.getElementById("escalaRelogiodePonto");
-      const selectedEscala = userData.find(
-        (escala) => escala.id == escalaSelect.value
-      );
-      if (!selectedEscala) return alert("Escala não encontrada");
-
-      preencherCampos(
-        selectedEscala,
-        "CargaRelogiodePonto",
-        selectedEscala.horario
-      );
-      preencherCampos(
-        selectedEscala,
-        "intervaloRelogiodePonto",
-        selectedEscala.intervalo
-      );
-      processarDadosSemanal(selectedEscala);
-      calcularHorasTrabalhadas(selectedEscala);
-      calcularAdicionalNoturno();
-    }
-
-    function preencherCampos(selectedEscala, campoId, valor) {
-      const campo = document.getElementById(campoId);
-      campo.innerHTML = "";
-      let option = document.createElement("option");
-      option.text = valor;
-      option.value = valor;
-      campo.add(option);
-    }
-
-    function processarDadosSemanal(selectedEscala) {
-      const diasDaSemana = [
-        "Domingo",
-        "Segunda-feira",
-        "Terça-feira",
-        "Quarta-feira",
-        "Quinta-feira",
-        "Sexta-feira",
-        "Sábado",
-      ];
-      let semanalData = JSON.parse(selectedEscala.semanal || "{}");
-
-      const diaSemana =
-        diasDaSemana[
-        new Date(document.getElementById("dataExtratoPonto").value).getDay()
-        ];
-      document.getElementById("diaSemana").value = diaSemana;
-
-      const cargaHorario = semanalData[diaSemana] || "Horário não encontrado";
-      const campoHorario =
-        diaSemana === "Sábado" || diaSemana === "Domingo"
-          ? "entrada1totalCargaHorarioSabado"
-          : "entrada1totalCargaHorarioPeriodo";
-
-      document.getElementById(campoHorario).value = cargaHorario;
-    }
-
-    function calcularHorasTrabalhadas(selectedEscala) {
-      const entrada1 = document.getElementById("entrada1Periodo").value;
-      const saida1 = document.getElementById("saida1Periodo").value;
-      const entrada2 = document.getElementById("entrada2Periodo").value || 0;
-      const saida2 = document.getElementById("saida2Periodo").value || 0;
-
-      const minutosTrabalhados =
-        calcularMinutos(saida1, entrada1) + calcularMinutos(saida2, entrada2);
-      const horasTrabalhadas = converterMinutosParaHoras(minutosTrabalhados);
-      document.getElementById("horasTrabalhadas").value = horasTrabalhadas;
-
-      const cargaHorariaPadrao =
-        document.getElementById("entrada1totalCargaHorarioPeriodo").value ||
-        "00:00";
-      const minutosCargaPadrao =
-        converterHorasParaMinutos(cargaHorariaPadrao);
-
-      preencherExtrasEDebito(minutosTrabalhados, minutosCargaPadrao);
-    }
-
-    function calcularMinutos(horarioSaida, horarioEntrada) {
-      let minutosSaida = converterHorasParaMinutos(horarioSaida);
-      let minutosEntrada = converterHorasParaMinutos(horarioEntrada);
-
-      // Verificar se a saída é no próximo dia
-      if (minutosSaida < minutosEntrada) {
-        minutosSaida += 24 * 60; // Adiciona 24 horas em minutos
-      }
-      return minutosSaida - minutosEntrada;
-    }
-
-    function converterHorasParaMinutos(horario) {
-      try {
-        const [hh, mm] = horario.split(":").map(Number);
-        return hh * 60 + mm;
-      } catch (error) {
-        return null;
-      }
-    }
-
-    function converterMinutosParaHoras(minutos) {
-      return `${Math.floor(minutos / 60)
-        .toString()
-        .padStart(2, "0")}:${(minutos % 60).toString().padStart(2, "0")}`;
-    }
-
-    function preencherExtrasEDebito(minutosTrabalhados, minutosCargaPadrao) {
-      const horasExtras = Math.max(
-        minutosTrabalhados - minutosCargaPadrao,
-        0
-      );
-      const horasDebito = Math.max(
-        minutosCargaPadrao - minutosTrabalhados,
-        0
-      );
-
-      document.getElementById("horasExtras").value =
-        converterMinutosParaHoras(horasExtras);
-      document.getElementById("horasDebito").value =
-        minutosTrabalhados < minutosCargaPadrao
-          ? converterMinutosParaHoras(horasDebito)
-          : "00:00"; // Evita que o campo mostre horas incorretas
-    }
-
-    function calcularAdicionalNoturno() {
-      const entrada = new Date(
-        `1970-01-01T${document.getElementById("entrada1Periodo").value}:00`
-      );
-      const saida = new Date(
-        `1970-01-01T${document.getElementById("saida1Periodo").value}:00`
-      );
-
-      // Ajustar para saída no dia seguinte
-      if (saida < entrada) saida.setDate(saida.getDate() + 1);
-
-      const inicioNoturno = new Date("1970-01-01T22:00:00");
-      const fimNoturno = new Date("1970-01-01T06:00:00");
-      fimNoturno.setDate(fimNoturno.getDate() + 1); // Dia seguinte para o fim do adicional noturno
-
-      const horasNoturnas = calcularHorasSobrepostas(
-        entrada,
-        saida,
-        inicioNoturno,
-        fimNoturno
-      );
-      document.getElementById("adicNoturno").value = horasNoturnas.toFixed(2);
-    }
-
-    function calcularHorasSobrepostas(
-      inicio,
-      fim,
-      inicioPeriodo,
-      fimPeriodo
-    ) {
-      const inicioMax = new Date(
-        Math.max(inicio.getTime(), inicioPeriodo.getTime())
-      );
-      const fimMin = new Date(Math.min(fim.getTime(), fimPeriodo.getTime()));
-
-      return inicioMax < fimMin ? (fimMin - inicioMax) / 1000 / 60 / 60 : 0;
-    }
-
-    // Função para coletar os dados do formulário e enviar ao servidor
-    function enviarRegistroExtratoRelogioPonto() {
-      mostrarSpinner();
-      // Capturando valores dos inputs do formulário
-      const colaborador = document.getElementById("scColaboradorRP").value;
-      const funcao = document.getElementById("funcaoColab").value;
-      const dataExtrato = document.getElementById("dataExtratoPonto").value;
-      const diaSemana = document.getElementById("diaSemana").value;
-      const trabalhou = document.getElementById("trabalhouSelect").value;
-      const observacoes = document.getElementById(
-        "observacoesTextarea"
-      ).value;
-      const cargaHoraria = document.getElementById(
-        "entrada1totalCargaHorarioPeriodo"
-      ).value;
-      const cargaFimDeSemana = document.getElementById(
-        "entrada1totalCargaHorarioSabado"
-      ).value;
-      const entrada1Periodo =
-        document.getElementById("entrada1Periodo").value;
-      const saida1Periodo = document.getElementById("saida1Periodo").value;
-      const entrada2Periodo =
-        document.getElementById("entrada2Periodo").value;
-
-      const saida2Periodo = document.getElementById("saida2Periodo").value;
-      const horasTrabalhadas =
-        document.getElementById("horasTrabalhadas").value;
-      const horasDevidas = document.getElementById("horasDevidas").value;
-      const horasDebito = document.getElementById("horasDebito").value;
-      const horasExtras = document.getElementById("horasExtras").value;
-      let mod = "new";
-      // Criar um objeto com todos os valores para envio
-      const dadosRegistro = {
-        colaborador: colaborador,
-        funcao: funcao,
-        dataExtrato: dataExtrato,
-        diaSemana: diaSemana,
-        trabalhou: trabalhou,
-        observacoes: observacoes,
-        cargaHoraria: cargaHoraria,
-        cargaFimDeSemana: cargaFimDeSemana,
-        entrada1Periodo: entrada1Periodo,
-        saida1Periodo: saida1Periodo,
-        entrada2Periodo: entrada2Periodo,
-        saida2Periodo: saida2Periodo,
-        horasTrabalhadas: horasTrabalhadas,
-        horasDevidas: horasDevidas,
-        horasDebito: horasDebito,
-        horasExtras: horasExtras,
-      };
-      $.ajax({
-        type: "POST",
-        url: urlAjax,
-        data: {
-          tarefa: mod,
-          qualFuncao: "outputRelogioDePonto",
-          dados: JSON.stringify(dadosRegistro),
-        },
-        success: function (response) {
-          esconderSpinner();
-
-
-          if (response.situacao) {
-            alert("Registro salvo com sucesso!");
-
-            dadosRegistro.forEach((registro) => {
-            });
-          } else {
-            alert("Erro de retorno");
-          }
-        },
-        error: function (error) {
-          esconderSpinner();
-          console.error("Erro ==>", error);
-        },
-      });
-    }
-
-    // TODO nOVO
-  </script>
-  <!-- Registro de Pagamento VT -->
-  <script>
-
-    function dadosvt() {
-      const cl = document.getElementById("nomecolaboradorvt").value;
-      const inputValor = document.getElementById("inputcartaoVT");
-      mostrarSpinner();
-      $.ajax({
-        type: "POST",
-        url: urlAjax,
-        data: {
-          qualFuncao: "carregarVT",
-          dados: cl, // Não precisa converter para JSON se for string simples
-        },
-        success: function (response) {
-          esconderSpinner();
-          if (response.situacao && response.dados.length > 0) {
-            // Extrair o número do cartão do primeiro resultado
-            inputValor.value = response.dados[0].cartao;
-          } else {
-            inputValor.value = "";
-          }
-        },
-        error: function (error) {
-          esconderSpinner();
-          console.error("Erro ==>", error);
-        },
-      });
-    }
-
-    function salvarPagamentoVT() {
-      const inputs = document.querySelectorAll(".rGVT");
-      const dadosArray = [];
-      mostrarSpinner();
-
-      inputs.forEach((input) => {
-        dadosArray.push({
-          id: input.id, // Pega o ID do input
-          valor: input.value, // Pega o valor do input
-        });
-      });
-
-      let mod = "new";
-      $.ajax({
-        type: "POST",
-        url: urlAjax,
-        data: {
-          mod: mod,
-          qualFuncao: "SalvarVT",
-          dados: JSON.stringify(dadosArray), // Enviando o array como JSON
-        },
-        success: function (response) {
-          esconderSpinner();
-          if (response.situacao) {
-            alert("Registro salvo com sucesso!");
-            inputs.forEach((input) => {
-              input.value = " "; // Limpar inputs
-            });
-            toFiilIntabePGVT();
-          } else {
-            alert("Erro de retorno: " + response.mensagem);
-          }
-        },
-        error: function (error) {
-          esconderSpinner();
-          console.error("Erro ==>", error);
-        },
-      });
-    }
-
-    function toFiilIntabePGVT(tabela) { // Preencher tabela PG VT
-      mostrarSpinner();
-      let tabelaID;
-
-      switch (tabela) {
-        case "tabelaPagamentos":
-          tabelaID = "tabelaPagamentos";
-          break;
-        default:
-          tabelaID = "tabelaPagamentos";
-      }
-      new DataTable(tabelaID);
-
-      const tableBody = document.getElementById(tabelaID);
-
-      $.ajax({
-        type: "POST",
-        url: urlAjax,
-        data: {
-          qualFuncao: "carregarPGVT",
-        },
-        success: function (response) {
-          esconderSpinner();
-          if (response.situacao) {
-            // Limpar tabela antes de preencher
-            tableBody.innerHTML = "";
-
-            // Preencher tabela com os dados retornados
-            response.dados.forEach(dado => {
-              const row = document.createElement("tr");
-
-              const cellID = document.createElement("td");
-              cellID.textContent = dado.id;
-              row.appendChild(cellID);
-
-              const cellNome = document.createElement("td");
-              cellNome.textContent = dado.nomecolaboradorvt;
-              row.appendChild(cellNome);
-
-              const cellCartao = document.createElement("td");
-              cellCartao.textContent = dado.inputcartaoVT;
-              row.appendChild(cellCartao);
-
-              const cellValor = document.createElement("td");
-              cellValor.textContent = dado.valorPagamento;
-              row.appendChild(cellValor);
-
-              const cellDataPagamento = document.createElement("td");
-              cellDataPagamento.textContent = dado.dataPagamento;
-              row.appendChild(cellDataPagamento);
-
-
-
-              tableBody.appendChild(row);
-            });
-
-            // Adicionar botões de edição e exclusão
-            response.dados.forEach(function (linha) {
-              const row = tableBody.insertRow();
-
-              Object.values(linha).forEach(function (cell) {
-                const td = row.insertCell();
-                td.textContent = cell;
-              });
-
-              // Adicionar botões de edição e exclusão
-              const td = row.insertCell();
-              const editButton = document.createElement('button');
-              editButton.type = 'button';
-              editButton.className = 'btn btn-warning p-1';
-              editButton.innerHTML = '<span class="material-symbols-outlined">edit</span>';
-              editButton.dataset.id = linha.id; // Assumindo que o ID está na propriedade 'id'
-              editButton.onclick = function () {
-                editarLinha(this);
-              };
-
-              const deleteButton = document.createElement('button');
-              deleteButton.type = 'button';
-              deleteButton.className = 'btn btn-danger p-1';
-              deleteButton.innerHTML = '<span class="material-symbols-outlined">delete</span>';
-              deleteButton.dataset.id = linha.id; // Assumindo que o ID está na propriedade 'id'
-              deleteButton.onclick = function () {
-                excluirLinha(this);
-              };
-
-              td.appendChild(editButton);
-              td.appendChild(deleteButton);
-            });
-
-            $(document).ready(function () {
-              // Inicialize o DataTables apenas se não estiver inicializado
-              if (!$.fn.DataTable.isDataTable('#tablePagamentos')) {
-                $('#tablePagamentos').DataTable({
-                  destroy: true,
-                  deferRender: true,
-                  scrollCollapse: true,
-                  scroller: true,
-                  scrollY: 350,
-                  scrollX: true, // Ativa rolagem horizontal
-                  autoWidth: false, // Desativa o ajuste automático da largura
-                  order: [[0, "desc"]],
-                  columnDefs: [{
-                    targets: 1,
-                    className: 'dt-body-center'
-                  }]
+                // Limpa as opções existentes
+                selects.forEach((select) => {
+                  select.innerHTML = "";
                 });
-              }
 
-              // Escutar cliques nas linhas da tabela
-              $('#tablePagamentos tbody').on('click', 'tr', function () {
-                const table = $('#tablePagamentos').DataTable();
-                const data = table.row(this).data();
+                // Adiciona uma opção vazia no início
+                selects.forEach((select) => {
+                  let option = document.createElement("option");
+                  option.text = "";
+                  option.value = "";
+                  select.add(option);
+                });
 
-                if (data) {
-                  const id = data[0]; // ID da linha
-                  console.log(id);
-                }
-              });
-            });
+                // Preenche os selects com as novas opções
+                colaboradores.forEach((colaborador) => {
+                  selects.forEach((select) => {
+                    let option = document.createElement("option");
+                    option.text = colaborador.descricao; // Supondo que 'nome' seja uma propriedade do colaborador
+                    option.value = colaborador.id; // Supondo que 'id' seja uma propriedade do colaborador
+                    select.add(option);
+                  });
+                });
+              } catch (error) { }
+            } else {
+              alert("Erro de retorno");
+            }
+          },
+          error: function (error) {
+            esconderSpinner();
+            console.error("Erro ==>", error);
+          },
+        });
+      }
 
+      function extratirFuncao(input) {
+        mostrarSpinner();
+        // Selecionar o elemento select pelo ID
+        let selectElement = document.getElementById(input);
 
-          } else {
-            alert("Erro de retorno: " + response.mensagem);
+        // Obter o valor selecionado
+        let nomeInput = selectElement.value;
+
+        // Verificar se nenhum valor foi selecionado
+        if (!nomeInput) {
+          // Limpar os campos se nenhum valor estiver selecionado
+          if (input === "scColaboradorRP") {
+            const funcaoInput = document.getElementById("funcaoColab");
+            const scalaInput = document.getElementById("escalaRelogiodePonto");
+
+            const cHorario = document.getElementById("CargaRelogiodePonto");
+            const cHorariointer = document.getElementById(
+              "intervaloRelogiodePonto"
+            );
+
+            // Limpar os valores dos campos
+            funcaoInput.value = "";
+            scalaInput.value = "";
+            cHorario.value = "";
+            cHorariointer.value = "";
           }
-        },
-        error: function (error) {
-          esconderSpinner();
-          console.error("Erro ==>", error);
-        },
-      });
-    }
+          return; // Saia da função se não houver valor
+        }
 
-    function editarLinha(button) {
-      try {
+        // Fazer a requisição AJAX se um valor foi selecionado
+        $.ajax({
+          type: "POST",
+          url: urlAjax,
+          data: {
+            qualFuncao: "carregarExtrairFuncao",
+            nome: nomeInput,
+          },
+          success: function (response) {
+            esconderSpinner();
+
+            if (response.situacao) {
+              const funcao = response.funcao;
+              const scala = response.scala;
+              // TODO Aqui
+              if (input === "scColaboradorRP") {
+                const funcaoInput = document.getElementById("funcaoColab");
+                const scalaInput = document.getElementById(
+                  "escalaRelogiodePonto"
+                );
+
+                // Atualiza o valor do input com a função do colaborador
+                funcaoInput.value = funcao;
+                scalaInput.value = scala;
+
+                chamarEscala();
+              }
+            } else {
+              esconderSpinner();
+              alert("Erro de retorno");
+            }
+          },
+          error: function (error) {
+            esconderSpinner();
+            console.error("Erro ==>", error);
+          },
+        });
+      }
+
+      // function executarAcaoComData(data, inputId) {
+      //   const diasDaSemana = [
+      //     "Domingo",
+      //     "Segunda-feira",
+      //     "Terça-feira",
+      //     "Quarta-feira",
+      //     "Quinta-feira",
+      //     "Sexta-feira",
+      //     "Sábado",
+      //   ];
+      //   document.getElementById(inputId).value = diasDaSemana[data.getDay()];
+      // }
+
+      function executarAcaoComData(data, inputId) {
+        // Obter o dia da semana atual
+        const diasDaSemana = [
+          "Domingo",
+          "Segunda-feira",
+          "Terça-feira",
+          "Quarta-feira",
+          "Quinta-feira",
+          "Sexta-feira",
+          "Sábado",
+        ];
+
+        // Fazer a requisição AJAX para obter os dados
+        $.ajax({
+          type: "POST",
+          url: urlAjax,
+          data: {
+            qualFuncao: "carregarScalaDias",
+          },
+          success: function (response) {
+            if (response.situacao) {
+              // TODO FICAR
+              // Parsear dados JSON se necessário
+              const dados = response.dados; // Supondo que response.dados é o JSON
+              // processarDadosSemanal(userData)
+              // Definir o valor no input correto
+              if (
+                [
+                  "Segunda-feira",
+                  "Terça-feira",
+                  "Quarta-feira",
+                  "Quinta-feira",
+                  "Sexta-feira",
+                ].includes(diaAtual)
+              ) {
+                document.getElementById(inputId).value = valorHora;
+              } else if (["Sábado", "Domingo"].includes(diaAtual)) {
+                document.getElementById(inputId).value = valorHora;
+              }
+            } else {
+              alert("Erro de retorno");
+            }
+          },
+          error: function (error) {
+            console.error("Erro Escala ==>", error);
+          },
+        });
+      }
+    </script>
+
+    <!-- Extrato de Relógio de Ponto -->
+    <script>
+      function verificarDataExtratoPonto() {
+        const inputData = document.getElementById("dataExtratoPonto");
+        const dataSelecionada = new Date(inputData.value + "T12:00:00");
+
+        if (inputData.value) {
+          executarAcaoComData(dataSelecionada, "diaSemana");
+          chamarEscala(); // Preenche o dia da semana no input
+        }
+      }
+
+      // Função usada para preencher o input com o dia da semana
+      function executarAcaoComData(data, inputId) {
+        const diasDaSemana = [
+          "Domingo",
+          "Segunda-feira",
+          "Terça-feira",
+          "Quarta-feira",
+          "Quinta-feira",
+          "Sexta-feira",
+          "Sábado",
+        ];
+        document.getElementById(inputId).value = diasDaSemana[data.getDay()]; // Preenche o input com o dia da semana
+      }
+
+      function carregaEscala() {
+        $.ajax({
+          type: "POST",
+          url: urlAjax,
+          data: {
+            qualFuncao: "carregarEscala",
+          }, // Envia os dados diretamente
+          success: function (response) {
+            if (response.situacao) {
+              // const escala = response.escala;
+              const escala = response.dados;
+              localStorage.setItem("listaEscala", JSON.stringify(escala));
+              // Seleciona <select> com ao id 'escalaRelogiodePonto'
+              const select = document.getElementById("escalaRelogiodePonto");
+              // Adiciona uma opção vazia no início
+              let option = document.createElement("option");
+              option.text = "";
+              option.value = "";
+              select.add(option);
+
+              // Preenche o select com as novas opções
+              escala.forEach((escalaItem) => {
+                let option = document.createElement("option");
+                option.text = escalaItem.descricao;
+                option.value = escalaItem.id;
+                select.add(option);
+              });
+            } else {
+              alert("Erro de retorno");
+            }
+          },
+          error: function (error) {
+            console.error("Erro Escala ==>", error);
+          },
+        });
+      }
+      function chamarEscala() {
+        let userData = JSON.parse(localStorage.getItem("listaEscala"));
+        if (!userData) return alert("Lista não encontrada");
+
+        const escalaSelect = document.getElementById("escalaRelogiodePonto");
+        const selectedEscala = userData.find(
+          (escala) => escala.id == escalaSelect.value
+        );
+        if (!selectedEscala) return alert("Escala não encontrada");
+
+        preencherCampos(
+          selectedEscala,
+          "CargaRelogiodePonto",
+          selectedEscala.horario
+        );
+        preencherCampos(
+          selectedEscala,
+          "intervaloRelogiodePonto",
+          selectedEscala.intervalo
+        );
+        processarDadosSemanal(selectedEscala);
+        calcularHorasTrabalhadas(selectedEscala);
+        calcularAdicionalNoturno();
+      }
+
+      function preencherCampos(selectedEscala, campoId, valor) {
+        const campo = document.getElementById(campoId);
+        campo.innerHTML = "";
+        let option = document.createElement("option");
+        option.text = valor;
+        option.value = valor;
+        campo.add(option);
+      }
+
+      function processarDadosSemanal(selectedEscala) {
+        const diasDaSemana = [
+          "Domingo",
+          "Segunda-feira",
+          "Terça-feira",
+          "Quarta-feira",
+          "Quinta-feira",
+          "Sexta-feira",
+          "Sábado",
+        ];
+        let semanalData = JSON.parse(selectedEscala.semanal || "{}");
+
+        const diaSemana =
+          diasDaSemana[
+          new Date(document.getElementById("dataExtratoPonto").value).getDay()
+          ];
+        document.getElementById("diaSemana").value = diaSemana;
+
+        const cargaHorario = semanalData[diaSemana] || "Horário não encontrado";
+        const campoHorario =
+          diaSemana === "Sábado" || diaSemana === "Domingo"
+            ? "entrada1totalCargaHorarioSabado"
+            : "entrada1totalCargaHorarioPeriodo";
+
+        document.getElementById(campoHorario).value = cargaHorario;
+      }
+
+      function calcularHorasTrabalhadas(selectedEscala) {
+        const entrada1 = document.getElementById("entrada1Periodo").value;
+        const saida1 = document.getElementById("saida1Periodo").value;
+        const entrada2 = document.getElementById("entrada2Periodo").value || 0;
+        const saida2 = document.getElementById("saida2Periodo").value || 0;
+
+        const minutosTrabalhados =
+          calcularMinutos(saida1, entrada1) + calcularMinutos(saida2, entrada2);
+        const horasTrabalhadas = converterMinutosParaHoras(minutosTrabalhados);
+        document.getElementById("horasTrabalhadas").value = horasTrabalhadas;
+
+        const cargaHorariaPadrao =
+          document.getElementById("entrada1totalCargaHorarioPeriodo").value ||
+          "00:00";
+        const minutosCargaPadrao =
+          converterHorasParaMinutos(cargaHorariaPadrao);
+
+        preencherExtrasEDebito(minutosTrabalhados, minutosCargaPadrao);
+      }
+
+      function calcularMinutos(horarioSaida, horarioEntrada) {
+        let minutosSaida = converterHorasParaMinutos(horarioSaida);
+        let minutosEntrada = converterHorasParaMinutos(horarioEntrada);
+
+        // Verificar se a saída é no próximo dia
+        if (minutosSaida < minutosEntrada) {
+          minutosSaida += 24 * 60; // Adiciona 24 horas em minutos
+        }
+        return minutosSaida - minutosEntrada;
+      }
+
+      function converterHorasParaMinutos(horario) {
+        try {
+          const [hh, mm] = horario.split(":").map(Number);
+          return hh * 60 + mm;
+        } catch (error) {
+          return null;
+        }
+      }
+
+      function converterMinutosParaHoras(minutos) {
+        return `${Math.floor(minutos / 60)
+          .toString()
+          .padStart(2, "0")}:${(minutos % 60).toString().padStart(2, "0")}`;
+      }
+
+      function preencherExtrasEDebito(minutosTrabalhados, minutosCargaPadrao) {
+        const horasExtras = Math.max(
+          minutosTrabalhados - minutosCargaPadrao,
+          0
+        );
+        const horasDebito = Math.max(
+          minutosCargaPadrao - minutosTrabalhados,
+          0
+        );
+
+        document.getElementById("horasExtras").value =
+          converterMinutosParaHoras(horasExtras);
+        document.getElementById("horasDebito").value =
+          minutosTrabalhados < minutosCargaPadrao
+            ? converterMinutosParaHoras(horasDebito)
+            : "00:00"; // Evita que o campo mostre horas incorretas
+      }
+
+      function calcularAdicionalNoturno() {
+        const entrada = new Date(
+          `1970-01-01T${document.getElementById("entrada1Periodo").value}:00`
+        );
+        const saida = new Date(
+          `1970-01-01T${document.getElementById("saida1Periodo").value}:00`
+        );
+
+        // Ajustar para saída no dia seguinte
+        if (saida < entrada) saida.setDate(saida.getDate() + 1);
+
+        const inicioNoturno = new Date("1970-01-01T22:00:00");
+        const fimNoturno = new Date("1970-01-01T06:00:00");
+        fimNoturno.setDate(fimNoturno.getDate() + 1); // Dia seguinte para o fim do adicional noturno
+
+        const horasNoturnas = calcularHorasSobrepostas(
+          entrada,
+          saida,
+          inicioNoturno,
+          fimNoturno
+        );
+        document.getElementById("adicNoturno").value = horasNoturnas.toFixed(2);
+      }
+
+      function calcularHorasSobrepostas(
+        inicio,
+        fim,
+        inicioPeriodo,
+        fimPeriodo
+      ) {
+        const inicioMax = new Date(
+          Math.max(inicio.getTime(), inicioPeriodo.getTime())
+        );
+        const fimMin = new Date(Math.min(fim.getTime(), fimPeriodo.getTime()));
+
+        return inicioMax < fimMin ? (fimMin - inicioMax) / 1000 / 60 / 60 : 0;
+      }
+
+      // Função para coletar os dados do formulário e enviar ao servidor
+      function enviarRegistroExtratoRelogioPonto() {
+        mostrarSpinner();
+        // Capturando valores dos inputs do formulário
+        const colaborador = document.getElementById("scColaboradorRP").value;
+        const funcao = document.getElementById("funcaoColab").value;
+        const dataExtrato = document.getElementById("dataExtratoPonto").value;
+        const diaSemana = document.getElementById("diaSemana").value;
+        const trabalhou = document.getElementById("trabalhouSelect").value;
+        const observacoes = document.getElementById(
+          "observacoesTextarea"
+        ).value;
+        const cargaHoraria = document.getElementById(
+          "entrada1totalCargaHorarioPeriodo"
+        ).value;
+        const cargaFimDeSemana = document.getElementById(
+          "entrada1totalCargaHorarioSabado"
+        ).value;
+        const entrada1Periodo =
+          document.getElementById("entrada1Periodo").value;
+        const saida1Periodo = document.getElementById("saida1Periodo").value;
+        const entrada2Periodo =
+          document.getElementById("entrada2Periodo").value;
+
+        const saida2Periodo = document.getElementById("saida2Periodo").value;
+        const horasTrabalhadas =
+          document.getElementById("horasTrabalhadas").value;
+        const horasDevidas = document.getElementById("horasDevidas").value;
+        const horasDebito = document.getElementById("horasDebito").value;
+        const horasExtras = document.getElementById("horasExtras").value;
+        let mod = "new";
+        // Criar um objeto com todos os valores para envio
+        const dadosRegistro = {
+          colaborador: colaborador,
+          funcao: funcao,
+          dataExtrato: dataExtrato,
+          diaSemana: diaSemana,
+          trabalhou: trabalhou,
+          observacoes: observacoes,
+          cargaHoraria: cargaHoraria,
+          cargaFimDeSemana: cargaFimDeSemana,
+          entrada1Periodo: entrada1Periodo,
+          saida1Periodo: saida1Periodo,
+          entrada2Periodo: entrada2Periodo,
+          saida2Periodo: saida2Periodo,
+          horasTrabalhadas: horasTrabalhadas,
+          horasDevidas: horasDevidas,
+          horasDebito: horasDebito,
+          horasExtras: horasExtras,
+        };
+        $.ajax({
+          type: "POST",
+          url: urlAjax,
+          data: {
+            tarefa: mod,
+            qualFuncao: "outputRelogioDePonto",
+            dados: JSON.stringify(dadosRegistro),
+          },
+          success: function (response) {
+            esconderSpinner();
+
+
+            if (response.situacao) {
+              alert("Registro salvo com sucesso!");
+
+              dadosRegistro.forEach((registro) => {
+              });
+            } else {
+              alert("Erro de retorno");
+            }
+          },
+          error: function (error) {
+            esconderSpinner();
+            console.error("Erro ==>", error);
+          },
+        });
+      }
+
+      // TODO nOVO
+    </script>
+    <!-- Registro de Pagamento VT -->
+    <script>
+
+      function dadosvt() {
+        const cl = document.getElementById("nomecolaboradorvt").value;
+        const inputValor = document.getElementById("inputcartaoVT");
+        mostrarSpinner();
+        $.ajax({
+          type: "POST",
+          url: urlAjax,
+          data: {
+            qualFuncao: "carregarVT",
+            dados: cl, // Não precisa converter para JSON se for string simples
+          },
+          success: function (response) {
+            esconderSpinner();
+            if (response.situacao && response.dados.length > 0) {
+              // Extrair o número do cartão do primeiro resultado
+              inputValor.value = response.dados[0].cartao;
+            } else {
+              inputValor.value = "";
+            }
+          },
+          error: function (error) {
+            esconderSpinner();
+            console.error("Erro ==>", error);
+          },
+        });
+      }
+
+      function salvarPagamentoVT() {
+        const inputs = document.querySelectorAll(".rGVT");
+        const dadosArray = [];
         mostrarSpinner();
 
-        // Obtém a linha (tr) que contém o botão clicado
-        const row = button.closest('tr');
+        inputs.forEach((input) => {
+          dadosArray.push({
+            id: input.id, // Pega o ID do input
+            valor: input.value, // Pega o valor do input
+          });
+        });
 
-        // Verifica se a linha foi encontrada
-        if (!row) {
-          throw new Error('Linha não encontrada');
-        }
-
-        // Limpar os campos antes de preenchê-los
-        const idPGVT = document.getElementById("idcolaboradorvt");
-        const nomeColaborador = document.getElementById("nomecolaboradorvt");
-        const cartaoVT = document.getElementById("inputcartaoVT");
-        const meioPagamento = document.getElementById("inputMeioPGVT");
-        const valorPagamento = document.getElementById("inputvalorVT");
-        const dataPagamento = document.getElementById("inputDataPagamento");
-        // idnomecolaboradorvt inputcartaoVT inputvalorVT inputDataPagamento inputMeioPGVT
-        idPGVT.value = "";
-        nomeColaborador.value = "";
-        cartaoVT.value = "";
-        meioPagamento.value = "";
-        valorPagamento.value = "";
-        dataPagamento.value = "";
-
-        // Pegar os dados da linha
-        const cells = Array.from(row.getElementsByTagName('td'));
-
-        // Verificar se as células foram encontradas e preencher os campos
-        if (cells.length >= 6) {
-          idPGVT.value = cells[0].textContent;
-          nomeColaborador.value = cells[1].textContent;
-          cartaoVT.value = cells[2].textContent;
-          meioPagamento.value = cells[3].textContent;
-          valorPagamento.value = cells[4].textContent;
-          dataPagamento.value = cells[5].textContent;
-
-          console.log("nome", cells[1].textContent);
-          console.log("cartao", cells[2].textContent);
-          console.log("meioPG", cells[3].textContent);
-          console.log("valor", cells[4].textContent);
-          console.log("data", cells[5].textContent);
-        } else {
-          throw new Error("Número insuficiente de células na linha.");
-        }
-      } catch (error) {
-        console.error('Erro: ' + error.message);
-      } finally {
-        esconderSpinner();
+        let mod = "new";
+        $.ajax({
+          type: "POST",
+          url: urlAjax,
+          data: {
+            mod: mod,
+            qualFuncao: "SalvarVT",
+            dados: JSON.stringify(dadosArray), // Enviando o array como JSON
+          },
+          success: function (response) {
+            esconderSpinner();
+            if (response.situacao) {
+              alert("Registro salvo com sucesso!");
+              inputs.forEach((input) => {
+                input.value = " "; // Limpar inputs
+              });
+              toFiilIntabePGVT();
+            } else {
+              alert("Erro de retorno: " + response.mensagem);
+            }
+          },
+          error: function (error) {
+            esconderSpinner();
+            console.error("Erro ==>", error);
+          },
+        });
       }
-    }
 
-    carregarColaboradores();
-    toFiilIntabePGVT("tabelaPagamentos");
-  </script>
+      function toFiilIntabePGVT(tabela) { // Preencher tabela PG VT
+        mostrarSpinner();
+        let tabelaID;
+
+        switch (tabela) {
+          case "tabelaPagamentos":
+            tabelaID = "tabelaPagamentos";
+            break;
+          default:
+            tabelaID = "tabelaPagamentos";
+        }
+
+        const tableBody = document.getElementById("tabelaPagamentos"); // Refere to tbody, not table
+        const dataTableID = "tablePagamentos"; // ID of the table for DataTable initialization
+
+        $.ajax({
+          type: "POST",
+          url: urlAjax,
+          data: {
+            qualFuncao: "carregarPGVT",
+          },
+          success: function (response) {
+            esconderSpinner();
+            if (response.situacao) {
+              try {
+                // Limpar tabela antes de preencher
+                tableBody.innerHTML = "";
+
+                // Preencher tabela com os dados retornados
+                response.dados.forEach(dado => {
+                  const row = document.createElement("tr");
+
+                  const cellID = document.createElement("td");
+                  cellID.textContent = dado.id;
+                  row.appendChild(cellID);
+
+                  const cellNome = document.createElement("td");
+                  cellNome.textContent = dado.nomecolaboradorvt;
+                  row.appendChild(cellNome);
+
+                  const cellCartao = document.createElement("td");
+                  cellCartao.textContent = dado.inputcartaoVT;
+                  row.appendChild(cellCartao);
+
+                  const cellValor = document.createElement("td");
+                  cellValor.textContent = dado.valorPagamento;
+                  row.appendChild(cellValor);
+
+                  const cellDataPagamento = document.createElement("td");
+                  cellDataPagamento.textContent = dado.dataPagamento;
+                  row.appendChild(cellDataPagamento);
+
+                  // Adicionar coluna de botões (Edição e Exclusão)
+                  const cellActions = document.createElement("td");
+
+                  // Botão Editar
+                  const editButton = document.createElement('button');
+                  editButton.type = 'button';
+                  editButton.className = 'btn btn-warning p-1';
+                  editButton.innerHTML = '<span class="material-symbols-outlined">edit</span>';
+                  editButton.dataset.id = dado.id; // Assumindo que o ID está na propriedade 'id'
+                  editButton.onclick = function () {
+                    editarLinha(this);
+                  };
+                  cellActions.appendChild(editButton);
+
+                  // Botão Excluir
+                  const deleteButton = document.createElement('button');
+                  deleteButton.type = 'button';
+                  deleteButton.className = 'btn btn-danger p-1';
+                  deleteButton.innerHTML = '<span class="material-symbols-outlined">delete</span>';
+                  deleteButton.dataset.id = dado.id; // Assumindo que o ID está na propriedade 'id'
+                  deleteButton.onclick = function () {
+                    excluirLinha(this);
+                  };
+                  cellActions.appendChild(deleteButton);
+
+                  row.appendChild(cellActions);
+
+                  tableBody.appendChild(row);
+                });
+
+                // Inicialize DataTables após preencher a tabela
+                $(document).ready(function () {
+                  if (!$.fn.DataTable.isDataTable(`#${dataTableID}`)) {
+                    $(`#${dataTableID}`).DataTable({
+                      destroy: true, // Reinitialize if needed
+                      deferRender: true,
+                      scrollCollapse: true,
+                      scroller: true,
+                      scrollY: 350,
+                      scrollX: true,
+                      autoWidth: false,
+                      order: [[0, "desc"]],
+                      columnDefs: [{
+                        targets: 1,
+                        className: 'dt-body-center'
+                      }]
+                    });
+                  }
+                });
+
+              } catch (error) {
+                console.log(error);
+              }
+            } else {
+              alert("Erro de retorno: " + response.mensagem);
+            }
+          },
+          error: function (error) {
+            esconderSpinner();
+            console.error("Erro ==>", error);
+          },
+        });
+      }
+
+      function toFiilIntabeDescVT(tabela) { // Preencher tabela PG VT
+        mostrarSpinner();
+        let tabelaID;
+
+        switch (tabela) {
+          case "tabelaAnaliseVTPagamentos":
+            tabelaID = "tabelaAnaliseVTPagamentos";
+            break;
+          default:
+            tabelaID = "tabelaAnaliseVTPagamentos";
+        }
+
+        const tableBody = document.getElementById("tabelaAnaliseVTPagamentos"); // Refere to tbody, not table
+        const dataTableID = "tableAnaliseVTPagamentos"; // ID of the table for DataTable initialization
+
+        $.ajax({
+          type: "POST",
+          url: urlAjax,
+          data: {
+            qualFuncao: "carregarPGVT",
+          },
+          success: function (response) {
+            esconderSpinner();
+            if (response.situacao) {
+              try {
+                // Limpar tabela antes de preencher
+                tableBody.innerHTML = "";
+
+                // Preencher tabela com os dados retornados
+                response.dados.forEach(dado => {
+                  const row = document.createElement("tr");
+
+                  const cellID = document.createElement("td");
+                  cellID.textContent = dado.id;
+                  row.appendChild(cellID);
+
+                  const cellNome = document.createElement("td");
+                  cellNome.textContent = dado.nomecolaboradorvt;
+                  row.appendChild(cellNome);
+
+                  const cellCartao = document.createElement("td");
+                  cellCartao.textContent = dado.inputcartaoVT;
+                  row.appendChild(cellCartao);
+
+                  const cellValor = document.createElement("td");
+                  cellValor.textContent = dado.valorPagamento;
+                  row.appendChild(cellValor);
+
+                  const cellDataPagamento = document.createElement("td");
+                  cellDataPagamento.textContent = dado.dataPagamento;
+                  row.appendChild(cellDataPagamento);
+
+
+
+
+                  tableBody.appendChild(row);
+                });
+
+                // Inicialize DataTables após preencher a tabela
+                $(document).ready(function () {
+                  if (!$.fn.DataTable.isDataTable(`#${dataTableID}`)) {
+                    $(`#${dataTableID}`).DataTable({
+                      destroy: true, // Reinitialize if needed
+                      deferRender: true,
+                      scrollCollapse: true,
+                      scroller: true,
+                      scrollY: 350,
+                      scrollX: true,
+                      autoWidth: false,
+                      order: [[0, "desc"]],
+                      columnDefs: [{
+                        targets: 1,
+                        className: 'dt-body-center'
+                      }]
+                    });
+                  }
+                });
+
+              } catch (error) {
+                console.log(error);
+              }
+            } else {
+              alert("Erro de retorno: " + response.mensagem);
+            }
+          },
+          error: function (error) {
+            esconderSpinner();
+            console.error("Erro ==>", error);
+          },
+        });
+      }
+
+      function editarLinha(button) {
+        try {
+          mostrarSpinner();
+
+          // Obtém a linha (tr) que contém o botão clicado
+          const row = button.closest('tr');
+          console.log(row)
+          // Verifica se a linha foi encontrada
+          if (!row) {
+            throw new Error('Linha não encontrada');
+          }
+
+          // Limpar os campos antes de preenchê-los
+          const idPGVT = document.getElementById("idcolaboradorvt");
+          const nomeColaborador = document.getElementById("nomecolaboradorvt");
+          const cartaoVT = document.getElementById("inputcartaoVT");
+          const meioPagamento = document.getElementById("inputMeioPGVT");
+          const valorPagamento = document.getElementById("inputvalorVT");
+          const dataPagamento = document.getElementById("inputDataPagamento");
+          // idnomecolaboradorvt inputcartaoVT inputvalorVT inputDataPagamento inputMeioPGVT
+          idPGVT.value = "";
+          nomeColaborador.value = "";
+          cartaoVT.value = "";
+          meioPagamento.value = "";
+          valorPagamento.value = "";
+          dataPagamento.value = "";
+
+          // Pegar os dados da linha
+          const cells = Array.from(row.getElementsByTagName('td'));
+          console.log("cells", cells);
+
+          // Verificar se as células foram encontradas e preencher os campos
+          if (cells.length >= 6) {
+            const [id, nome, cartao, meio, valor, data] = cells.map(cell => cell.textContent);
+
+            // Atribuir os valores aos campos de forma mais clara
+            idPGVT.value = id;
+            nomeColaborador.value = nome;
+            cartaoVT.value = cartao;
+            meioPagamento.value = meio;
+            valorPagamento.value = valor;
+            dataPagamento.value = data;
+
+            // Log dos valores
+            console.log({ id, nome, cartao, meio, valor, data });
+          } else {
+            throw new Error("Número insuficiente de células na linha.");
+          }
+
+        } catch (error) {
+          console.error('Erro: ' + error.message);
+        } finally {
+          esconderSpinner();
+        }
+      }
+
+
+    </script>
 </body>
 
 </html>
