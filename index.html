@@ -120,6 +120,7 @@
       margin-left: 0.8vh;
       background: var(--cor-terciaria);
       padding: 1em;
+      display: none;
     }
 
     button {
@@ -217,6 +218,7 @@
       #ladoDireito {
         height: 100vh;
         max-width: 93vw;
+
       }
 
       #ladoEsquerdo {
@@ -299,8 +301,8 @@
       </nav>
     </div>
 
+    <div id="conteudo"></div>
     <div id="ladoDireito">
-      <div id="conteudo"></div>
 
       <template id="car-logar">
         <div class="card loginstilo cardlogar shadow">
@@ -1712,101 +1714,93 @@
       <template id="registroVT">
         <div class="card">
           <div class="card-body">
-            <h1 class="card-title">Registro de Pagamento VT</h1>
+            <h3 class="card-title">Registro de Pagamento VT</h3>
             <div class="row">
               <!-- Formulário de Registro de Pagamento -->
-              <div class="col-md-6">
-                <div class="card mt-4">
-                  <div class="card-body">
-                    <div class="container">
-                      <div class="row g-2">
-                        <div class="card">
-                          <div class="row">
-                            <!-- ID -->
-                            <div class="col-md-2 mb-3">
-                              <div class="form-group">
-                                <label for="idcolaboradorvt" class="input-group-text">ID</label>
-                                <input id="idcolaboradorvt" type="text" class="form-control rGVT" disabled />
-                              </div>
-                            </div>
-                            <!-- Colaborador -->
-                            <div class="col-md-6 mb-3">
-                              <div class="form-group">
-                                <label for="nomecolaboradorvt" class="input-group-text">Colaborador</label>
-                                <select id="nomecolaboradorvt" class="form-control scColaborador rGVT"
-                                  onchange="dadosvt()">
-                                  <option></option>
-                                </select>
-                              </div>
-                            </div>
-
-                            <!-- Cartão -->
-                            <div class="col-md-6 mb-3">
-                              <div class="form-group">
-                                <label for="inputcartaoVT" class="input-group-text">Cartão</label>
-                                <input type="text" id="inputcartaoVT" class="form-control rGVT" disabled />
-                              </div>
-                            </div>
-
-                            <!-- Valor -->
-                            <div class="col-md-6 mb-3">
-                              <div class="form-group">
-                                <label for="inputvalorVT" class="input-group-text">Valor do Pagamento</label>
-                                <input type="number" id="inputvalorVT" class="form-control rGVT" />
-                              </div>
-                            </div>
-
-                            <!-- Data de Pagamento -->
-                            <div class="col-md-6 mb-3">
-                              <div class="form-group">
-                                <label for="inputDataPagamento" class="input-group-text">Data de Pagamento</label>
-                                <input type="date" id="inputDataPagamento" class="form-control rGVT" />
-                              </div>
-                            </div>
-
-                            <!-- Meio de Pagamento -->
-                            <div class="col-md-6 mb-3">
-                              <div class="form-group">
-                                <label for="inputMeioPGVT" class="input-group-text">Meio de Pagamento</label>
-                                <input type="text" id="inputMeioPGVT" class="form-control rGVT" />
-                              </div>
-                            </div>
+              <div class="card-body">
+                <div class="container">
+                  <div class="row g-2">
+                    <div class="card">
+                      <div class="row">
+                        <!-- ID -->
+                        <div class="col-md-2 mb-3">
+                          <div class="form-group">
+                            <label for="idcolaboradorvt" class="input-group-text">ID</label>
+                            <input id="idcolaboradorvt" type="text" class="form-control rGVT" disabled />
                           </div>
                         </div>
-                      </div>
-
-                      <div class="row g-4 p-1">
+                        <!-- Colaborador -->
                         <div class="col-md-6 mb-3">
-                          <a class="btn btn-primary btn-sm" href="#" role="button" onclick="salvarPagamentoVT()">
-                            Salvar Pagamento</a>
+                          <div class="form-group">
+                            <label for="nomecolaboradorvt" class="input-group-text">Colaborador</label>
+                            <select id="nomecolaboradorvt" class="form-control scColaborador rGVT" onchange="dadosvt()">
+                              <option></option>
+                            </select>
+                          </div>
+                        </div>
+
+                        <!-- Cartão -->
+                        <div class="col-md-6 mb-3">
+                          <div class="form-group">
+                            <label for="inputcartaoVT" class="input-group-text">Cartão</label>
+                            <input type="text" id="inputcartaoVT" class="form-control rGVT" disabled />
+                          </div>
+                        </div>
+
+                        <!-- Valor -->
+                        <div class="col-md-6 mb-3">
+                          <div class="form-group">
+                            <label for="inputvalorVT" class="input-group-text">Valor do Pagamento</label>
+                            <input type="number" id="inputvalorVT" class="form-control rGVT" />
+                          </div>
+                        </div>
+
+                        <!-- Data de Pagamento -->
+                        <div class="col-md-6 mb-3">
+                          <div class="form-group">
+                            <label for="inputDataPagamento" class="input-group-text">Data de Pagamento</label>
+                            <input type="date" id="inputDataPagamento" class="form-control rGVT" />
+                          </div>
+                        </div>
+
+                        <!-- Meio de Pagamento -->
+                        <div class="col-md-6 mb-3">
+                          <div class="form-group">
+                            <label for="inputMeioPGVT" class="input-group-text">Meio de Pagamento</label>
+                            <input type="text" id="inputMeioPGVT" class="form-control rGVT" />
+                          </div>
                         </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              </div>
 
-              <!-- Tabela de Pagamentos Salvos -->
-              <div class="col-md-6">
-                <div class="card mt-4">
-                  <div class="card-body w-100">
-                    <h4 class="card-title">Pagamentos Salvos</h4>
-                    <table class="table table-striped table-bordered nowrap" width="100%" id="tablePagamentos">
-                      <thead>
-                        <tr>
-                          <th>ID</th>
-                          <th>Colaborador</th>
-                          <th>Cartão</th>
-                          <th>Valor</th>
-                          <th>Data de Pagamento</th>
-                        </tr>
-                      </thead>
-                      <tbody id="tabelaPagamentos">
-                        <!-- Os pagamentos serão inseridos aqui dinamicamente -->
-                      </tbody>
-                    </table>
+                  <div class="row g-4 p-1">
+                    <div class="col-md-6 mb-3">
+                      <a class="btn btn-primary btn-sm" href="#" role="button" onclick="salvarPagamentoVT()">
+                        Salvar Pagamento</a>
+                    </div>
                   </div>
                 </div>
+              </div>
+            </div>
+            <div class="row">
+              <!-- Tabela de Pagamentos Salvos -->
+              <div class="card-body w-100">
+                <h4 class="card-title">Pagamentos Salvos</h4>
+                <table class="table table-striped table-bordered nowrap" width="100%" id="tablePagamentos">
+                  <thead>
+                    <tr>
+                      <th>ID</th>
+                      <th>Colaborador</th>
+                      <th>Cartão</th>
+                      <th>Valor</th>
+                      <th>Data de Pagamento</th>
+                    </tr>
+                  </thead>
+                  <tbody id="tabelaPagamentos">
+                    <!-- Os pagamentos serão inseridos aqui dinamicamente -->
+                  </tbody>
+                </table>
               </div>
             </div>
           </div>
@@ -1814,7 +1808,7 @@
       </template>
 
       <template id="analiseDeRegistroVT">
-        <div class="card">
+        <div class="card w-100">
           <div class="card-body">
             <h1 class="card-title">Descrição de Pagamento VT</h1>
             <div class="row">
@@ -2078,16 +2072,12 @@
       </div>
     </div>
 
-
-
     <!-- Offcanvas -->
     <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasMenu" aria-labelledby="offcanvasExampleLabel">
-      <div class="offcanvas-header">
-        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-      </div>
+
       <div class="offcanvas-body" id="ladoEsquerdoSoffcanvas">
         <!-- Acordeão -->
-        <div id="accordion">
+        <div id="accordion" class="w-100 shadow">
           <!-- Menu -->
           <h3><span class="material-icons outlined">menu</span> Menu</h3>
           <div>Menu</div>
