@@ -6,6 +6,11 @@
       content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
       charset="UTF-8"
     />
+    <link
+      href="https://cdn.datatables.net/v/dt/jq-3.7.0/dt-2.0.2/b-3.0.1/sp-2.3.0/sl-2.0.0/datatables.min.css"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.datatables.net/v/dt/jq-3.7.0/dt-2.0.2/b-3.0.1/sp-2.3.0/sl-2.0.0/datatables.min.js"></script>
 
     <!-- Estilo copiado da internet -->
     <!-- Google Fonts -->
@@ -180,6 +185,9 @@
         border: none;
         padding: 0.8em 1em;
         cursor: pointer;
+      }
+      div#tableHorasExtras_wrapper {
+        font-family: Verdana;
       }
 
       .menu {
@@ -2977,11 +2985,11 @@
                         <!--Data  -->
                         <div class="col-sm-3 mb-3">
                           <div class="form-group">
-                            <label for="dataAgandamentoHora">Data</label>
+                            <label for="dataAgendamentoHora">Data</label>
                             <input
                               type="date"
-                              name="dataAgandamentoHora"
-                              id="dataAgandamentoHora"
+                              name="dataAgendamentoHora"
+                              id="dataAgendamentoHora"
                               class="form-control HrExtras"
                               required
                             />
@@ -2989,12 +2997,12 @@
                         </div>
                         <!-- Horas Extras -->
                         <div class="col-sm-3 mb-3">
-                          <label for="horaAgandamentoHora">Hora Entrada</label>
+                          <label for="horaAgendamentoHora">Hora Entrada</label>
                           <div class="form-group">
                             <input
                               type="time"
-                              id="horaAgandamentoHora"
-                              name="horaAgandamentoHora"
+                              id="horaAgendamentoHora"
+                              name="horaAgendamentoHora"
                               min="00:00"
                               max="23:59"
                               class="form-control HrExtras"
@@ -3003,12 +3011,12 @@
                           </div>
                         </div>
                         <div class="col-sm-3 mb-3">
-                          <label for="horaAgandamentoFimHora">Hora Saida</label>
+                          <label for="horaAgendamentoFimHora">Hora Saida</label>
                           <div class="form-group">
                             <input
                               type="time"
-                              id="horaAgandamentoFimHora"
-                              name="horaAgandamentoFimHora"
+                              id="horaAgendamentoFimHora"
+                              name="horaAgendamentoFimHora"
                               min="00:00"
                               max="23:59"
                               class="form-control HrExtras"
@@ -3018,11 +3026,11 @@
                         </div>
                         <!-- situacão -->
                         <div class="col-sm-3 mb-3">
-                          <label for="situcaoAgandamentoHora">Situção</label>
+                          <label for="situcaoAgendamentoHora">Situção</label>
                           <div class="form-group">
                             <select
-                              name="situcaoAgandamentoHora"
-                              id="situcaoAgandamentoHora"
+                              name="situcaoAgendamentoHora"
+                              id="situcaoAgendamentoHora"
                               class="form-control HrExtras"
                               required
                             >
@@ -3033,12 +3041,12 @@
                         </div>
                         <!-- observação -->
                         <div class="col-sm-3 mb-3">
-                          <label for="obsAgandamentoHora">Descrição</label>
+                          <label for="obsAgendamentoHora">Descrição</label>
                           <div class="form-group">
                             <textarea
                               type="text"
-                              name="obsAgandamentoHora"
-                              id="obsAgandamentoHora"
+                              name="obsAgendamentoHora"
+                              id="obsAgendamentoHora"
                               class="form-control HrExtras"
                             ></textarea>
                           </div>
@@ -3095,6 +3103,7 @@
                             <th>Hora de Saida</th>
                             <th>Situação</th>
                             <th>Descrição</th>
+                            <th>Dataupdate</th>
                           </tr>
                         </thead>
                         <tbody id="tabelaHorasExtras">
@@ -4593,16 +4602,8 @@
         mostrarSpinner();
         let tabelaID = "tableHorasExtras";
 
-        // switch (tabela) {
-        //   case "tabelaAnaliseVTPagamentos":
-        //     tabelaID = "tabelaAnaliseVTPagamentos";
-        //     break;
-        //   default:
-        //     tabelaID = "tabelaAnaliseVTPagamentos";
-        // }
-
-        const tableBody = document.getElementById("tabelaHorasExtras"); // Refere to tbody, not table
-        const dataTableID = "tableHorasExtras"; // ID of the table for DataTable initialization
+        const tableBody = document.getElementById("tabelaHorasExtras"); // Refere-se ao tbody, não à table
+        const dataTableID = "tableHorasExtras"; // ID da tabela para inicialização do DataTable
 
         $.ajax({
           type: "POST",
@@ -4631,17 +4632,30 @@
                   cellNome.textContent = dado.nomecolaboradorvt;
                   row.appendChild(cellNome);
 
-                  const cellCartao = document.createElement("td");
-                  cellCartao.textContent = dado.inputcartaoVT;
-                  row.appendChild(cellCartao);
+                  const cellData = document.createElement("td");
+                  cellData.textContent = dado.dataAgendamento;
+                  row.appendChild(cellData);
 
-                  const cellValor = document.createElement("td");
-                  cellValor.textContent = dado.valorPagamento;
-                  row.appendChild(cellValor);
+                  const cellhoraAgendamentoHora = document.createElement("td");
+                  cellhoraAgendamentoHora.textContent =
+                    dado.horaAgendamentoHora; // Ajuste com os dados corretos
+                  row.appendChild(cellhoraAgendamentoHora);
 
-                  const cellDataPagamento = document.createElement("td");
-                  cellDataPagamento.textContent = dado.dataPagamento;
-                  row.appendChild(cellDataPagamento);
+                  const cellHoraSaida = document.createElement("td");
+                  cellHoraSaida.textContent = dado.horaAgendamentoFimHora; // Ajuste com os dados corretos
+                  row.appendChild(cellHoraSaida);
+
+                  const cellSituacao = document.createElement("td");
+                  cellSituacao.textContent = dado.situcaoAgendamentoHora; // Ajuste com os dados corretos
+                  row.appendChild(cellSituacao);
+
+                  const cellDescricao = document.createElement("td");
+                  cellDescricao.textContent = dado.obsAgendamentoHora; // Ajuste com os dados corretos
+                  row.appendChild(cellDescricao);
+
+                  const celldataUpdate = document.createElement("td");
+                  celldataUpdate.textContent = dado.dataUpdate; // Ajuste com os dados corretos
+                  row.appendChild(celldataUpdate);
 
                   tableBody.appendChild(row);
                 });
@@ -4656,12 +4670,24 @@
                       scroller: true,
                       scrollY: 350,
                       scrollX: true,
+                      scrollHeight: 350,
                       autoWidth: false,
                       order: [[0, "desc"]],
+                      dom: "B", // Adiciona o layout com botões
+                      buttons: ["copy", "excel", "pdf"],
+                      layout: {
+                        topStart: {
+                          buttons: ["searchPanes"],
+                        },
+                      },
                       columnDefs: [
                         {
                           targets: 1,
                           className: "dt-body-center",
+                        },
+                        {
+                          target: 7,
+                          visible: false,
                         },
                       ],
                     });
