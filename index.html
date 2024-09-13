@@ -109,7 +109,6 @@
         /* Exemplo de cor de acento */
       }
 
-<<<<<<< HEAD
       body {
         margin: 0;
         padding: 0;
@@ -117,180 +116,6 @@
         height: 100vh;
         font-family: "Rubik", sans-serif;
         font-size: 0.8rem;
-=======
-  <style>
-    :root {
-      /* Paleta de cores */
-      --cor-primaria: #fafafa;
-      --cor-secundaria: #07637a;
-      --cor-terciaria: #ffffff;
-      --cor-quaternaria: #e5e5e5;
-      --cor-acento: #ff5733;
-      --cor-branco: #ffffff;
-      --cor-subFundo: linear-gradient(74deg, #ff0066, #bb00ff, #b358c3);
-      --cor-Fundo: #e3ac98;
-      /* Exemplo de cor de acento */
-    }
-
-    body {
-      margin: 0;
-      padding: 0;
-      width: 100%;
-      height: 100vh;
-      font-family: "Raleway", sans-serif;
-      font-size: 0.8rem;
-    }
-
-    #superBody {
-      display: grid;
-      grid-template-rows: auto 1fr;
-      grid-template-columns: auto 1fr auto;
-      background: var(--cor-branco);
-      height: 100%;
-      width: 100%;
-    }
-
-    div#tpl-body {
-      display: grid;
-      grid-template-rows: auto 1fr;
-      grid-template-columns: auto 1fr auto;
-      background: var(--cor-branco);
-      height: 100%;
-      width: 100%;
-    }
-
-    #barTop {
-      grid-column: 1 / -1;
-      /* Ocupa toda a largura do grid */
-      background: var(--cor-terciaria);
-      color: #070606;
-      padding: 1em;
-      text-align: center;
-      width: 97vw;
-    }
-
-    #ladoEsquerdo {
-      background: var(--cor-branco);
-      font-size: 1.1rem;
-      padding: 1rem;
-    }
-
-    #ladoDireito,
-    conteudo {
-      max-width: 100vw;
-      margin-left: 0.8vh;
-      background: var(--cor-terciaria);
-      padding: 1em;
-      display: none;
-    }
-
-    button {
-      border: none;
-    }
-
-    .is-invalid {
-      border-color: red;
-    }
-
-    .ui-accordion .ui-accordion-content {
-      display: grid;
-    }
-
-    button.btn.btn-light.btn-acc {
-      width: 100%;
-      text-align: center;
-      border: none;
-    }
-
-    /* Classe para mostrar/ocultar o overlay */
-    .d-none {
-      display: none;
-    }
-
-    .accordion-control {
-      text-align: left;
-      font-size: 1.2rem;
-      font-family: "Montserrat";
-      background: #000;
-      color: white;
-      border: none;
-      padding: 0.8em 1em;
-      cursor: pointer;
-    }
-
-    div#tableHorasExtras_wrapper {
-      font-family: Verdana;
-    }
-
-    .menu {
-      position: relative;
-    }
-
-    .menu__item {
-      position: relative;
-      padding: 0.5em 1em;
-    }
-
-    .menu__border {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      height: 4px;
-      background-color: #ff5733;
-      /* Cor da borda */
-      transition: transform 0.3s ease;
-    }
-
-    .spinner-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(255, 255, 255, 0.7);
-      /* Cor de fundo com transparência */
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      z-index: 9999;
-      /* Certifique-se de que o overlay esteja acima de outros conteúdos */
-    }
-
-    .card.loginstilo {
-      align-items: center;
-      font-size: 1.2rem;
-      text-align: justify;
-      width: 90vw;
-      height: 90vh;
-      border: none;
-    }
-
-    div#login {
-      display: flex;
-      flex-flow: column wrap;
-      gap: 1.8rem;
-      width: 19vw;
-      height: 70vh;
-      justify-content: center;
-      margin-top: 2rem;
-    }
-
-    @media (max-width: 400px) {
-      #ladoDireito {
-        height: 100vh;
-        max-width: 93vw;
-
-      }
-
-      #ladoEsquerdo {
-        /* height: 50vh; */
-        width: 100%;
-      }
-
-      div#accordion {
-        width: 100%;
-        font-size: 1.2rem;
->>>>>>> d1a884bfc2478852480c27d5864f29b1774a95e3
       }
 
       #superBody {
@@ -450,14 +275,9 @@
           gap: 1.8rem;
         }
 
-<<<<<<< HEAD
         .ui-accordion .ui-accordion-header .ui-accordion-content {
           width: 98vw;
         }
-=======
-    <div id="conteudo"></div>
-    <div id="ladoDireito">
->>>>>>> d1a884bfc2478852480c27d5864f29b1774a95e3
 
         .card.loginstilo {
           align-items: center;
@@ -2850,7 +2670,6 @@
             </div>
           </div>
 
-<<<<<<< HEAD
           <!-- Conteúdo que será carregado dinamicamente -->
         </template>
 
@@ -2904,7 +2723,9 @@
         <template id="cadastroDeHorasExtras">
           <div class="card">
             <div class="card-body">
-              <h1 class="card-title">Cadastro de horas extras - Ciclo Verde</h1>
+              <h1 class="card-title">
+                Registros de horas extras - Ciclo Verde
+              </h1>
               <div class="row fs-5 g-2">
                 <div class="col-md-12">
                   <div class="card mt-4">
@@ -3030,72 +2851,13 @@
                           >
                             excluir
                           </button>
-=======
-      <template id="registroVT">
-        <div class="card">
-          <div class="card-body">
-            <h3 class="card-title">Registro de Pagamento VT</h3>
-            <div class="row">
-              <!-- Formulário de Registro de Pagamento -->
-              <div class="card-body">
-                <div class="container">
-                  <div class="row g-2">
-                    <div class="card">
-                      <div class="row">
-                        <!-- ID -->
-                        <div class="col-md-2 mb-3">
-                          <div class="form-group">
-                            <label for="idcolaboradorvt" class="input-group-text">ID</label>
-                            <input id="idcolaboradorvt" type="text" class="form-control rGVT" disabled />
-                          </div>
-                        </div>
-                        <!-- Colaborador -->
-                        <div class="col-md-6 mb-3">
-                          <div class="form-group">
-                            <label for="nomecolaboradorvt" class="input-group-text">Colaborador</label>
-                            <select id="nomecolaboradorvt" class="form-control scColaborador rGVT" onchange="dadosvt()">
-                              <option></option>
-                            </select>
-                          </div>
-                        </div>
-
-                        <!-- Cartão -->
-                        <div class="col-md-6 mb-3">
-                          <div class="form-group">
-                            <label for="inputcartaoVT" class="input-group-text">Cartão</label>
-                            <input type="text" id="inputcartaoVT" class="form-control rGVT" disabled />
-                          </div>
-                        </div>
-
-                        <!-- Valor -->
-                        <div class="col-md-6 mb-3">
-                          <div class="form-group">
-                            <label for="inputvalorVT" class="input-group-text">Valor do Pagamento</label>
-                            <input type="number" id="inputvalorVT" class="form-control rGVT" />
-                          </div>
-                        </div>
-
-                        <!-- Data de Pagamento -->
-                        <div class="col-md-6 mb-3">
-                          <div class="form-group">
-                            <label for="inputDataPagamento" class="input-group-text">Data de Pagamento</label>
-                            <input type="date" id="inputDataPagamento" class="form-control rGVT" />
-                          </div>
-                        </div>
-
-                        <!-- Meio de Pagamento -->
-                        <div class="col-md-6 mb-3">
-                          <div class="form-group">
-                            <label for="inputMeioPGVT" class="input-group-text">Meio de Pagamento</label>
-                            <input type="text" id="inputMeioPGVT" class="form-control rGVT" />
-                          </div>
->>>>>>> d1a884bfc2478852480c27d5864f29b1774a95e3
                         </div>
                       </div>
                     </div>
                   </div>
+                </div>
+              </div>
 
-<<<<<<< HEAD
               <div class="row fs-5">
                 <!-- Formulário de Registro de Pagamento -->
 
@@ -3131,35 +2893,9 @@
                           </tr>
                         </tbody>
                       </table>
-=======
-                  <div class="row g-4 p-1">
-                    <div class="col-md-6 mb-3">
-                      <a class="btn btn-primary btn-sm" href="#" role="button" onclick="salvarPagamentoVT()">
-                        Salvar Pagamento</a>
->>>>>>> d1a884bfc2478852480c27d5864f29b1774a95e3
                     </div>
                   </div>
                 </div>
-              </div>
-            </div>
-            <div class="row">
-              <!-- Tabela de Pagamentos Salvos -->
-              <div class="card-body w-100">
-                <h4 class="card-title">Pagamentos Salvos</h4>
-                <table class="table table-striped table-bordered nowrap" width="100%" id="tablePagamentos">
-                  <thead>
-                    <tr>
-                      <th>ID</th>
-                      <th>Colaborador</th>
-                      <th>Cartão</th>
-                      <th>Valor</th>
-                      <th>Data de Pagamento</th>
-                    </tr>
-                  </thead>
-                  <tbody id="tabelaPagamentos">
-                    <!-- Os pagamentos serão inseridos aqui dinamicamente -->
-                  </tbody>
-                </table>
               </div>
             </div>
           </div>
@@ -3170,7 +2906,6 @@
             <div class="card-body">
               <h1 class="card-title">Solicitações - Ciclo Verde</h1>
 
-<<<<<<< HEAD
               <div class="card mt-4">
                 <div class="card-body w-100">
                   <div class="row w-auto">
@@ -3185,142 +2920,6 @@
                           disabled="disabled"
                           class="form-control slLideranca"
                         />
-=======
-      <template id="analiseDeRegistroVT">
-        <div class="card w-100">
-          <div class="card-body">
-            <h1 class="card-title">Descrição de Pagamento VT</h1>
-            <div class="row">
-              <!-- Formulário de Registro de Pagamento -->
-
-              <div class="col-md-12">
-                <div class="card mt-4">
-                  <div class="card-body w-100">
-                    <table class="table table-striped table-bordered nowrap" width="100%" id="tableAnaliseVTPagamentos">
-                      <thead>
-                        <tr>
-                          <th>ID</th>
-                          <th>Colaborador</th>
-                          <th>Cartão</th>
-                          <th>Valor</th>
-                          <th>Data de Pagamento</th>
-                        </tr>
-                      </thead>
-                      <tbody id="tabelaAnaliseVTPagamentos">
-                        <!-- Os pagamentos serão inseridos aqui dinamicamente -->
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Conteúdo que será carregado dinamicamente -->
-      </template>
-      <template id="analiseDeRegistroColaboradores">
-        <div class="card">
-          <div class="card-body">
-            <h1 class="card-title">Extrato de Colaboradores - Ciclo Verde</h1>
-            <div class="row">
-              <!-- Formulário de Registro de Pagamento -->
-
-              <div class="col-md-12">
-                <div class="card mt-4">
-                  <div class="card-body w-100">
-                    <table class="table table-striped table-inverse table-responsive">
-                      <thead class="thead-default">
-                        <tr>
-                          <th></th>
-                          <th></th>
-                          <th></th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <td scope="row"></td>
-                          <td></td>
-                          <td></td>
-                        </tr>
-                        <tr>
-                          <td scope="row"></td>
-                          <td></td>
-                          <td></td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Conteúdo que será carregado dinamicamente -->
-      </template>
-      <template id="analiseDeRegistroFerias">
-        <div class="card">
-          <div class="card-body">
-            <h1 class="card-title">Extrato de Férias - Ciclo Verde</h1>
-            <div class="row">
-              <!-- Formulário de Registro de Pagamento -->
-
-              <div class="col-md-12">
-                <div class="card mt-4">
-                  <div class="card-body w-100">
-                    <table class="table table-striped table-inverse table-responsive">
-                      <thead class="thead-default">
-                        <tr>
-                          <th>ID Registros</th>
-                          <th>Nome</th>
-                          <th>CPF</th>
-                          <th>Data de Admissão</th>
-                          <th>Cargo</th>
-                          <th>Salário</th>
-                          <th>Data Prevista</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <td scope="row"></td>
-                          <td></td>
-                          <td></td>
-                        </tr>
-                        <tr>
-                          <td scope="row"></td>
-                          <td></td>
-                          <td></td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Conteúdo que será carregado dinamicamente -->
-      </template>
-      <!-- Cadastro de horas extras -->
-      <template id="cadastroDeHorasExtras">
-        <div class="card">
-          <div class="card-body">
-            <h1 class="card-title">Cadastro de horas extras - Ciclo Verde</h1>
-            <div class="row fs-5 g-2">
-              <div class="col-md-12">
-                <div class="card mt-4">
-                  <div class="card-body w-100">
-                    <div class="row row-cols-lg-auto g-3 align-items-center">
-                      <!-- ID -->
-                      <div class="col-sm-3 mb-3">
-                        <label for="idHorasExtras">ID</label>
-                        <div class="form-group">
-                          <input type="text" name="idHorasExtras" id="idHorasExtras" disabled="disabled"
-                            class="form-control HrExtras" />
-                        </div>
->>>>>>> d1a884bfc2478852480c27d5864f29b1774a95e3
                       </div>
                     </div>
                     <!--Colaborador  -->
@@ -3355,7 +2954,7 @@
                       <label for="situcaoAgendamentoSL">Situção</label>
                       <div class="form-group">
                         <select
-                          name="situcaoAgendamentoSL"
+                          name="situcaoAgendamentoHora"
                           id="situcaoAgendamentoSL"
                           class="form-control slLideranca"
                           required
@@ -3395,12 +2994,12 @@
                     <div class="col-sm-3 mb-3">
                       <div class="form-group">
                         <div class="form-group">
-                          <label for="qDiasSl">Dias</label>
+                          <label for="qDias">Dias</label>
                           <input
                             type="text"
                             class="form-control slLideranca"
-                            name="qDiasSl"
-                            id="qDiasSl"
+                            name="qDias"
+                            id="qDias"
                             aria-describedby="helpId"
                             placeholder="0"
                             disabled="disabled"
@@ -3452,12 +3051,18 @@
                   <div class="card mt-4">
                     <div class="card-body w-100">
                       <div class="row g-1 align-items-center">
+                        <div id="divTarefasdocliente"></div>
                         <div class="col-auto">
                           <div class="form-group">
                             <a name="" id="" class="btn" role="button">
                               <div class="card" style="width: 18rem">
                                 <div class="card-body">
-                                  <h5 class="card-title">Card title</h5>
+                                  <img
+                                    src="https://drive.google.com/file/d/1NOH7EIB9QsS5_OG6nkYb5DKFvJdTjS_d/view?usp=drive_link"
+                                    alt=""
+                                  />
+                                  <h5 class="card-title">Tarefa:</h5>
+                                  <span>Prazo: </span>
                                   <p class="card-text">
                                     Some quick example text to build on the card
                                     title and make up the bulk of the card's
@@ -3468,54 +3073,7 @@
                             </a>
                           </div>
                         </div>
-                        <div class="col-auto">
-                          <div class="form-group">
-                            <a name="" id="" class="btn" role="button">
-                              <div class="card" style="width: 18rem">
-                                <div class="card-body">
-                                  <h5 class="card-title">Card title</h5>
-                                  <p class="card-text">
-                                    Some quick example text to build on the card
-                                    title and make up the bulk of the card's
-                                    content.
-                                  </p>
-                                </div>
-                              </div>
-                            </a>
-                          </div>
-                        </div>
-                        <div class="col-auto">
-                          <div class="form-group">
-                            <a name="" id="" class="btn" role="button">
-                              <div class="card" style="width: 18rem">
-                                <div class="card-body">
-                                  <h5 class="card-title">Card title</h5>
-                                  <p class="card-text">
-                                    Some quick example text to build on the card
-                                    title and make up the bulk of the card's
-                                    content.
-                                  </p>
-                                </div>
-                              </div>
-                            </a>
-                          </div>
-                        </div>
-                        <div class="col-auto">
-                          <div class="form-group">
-                            <a name="" id="" class="btn" role="button">
-                              <div class="card" style="width: 18rem">
-                                <div class="card-body">
-                                  <h5 class="card-title">Card title</h5>
-                                  <p class="card-text">
-                                    Some quick example text to build on the card
-                                    title and make up the bulk of the card's
-                                    content.
-                                  </p>
-                                </div>
-                              </div>
-                            </a>
-                          </div>
-                        </div>
+
                         <!-- <a
                           name="modalid"
                           id="modalid"
@@ -3686,7 +3244,7 @@
                 name="cadastroDeHorasExtras"
                 onclick="chamaTemplate(this.name)"
               >
-                Cadastro de Hora extras
+                Registros de Hora extras
               </button>
             </div>
 
@@ -3742,6 +3300,13 @@
               >
                 Registro VT
               </button>
+              <button
+                class="ui-button ui-widget ui-corner-all"
+                name="cadastroDeHorasExtras"
+                onclick="chamaTemplate(this.name)"
+              >
+                Registros de Hora extras
+              </button>
             </div>
             <!-- RegistrosNivel3 -->
             <h3><i class="bi bi-plus-lg"></i> Supervisao</h3>
@@ -3768,13 +3333,6 @@
                 Análise de Registros
               </button>
               <p></p>
-              <button
-                class="ui-button ui-widget ui-corner-all"
-                name="cadastroDeHorasExtras"
-                onclick="chamaTemplate(this.name)"
-              >
-                Cadastro de Hora extras
-              </button>
 
               <button
                 class="ui-button ui-widget ui-corner-all"
@@ -3788,7 +3346,7 @@
                 name="solicitacaoLideranca"
                 onclick="chamaTemplate(this.name)"
               >
-                Tarefas Liderança
+                Registros de Tarefas
               </button>
             </div>
 
@@ -3930,7 +3488,6 @@
       </div>
     </div>
 
-<<<<<<< HEAD
     <script id="MetodoPost">
       let urlAjax =
         "https://script.google.com/macros/s/AKfycbwrfbMFYCkSAQ-rZdxuYBX_TUlFevl-SBk2c_8qM4BnLgqwEcJa5mbRTkMxtspf9tXRfg/exec";
@@ -3942,325 +3499,6 @@
         icons: {
           header: "ui-icon-circle-plus", // Ícone para cabeçalhos fechados
           activeHeader: "ui-icon-circle-minus", // Ícone para cabeçalhos abertos
-=======
-    <!-- Offcanvas -->
-    <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasMenu" aria-labelledby="offcanvasExampleLabel">
-
-      <div class="offcanvas-body" id="ladoEsquerdoSoffcanvas">
-        <!-- Acordeão -->
-        <div id="accordion" class="w-100 shadow">
-          <!-- Menu -->
-          <h3><span class="material-icons outlined">menu</span> Menu</h3>
-          <div>Menu</div>
-
-          <!-- Análise -->
-          <h3><i class="bi bi-clipboard2-data-fill"></i> Análise</h3>
-          <div>
-            <button class="ui-button ui-widget ui-corner-all" name="analiseDeRegistroFerias"
-              onclick="chamaTemplate(this.name)">
-              Análise de Férias
-            </button>
-            <button class="ui-button ui-widget ui-corner-all" name="analiseDeRegistroColaboradores"
-              onclick="chamaTemplate(this.name)">
-              Análise de Registros
-            </button>
-            <button class="ui-button ui-widget ui-corner-all" name="analiseDeRegistroVT"
-              onclick="chamaTemplate(this.name)">
-              Analise de VT
-            </button>
-            <button class="ui-button ui-widget ui-corner-all" name="cadastroDeHorasExtras"
-              onclick="chamaTemplate(this.name)">
-              Cadastro de Hora extras
-            </button>
-          </div>
-
-          <!-- Registros -->
-          <h3><i class="bi bi-plus-lg"></i> Registros</h3>
-          <div>
-            <button class="ui-button ui-widget ui-corner-all" name="registrosDOC" onclick="chamaTemplate(this.name)">
-              Registro de Documentação
-            </button>
-            <button class="ui-button ui-widget ui-corner-all" name="registroferias" onclick="chamaTemplate(this.name)">
-              Férias
-            </button>
-            <button class="ui-button ui-widget ui-corner-all" name="driver" onclick="chamaTemplate(this.name)">
-              Driver
-            </button>
-            <button class="ui-button ui-widget ui-corner-all" name="registroPagamentosAdiantamento"
-              onclick="chamaTemplate(this.name)">
-              Registro de Adiantamento
-            </button>
-            <button class="ui-button ui-widget ui-corner-all" name="registroPagamentosColaboradores"
-              onclick="chamaTemplate(this.name)">
-              Registros de Pagamentos
-            </button>
-            <button class="ui-button ui-widget ui-corner-all" name="registroRelogioDePonto"
-              onclick="chamaTemplate(this.name)">
-              Relógio De Ponto
-            </button>
-            <button class="ui-button ui-widget ui-corner-all" name="registroVT" onclick="chamaTemplate(this.name)">
-              Registro VT
-            </button>
-          </div>
-          <!-- RegistrosNivel3 -->
-          <h3><i class="bi bi-plus-lg"></i> Supervisao</h3>
-          <div>
-            <button class="ui-button ui-widget ui-corner-all" name="analiseDeRegistroVT"
-              onclick="chamaTemplate(this.name)">
-              Analise de VT
-            </button>
-            <button class="ui-button ui-widget ui-corner-all" name="analiseDeRegistroFerias"
-              onclick="chamaTemplate(this.name)">
-              Análise de Férias
-            </button>
-            <button class="ui-button ui-widget ui-corner-all" name="analiseDeRegistroColaboradores"
-              onclick="chamaTemplate(this.name)">
-              Análise de Registros
-            </button>
-            <p></p>
-            <button class="ui-button ui-widget ui-corner-all" name="cadastroDeHorasExtras"
-              onclick="chamaTemplate(this.name)">
-              Cadastro de Hora extras
-            </button>
-          </div>
-
-          <!-- Cadastro -->
-          <h3><i class="bi bi-file-plus"></i> Cadastro</h3>
-          <div>
-            <button class="ui-button ui-widget ui-corner-all" name="cadastroDeColaboradores"
-              onclick="chamaTemplate(this.name)">
-              Colaboradores
-            </button>
-            <button class="ui-button ui-widget ui-corner-all" name="cadastroDeFuncao"
-              onclick="chamaTemplate(this.name)">
-              Função
-            </button>
-            <button class="ui-button ui-widget ui-corner-all" name="exames" onclick="chamaTemplate(this.name)">
-              Exames
-            </button>
-            <button class="ui-button ui-widget ui-corner-all" name="cursos" onclick="chamaTemplate(this.name)">
-              Cursos
-            </button>
-            <button class="ui-button ui-widget ui-corner-all" name="cadastroEscala" onclick="chamaTemplate(this.name)">
-              Escala
-            </button>
-          </div>
-
-          <!-- Acesso Colaborador -->
-          <h3>Acesso Colaborador</h3>
-          <div>
-            <!-- Card 1 -->
-            <button type="button" class="btn btn-secondary" name="fichaDeregistros" onclick="chamaTemplate(this.name)">
-              <span class="material-symbols-outlined">view_agenda</span> Ficha
-              de Registro/Docs
-            </button>
-
-            <!-- Card 2 -->
-            <button type="button" class="btn btn-secondary" name="extratoPagamento" onclick="chamaTemplate(this.name)">
-              <span class="material-symbols-outlined">view_agenda</span> Extrato
-              de Pagamento
-            </button>
-
-            <!-- Card 3 -->
-            <button type="button" class="btn btn-secondary" name="extratoAdiantamento"
-              onclick="chamaTemplate(this.name)">
-              <span class="material-symbols-outlined">view_agenda</span> Extrato
-              de Adiantamento
-            </button>
-
-            <!-- Card 4 -->
-            <button type="button" class="btn btn-secondary" name="listaFerias" onclick="chamaTemplate(this.name)">
-              <span class="material-symbols-outlined">view_agenda</span> Férias
-            </button>
-
-            <!-- Card 5 -->
-            <button type="button" class="btn btn-secondary" name="planoDeSaude" onclick="chamaTemplate(this.name)">
-              <span class="material-symbols-outlined">view_agenda</span> Plano
-              de Saúde
-            </button>
-
-            <!-- Card 6 -->
-            <button type="button" class="btn btn-secondary" name="exames" onclick="chamaTemplate(this.name)">
-              <span class="material-symbols-outlined">view_agenda</span> Exames
-            </button>
-          </div>
-
-          <!-- Logout -->
-          <h3><span class="material-icons outlined">logout</span> Logout</h3>
-          <div>
-            <button class="ui-button ui-widget ui-corner-all" name="Logout" onclick="chamarLogout()">
-              Logout
-            </button>
-          </div>
-
-          <!-- Login -->
-          <h3><span class="material-icons outlined">login</span> Login</h3>
-          <div>
-            <button class="ui-button ui-widget ui-corner-all" name="car-logar" onclick="chamaTemplate(this.name)">
-              Login
-            </button>
-          </div>
-        </div>
-
-      </div>
-    </div>
-
-  </div>
-
-  <script id="MetodoPost">
-    let urlAjax =
-      "https://script.google.com/macros/s/AKfycbwrfbMFYCkSAQ-rZdxuYBX_TUlFevl-SBk2c_8qM4BnLgqwEcJa5mbRTkMxtspf9tXRfg/exec";
-
-    $("#accordion").accordion({
-      active: false,
-      collapsible: true,
-      heightStyle: "content",
-      icons: {
-        header: "ui-icon-circle-plus", // Ícone para cabeçalhos fechados
-        activeHeader: "ui-icon-circle-minus", // Ícone para cabeçalhos abertos
-      },
-    });
-
-    // Função para chamar o template
-    const inserirTemplate = (templateId, destino) => {
-      try {
-        const formularioID = document.getElementById(templateId);
-        const paginanova = document.getElementById(destino);
-        paginanova.innerHTML = "";
-        const clone = document.importNode(formularioID.content, true);
-        paginanova.appendChild(clone);
-        return formularioID;
-      } catch (error) {
-        return null;
-      }
-    };
-
-    function chamaTemplate(pagina) {
-      let x;
-      if (pagina === "car-logar21") {
-        x = "menuLogin";
-      } else {
-        x = "conteudo";
-      }
-      console.log("pagina", pagina);
-      const formularioID = inserirTemplate(pagina, x);
-      if (!formularioID) return;
-
-      // const formularioID = inserirTemplate(pagina);
-      const paginaB = pagina;
-      switch (paginaB) {
-        case "registrosDOC":
-          carregarColaboradores();
-          break;
-        case "registroPagamentosColaboradores":
-          carregarColaboradores();
-          break;
-        case "registroRelogioDePonto":
-          carregarColaboradores();
-          carregaEscala();
-          break;
-        case "cadastroDeFuncao":
-          carregarColaboradores();
-          break;
-        case "registroferias":
-          carregarColaboradores();
-          break;
-        case "registroPagamentosAdiantamento":
-          carregarColaboradores();
-          break;
-        case "cadastroEscala":
-          carregarColaboradores();
-          carregarFuncao();
-
-          break;
-        case "registroVT":
-          carregarColaboradores();
-          toFiilIntabePGVT("tabelaPagamentos");
-
-          break;
-        case "analiseDeRegistroVT":
-          toFiilIntabeDescVT("tabelaAnaliseVTPagamentos");
-
-          break;
-        case "analiseDeRegistroColaboradores":
-          break;
-        case "analiseDeRegistroFerias":
-          break;
-        case "cadastroDeHorasExtras":
-          carregarColaboradores();
-          toFiilIntabeHoraExtra();
-
-          break;
-
-        default:
-          break;
-      }
-    }
-  </script>
-  <script id="login">
-    function chamarLogout() {
-      localStorage.removeItem("usuarioLogado"); // Remove o usuário logado do Local Storage
-      alert("Logout realizado com sucesso");
-      controlarExibicaoAccordion(3);
-    }
-
-    function chamarLogin() {
-      let meuLogin = document.getElementById("input-user-login").value;
-      let minhasenha = document.getElementById("input-senha-login").value;
-
-      let usergrup = { login: meuLogin, password: minhasenha };
-      localStorage.setItem("usuarioLogado", JSON.stringify(usergrup));
-
-      // Chamar a função de verificação de credenciais
-      verificarCredenciais();
-    }
-
-    function verificarCredenciais() {
-      mostrarSpinner();
-      let userData = JSON.parse(localStorage.getItem("usuarioLogado"));
-
-      if (!userData) {
-        alert("Usuário não encontrado. Por favor, faça o login novamente.");
-        return;
-      }
-
-      let userName = userData.login;
-      let password = userData.password;
-
-      if (!urlAjax) {
-        alert("URL para a requisição AJAX não definida.");
-        return;
-      }
-
-      $.ajax({
-        type: "POST",
-        url: urlAjax,
-        data: {
-          userName: userName,
-          qualFuncao: "verificarCredenciais",
-          password: password,
-        }, // Envia os dados diretamente
-        success: function (response) {
-          esconderSpinner();
-
-          if (response.usuarioAutenticado) {
-            alert("Usuário autenticado com sucesso.");
-            // Atualize o localStorage com as informações retornadas
-            userData.id = response.id;
-            userData.nivel = response.loginResult;
-            localStorage.setItem("usuarioLogado", JSON.stringify(userData));
-            controlarExibicaoAccordion(response.loginResult);
-
-            // document.getElementById("input-user-login").value = "";
-            // document.getElementById("input-senha-login").value = "";
-          } else {
-            alert("Erro de login: credenciais inválidas.");
-          }
-        },
-        error: function (error) {
-          esconderSpinner();
-          console.error("Erro ao autenticar", error);
->>>>>>> d1a884bfc2478852480c27d5864f29b1774a95e3
         },
       });
 
@@ -5768,6 +5006,9 @@
     </script>
     <!-- Registro de Solicitações -->
     <script>
+      chamaTemplate("solicitacaoLideranca");
+      toFiilIntabeTarefa();
+
       function salvarDadosTarefas() {
         const inputs = document.querySelectorAll(".slLideranca");
         inputs.forEach((input) => {
@@ -5826,24 +5067,20 @@
           },
         });
       }
-      function toFiilIntabeHoraExtra(tabela) {
+      function toFiilIntabeTarefa() {
         // Preencher tabela PG VT
         mostrarSpinner();
-        let tabelaID = "tableHorasExtras";
-
-        const tableBody = document.getElementById("tabelaHorasExtras"); // Refere-se ao tbody, não à table
-        const dataTableID = "tableHorasExtras"; // ID da tabela para inicialização do DataTable
 
         $.ajax({
           type: "POST",
           url: urlAjax,
           data: {
-            qualFuncao: "carregarHoraExtra",
+            qualFuncao: "carregaTarefas",
           },
           success: function (response) {
             esconderSpinner();
-            console.log(response);
-            console.log(JSON.stringify(response));
+            console.log("carregaTarefas", response);
+            console.log("carregaTarefas", JSON.stringify(response));
             if (response.situacao) {
               try {
                 // Limpar tabela antes de preencher
@@ -5887,40 +5124,6 @@
                   row.appendChild(celldataUpdate);
 
                   tableBody.appendChild(row);
-                });
-
-                // Inicialize DataTables após preencher a tabela
-                $(document).ready(function () {
-                  if (!$.fn.DataTable.isDataTable(`#${dataTableID}`)) {
-                    $(`#${dataTableID}`).DataTable({
-                      destroy: true, // Reinitialize if needed
-                      deferRender: true,
-                      scrollCollapse: true,
-                      scroller: true,
-                      scrollY: 350,
-                      scrollX: true,
-                      scrollHeight: 350,
-                      autoWidth: false,
-                      order: [[0, "desc"]],
-                      dom: "B", // Adiciona o layout com botões
-                      buttons: ["copy", "excel", "pdf"],
-                      layout: {
-                        topStart: {
-                          buttons: ["searchPanes"],
-                        },
-                      },
-                      columnDefs: [
-                        {
-                          targets: 1,
-                          className: "dt-body-center",
-                        },
-                        {
-                          target: 7,
-                          visible: false,
-                        },
-                      ],
-                    });
-                  }
                 });
               } catch (error) {
                 console.log(error);

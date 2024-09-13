@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
+      charset="UTF-8"
+    />
+    <link
+      href="https://cdn.datatables.net/v/dt/jq-3.7.0/dt-2.0.2/b-3.0.1/sp-2.3.0/sl-2.0.0/datatables.min.css"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.datatables.net/v/dt/jq-3.7.0/dt-2.0.2/b-3.0.1/sp-2.3.0/sl-2.0.0/datatables.min.js"></script>
+
+    <!-- Estilo copiado da internet -->
+    <!-- Google Fonts -->
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Icons"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"
+      rel="stylesheet"
+    />
+
+    <!-- Estilo copiado da internet -->
+
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous"
+    />
+
+    <!-- d -->
+    <!-- Bootstrap JS -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-pZ+QWtYfELzgy58GfbGLAfnQ1SzKpAaOVPfT+c6b5YvZJQW9Fk84Jr0+P1+pSydA" crossorigin="anonymous">
+  </script> -->
+
+    <!-- d -->
+    <!-- Bootstrap Icons CSS -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://code.jquery.com/ui/1.13.3/themes/smoothness/jquery-ui.css"
+    />
+    <!-- DataTables CSS -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.datatables.net/2.0.8/css/dataTables.dataTables.css"
+    />
+    <!-- Flags css -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/gh/lafeber/world-flags-sprite/stylesheets/flags32-both.css"
+    />
+    <!-- Scroller CSS -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.datatables.net/scroller/2.2.0/css/scroller.dataTables.min.css"
+    />
+
+    <!-- jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+    <!-- jQuery UI (if needed) -->
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <!-- DataTables JS -->
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <!-- Scroller JS -->
+    <script src="https://cdn.datatables.net/scroller/2.4.3/js/scroller.dataTables.js"></script>
+    <script src="https://cdn.datatables.net/2.0.8/js/dataTables.js"></script>
+    <script src="https://cdn.datatables.net/scroller/2.4.3/js/dataTables.scroller.js"></script>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+    <link
+      rel="stylesheet"
+      href="https://code.jquery.com/ui/1.14.0/themes/base/jquery-ui.css"
+    />
+    <link rel="stylesheet" href="/resources/demos/style.css" />
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script src="https://code.jquery.com/ui/1.14.0/jquery-ui.js"></script>
+
+    <style>
+      :root {
+        /* Paleta de cores */
+        --cor-primaria: #fafafa;
+        --cor-secundaria: #07637a;
+        --cor-terciaria: #ffffff;
+        --cor-quaternaria: #e5e5e5;
+        --cor-acento: #ff5733;
+        --cor-branco: #ffffff;
+        --cor-subFundo: linear-gradient(74deg, #ff0066, #bb00ff, #b358c3);
+        --cor-Fundo: #e3ac98;
+        /* Exemplo de cor de acento */
+      }
+
+      body {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100vh;
+        font-family: "Raleway", sans-serif;
+        font-size: 0.8rem;
+      }
+
+      #superBody {
+        display: grid;
+        grid-template-rows: auto 1fr;
+        grid-template-columns: auto 1fr auto;
+        background: var(--cor-branco);
+        height: 100%;
+        width: 100%;
+      }
+
+      div#tpl-body {
+        display: grid;
+        grid-template-rows: auto 1fr;
+        grid-template-columns: auto 1fr auto;
+        background: var(--cor-branco);
+        height: 100%;
+        width: 100%;
+      }
+
+      #barTop {
+        grid-column: 1 / -1;
+        /* Ocupa toda a largura do grid */
+        background: var(--cor-terciaria);
+        color: #070606;
+        padding: 1em;
+        text-align: center;
+        width: 97vw;
+      }
+
+      #ladoEsquerdo {
+        background: var(--cor-branco);
+        font-size: 1.1rem;
+        padding: 1rem;
+      }
+
+      #ladoDireito,
+      conteudo {
+        max-width: 100vw;
+        margin-left: 0.8vh;
+        background: var(--cor-terciaria);
+        padding: 1em;
+      }
+
+      button {
+        border: none;
+      }
+
+      .is-invalid {
+        border-color: red;
+      }
+
+      .ui-accordion .ui-accordion-content {
+        display: grid;
+      }
+
+      button.btn.btn-light.btn-acc {
+        width: 100%;
+        text-align: center;
+        border: none;
+      }
+
+      /* Classe para mostrar/ocultar o overlay */
+      .d-none {
+        display: none;
+      }
+
+      .accordion-control {
+        text-align: left;
+        font-size: 1.2rem;
+        font-family: "Montserrat";
+        background: #000;
+        color: white;
+        border: none;
+        padding: 0.8em 1em;
+        cursor: pointer;
+      }
+
+      div#tableHorasExtras_wrapper {
+        font-family: Verdana;
+      }
+
+      .menu {
+        position: relative;
+      }
+
+      .menu__item {
+        position: relative;
+        padding: 0.5em 1em;
+      }
+
+      .menu__border {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        height: 4px;
+        background-color: #ff5733;
+        /* Cor da borda */
+        transition: transform 0.3s ease;
+      }
+
+      .spinner-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(255, 255, 255, 0.7);
+        /* Cor de fundo com transparência */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+        /* Certifique-se de que o overlay esteja acima de outros conteúdos */
+      }
+
+      .card.loginstilo {
+        align-items: center;
+        font-size: 1.2rem;
+        text-align: justify;
+        width: 90vw;
+        height: 90vh;
+        border: none;
+      }
+
+      div#login {
+        display: flex;
+        flex-flow: column wrap;
+        gap: 1.8rem;
+        width: 19vw;
+        height: 70vh;
+        justify-content: center;
+        margin-top: 2rem;
+      }
+
+      @media (max-width: 400px) {
+        #ladoDireito {
+          height: 100vh;
+          max-width: 93vw;
+        }
+
+        #ladoEsquerdo {
+          /* height: 50vh; */
+          width: 100%;
+        }
+
+        div#accordion {
+          width: 100%;
+          font-size: 2rem;
+        }
+
+        #superBody {
+          grid-template-columns: 1fr;
+          grid-template-rows: auto 1fr auto;
+          height: 100vh;
+          width: 100%;
+          gap: 1.8rem;
+        }
+
+        .ui-accordion .ui-accordion-header .ui-accordion-content {
+          width: 98vw;
+        }
+
+        .card.loginstilo {
+          align-items: center;
+          font-size: 1.2rem;
+          text-align: justify;
+          border: none;
+          height: 66vh;
+        }
+
+        div#login {
+          display: flex;
+          flex-flow: column wrap;
+          gap: 1.2rem;
+          justify-content: center;
+          margin-top: 2rem;
+          width: 100%;
+          height: 51vh;
+        }
+      }
+
+      barTop {
+        display: none;
+      }
+      div#offcanvasMenu {
+        max-width: 17rem;
+      }
+      #clock {
+        font-size: 24px;
+        font-family: Arial, sans-serif;
+        font-weight: bold;
+        color: #07637a;
+      }
+      .dt-body-nowrap {
+        white-space: nowrap;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="superBody">
+      <template id="solicitacaoLideranca" class="w-100">
+        <div class="card w-100 shadow-lg">
+          <div class="card-body">
+            <h1 class="card-title">Solicitações - Ciclo Verde</h1>
+
+            <div class="card mt-4">
+              <div class="card-body w-100">
+                <div class="row w-auto">
+                  <!-- ID -->
+                  <div class="col-sm-3 mb-3">
+                    <label for="idHorasSl">ID</label>
+                    <div class="form-group">
+                      <input
+                        type="text"
+                        name="idHorasSl"
+                        id="idHorasSl"
+                        disabled="disabled"
+                        class="form-control slLideranca"
+                      />
+                    </div>
+                  </div>
+                  <!--Colaborador  -->
+                  <div class="col-sm-3 mb-3">
+                    <label for="colaboradorSl"
+                      >Responsável pela Solicitação</label
+                    >
+                    <div class="form-group">
+                      <select
+                        class="slLideranca form-control scColaborador"
+                        name="colaboradorSl"
+                        id="colaboradorSl"
+                        required
+                      ></select>
+                    </div>
+                  </div>
+                  <!--Data  -->
+                  <div class="col-sm-3 mb-3">
+                    <div class="form-group">
+                      <label for="dataAgendamentoSl">Data</label>
+                      <input
+                        type="date"
+                        name="dataAgendamentoSl"
+                        id="dataAgendamentoSl"
+                        class="form-control slLideranca"
+                        required
+                      />
+                    </div>
+                  </div>
+                  <!-- situacão -->
+                  <div class="col-sm-3 mb-3">
+                    <label for="situcaoAgendamentoSL">Situção</label>
+                    <div class="form-group">
+                      <select
+                        name="situcaoAgendamentoHora"
+                        id="situcaoAgendamentoSL"
+                        class="form-control slLideranca"
+                        required
+                      >
+                        <option value="1">Aprovado</option>
+                        <option value="2">Reprovado</option>
+                        <option value="3">negado</option>
+                      </select>
+                    </div>
+                  </div>
+                  <!-- observação -->
+                  <div class="col-sm-3 mb-3">
+                    <label for="obsAgendamentoSl">Descrição</label>
+                    <div class="form-group">
+                      <textarea
+                        type="text"
+                        name="obsAgendamentoSl"
+                        id="obsAgendamentoSl"
+                        class="form-control slLideranca"
+                      ></textarea>
+                    </div>
+                  </div>
+                  <!-- Prazo -->
+                  <div class="col-sm-3 mb-3">
+                    <div class="form-group">
+                      <label for="dataAgendamentoPSl">Prazo</label>
+                      <input
+                        type="date"
+                        name="dataAgendamentoPSl"
+                        id="dataAgendamentoPSl"
+                        class="form-control slLideranca"
+                        required
+                      />
+                    </div>
+                  </div>
+                  <!-- quantidade de de dias -->
+                  <div class="col-sm-3 mb-3">
+                    <div class="form-group">
+                      <div class="form-group">
+                        <label for="qDias">Dias</label>
+                        <input
+                          type="text"
+                          class="form-control slLideranca"
+                          name="qDias"
+                          id="qDias"
+                          aria-describedby="helpId"
+                          placeholder="0"
+                          disabled="disabled"
+                        />
+                        <small id="helpId" class="form-text text-muted"
+                          >Quantidade de dias</small
+                        >
+                      </div>
+                    </div>
+                  </div>
+                  <!--Reponsavel pela tarefa  -->
+                  <div class="col-sm-3 mb-3">
+                    <label for="colaboradorRespoonsavelTSl"
+                      >Responsável pela tarefa</label
+                    >
+                    <div class="form-group">
+                      <select
+                        class="slLideranca form-control scColaborador"
+                        name="colaboradorRespoonsavelTSl"
+                        id="colaboradorRespoonsavelTSl"
+                        required
+                      ></select>
+                    </div>
+                  </div>
+                </div>
+                <!-- Botoes -->
+                <div class="row g-1 align-items-center">
+                  <div class="col-sm-1 mb-3">
+                    <button
+                      type="button"
+                      class="btn btn-primary"
+                      data-toggle="button"
+                      aria-pressed="false"
+                      autocomplete="off"
+                      onclick="salvarDadosTarefas()"
+                    >
+                      Salvar
+                    </button>
+                    <!-- TODO Button -->
+                  </div>
+                  <div class="col-sm-1 mb-3"></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row fs-8">
+              <!-- Formulário de Registro de Pagamento -->
+              <div class="col-md-12">
+                <div class="card mt-4">
+                  <div class="card-body w-100">
+                    <div class="row g-1 align-items-center">
+                      <div class="col-auto">
+                        <div class="form-group">
+                          <a name="" id="" class="btn" role="button">
+                            <div class="card" style="width: 18rem">
+                              <div class="card-body">
+                                <h5 class="card-title">Card title</h5>
+                                <p class="card-text">
+                                  Some quick example text to build on the card
+                                  title and make up the bulk of the card's
+                                  content.
+                                </p>
+                              </div>
+                            </div>
+                          </a>
+                        </div>
+                      </div>
+                      <div class="col-auto">
+                        <div class="form-group">
+                          <a name="" id="" class="btn" role="button">
+                            <div class="card" style="width: 18rem">
+                              <div class="card-body">
+                                <h5 class="card-title">Card title</h5>
+                                <p class="card-text">
+                                  Some quick example text to build on the card
+                                  title and make up the bulk of the card's
+                                  content.
+                                </p>
+                              </div>
+                            </div>
+                          </a>
+                        </div>
+                      </div>
+                      <div class="col-auto">
+                        <div class="form-group">
+                          <a name="" id="" class="btn" role="button">
+                            <div class="card" style="width: 18rem">
+                              <div class="card-body">
+                                <h5 class="card-title">Card title</h5>
+                                <p class="card-text">
+                                  Some quick example text to build on the card
+                                  title and make up the bulk of the card's
+                                  content.
+                                </p>
+                              </div>
+                            </div>
+                          </a>
+                        </div>
+                      </div>
+                      <div class="col-auto">
+                        <div class="form-group">
+                          <a name="" id="" class="btn" role="button">
+                            <div class="card" style="width: 18rem">
+                              <div class="card-body">
+                                <h5 class="card-title">Card title</h5>
+                                <p class="card-text">
+                                  Some quick example text to build on the card
+                                  title and make up the bulk of the card's
+                                  content.
+                                </p>
+                              </div>
+                            </div>
+                          </a>
+                        </div>
+                      </div>
+                      <!-- <a
+                        name="modalid"
+                        id="modalid"
+                        class="btn btn-primary"
+                        href="#"
+                        data-bs-toggle="modal"
+                        data-bs-target="#exampleModal"
+                        >Abrir Modal</a
+                      > -->
+                      <!-- 
+                      <div id="dialog" title="Basic dialog">
+                        <p>
+                          This is the default dialog which is useful for
+                          displaying information. The dialog window can be
+                          moved, resized and closed with the 'x' icon.
+                        </p>
+                      </div> -->
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Modal -->
+        <div
+          class="modal fade"
+          id="exampleModal"
+          tabindex="-1"
+          aria-labelledby="exampleModalLabel"
+          aria-hidden="true"
+        >
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Categoria</h5>
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                ></button>
+              </div>
+              <div class="modal-body">
+                <!-- //Conteúdo do modal aqui. -->
+                <div class="form-group">
+                  <label for="listaCategoria" class="form-label"
+                    >Categoria</label
+                  >
+                  <input
+                    class="form-control"
+                    list="datalistCategoriaOptions"
+                    id="listaCategoria"
+                    placeholder="Escreva aqui..."
+                  />
+                  <datalist id="datalistCategoriaOptions">
+                    <option value="San Francisco"></option>
+                    <option value="New York"></option>
+                    <option value="Seattle"></option>
+                    <option value="Los Angeles"></option>
+                    <option value="Chicago"></option>
+                  </datalist>
+                </div>
+                <!-- <div class="form-group">
+                <label for="categoriaSolicitacao">Categoria</label>
+                <input
+                  type="text"
+                  name="categoriaSolicitacao"
+                  id="categoriaSolicitacao"
+                  class="form-control"
+                  placeholder="Descrição"
+                  aria-describedby="helpId"
+                />
+              </div> -->
+              </div>
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  data-bs-dismiss="modal"
+                >
+                  Fechar
+                </button>
+                <button
+                  type="button"
+                  onclick="salvarDadosSolicitacaoLS()"
+                  class="btn btn-primary"
+                >
+                  Salvar
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </template>
+    </div>
+
+    <!-- <script>
+      $(function () {
+        $("#dialog").dialog();
+      });
+    </script> -->
+  </body>
+</html>
