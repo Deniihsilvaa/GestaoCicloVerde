@@ -313,6 +313,43 @@
       .dt-body-nowrap {
         white-space: nowrap;
       }
+
+      .cardTools:hover {
+        /* transform: matrix(2.1); */
+        scale: 1.05;
+        transition: 0.5s;
+      }
+      .modal {
+        display: none;
+        position: fixed;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+      }
+
+      .modal-content {
+        background-color: #fefefe;
+        margin: 15% auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 80%;
+      }
+
+      .close {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+      }
+
+      .close:hover,
+      .close:focus {
+        color: black;
+        text-decoration: none;
+        cursor: pointer;
+      }
     </style>
   </head>
 
@@ -2900,7 +2937,7 @@
             </div>
           </div>
         </template>
-        <!-- TODO TEMPLATES solcitacaoLideranca -->
+
         <template id="solicitacaoLideranca" class="w-100">
           <div class="card w-100 shadow-lg">
             <div class="card-body">
@@ -2965,7 +3002,19 @@
                         </select>
                       </div>
                     </div>
-                    <!-- observação -->
+                    <!-- Tarefa -->
+                    <div class="col-sm-3 mb-3">
+                      <label for="tarefaAgendamentoSl">Tarefa</label>
+                      <div class="form-group">
+                        <textarea
+                          type="text"
+                          name="tarefaAgendamentoSl"
+                          id="tarefaAgendamentoSl"
+                          class="form-control slLideranca"
+                        ></textarea>
+                      </div>
+                    </div>
+                    <!-- Obersavação da tarefa -->
                     <div class="col-sm-3 mb-3">
                       <label for="obsAgendamentoSl">Descrição</label>
                       <div class="form-group">
@@ -3044,126 +3093,66 @@
                   </div>
                 </div>
               </div>
+              <!-- TODO TEMPLATES solcitacaoLideranca -->
+              <div class="card mt-4">
+                <div class="card w-100">
+                  <!-- Filtro de Situação -->
+                  <div class="form-group">
+                    <label class="custom-control custom-radio">
+                      <input
+                        type="radio"
+                        name="filterStatus"
+                        id="radioPendente"
+                        value="Todos"
+                        class="custom-control-input"
+                        checked
+                      />
+                      <span class="custom-control-indicator">Todos</span>
+                    </label>
+                    <label class="custom-control custom-radio">
+                      <input
+                        type="radio"
+                        name="filterStatus"
+                        id="radioConcluido"
+                        value="Concluido"
+                        class="custom-control-input"
+                      />
+                      <span class="custom-control-indicator">Concluido</span>
+                    </label>
+                    <label class="custom-control custom-radio">
+                      <input
+                        type="radio"
+                        name="filterStatus"
+                        id="radioPendente"
+                        value="Pendente"
+                        class="custom-control-input"
+                      />
+                      <span class="custom-control-indicator">Pendente</span>
+                    </label>
+                  </div>
 
-              <div class="row fs-8">
-                <!-- Formulário de Registro de Pagamento -->
-                <div class="col-md-12">
-                  <div class="card mt-4">
-                    <div class="card-body w-100">
-                      <div class="row g-1 align-items-center">
-                        <div id="divTarefasdocliente"></div>
-                        <div class="col-auto">
-                          <div class="form-group">
-                            <a name="" id="" class="btn" role="button">
-                              <div class="card" style="width: 18rem">
-                                <div class="card-body">
-                                  <img
-                                    src="https://drive.google.com/file/d/1NOH7EIB9QsS5_OG6nkYb5DKFvJdTjS_d/view?usp=drive_link"
-                                    alt=""
-                                  />
-                                  <h5 class="card-title">Tarefa:</h5>
-                                  <span>Prazo: </span>
-                                  <p class="card-text">
-                                    Some quick example text to build on the card
-                                    title and make up the bulk of the card's
-                                    content.
-                                  </p>
-                                </div>
-                              </div>
-                            </a>
-                          </div>
-                        </div>
+                  <!-- Áreas para as tarefas -->
+                  <div class="row w-auto">
+                    <!-- Tarefas Pendentes -->
+                    <div class="card-body">
+                      <h5>Pendentes</h5>
+                      <div id="divTarefasPendentes" class="tarefa-grid"></div>
+                    </div>
 
-                        <!-- <a
-                          name="modalid"
-                          id="modalid"
-                          class="btn btn-primary"
-                          href="#"
-                          data-bs-toggle="modal"
-                          data-bs-target="#exampleModal"
-                          >Abrir Modal</a
-                        > -->
-                        <!-- 
-                        <div id="dialog" title="Basic dialog">
-                          <p>
-                            This is the default dialog which is useful for
-                            displaying information. The dialog window can be
-                            moved, resized and closed with the 'x' icon.
-                          </p>
-                        </div> -->
-                      </div>
+                    <!-- Tarefas Concluídas -->
+                    <div class="card-body">
+                      <h5>Concluídas</h5>
+                      <div id="divTarefasConcluidas" class="tarefa-grid"></div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
-          <!-- Modal -->
-          <div
-            class="modal fade"
-            id="exampleModal"
-            tabindex="-1"
-            aria-labelledby="exampleModalLabel"
-            aria-hidden="true"
-          >
-            <div class="modal-dialog">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLabel">Categoria</h5>
-                  <button
-                    type="button"
-                    class="btn-close"
-                    data-bs-dismiss="modal"
-                    aria-label="Close"
-                  ></button>
-                </div>
-                <div class="modal-body">
-                  <!-- //Conteúdo do modal aqui. -->
-                  <div class="form-group">
-                    <label for="listaCategoria" class="form-label"
-                      >Categoria</label
-                    >
-                    <input
-                      class="form-control"
-                      list="datalistCategoriaOptions"
-                      id="listaCategoria"
-                      placeholder="Escreva aqui..."
-                    />
-                    <datalist id="datalistCategoriaOptions">
-                      <option value="San Francisco"></option>
-                      <option value="New York"></option>
-                      <option value="Seattle"></option>
-                      <option value="Los Angeles"></option>
-                      <option value="Chicago"></option>
-                    </datalist>
-                  </div>
-                  <!-- <div class="form-group">
-                  <label for="categoriaSolicitacao">Categoria</label>
-                  <input
-                    type="text"
-                    name="categoriaSolicitacao"
-                    id="categoriaSolicitacao"
-                    class="form-control"
-                    placeholder="Descrição"
-                    aria-describedby="helpId"
-                  />
-                </div> -->
-                </div>
-                <div class="modal-footer">
-                  <button
-                    type="button"
-                    class="btn btn-secondary"
-                    data-bs-dismiss="modal"
-                  >
-                    Fechar
-                  </button>
-                  <button
-                    type="button"
-                    onclick="salvarDadosSolicitacaoLS()"
-                    class="btn btn-primary"
-                  >
-                    Salvar
-                  </button>
+
+              <!-- Modal para mostrar detalhes -->
+              <div class="modal" id="taskModal">
+                <div class="modal-content">
+                  <span class="close" id="closeModal">&times;</span>
+                  <div id="modalBody"></div>
                 </div>
               </div>
             </div>
@@ -3523,7 +3512,6 @@
         } else {
           x = "conteudo";
         }
-        console.log("pagina", pagina);
         const formularioID = inserirTemplate(pagina, x);
         if (!formularioID) return;
 
@@ -4806,7 +4794,7 @@
 
           // Pegar os dados da linha
           const cells = Array.from(row.getElementsByTagName("td"));
-          console.log("cells", cells);
+          // console.log("cells", cells);
 
           // Verificar se as células foram encontradas e preencher os campos
           if (cells.length >= 6) {
@@ -5007,7 +4995,7 @@
     <!-- Registro de Solicitações -->
     <script>
       chamaTemplate("solicitacaoLideranca");
-      toFiilIntabeTarefa();
+      toFillTableTarefa();
 
       function salvarDadosTarefas() {
         const inputs = document.querySelectorAll(".slLideranca");
@@ -5067,66 +5055,93 @@
           },
         });
       }
-      function toFiilIntabeTarefa() {
-        // Preencher tabela PG VT
+      function toFillTableTarefa() {
         mostrarSpinner();
 
         $.ajax({
           type: "POST",
           url: urlAjax,
-          data: {
-            qualFuncao: "carregaTarefas",
-          },
+          data: { qualFuncao: "carregaTarefas" },
           success: function (response) {
             esconderSpinner();
-            console.log("carregaTarefas", response);
-            console.log("carregaTarefas", JSON.stringify(response));
             if (response.situacao) {
               try {
-                // Limpar tabela antes de preencher
-                tableBody.innerHTML = "";
+                // Limpar as áreas de pendente e concluído
+                const pendenteContainer = document.getElementById(
+                  "divTarefasPendentes"
+                );
+                const concluidoContainer = document.getElementById(
+                  "divTarefasConcluidas"
+                );
+                pendenteContainer.innerHTML = "";
+                concluidoContainer.innerHTML = "";
 
-                // Preencher tabela com os dados retornados
+                // Função para criar os cards
+                function createCard(dado) {
+                  const cardcol = document.createElement("div");
+                  cardcol.classList.add("col-md-4");
+
+                  const bttCard = document.createElement("a");
+                  bttCard.classList.add("btn", "cardTools");
+                  bttCard.role = "button";
+                  bttCard.name = `tarefas?id=${dado.id}`;
+                  bttCard.id = dado.id;
+
+                  const cardDiv = document.createElement("div");
+                  cardDiv.style.width = "18rem";
+                  cardDiv.style.height = "100%";
+
+                  const cardBodyDiv = document.createElement("div");
+                  cardBodyDiv.classList.add("card-body", "shadow");
+
+                  const cardTitle = document.createElement("h5");
+                  cardTitle.classList.add(
+                    "card-title",
+                    "shadow-lg",
+                    "p-3",
+                    "mb-5",
+                    "bg-body",
+                    "rounded"
+                  );
+                  cardTitle.textContent = `Tarefa: ${dado.tarefaAgendamentoSl}`;
+                  cardTitle.style.color =
+                    dado.situcaoAgendamentoSL === "Pendente" ? "red" : "green";
+
+                  const cardPrazo = document.createElement("span");
+                  cardPrazo.textContent = `Prazo: ${dado.prazoAgendamento}`;
+
+                  const cardText = document.createElement("p");
+                  cardText.classList.add("card-text", "text-muted", "p-3");
+                  cardText.innerHTML = `
+              Responsável: ${dado.colaboradorSl}<br>
+              Situação: ${dado.situcaoAgendamentoSL}<br>
+            `;
+
+                  cardBodyDiv.appendChild(cardTitle);
+                  cardBodyDiv.appendChild(cardPrazo);
+                  cardBodyDiv.appendChild(cardText);
+                  cardDiv.appendChild(cardBodyDiv);
+                  cardcol.appendChild(bttCard);
+                  bttCard.appendChild(cardDiv);
+
+                  bttCard.addEventListener("click", function () {
+                    showModal(dado); // Abrir modal com os dados
+                  });
+
+                  return bttCard;
+                }
+
+                // Preencher os containers com as tarefas
                 response.dados.forEach((dado) => {
-                  const row = document.createElement("tr");
-
-                  const cellID = document.createElement("td");
-                  cellID.textContent = dado.id;
-                  row.appendChild(cellID);
-
-                  const cellNome = document.createElement("td");
-                  cellNome.textContent = dado.nomecolaboradorvt;
-                  row.appendChild(cellNome);
-
-                  const cellData = document.createElement("td");
-                  cellData.textContent = dado.dataAgendamento;
-                  row.appendChild(cellData);
-
-                  const cellhoraAgendamentoHora = document.createElement("td");
-                  cellhoraAgendamentoHora.textContent =
-                    dado.horaAgendamentoHora; // Ajuste com os dados corretos
-                  row.appendChild(cellhoraAgendamentoHora);
-
-                  const cellHoraSaida = document.createElement("td");
-                  cellHoraSaida.textContent = dado.horaAgendamentoFimHora; // Ajuste com os dados corretos
-                  row.appendChild(cellHoraSaida);
-
-                  const cellSituacao = document.createElement("td");
-                  cellSituacao.textContent = dado.situcaoAgendamentoHora; // Ajuste com os dados corretos
-                  row.appendChild(cellSituacao);
-
-                  const cellDescricao = document.createElement("td");
-                  cellDescricao.textContent = dado.obsAgendamentoHora; // Ajuste com os dados corretos
-                  row.appendChild(cellDescricao);
-
-                  const celldataUpdate = document.createElement("td");
-                  celldataUpdate.textContent = dado.dataUpdate; // Ajuste com os dados corretos
-                  row.appendChild(celldataUpdate);
-
-                  tableBody.appendChild(row);
+                  const card = createCard(dado);
+                  if (dado.situcaoAgendamentoSL === "Pendente") {
+                    pendenteContainer.appendChild(card);
+                  } else {
+                    concluidoContainer.appendChild(card);
+                  }
                 });
               } catch (error) {
-                console.log(error);
+                console.error(error);
               }
             } else {
               alert("Erro de retorno: " + response.mensagem);
@@ -5137,6 +5152,58 @@
             console.error("Erro ==>", error);
           },
         });
+      }
+
+      // Mostrar modal com informações adicionais
+      function showModal(dado) {
+        const modal = document.getElementById("taskModal");
+        const modalBody = document.getElementById("modalBody");
+
+        modalBody.innerHTML = `
+          <h3>Detalhes da Tarefa</h3>
+          <p>Tarefa: ${dado.tarefaAgendamentoSl}</p>
+          <p>Responsável: ${dado.colaboradorSl}</p>
+          <p>Prazo: ${dado.prazoAgendamento}</p>
+          <p>Situação: ${dado.situcaoAgendamentoSL}</p>
+          <p>Data de Agendamento: ${dado.dataAgendamentoSl}</p>
+          <p>Última atualização: ${dado.dataUpdate}</p>
+        `;
+        modal.style.display = "block";
+
+        // Fechar o modal
+        document.getElementById("closeModal").onclick = function () {
+          modal.style.display = "none";
+        };
+      }
+
+      // Filtro de Tarefas
+      document
+        .querySelectorAll('input[name="filterStatus"]')
+        .forEach((radio) => {
+          radio.addEventListener("change", function () {
+            const status = this.value;
+            filterTasks(status);
+          });
+        });
+
+      function filterTasks(status) {
+        const pendenteContainer = document.getElementById(
+          "divTarefasPendentes"
+        );
+        const concluidoContainer = document.getElementById(
+          "divTarefasConcluidas"
+        );
+
+        if (status === "Pendente") {
+          pendenteContainer.style.display = "block";
+          concluidoContainer.style.display = "none";
+        } else if (status === "Concluido") {
+          pendenteContainer.style.display = "none";
+          concluidoContainer.style.display = "block";
+        } else {
+          pendenteContainer.style.display = "block";
+          concluidoContainer.style.display = "block";
+        }
       }
     </script>
   </body>
