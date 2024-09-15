@@ -450,7 +450,7 @@
 
         <template id="car-logar">
           <div class="card loginstilo cardlogar shadow">
-            <div class="card-body text-dark shadow">
+            <div class="card-body text-dark">
               <div id="login" class="w-100 p-5 bg-body-tertiary rounded">
                 <div class="div-login">
                   <label for="input-user-login" class="input-group-text"
@@ -5072,9 +5072,7 @@
 
       function salvarDadosTarefas() {
         const inputs = document.querySelectorAll(".slLideranca");
-        inputs.forEach((input) => {
-          console.log(`${input.name || input.id}: ${input.value}`); // Mostra o nome ou id e o valor do input no console
-        });
+
         const isValid = Array.from(inputs).every((input) => {
           if (input.hasAttribute("required") && !input.value) {
             input.classList.add("is-invalid"); // Adiciona classe para destacar o campo vazio
@@ -5107,7 +5105,7 @@
           url: urlAjax,
           data: {
             mod: mod,
-            qualFuncao: "salvarDadosHorasExtra",
+            qualFuncao: "salvarDadosTarefas",
             dados: JSON.stringify(dadosArray), // Enviando o array como JSON
           },
           success: function (response) {
@@ -5117,7 +5115,7 @@
               inputs.forEach((input) => {
                 input.value = " "; // Limpar inputs
               });
-              toFiilIntabePGVT(); // atualizar tabela
+              toFillTableTarefa();
             } else {
               alert("Erro de retorno: " + response.mensagem);
             }
