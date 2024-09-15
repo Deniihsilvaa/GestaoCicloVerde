@@ -3126,13 +3126,11 @@
                       >
                         Salvar
                       </button>
-                      <!-- TODO Button -->
                     </div>
                     <div class="col-sm-1 mb-3"></div>
                   </div>
                 </div>
               </div>
-              <!-- TODO TEMPLATES solcitacaoLideranca -->
               <div class="card mt-4">
                 <div class="card w-100">
                   <!-- Filtro de Situação -->
@@ -3215,13 +3213,17 @@
                 </div>
               </div>
 
-              <!-- Modal para mostrar detalhes -->
+              <!-- TODO Modal para mostrar detalhes -->
               <div class="modal" id="taskModal">
                 <div class="modal-content">
                   <span class="close" id="closeModal">&times;</span>
-                  <div id="modalBody"></div>
+                  <div id="modalBodySL"></div>
                   <div class="modal-footer">
-                    <button type="button" class="btn btn-primary">
+                    <button
+                      type="button"
+                      onclick="EditarDadosTarefas()"
+                      class="btn btn-primary"
+                    >
                       Editar
                     </button>
                   </div>
@@ -4172,7 +4174,6 @@
             if (response.situacao) {
               const funcao = response.funcao;
               const scala = response.scala;
-              // TODO Aqui
               if (input === "scColaboradorRP") {
                 const funcaoInput = document.getElementById("funcaoColab");
                 const scalaInput = document.getElementById(
@@ -4231,7 +4232,6 @@
           },
           success: function (response) {
             if (response.situacao) {
-              // TODO FICAR
               // Parsear dados JSON se necessário
               const dados = response.dados; // Supondo que response.dados é o JSON
               // processarDadosSemanal(userData)
@@ -4560,8 +4560,6 @@
           },
         });
       }
-
-      // TODO nOVO
     </script>
     <!-- Registro de Pagamento VT -->
     <script id="valeTransporte">
@@ -5067,12 +5065,12 @@
     </script>
     <!-- Registro de Solicitações -->
     <script>
-      // chamaTemplate("solicitacaoLideranca");
-      // toFillTableTarefa();
+      chamaTemplate("solicitacaoLideranca");
+      toFillTableTarefa();
 
       function salvarDadosTarefas() {
+        // Verifica se todos os campos obrigatórios foram preenchidos
         const inputs = document.querySelectorAll(".slLideranca");
-
         const isValid = Array.from(inputs).every((input) => {
           if (input.hasAttribute("required") && !input.value) {
             input.classList.add("is-invalid"); // Adiciona classe para destacar o campo vazio
@@ -5098,6 +5096,7 @@
             valor: input.value, // Pega o valor do input
           });
         });
+        console.log("Dados que serao salvos", dadosArray);
 
         let mod = "new";
         $.ajax({
@@ -5126,6 +5125,65 @@
           },
         });
       }
+
+      function EditarDadosTarefas() {
+        // Verifica se todos os campos obrigatórios foram preenchidos
+        const inputs = document.querySelectorAll(".EditslLideranca");
+        const isValid = Array.from(inputs).every((input) => {
+          if (input.hasAttribute("required") && !input.value) {
+            input.classList.add("is-invalid"); // Adiciona classe para destacar o campo vazio
+            return false;
+          } else {
+            input.classList.remove("is-invalid"); // Remove a classe caso esteja preenchido
+            return true;
+          }
+        });
+
+        // Se algum campo obrigatório não estiver preenchido, alerta o usuário e interrompe o processo
+        if (!isValid) {
+          alert("Por favor, preencha todos os campos obrigatórios.");
+          return;
+        }
+
+        const dadosArray = [];
+        mostrarSpinner();
+
+        inputs.forEach((input) => {
+          dadosArray.push({
+            id: input.name || input.id, // Pega o ID do input
+            valor: input.value, // Pega o valor do input
+          });
+        });
+        console.log("Dados que Editado salvos", dadosArray);
+
+        let mod = "edit";
+        $.ajax({
+          type: "POST",
+          url: urlAjax,
+          data: {
+            mod: mod,
+            qualFuncao: "salvarDadosTarefas",
+            dados: JSON.stringify(dadosArray), // Enviando o array como JSON
+          },
+          success: function (response) {
+            esconderSpinner();
+            if (response.situacao) {
+              alert("Registro Editado com sucesso!");
+              inputs.forEach((input) => {
+                input.value = " "; // Limpar inputs
+              });
+              toFillTableTarefa();
+            } else {
+              alert("Erro de retorno: " + response.mensagem);
+            }
+          },
+          error: function (error) {
+            esconderSpinner();
+            console.error("Erro ==>", error);
+          },
+        });
+      }
+
       function toFillTableTarefa() {
         mostrarSpinner();
 
@@ -5174,6 +5232,7 @@
                     "rounded"
                   );
                   cardTitle.textContent = `Tarefa: ${dado.tarefaAgendamentoSl}`;
+                  console.log(`Tarefa: ${dado.tarefaAgendamentoSl}`);
                   cardTitle.style.color =
                     dado.situcaoAgendamentoSL === "Pendente" ? "red" : "green";
 
@@ -5202,6 +5261,7 @@
 
                 // Preencher os containers com as tarefas
                 response.dados.forEach((dado) => {
+                  console.log(dado);
                   const card = createCard(dado);
                   if (dado.situcaoAgendamentoSL === "Pendente") {
                     pendenteContainer.appendChild(card);
@@ -5227,18 +5287,23 @@
       function showModal(dado) {
         mostrarSpinner();
         const modal = document.getElementById("taskModal");
-        const modalBody = document.getElementById("modalBody");
-        // TODO MODAl
-        modalBody.innerHTML = `
-          <h3>Detalhes da Tarefa</h3>
+        const modalBodySL = document.getElementById("modalBodySL");
+        modalBodySL.innerHTML = `
+          <li class="list-group-item d-flex justify-content-between align-items-center">
+            <h3>Detalhes da Tarefa</h3>
+            <span class="badge bg-primary rounded-pill">${dado.qDiasSl}</span>
+          </li>
           <ul class="list-group">
+          <li class="list-group-item EditslLideranca" id="${
+            dado.id
+          }">IDentificação: ${dado.id}</li>
           <li class="list-group-item">Tarefa: ${dado.tarefaAgendamentoSl}</li>
           <li class="list-group-item">Responsável: ${dado.colaboradorSl}</li>
           <li class="list-group-item">Prazo: ${dado.prazoAgendamento}</li>
-          <li class="list-group-item">          <!-- Situação como campo editável -->
+          <li class="list-group-item"> 
           <div>
             <label for="situacaoSelect">Situação:</label>
-            <select id="situacaoSelect">
+            <select id="situacaoSelect" class="EditslLideranca">
               <option value="Pendente" ${
                 dado.situcaoAgendamentoSL === "Pendente" ? "selected" : ""
               }>Pendente</option>
@@ -5248,7 +5313,7 @@
               <!-- Adicione mais opções, se necessário -->
             </select>
           </div></li>
-          <li class="list-group-item"><textarea>Obersavação: ${
+          <li class="list-group-item">Obersavação:<textarea class="EditslLideranca"> ${
             dado.obsAgendamentoSl
           }</textarea></li>
           <li class="list-group-item">Data de Agendamento: ${
