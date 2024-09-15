@@ -316,7 +316,7 @@
 
       .cardTools:hover {
         /* transform: matrix(2.1); */
-        scale: 1.05;
+        box-shadow: 0 0 5px 0 #07637a;
         transition: 0.5s;
       }
       .modal {
@@ -349,6 +349,46 @@
         color: black;
         text-decoration: none;
         cursor: pointer;
+      }
+      .carousel-container {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        margin: 20px 0;
+      }
+
+      .carousel {
+        display: flex;
+        overflow-x: auto;
+        scroll-behavior: smooth;
+        white-space: nowrap;
+        width: calc(100% - 80px); /* Ajuste conforme necessário */
+      }
+
+      .carousel::-webkit-scrollbar {
+        display: none;
+      }
+
+      .carousel-prev,
+      .carousel-next {
+        background-color: #007bff;
+        color: white;
+        border: none;
+        padding: 10px;
+        cursor: pointer;
+      }
+
+      .carousel-prev:hover,
+      .carousel-next:hover {
+        background-color: #0056b3;
+      }
+
+      .card-body {
+        flex: 0 0 250px; /* Largura fixa dos cards */
+        margin-right: 20px; /* Espaço entre cards */
+      }
+      .modal-content {
+        width: 20rem;
       }
     </style>
   </head>
@@ -2996,9 +3036,8 @@
                           class="form-control slLideranca"
                           required
                         >
-                          <option value="1">Aprovado</option>
-                          <option value="2">Reprovado</option>
-                          <option value="3">negado</option>
+                          <option value="1">Pendente</option>
+                          <option value="2">Concluido</option>
                         </select>
                       </div>
                     </div>
@@ -3102,22 +3141,12 @@
                       <input
                         type="radio"
                         name="filterStatus"
-                        id="radioPendente"
+                        id="radioTodos"
                         value="Todos"
                         class="custom-control-input"
                         checked
                       />
                       <span class="custom-control-indicator">Todos</span>
-                    </label>
-                    <label class="custom-control custom-radio">
-                      <input
-                        type="radio"
-                        name="filterStatus"
-                        id="radioConcluido"
-                        value="Concluido"
-                        class="custom-control-input"
-                      />
-                      <span class="custom-control-indicator">Concluido</span>
                     </label>
                     <label class="custom-control custom-radio">
                       <input
@@ -3129,20 +3158,58 @@
                       />
                       <span class="custom-control-indicator">Pendente</span>
                     </label>
+                    <label class="custom-control custom-radio">
+                      <input
+                        type="radio"
+                        name="filterStatus"
+                        id="radioConcluido"
+                        value="Concluido"
+                        class="custom-control-input"
+                      />
+                      <span class="custom-control-indicator">Concluido</span>
+                    </label>
+                  </div>
+                  <div class="card w-100">
+                    <h5 class="card-header">Pendente</h5>
+                    <!-- Carrossel de Tarefas Pendentes -->
+                    <div class="carousel-container">
+                      <button
+                        class="carousel-prev"
+                        onclick="scrollLeftCarousel('divTarefasPendentes')"
+                      >
+                        ←
+                      </button>
+                      <div id="divTarefasPendentes" class="carousel">
+                        <!-- Tarefas Pendentes vão aqui -->
+                      </div>
+                      <button
+                        class="carousel-next"
+                        onclick="scrollRightCarousel('divTarefasPendentes')"
+                      >
+                        →
+                      </button>
+                    </div>
                   </div>
 
-                  <!-- Áreas para as tarefas -->
-                  <div class="row w-auto">
-                    <!-- Tarefas Pendentes -->
-                    <div class="card-body">
-                      <h5>Pendentes</h5>
-                      <div id="divTarefasPendentes" class="tarefa-grid"></div>
-                    </div>
-
-                    <!-- Tarefas Concluídas -->
-                    <div class="card-body">
-                      <h5>Concluídas</h5>
-                      <div id="divTarefasConcluidas" class="tarefa-grid"></div>
+                  <div class="card w-100">
+                    <h5 class="card-header">Concluido</h5>
+                    <!-- Carrossel de Tarefas Concluídas -->
+                    <div class="carousel-container">
+                      <button
+                        class="carousel-prev"
+                        onclick="scrollLeftCarousel('divTarefasConcluidas')"
+                      >
+                        ←
+                      </button>
+                      <div id="divTarefasConcluidas" class="carousel">
+                        <!-- Tarefas Concluídas vão aqui -->
+                      </div>
+                      <button
+                        class="carousel-next"
+                        onclick="scrollRightCarousel('divTarefasConcluidas')"
+                      >
+                        →
+                      </button>
                     </div>
                   </div>
                 </div>
@@ -3153,6 +3220,11 @@
                 <div class="modal-content">
                   <span class="close" id="closeModal">&times;</span>
                   <div id="modalBody"></div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-primary">
+                      Editar
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
@@ -4994,8 +5066,8 @@
     </script>
     <!-- Registro de Solicitações -->
     <script>
-      chamaTemplate("solicitacaoLideranca");
-      toFillTableTarefa();
+      // chamaTemplate("solicitacaoLideranca");
+      // toFillTableTarefa();
 
       function salvarDadosTarefas() {
         const inputs = document.querySelectorAll(".slLideranca");
@@ -5088,11 +5160,10 @@
                   bttCard.id = dado.id;
 
                   const cardDiv = document.createElement("div");
-                  cardDiv.style.width = "18rem";
-                  cardDiv.style.height = "100%";
 
                   const cardBodyDiv = document.createElement("div");
-                  cardBodyDiv.classList.add("card-body", "shadow");
+                  // cardBodyDiv.classList.add("card-body", "shadow");
+                  cardBodyDiv.classList.add("shadow");
 
                   const cardTitle = document.createElement("h5");
                   cardTitle.classList.add(
@@ -5114,7 +5185,6 @@
                   cardText.classList.add("card-text", "text-muted", "p-3");
                   cardText.innerHTML = `
               Responsável: ${dado.colaboradorSl}<br>
-              Situação: ${dado.situcaoAgendamentoSL}<br>
             `;
 
                   cardBodyDiv.appendChild(cardTitle);
@@ -5158,15 +5228,36 @@
       function showModal(dado) {
         const modal = document.getElementById("taskModal");
         const modalBody = document.getElementById("modalBody");
-
+        // TODO MODAl
         modalBody.innerHTML = `
           <h3>Detalhes da Tarefa</h3>
-          <p>Tarefa: ${dado.tarefaAgendamentoSl}</p>
-          <p>Responsável: ${dado.colaboradorSl}</p>
-          <p>Prazo: ${dado.prazoAgendamento}</p>
-          <p>Situação: ${dado.situcaoAgendamentoSL}</p>
-          <p>Data de Agendamento: ${dado.dataAgendamentoSl}</p>
-          <p>Última atualização: ${dado.dataUpdate}</p>
+          <ul class="list-group">
+          <li class="list-group-item">Tarefa: ${dado.tarefaAgendamentoSl}</li>
+          <li class="list-group-item">Responsável: ${dado.colaboradorSl}</li>
+          <li class="list-group-item">Prazo: ${dado.prazoAgendamento}</li>
+          <li class="list-group-item">          <!-- Situação como campo editável -->
+          <div>
+            <label for="situacaoSelect">Situação:</label>
+            <select id="situacaoSelect">
+              <option value="Pendente" ${
+                dado.situcaoAgendamentoSL === "Pendente" ? "selected" : ""
+              }>Pendente</option>
+              <option value="Concluido" ${
+                dado.situcaoAgendamentoSL === "Concluido" ? "selected" : ""
+              }>Concluído</option>
+              <!-- Adicione mais opções, se necessário -->
+            </select>
+          </div></li>
+          <li class="list-group-item"><textarea>Obersavação: ${
+            dado.obsAgendamentoSl
+          }</textarea></li>
+          <li class="list-group-item">Data de Agendamento: ${
+            dado.dataAgendamentoSl
+          }</li>
+          <li class="list-group-item">Última atualização: ${
+            dado.dataUpdate
+          }</li>
+          </ul>
         `;
         modal.style.display = "block";
 
@@ -5204,6 +5295,24 @@
           pendenteContainer.style.display = "block";
           concluidoContainer.style.display = "block";
         }
+      }
+
+      function scrollLeftCarousel(containerId) {
+        const container = document.getElementById(containerId);
+        container.scrollBy({
+          top: 0,
+          left: -200, // Ajuste a quantidade de rolagem
+          behavior: "smooth",
+        });
+      }
+
+      function scrollRightCarousel(containerId) {
+        const container = document.getElementById(containerId);
+        container.scrollBy({
+          top: 0,
+          left: 200, // Ajuste a quantidade de rolagem
+          behavior: "smooth",
+        });
       }
     </script>
   </body>
