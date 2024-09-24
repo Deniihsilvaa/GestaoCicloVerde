@@ -1412,15 +1412,18 @@
                 
                 <ul class="nav nav-tabs" id="myTabCadasColab" role="tablist">
                   <!-- Informações Gerais -->
+                 <i class="bi bi-asterisk "></i>
                   <li class="nav-item" role="presentation">
                     <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#gerais-tab-pane" type="button" role="tab" aria-controls="gerais-tab-pane" aria-selected="true">Informações Gerais</button>
                   </li>
+                 <i class="bi bi-asterisk"></i>
                   <!-- Informações de Endereço -->
                   <li class="nav-item" role="presentation">
                     <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#ender-tab-pane" type="button" role="tab" aria-controls="ender-tab-pane" aria-selected="false"> Informações de Endereço</button>
                   </li>
+                 <i class="bi bi-asterisk text-danger"></i>
                   <!-- Informações de Trabalho -->
-                  <li class="nav-item" role="presentation">
+                  <li class="nav-item " role="presentation">
                     <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#trab-tab-pane" type="button" role="tab" aria-controls="trab-tab-pane" aria-selected="false">Informações de Trabalho</button>
                   </li>
                 </ul>
@@ -1505,9 +1508,16 @@
                           </select>
                         </div>
                       </div>
+                      
                     </div>
 
                     <div class="row g-4">
+                      <div class="col-md-3 mb-3">
+                        <div class="form-group">
+                          <label for="txt-email">E-mail</label>
+                          <input type="email" class="form-control registroColab" id="txt-email" name="txt-email" placeholder="E-mail" />
+                        </div>
+                      </div>
                       <div class="col-md-3 mb-3">
                         <div class="form-group">
                           <label for="txt-LocalNasci"
@@ -1538,7 +1548,7 @@
                           </select>
                         </div>
                       </div>
-                      <div class="col-md-3 mb-5">
+                      <div class="col-md-3">
                         <div class="form-group">
                           <label for="txt-nomePai">Nome do Pai</label>
                           <input
@@ -1551,7 +1561,7 @@
                           />
                         </div>
                       </div>
-                      <div class="col-md-3 mb-3">
+                      <div class="col-md-3">
                         <div class="form-group">
                           <label for="txt-nomeMae">Nome da Mãe</label>
                           <input
@@ -1579,6 +1589,12 @@
                         <div class="row g-4">
                           <div class="col-md-3 mb-3">
                             <div class="form-group">
+                              <label for="txt-cep">CEP</label>
+                              <input type="text" class="form-control registroColab" id="txt-cep" name="txt-cep" placeholder="CEP" onblur="pesquisacep(this.value);" />
+                            </div>
+                          </div>
+                          <div class="col-md-3 mb-3">
+                            <div class="form-group">
                               <label for="txt-endereco">Endereço</label>
                               <input type="text" class="form-control registroColab" id="txt-endereco" name="txt-endereco" placeholder="Endereço" />
                             </div>
@@ -1586,7 +1602,7 @@
                           <div class="col-md-3 mb-3">
                             <div class="form-group">
                               <label for="txt-numeroEndereco">Número</label>
-                              <input type="text" class="form-control registroColab" id="txt-numeroEndereco" name="txt-numeroEndereco" placeholder="Número" />
+                              <input type="text" class="form-control registroColab" id="txt-numeroEndereco" name="txt-numeroEndereco" placeholder="Número" required />
                             </div>
                           </div>
                           <div class="col-md-3 mb-3">
@@ -1594,39 +1610,31 @@
                               <label for="txt-complemento">Complemento</label>
                               <input type="text" class="form-control registroColab" id="txt-complemento" name="txt-complemento" placeholder="Complemento" />
                             </div>
-                          </div>
-                          <div class="col-md-3 mb-3">
-                            <div class="form-group">
-                              <label for="txt-bairro">Bairro</label>
-                              <input type="text" class="form-control registroColab" id="txt-bairro" name="txt-bairro" placeholder="Bairro" />
-                            </div>
-                          </div>
+
                         </div>
-                        <div class="row g-4">
+                        <div class="row g-3">
                           <div class="col-md-3 mb-3">
                             <div class="form-group">
                               <label for="txt-cidade">Cidade</label>
                               <input type="text" class="form-control registroColab" id="txt-cidade" name="txt-cidade" placeholder="Cidade" />
                             </div>
                           </div>
-                          <div class="col-md-3 mb-3">
-                            <div class="form-group">
-                              <label for="txt-cep">CEP</label>
-                              <input type="text" class="form-control registroColab" id="txt-cep" name="txt-cep" placeholder="CEP" onblur="pesquisacep(this.value);" />
-                            </div>
-                          </div>
+      
                           <div class="col-md-3 mb-3">
                             <div class="form-group">
                               <label for="txt-uf">UF</label>
-                              <input type="text" class="form-control registroColab" id="txt-uf" name="txt-uf" placeholder="UF" />
+                              <input type="text" class="form-control registroColab" id="txt-uf" name="txt-uf" placeholder="UF" disabled />
                             </div>
                           </div>
-                          <div class="col-md-3 mb-3">
-                            <div class="form-group">
-                              <label for="txt-email">E-mail</label>
-                              <input type="email" class="form-control registroColab" id="txt-email" name="txt-email" placeholder="E-mail" />
-                            </div>
+                        
+                        <div class="col-auto mb-3">
+                          <div class="form-group">
+                            <label for="txt-bairro">Bairro</label>
+                            <input type="text" class="form-control registroColab" id="txt-bairro" name="txt-bairro" placeholder="Bairro" />
                           </div>
+                        </div>
+                      </div>
+
                         </div>
                       </div>
                     </div>
@@ -1640,7 +1648,7 @@
                     <h5>Informações de Trabalho</h5>
                   </div>
                   <div class="card-body">
-                    <div class="row g-4">
+                    <div class="row">
                       <div class="col-md-2 mb-3">
                         <div class="form-group">
                           <label for="txt-matricula">Matricula</label>
@@ -1712,7 +1720,7 @@
                         </div>
                       </div>
                     </div>
-                    <div class="row g-4">
+                    <div class="row">
                       <div class="col-md-2 mb-3">
                         <div class="form-group">
                           <label for="txt-numeroCtps">CTPS Numero</label>
@@ -1737,7 +1745,7 @@
                           />
                         </div>
                       </div>
-                      <div class="col-md-2 mb-3">
+                      <div class="col-md-2 mb-1">
                         <div class="form-group">
                           <label for="txt-banco">Banco</label>
                           <input
@@ -1749,7 +1757,7 @@
                           />
                         </div>
                       </div>
-                      <div class="col-md-2 mb-3">
+                      <div class="col-md-2 mb-1">
                         <div class="form-group">
                           <label for="txt-conta">Conta</label>
                           <input
@@ -1761,7 +1769,7 @@
                           />
                         </div>
                       </div>
-                      <div class="col-md-2 mb-3">
+                      <div class="col-md-2">
                         <div class="form-group">
                           <label for="txt-agencia">Agencia</label>
                           <input
@@ -1776,8 +1784,7 @@
                     </div>
                   </div>
                 </div>
-
-                <div class="row mb-4">
+                <div class="row ">
                   <div class="col-md-12 text-end">
                     <button
                       type="button"
@@ -5032,7 +5039,7 @@ function pesquisacep(valor) {
     <!-- Fazer teste -->
     <script>
       // TODO Fazer Teste
-      chamaTemplate("cadastroDeColaboradores");
+      // chamaTemplate("cadastroDeColaboradores");
     </script>
   </body>
 </html>
