@@ -95,14 +95,6 @@
     />
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 
-    <link
-      rel="stylesheet"
-      href="https://code.jquery.com/ui/1.14.0/themes/base/jquery-ui.css"
-    />
-    <link rel="stylesheet" href="/resources/demos/style.css" />
-    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
-    <script src="https://code.jquery.com/ui/1.14.0/jquery-ui.js"></script>
-
     <style>
       :root {
         /* Paleta de cores */
@@ -122,7 +114,7 @@
         padding: 0;
         width: 100%;
         height: 100vh;
-        font-family: "Raleway", sans-serif;
+        font-family: "Rubik", sans-serif;
         font-size: 0.8rem;
       }
 
@@ -321,326 +313,944 @@
       .dt-body-nowrap {
         white-space: nowrap;
       }
+
+      .cardTools:hover {
+        /* transform: matrix(2.1); */
+        box-shadow: 0 0 5px 0 #07637a;
+        transition: 0.5s;
+      }
+      .modal {
+        display: none;
+        position: fixed;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+      }
+
+      .modal-content {
+        background-color: #fefefe;
+        margin: 15% auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 80%;
+      }
+
+      .close {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+      }
+
+      .close:hover,
+      .close:focus {
+        color: black;
+        text-decoration: none;
+        cursor: pointer;
+      }
+      .carousel-container {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        margin: 20px 0;
+      }
+
+      .carousel {
+        display: flex;
+        overflow-x: auto;
+        scroll-behavior: smooth;
+        white-space: nowrap;
+        width: calc(100% - 80px); /* Ajuste conforme necessário */
+      }
+
+      .carousel::-webkit-scrollbar {
+        display: none;
+      }
+
+      .carousel-prev,
+      .carousel-next {
+        background-color: #007bff;
+        color: white;
+        border: none;
+        padding: 10px;
+        cursor: pointer;
+      }
+
+      .carousel-prev:hover,
+      .carousel-next:hover {
+        background-color: #0056b3;
+      }
+
+      .card-body {
+        flex: 0 0 250px; /* Largura fixa dos cards */
+        margin-right: 20px; /* Espaço entre cards */
+      }
+      .modal-content {
+        width: 20rem;
+      }
     </style>
   </head>
 
   <body>
     <div id="superBody">
-      <template id="solicitacaoLideranca" class="w-100">
-        <div class="card w-100 shadow-lg">
-          <div class="card-body">
-            <h1 class="card-title">Solicitações - Ciclo Verde</h1>
+      <div
+        id="barTop"
+        class="container-fluid shadow w-100 p-3 mb-1 bg-body rounded"
+      >
+        <nav class="navbar navbar-expand-lg bg-body-tertiary">
+          <div class="container-fluid">
+            <!-- Botão para abrir o Offcanvas -->
+            <a
+              class="btn"
+              type="button"
+              data-bs-toggle="offcanvas"
+              data-bs-target="#offcanvasMenu"
+              aria-controls="offcanvasMenu"
+              id="btnOffcanvas"
+            >
+              <span class="material-icons outlined">menu</span>
+            </a>
+            <!-- <button
+              class="navbar-toggler"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#navbarSupportedContent"
+              aria-controls="navbarSupportedContent"
+              aria-expanded="false"
+              aria-label="Toggle navigation"
+            >
+              <span class="navbar-toggler-icon"></span>
+            </button> -->
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul class="navbar-nav me-auto mb-2 mb-lg-0"></ul>
+              <!-- <form class="d-flex" role="search">
+                <input
+                  class="form-control me-2"
+                  type="search"
+                  placeholder="Search"
+                  aria-label="Search"
+                />
+                <button class="btn btn-outline-success" type="submit">
+                  Search
+                </button>
+              </form> -->
+            </div>
 
-            <div class="card mt-4">
-              <div class="card-body w-100">
-                <div class="row w-auto">
-                  <!-- ID -->
-                  <div class="col-sm-3 mb-3">
-                    <label for="idHorasSl">ID</label>
-                    <div class="form-group">
-                      <input
-                        type="text"
-                        name="idHorasSl"
-                        id="idHorasSl"
-                        disabled="disabled"
-                        class="form-control slLideranca"
-                      />
-                    </div>
-                  </div>
-                  <!--Colaborador  -->
-                  <div class="col-sm-3 mb-3">
-                    <label for="colaboradorSl"
-                      >Responsável pela Solicitação</label
-                    >
-                    <div class="form-group">
-                      <select
-                        class="slLideranca form-control scColaborador"
-                        name="colaboradorSl"
-                        id="colaboradorSl"
-                        required
-                      ></select>
-                    </div>
-                  </div>
-                  <!--Data  -->
-                  <div class="col-sm-3 mb-3">
-                    <div class="form-group">
-                      <label for="dataAgendamentoSl">Data</label>
-                      <input
-                        type="date"
-                        name="dataAgendamentoSl"
-                        id="dataAgendamentoSl"
-                        class="form-control slLideranca"
-                        required
-                      />
-                    </div>
-                  </div>
-                  <!-- situacão -->
-                  <div class="col-sm-3 mb-3">
-                    <label for="situcaoAgendamentoSL">Situção</label>
-                    <div class="form-group">
-                      <select
-                        name="situcaoAgendamentoHora"
-                        id="situcaoAgendamentoSL"
-                        class="form-control slLideranca"
-                        required
-                      >
-                        <option value="1">Aprovado</option>
-                        <option value="2">Reprovado</option>
-                        <option value="3">negado</option>
-                      </select>
-                    </div>
-                  </div>
-                  <!-- observação -->
-                  <div class="col-sm-3 mb-3">
-                    <label for="obsAgendamentoSl">Descrição</label>
-                    <div class="form-group">
-                      <textarea
-                        type="text"
-                        name="obsAgendamentoSl"
-                        id="obsAgendamentoSl"
-                        class="form-control slLideranca"
-                      ></textarea>
-                    </div>
-                  </div>
-                  <!-- Prazo -->
-                  <div class="col-sm-3 mb-3">
-                    <div class="form-group">
-                      <label for="dataAgendamentoPSl">Prazo</label>
-                      <input
-                        type="date"
-                        name="dataAgendamentoPSl"
-                        id="dataAgendamentoPSl"
-                        class="form-control slLideranca"
-                        required
-                      />
-                    </div>
-                  </div>
-                  <!-- quantidade de de dias -->
-                  <div class="col-sm-3 mb-3">
-                    <div class="form-group">
+            <a class="btn" type="button" onclick="chamarLogout()">
+              <span class="material-icons"></span>
+            </a>
+          </div>
+        </nav>
+      </div>
+
+      <div id="ladoDireito">
+        <div id="conteudo"></div>
+
+        <template id="registrarGRA" class="w-100">
+          <div class="card w-100 shadow-lg">
+            <div class="card-body">
+              <h1 class="card-title">Registro GRA - Ciclo Verde</h1>
+
+              <div class="card mb-3">
+                <div class="card-body">
+                  <div class="row g-sm-2">
+                    <!-- ID -->
+                    <div class="col-sm-2 mb-3">
+                      <label for="idHorasSl">ID:</label>
                       <div class="form-group">
-                        <label for="qDias">Dias</label>
                         <input
                           type="text"
+                          name="idHorasSl"
+                          id="idHorasSl"
+                          disabled="disabled"
                           class="form-control slLideranca"
-                          name="qDias"
-                          id="qDias"
-                          aria-describedby="helpId"
-                          placeholder="0"
+                        />
+                      </div>
+                    </div>
+                    <!--Request  -->
+                    <div class="col-sm-4 mb-3">
+                      <label for="requestGRA">NºRequest#: </label>
+                      <div class="form-group">
+                        <input
+                          type="text"
+                          name="requestGRA"
+                          id="requestGRA"
+                          placeholder="NºRequest#"
+                          class="form-control slLideranca"
+                        />
+                      </div>
+                    </div>
+                    <!--Data  -->
+                    <div class="col-sm-4 mb-3">
+                      <div class="form-group">
+                        <label for="dataAgendamentoSl">Data:</label>
+                        <input
+                          type="date"
+                          name="dataAgendamentoSl"
+                          id="dataAgendamentoSl"
+                          class="form-control slLideranca"
+                          required
+                        />
+                      </div>
+                    </div>
+                    <!-- Material -->
+                    <div class="col-sm-3 mb-3">
+                      <label for="situcaoGRA">Situção:</label>
+                      <div class="form-group">
+                        <select
+                          name="situcaoGRA"
+                          id="situcaoGRA"
+                          class="form-control"
+                          required
+                        >
+                          <option value="1">Complete</option>
+                          <option value="2">Confirmation</option>
+                          <option value="3">negado</option>
+                        </select>
+                      </div>
+                    </div>
+                    <!-- situacão -->
+                    <div class="col-sm-3 mb-3">
+                      <label for="situcaoGRA">Material:</label>
+                      <div class="form-group">
+                        <select
+                          name="materiaisGRA"
+                          id="materiaisGRA"
+                          class="form-control"
+                          required
+                        ></select>
+                      </div>
+                    </div>
+                    <!--Valor  -->
+                    <div class="col-sm-3 mb-3">
+                      <label for="valorRequestGRA">Valor: </label>
+                      <div class="form-group">
+                        <input
+                          type="text"
+                          name="valorRequestGRA"
+                          id="valorRequestGRA"
+                          placeholder="R$ 0,00"
+                          class="form-control"
+                        />
+                      </div>
+                    </div>
+                    <!--Quantidade  -->
+                    <div class="col-sm-3 mb-3">
+                      <label for="quantidadeRequestGRA">Quantidade: </label>
+                      <div class="form-group">
+                        <input
+                          type="text"
+                          name="quantidadeRequestGRA"
+                          id="quantidadeRequestGRA"
+                          placeholder="0,00"
+                          class="form-control"
+                        />
+                      </div>
+                    </div>
+                    <!--Total  -->
+                    <div class="col-sm-3 mb-3">
+                      <label for="totalRequestGRA">Total: </label>
+                      <div class="form-group">
+                        <input
+                          type="text"
+                          name="totalRequestGRA"
+                          id="totalRequestGRA"
+                          placeholder="R$ 0,00"
+                          class="form-control"
                           disabled="disabled"
                         />
-                        <small id="helpId" class="form-text text-muted"
-                          >Quantidade de dias</small
-                        >
                       </div>
                     </div>
                   </div>
-                  <!--Reponsavel pela tarefa  -->
-                  <div class="col-sm-3 mb-3">
-                    <label for="colaboradorRespoonsavelTSl"
-                      >Responsável pela tarefa</label
-                    >
-                    <div class="form-group">
-                      <select
-                        class="slLideranca form-control scColaborador"
-                        name="colaboradorRespoonsavelTSl"
-                        id="colaboradorRespoonsavelTSl"
-                        required
-                      ></select>
+                  <!-- Botoes -->
+                  <div class="row">
+                    <div class="col-sm-3 mb-3">
+                      <button
+                        type="button"
+                        class="btn btn-primary"
+                        data-toggle="button"
+                        aria-pressed="false"
+                        autocomplete="off"
+                        onclick="salvarDadosTarefas()"
+                      >
+                        Salvar
+                      </button>
+                    </div>
+                    <div class="col">
+                      <button
+                        type="button"
+                        class="btn btn-dark"
+                        data-toggle="button"
+                        aria-pressed="false"
+                        autocomplete="off"
+                        onclick="showModalGRA()"
+                      >
+                        Registrar NFe
+                      </button>
                     </div>
                   </div>
                 </div>
-                <!-- Botoes -->
-                <div class="row g-1 align-items-center">
-                  <div class="col-sm-1 mb-3">
+              </div>
+              <div class="card mt-4">
+                <div class="card w-100">
+                  <!-- Filtro de Situação -->
+                  <div class="form-group">
+                    <label class="custom-control custom-radio">
+                      <input
+                        type="radio"
+                        name="filterStatus"
+                        id="radioTodos"
+                        value="Todos"
+                        class="custom-control-input"
+                        checked
+                      />
+                      <span class="custom-control-indicator">Todos</span>
+                    </label>
+                    <label class="custom-control custom-radio">
+                      <input
+                        type="radio"
+                        name="filterStatus"
+                        id="radioPendente"
+                        value="Pendente"
+                        class="custom-control-input"
+                      />
+                      <span class="custom-control-indicator">Pendente</span>
+                    </label>
+                    <label class="custom-control custom-radio">
+                      <input
+                        type="radio"
+                        name="filterStatus"
+                        id="radioConcluido"
+                        value="Concluido"
+                        class="custom-control-input"
+                      />
+                      <span class="custom-control-indicator">Concluido</span>
+                    </label>
+                  </div>
+                  <div class="card w-100">
+                    <h5 class="card-header">Pendente</h5>
+                    <!-- Carrossel de Tarefas Pendentes -->
+                    <div class="carousel-container">
+                      <button
+                        class="carousel-prev"
+                        onclick="scrollLeftCarousel('divTarefasPendentes')"
+                      >
+                        ←
+                      </button>
+                      <div id="divTarefasPendentes" class="carousel">
+                        <!-- Tarefas Pendentes vão aqui -->
+                      </div>
+                      <button
+                        class="carousel-next"
+                        onclick="scrollRightCarousel('divTarefasPendentes')"
+                      >
+                        →
+                      </button>
+                    </div>
+                  </div>
+
+                  <div class="card w-100">
+                    <h5 class="card-header">Concluido</h5>
+                    <!-- Carrossel de Tarefas Concluídas -->
+                    <div class="carousel-container">
+                      <button
+                        class="carousel-prev"
+                        onclick="scrollLeftCarousel('divTarefasConcluidas')"
+                      >
+                        ←
+                      </button>
+                      <div id="divTarefasConcluidas" class="carousel">
+                        <!-- Tarefas Concluídas vão aqui -->
+                      </div>
+                      <button
+                        class="carousel-next"
+                        onclick="scrollRightCarousel('divTarefasConcluidas')"
+                      >
+                        →
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <div class="card-group">
+                  <div class="card">
+                    <h5>Registar NFe </h5>
+                  </div>
+                  <div class="card">
+                  <div class="col">
+                    <div class="form-group">
+                      <label for="">NFE:</label>
+                      <input type="text" name="nfeGRA" id="nfeGRA" class="form-control" placeholder="">
+                    </div>
+
+                  </div>
+                    <h5>NFE</h5>
+                    <h5>Valor</h5>
+                    <h5>Produto</h5>
+                    <h5>Quantidade</h5>
+                    <h5>ORDEM DE VENDA</h5>
+                    <h5>Data Emissao</h5>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+
+              <!-- TODO Modal para mostrar detalhes -->
+              <div class="modal" id="taskModalGRA">
+                <div class="modal-content">
+                  <span class="close" id="closeModaGRAl">&times;</span>
+                  <div id="modalBodyGRA"></div>
+                  <div class="modal-footer">
                     <button
                       type="button"
+                      onclick="EditarDadosTarefas()"
                       class="btn btn-primary"
-                      data-toggle="button"
-                      aria-pressed="false"
-                      autocomplete="off"
-                      onclick="salvarDadosTarefas()"
                     >
-                      Salvar
+                      Editar
                     </button>
-                    <!-- TODO Button -->
                   </div>
-                  <div class="col-sm-1 mb-3"></div>
                 </div>
               </div>
+            </div>
+          </div>
+        </template>
+      </div>
+      <!-- Div Auxiliares -->
+
+      <!-- Spinner Overlay -->
+      <div id="spinner-overlay" class="spinner-overlay d-none">
+        <div class="d-flex justify-content-center align-items-center h-100">
+          <div class="spinner-border" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Offcanvas -->
+      <div
+        class="offcanvas offcanvas-start"
+        tabindex="-1"
+        id="offcanvasMenu"
+        aria-labelledby="offcanvasExampleLabel"
+      >
+        <div class="offcanvas-header">
+          <div class="form-group">
+            <span class="material-symbols-outlined">
+              nest_clock_farsight_analog
+            </span>
+            <div id="clock" class="card-body"></div>
+          </div>
+
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="offcanvas"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="offcanvas-body" id="ladoEsquerdoSoffcanvas">
+          <!-- Acordeão -->
+          <div id="accordion" class="w-100">
+            <!-- Menu -->
+            <h3><span class="material-icons outlined">menu</span> Menu</h3>
+            <div>Menu</div>
+
+            <!-- Análise -->
+            <h3><i class="bi bi-clipboard2-data-fill"></i> Análise</h3>
+            <div>
+              <button
+                class="ui-button ui-widget ui-corner-all"
+                name="analiseDeRegistroFerias"
+                onclick="chamaTemplate(this.name)"
+              >
+                Análise de Férias
+              </button>
+              <button
+                class="ui-button ui-widget ui-corner-all"
+                name="analiseDeRegistroColaboradores"
+                onclick="chamaTemplate(this.name)"
+              >
+                Análise de Registros
+              </button>
+              <button
+                class="ui-button ui-widget ui-corner-all"
+                name="analiseDeRegistroVT"
+                onclick="chamaTemplate(this.name)"
+              >
+                Analise de VT
+              </button>
+              <button
+                class="ui-button ui-widget ui-corner-all"
+                name="cadastroDeHorasExtras"
+                onclick="chamaTemplate(this.name)"
+              >
+                Registros de Hora extras
+              </button>
             </div>
 
-            <div class="row fs-8">
-              <!-- Formulário de Registro de Pagamento -->
-              <div class="col-md-12">
-                <div class="card mt-4">
-                  <div class="card-body w-100">
-                    <div class="row g-1 align-items-center">
-                      <div class="col-auto">
-                        <div class="form-group">
-                          <a name="" id="" class="btn" role="button">
-                            <div class="card" style="width: 18rem">
-                              <div class="card-body">
-                                <h5 class="card-title">Card title</h5>
-                                <p class="card-text">
-                                  Some quick example text to build on the card
-                                  title and make up the bulk of the card's
-                                  content.
-                                </p>
-                              </div>
-                            </div>
-                          </a>
-                        </div>
-                      </div>
-                      <div class="col-auto">
-                        <div class="form-group">
-                          <a name="" id="" class="btn" role="button">
-                            <div class="card" style="width: 18rem">
-                              <div class="card-body">
-                                <h5 class="card-title">Card title</h5>
-                                <p class="card-text">
-                                  Some quick example text to build on the card
-                                  title and make up the bulk of the card's
-                                  content.
-                                </p>
-                              </div>
-                            </div>
-                          </a>
-                        </div>
-                      </div>
-                      <div class="col-auto">
-                        <div class="form-group">
-                          <a name="" id="" class="btn" role="button">
-                            <div class="card" style="width: 18rem">
-                              <div class="card-body">
-                                <h5 class="card-title">Card title</h5>
-                                <p class="card-text">
-                                  Some quick example text to build on the card
-                                  title and make up the bulk of the card's
-                                  content.
-                                </p>
-                              </div>
-                            </div>
-                          </a>
-                        </div>
-                      </div>
-                      <div class="col-auto">
-                        <div class="form-group">
-                          <a name="" id="" class="btn" role="button">
-                            <div class="card" style="width: 18rem">
-                              <div class="card-body">
-                                <h5 class="card-title">Card title</h5>
-                                <p class="card-text">
-                                  Some quick example text to build on the card
-                                  title and make up the bulk of the card's
-                                  content.
-                                </p>
-                              </div>
-                            </div>
-                          </a>
-                        </div>
-                      </div>
-                      <!-- <a
-                        name="modalid"
-                        id="modalid"
-                        class="btn btn-primary"
-                        href="#"
-                        data-bs-toggle="modal"
-                        data-bs-target="#exampleModal"
-                        >Abrir Modal</a
-                      > -->
-                      <!-- 
-                      <div id="dialog" title="Basic dialog">
-                        <p>
-                          This is the default dialog which is useful for
-                          displaying information. The dialog window can be
-                          moved, resized and closed with the 'x' icon.
-                        </p>
-                      </div> -->
-                    </div>
-                  </div>
-                </div>
-              </div>
+            <!-- Registros -->
+            <h3><i class="bi bi-plus-lg"></i> Registros</h3>
+            <div>
+              <button
+                class="ui-button ui-widget ui-corner-all"
+                name="registrosDOC"
+                onclick="chamaTemplate(this.name)"
+              >
+                Registro de Documentação
+              </button>
+              <button
+                class="ui-button ui-widget ui-corner-all"
+                name="registroferias"
+                onclick="chamaTemplate(this.name)"
+              >
+                Férias
+              </button>
+              <button
+                class="ui-button ui-widget ui-corner-all"
+                name="driver"
+                onclick="chamaTemplate(this.name)"
+              >
+                Driver
+              </button>
+              <button
+                class="ui-button ui-widget ui-corner-all"
+                name="registroPagamentosAdiantamento"
+                onclick="chamaTemplate(this.name)"
+              >
+                Registro de Adiantamento
+              </button>
+              <button
+                class="ui-button ui-widget ui-corner-all"
+                name="registroPagamentosColaboradores"
+                onclick="chamaTemplate(this.name)"
+              >
+                Registros de Pagamentos
+              </button>
+              <button
+                class="ui-button ui-widget ui-corner-all"
+                name="registroRelogioDePonto"
+                onclick="chamaTemplate(this.name)"
+              >
+                Relógio De Ponto
+              </button>
+              <button
+                class="ui-button ui-widget ui-corner-all"
+                name="registroVT"
+                onclick="chamaTemplate(this.name)"
+              >
+                Registro VT
+              </button>
+              <button
+                class="ui-button ui-widget ui-corner-all"
+                name="cadastroDeHorasExtras"
+                onclick="chamaTemplate(this.name)"
+              >
+                Registros de Hora extras
+              </button>
+            </div>
+            <!-- RegistrosNivel3 -->
+            <h3><i class="bi bi-plus-lg"></i> Supervisao</h3>
+            <div>
+              <button
+                class="ui-button ui-widget ui-corner-all"
+                name="analiseDeRegistroVT"
+                onclick="chamaTemplate(this.name)"
+              >
+                Analise de VT
+              </button>
+              <button
+                class="ui-button ui-widget ui-corner-all"
+                name="analiseDeRegistroFerias"
+                onclick="chamaTemplate(this.name)"
+              >
+                Análise de Férias
+              </button>
+              <button
+                class="ui-button ui-widget ui-corner-all"
+                name="analiseDeRegistroColaboradores"
+                onclick="chamaTemplate(this.name)"
+              >
+                Análise de Registros
+              </button>
+              <p></p>
+
+              <button
+                class="ui-button ui-widget ui-corner-all"
+                name="cadastroDeHorasExtras"
+                onclick="chamaTemplate(this.name)"
+              >
+                Cadastro de Hora extras
+              </button>
+              <button
+                class="ui-button ui-widget ui-corner-all"
+                name="solicitacaoLideranca"
+                onclick="chamaTemplate(this.name)"
+              >
+                Registros de Tarefas
+              </button>
+            </div>
+
+            <!-- Cadastro -->
+            <h3><i class="bi bi-file-plus"></i> Cadastro</h3>
+            <div>
+              <button
+                class="ui-button ui-widget ui-corner-all"
+                name="cadastroDeColaboradores"
+                onclick="chamaTemplate(this.name)"
+              >
+                Colaboradores
+              </button>
+              <button
+                class="ui-button ui-widget ui-corner-all"
+                name="cadastroDeFuncao"
+                onclick="chamaTemplate(this.name)"
+              >
+                Função
+              </button>
+              <button
+                class="ui-button ui-widget ui-corner-all"
+                name="exames"
+                onclick="chamaTemplate(this.name)"
+              >
+                Exames
+              </button>
+              <button
+                class="ui-button ui-widget ui-corner-all"
+                name="cursos"
+                onclick="chamaTemplate(this.name)"
+              >
+                Cursos
+              </button>
+              <button
+                class="ui-button ui-widget ui-corner-all"
+                name="cadastroEscala"
+                onclick="chamaTemplate(this.name)"
+              >
+                Escala
+              </button>
+            </div>
+
+            <!-- Acesso Colaborador -->
+            <h3>Acesso Colaborador</h3>
+            <div>
+              <!-- Card 1 -->
+              <button
+                type="button"
+                class="btn btn-secondary"
+                name="fichaDeregistros"
+                onclick="chamaTemplate(this.name)"
+              >
+                <span class="material-symbols-outlined">view_agenda</span> Ficha
+                de Registro/Docs
+              </button>
+
+              <!-- Card 2 -->
+              <button
+                type="button"
+                class="btn btn-secondary"
+                name="extratoPagamento"
+                onclick="chamaTemplate(this.name)"
+              >
+                <span class="material-symbols-outlined">view_agenda</span>
+                Extrato de Pagamento
+              </button>
+
+              <!-- Card 3 -->
+              <button
+                type="button"
+                class="btn btn-secondary"
+                name="extratoAdiantamento"
+                onclick="chamaTemplate(this.name)"
+              >
+                <span class="material-symbols-outlined">view_agenda</span>
+                Extrato de Adiantamento
+              </button>
+
+              <!-- Card 4 -->
+              <button
+                type="button"
+                class="btn btn-secondary"
+                name="listaFerias"
+                onclick="chamaTemplate(this.name)"
+              >
+                <span class="material-symbols-outlined">view_agenda</span>
+                Férias
+              </button>
+
+              <!-- Card 5 -->
+              <button
+                type="button"
+                class="btn btn-secondary"
+                name="planoDeSaude"
+                onclick="chamaTemplate(this.name)"
+              >
+                <span class="material-symbols-outlined">view_agenda</span> Plano
+                de Saúde
+              </button>
+
+              <!-- Card 6 -->
+              <button
+                type="button"
+                class="btn btn-secondary"
+                name="exames"
+                onclick="chamaTemplate(this.name)"
+              >
+                <span class="material-symbols-outlined">view_agenda</span>
+                Exames
+              </button>
+            </div>
+
+            <!-- Logout -->
+            <h3><span class="material-icons outlined">logout</span> Logout</h3>
+            <div>
+              <button
+                class="ui-button ui-widget ui-corner-all"
+                name="Logout"
+                onclick="chamarLogout()"
+              >
+                Logout
+              </button>
+            </div>
+
+            <!-- Login -->
+            <h3><span class="material-icons outlined">login</span> Login</h3>
+            <div>
+              <button
+                class="ui-button ui-widget ui-corner-all"
+                name="car-logar"
+                onclick="chamaTemplate(this.name)"
+              >
+                Login
+              </button>
             </div>
           </div>
         </div>
-        <!-- Modal -->
-        <div
-          class="modal fade"
-          id="exampleModal"
-          tabindex="-1"
-          aria-labelledby="exampleModalLabel"
-          aria-hidden="true"
-        >
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Categoria</h5>
-                <button
-                  type="button"
-                  class="btn-close"
-                  data-bs-dismiss="modal"
-                  aria-label="Close"
-                ></button>
-              </div>
-              <div class="modal-body">
-                <!-- //Conteúdo do modal aqui. -->
-                <div class="form-group">
-                  <label for="listaCategoria" class="form-label"
-                    >Categoria</label
-                  >
-                  <input
-                    class="form-control"
-                    list="datalistCategoriaOptions"
-                    id="listaCategoria"
-                    placeholder="Escreva aqui..."
-                  />
-                  <datalist id="datalistCategoriaOptions">
-                    <option value="San Francisco"></option>
-                    <option value="New York"></option>
-                    <option value="Seattle"></option>
-                    <option value="Los Angeles"></option>
-                    <option value="Chicago"></option>
-                  </datalist>
-                </div>
-                <!-- <div class="form-group">
-                <label for="categoriaSolicitacao">Categoria</label>
-                <input
-                  type="text"
-                  name="categoriaSolicitacao"
-                  id="categoriaSolicitacao"
-                  class="form-control"
-                  placeholder="Descrição"
-                  aria-describedby="helpId"
-                />
-              </div> -->
-              </div>
-              <div class="modal-footer">
-                <button
-                  type="button"
-                  class="btn btn-secondary"
-                  data-bs-dismiss="modal"
-                >
-                  Fechar
-                </button>
-                <button
-                  type="button"
-                  onclick="salvarDadosSolicitacaoLS()"
-                  class="btn btn-primary"
-                >
-                  Salvar
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </template>
+      </div>
     </div>
 
-    <!-- <script>
-      $(function () {
-        $("#dialog").dialog();
+    <script id="MetodoPost">
+      let urlAjax =
+        "https://script.google.com/macros/s/AKfycbwrfbMFYCkSAQ-rZdxuYBX_TUlFevl-SBk2c_8qM4BnLgqwEcJa5mbRTkMxtspf9tXRfg/exec";
+
+      $("#accordion").accordion({
+        active: false,
+        collapsible: true,
+        heightStyle: "content",
+        icons: {
+          header: "ui-icon-circle-plus", // Ícone para cabeçalhos fechados
+          activeHeader: "ui-icon-circle-minus", // Ícone para cabeçalhos abertos
+        },
       });
-    </script> -->
+
+      // Função para chamar o template
+      const inserirTemplate = (templateId, destino) => {
+        try {
+          const formularioID = document.getElementById(templateId);
+          const paginanova = document.getElementById(destino);
+          paginanova.innerHTML = "";
+          const clone = document.importNode(formularioID.content, true);
+          paginanova.appendChild(clone);
+          return formularioID;
+        } catch (error) {
+          return null;
+        }
+      };
+
+      function chamaTemplate(pagina) {
+        let x;
+        if (pagina === "car-logar21") {
+          x = "menuLogin";
+        } else {
+          x = "conteudo";
+        }
+        const formularioID = inserirTemplate(pagina, x);
+        if (!formularioID) return;
+
+        // const formularioID = inserirTemplate(pagina);
+        const paginaB = pagina;
+        switch (paginaB) {
+          case "registrosDOC":
+            carregarColaboradores();
+            break;
+          case "registroPagamentosColaboradores":
+            carregarColaboradores();
+            break;
+          case "registroRelogioDePonto":
+            carregarColaboradores();
+            carregaEscala();
+            break;
+          case "cadastroDeFuncao":
+            carregarColaboradores();
+            break;
+          case "registroferias":
+            carregarColaboradores();
+            break;
+          case "registroPagamentosAdiantamento":
+            carregarColaboradores();
+            break;
+          case "cadastroEscala":
+            carregarColaboradores();
+            carregarFuncao();
+
+            break;
+          case "registroVT":
+            carregarColaboradores();
+            toFiilIntabePGVT("tabelaPagamentos");
+
+            break;
+          case "analiseDeRegistroVT":
+            toFiilIntabeDescVT("tabelaAnaliseVTPagamentos");
+
+            break;
+          case "analiseDeRegistroColaboradores":
+            break;
+          case "analiseDeRegistroFerias":
+            break;
+          case "cadastroDeHorasExtras":
+            carregarColaboradores();
+            toFiilIntabeHoraExtra();
+
+            break;
+          case "solicitacaoLideranca":
+            carregarColaboradores();
+            toFillTableTarefa();
+
+            break;
+
+          default:
+            break;
+        }
+      }
+    </script>
+    <!-- Registrar Gra -->
+    <script>
+      function inputMaterial(inputName) {
+        mostrarSpinner();
+        $.ajax({
+          type: "POST",
+          url: urlAjax,
+          data: {
+            qualFuncao: "carregarMateriais",
+          },
+          success: function (response) {
+            esconderSpinner();
+            if (response.situacao) {
+              let colaboradores = response.colaboradores;
+              try {
+                // Ordena colaboradores por nome em ordem alfabética
+                colaboradores.sort((a, b) => a.nome.localeCompare(b.nome));
+
+                // Seleciona todos os <select> com a classe 'scColaborador'
+                const selects = document.querySelectorAll(".scColaborador");
+
+                // Limpa as opções existentes
+                selects.forEach((select) => {
+                  select.innerHTML = "";
+                });
+
+                // Adiciona uma opção vazia no início
+                selects.forEach((select) => {
+                  let option = document.createElement("option");
+                  option.text = "";
+                  option.value = "";
+                  select.add(option);
+                });
+
+                // Preenche os selects com as novas opções
+                colaboradores.forEach((colaborador) => {
+                  selects.forEach((select) => {
+                    let option = document.createElement("option");
+                    option.text = colaborador.nome; // Supondo que 'nome' seja uma propriedade do colaborador
+                    option.value = colaborador.id; // Supondo que 'id' seja uma propriedade do colaborador
+                    select.add(option);
+                  });
+                });
+              } catch (error) {}
+            } else {
+              alert("Erro de retorno");
+            }
+          },
+          error: function (error) {
+            esconderSpinner();
+            console.error("Erro ==>", error);
+          },
+        });
+      }
+    </script>
+
+    <!-- salvar dados Colaborador -->
+    <script>
+      chamaTemplate("registrarGRA");
+      function showModalGRA(dado) {
+        // mostrarSpinner();
+        const modal = document.getElementById("taskModalGRA");
+        const modalBodySL = document.getElementById("modalBodyGRA");
+        modalBodySL.innerHTML = `
+          
+        `;
+        
+        modal.style.display = "block";
+
+        // Fechar o modal
+        document.getElementById("closeModaGRAl").onclick = function () {
+          modal.style.display = "none";
+        };
+        // esconderSpinner();
+      }
+
+      function salvardadosColaborador(params) {
+        const inputs = document.querySelectorAll(".registroColab");
+        // inputs.forEach((input) => {
+        //   console.log(`${input.name || input.id}: ${input.value}`); // Mostra o nome ou id e o valor do input no console
+        // });
+        const isValid = Array.from(inputs).every((input) => {
+          if (input.hasAttribute("required") && !input.value) {
+            input.classList.add("is-invalid"); // Adiciona classe para destacar o campo vazio
+            return false;
+          } else {
+            input.classList.remove("is-invalid"); // Remove a classe caso esteja preenchido
+            return true;
+          }
+        });
+
+        // Se algum campo obrigatório não estiver preenchido, alerta o usuário e interrompe o processo
+        if (!isValid) {
+          alert("Por favor, preencha todos os campos obrigatórios.");
+          return;
+        }
+
+        const dadosArray = [];
+        mostrarSpinner();
+
+        inputs.forEach((input) => {
+          dadosArray.push({
+            id: input.name || input.id, // Pega o ID do input
+            valor: input.value, // Pega o valor do input
+          });
+        });
+      }
+      // document.getElementById("btt-cadastro-calab").disabled = true;
+
+      $.ajax({
+        type: "POST",
+        url: urlAjax,
+        data: {
+          dados: JSON.stringify(dadosArray),
+          qualFuncao: "salvarDadosNoSheet",
+        }, // Envia os dados diretamente
+        success: function (response) {
+          if (response) {
+            alert("Dados salvos com sucesso");
+          } else {
+            alert("Erro de retorno");
+          }
+        },
+        error: function (error) {
+          console.error("Erro ao autenticar", error);
+        },
+      });
+    </script>
   </body>
 </html>

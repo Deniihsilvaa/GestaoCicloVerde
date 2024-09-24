@@ -1384,32 +1384,51 @@
         </template>
 
         <template id="cadastroDeColaboradores">
-          <div id="forms">
             <div class="card">
-              <div class="card-body"></div>
-              <h1>Cadastro de Usuario</h1>
-              <ul class="nav nav-pills card-header-pills">
-                <li class="nav-item">
-                  <a
-                    class="nav-link"
-                    aria-current="true"
-                    href="https://drive.google.com/drive/folders/1liqnDAeM1LK-pKN9Rz_B_S0M7Z2V7gdR?usp=drive_link"
-                    >Pasta Doscs Registros</a
-                  >
-                </li>
-                <li class="nav-item">
-                  <a
-                    class="nav-link"
-                    aria-current="true"
-                    href="https://drive.google.com/drive/folders/1liqnDAeM1LK-pKN9Rz_B_S0M7Z2V7gdR?usp=drive_link"
-                    >Pasta Doscs ASOS</a
-                  >
-                </li>
-              </ul>
-            </div>
+              <div class="card-body">
+                <h1 class="card-title">Cadastro de Colaboradores</h1>
+                <div class="row">
+                  <ul class="nav nav-pills card-header-pills">
+                    <li class="nav-item">
+                      <a
+                        class="nav-link"
+                        aria-current="true"
+                        href="https://drive.google.com/drive/folders/1liqnDAeM1LK-pKN9Rz_B_S0M7Z2V7gdR?usp=drive_link"
+                        >Pasta Doscs Registros</a
+                      >
+                    </li>
+                    <li class="nav-item">
+                      <a
+                        class="nav-link"
+                        aria-current="true"
+                        href="https://drive.google.com/drive/folders/1liqnDAeM1LK-pKN9Rz_B_S0M7Z2V7gdR?usp=drive_link"
+                        >Pasta Doscs ASOS</a
+                      >
+                    </li>
+                  </ul>
 
-            <form class="card">
-              <div class="container mt-4">
+                </div>
+                <p class="card"></p>
+                
+                <ul class="nav nav-tabs" id="myTabCadasColab" role="tablist">
+                  <!-- Informações Gerais -->
+                  <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#gerais-tab-pane" type="button" role="tab" aria-controls="gerais-tab-pane" aria-selected="true">Informações Gerais</button>
+                  </li>
+                  <!-- Informações de Endereço -->
+                  <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#ender-tab-pane" type="button" role="tab" aria-controls="ender-tab-pane" aria-selected="false"> Informações de Endereço</button>
+                  </li>
+                  <!-- Informações de Trabalho -->
+                  <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#trab-tab-pane" type="button" role="tab" aria-controls="trab-tab-pane" aria-selected="false">Informações de Trabalho</button>
+                  </li>
+                </ul>
+                <!-- Conjunto de dados -->
+                <div class="tab-content" id="myTabContentCadasColab">
+
+                  <!-- Informações Gerais -->
+                <div class="tab-pane fade show active" id="gerais-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
                 <!-- Informações Gerais -->
                 <div class="card text-bg-light mb-3">
                   <div class="card-header">
@@ -1417,14 +1436,15 @@
                   </div>
                   <div class="card-body">
                     <div class="row g-4">
-                      <div class="col-md-1 mb-3">
+                      <div class="col-md-2 mb-3">
                         <div class="form-group">
                           <label for="txt-idColaborador">ID Registros</label>
                           <input
                             type="text"
-                            class="form-control"
+                            class="form-control registroColab"
                             id="txt-idColaborador"
                             name="txt-idColaborador"
+                            disabled="disabled"
                           />
                         </div>
                       </div>
@@ -1433,7 +1453,7 @@
                           <label for="txt-nome">Nome</label>
                           <input
                             type="text"
-                            class="form-control"
+                            class="form-control registroColab"
                             id="txt-nome"
                             name="txt-nome"
                             placeholder="Nome"
@@ -1446,12 +1466,13 @@
                           <label for="txt-cpf">CPF</label>
                           <input
                             type="text"
-                            class="form-control"
+                            class="form-control registroColab"
                             id="txt-cpf"
                             name="txt-cpf"
                             placeholder="000.000.000-00"
                             required
                             pattern="\d{3}\.\d{3}\.\d{3}-\d{2}"
+                            maxlength="14"
                           />
                         </div>
                       </div>
@@ -1462,9 +1483,11 @@
                           >
                           <input
                             type="date"
-                            class="form-control"
+                            class="form-control registroColab"
                             id="txt-dataNascimento"
                             name="txt-dataNascimento"
+                            required
+                            
                           />
                         </div>
                       </div>
@@ -1474,10 +1497,11 @@
                           <select
                             id="sc-Sexo"
                             name="sc-Sexo"
-                            class="form-select"
+                            class="form-select registroColab"
                           >
-                            <option>Feminino</option>
-                            <option>Masculino</option>
+                            <option></option>
+                            <option value="Masculino">Masculino</option>
+                            <option value="Feminino">Feminino</option>
                           </select>
                         </div>
                       </div>
@@ -1491,7 +1515,7 @@
                           >
                           <input
                             type="text"
-                            class="form-control"
+                            class="form-control registroColab"
                             id="txt-LocalNasci"
                             name="txt-LocalNasci"
                             placeholder="Local de Nascimento"
@@ -1504,24 +1528,26 @@
                           <select
                             id="sc-EstadoCivil"
                             name="sc-EstadoCivil"
-                            class="form-select"
+                            class="form-select registroColab"
                           >
-                            <option>SOLTEIRO</option>
-                            <option>CASADO</option>
-                            <option>DIVORCIADO</option>
-                            <option>SEPARADO</option>
+                          <option value=""></option>
+                            <option value="SOLTEIRO">SOLTEIRO</option>
+                            <option value="CASADO">CASADO</option>
+                            <option value="DIVORCIADO">DIVORCIADO</option>
+                            <option value="SEPARADO">SEPARADO</option>
                           </select>
                         </div>
                       </div>
-                      <div class="col-md-3 mb-3">
+                      <div class="col-md-3 mb-5">
                         <div class="form-group">
                           <label for="txt-nomePai">Nome do Pai</label>
                           <input
                             type="text"
-                            class="form-control"
+                            class="form-control registroColab"
                             id="txt-nomePai"
                             name="txt-nomePai"
                             placeholder="Nome do Pai"
+
                           />
                         </div>
                       </div>
@@ -1530,126 +1556,84 @@
                           <label for="txt-nomeMae">Nome da Mãe</label>
                           <input
                             type="text"
-                            class="form-control"
+                            class="form-control registroColab"
                             id="txt-nomeMae"
                             name="txt-nomeMae"
                             placeholder="Nome da Mãe"
+                            required
                           />
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
-
-                <!-- Informações de Endereço -->
-                <div class="card text-bg-light mb-3">
-                  <div class="card-header">
-                    <h5>Informações de Endereço</h5>
                   </div>
-                  <div class="card-body">
-                    <div class="row g-4">
-                      <div class="col-md-3 mb-3">
-                        <div class="form-group">
-                          <label for="txt-endereco">Endereço</label>
-                          <input
-                            type="text"
-                            class="form-control"
-                            id="txt-endereco"
-                            name="txt-endereco"
-                            placeholder="Endereço"
-                          />
-                        </div>
+                  <!-- Informações de Endereço -->
+                  <div class="tab-pane fade" id="ender-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
+                    <!-- Informações de Endereço -->
+                    <div class="card text-bg-light mb-3">
+                      <div class="card-header">
+                        <h5>Informações de Endereço</h5>
                       </div>
-                      <div class="col-md-3 mb-3">
-                        <div class="form-group">
-                          <label for="txt-numeroEndereco">Número</label>
-                          <input
-                            type="text"
-                            class="form-control"
-                            id="txt-numeroEndereco"
-                            name="txt-numeroEndereco"
-                            placeholder="Número"
-                          />
+                      <div class="card-body">
+                        <div class="row g-4">
+                          <div class="col-md-3 mb-3">
+                            <div class="form-group">
+                              <label for="txt-endereco">Endereço</label>
+                              <input type="text" class="form-control registroColab" id="txt-endereco" name="txt-endereco" placeholder="Endereço" />
+                            </div>
+                          </div>
+                          <div class="col-md-3 mb-3">
+                            <div class="form-group">
+                              <label for="txt-numeroEndereco">Número</label>
+                              <input type="text" class="form-control registroColab" id="txt-numeroEndereco" name="txt-numeroEndereco" placeholder="Número" />
+                            </div>
+                          </div>
+                          <div class="col-md-3 mb-3">
+                            <div class="form-group">
+                              <label for="txt-complemento">Complemento</label>
+                              <input type="text" class="form-control registroColab" id="txt-complemento" name="txt-complemento" placeholder="Complemento" />
+                            </div>
+                          </div>
+                          <div class="col-md-3 mb-3">
+                            <div class="form-group">
+                              <label for="txt-bairro">Bairro</label>
+                              <input type="text" class="form-control registroColab" id="txt-bairro" name="txt-bairro" placeholder="Bairro" />
+                            </div>
+                          </div>
                         </div>
-                      </div>
-                      <div class="col-md-3 mb-3">
-                        <div class="form-group">
-                          <label for="txt-complemento">Complemento</label>
-                          <input
-                            type="text"
-                            class="form-control"
-                            id="txt-complemento"
-                            name="txt-complemento"
-                            placeholder="Complemento"
-                          />
-                        </div>
-                      </div>
-                      <div class="col-md-3 mb-3">
-                        <div class="form-group">
-                          <label for="txt-bairro">Bairro</label>
-                          <input
-                            type="text"
-                            class="form-control"
-                            id="txt-bairro"
-                            name="txt-bairro"
-                            placeholder="Bairro"
-                          />
-                        </div>
-                      </div>
-                    </div>
-                    <div class="row g-4">
-                      <div class="col-md-3 mb-3">
-                        <div class="form-group">
-                          <label for="txt-cidade">Cidade</label>
-                          <input
-                            type="text"
-                            class="form-control"
-                            id="txt-cidade"
-                            name="txt-cidade"
-                            placeholder="Cidade"
-                          />
-                        </div>
-                      </div>
-                      <div class="col-md-3 mb-3">
-                        <div class="form-group">
-                          <label for="txt-cep">CEP</label>
-                          <input
-                            type="text"
-                            class="form-control"
-                            id="txt-cep"
-                            name="txt-cep"
-                            placeholder="CEP"
-                          />
-                        </div>
-                      </div>
-                      <div class="col-md-3 mb-3">
-                        <div class="form-group">
-                          <label for="txt-uf">UF</label>
-                          <input
-                            type="text"
-                            class="form-control"
-                            id="txt-uf"
-                            name="txt-uf"
-                            placeholder="UF"
-                          />
-                        </div>
-                      </div>
-                      <div class="col-md-3 mb-3">
-                        <div class="form-group">
-                          <label for="txt-email">E-mail</label>
-                          <input
-                            type="email"
-                            class="form-control"
-                            id="txt-email"
-                            name="txt-email"
-                            placeholder="E-mail"
-                          />
+                        <div class="row g-4">
+                          <div class="col-md-3 mb-3">
+                            <div class="form-group">
+                              <label for="txt-cidade">Cidade</label>
+                              <input type="text" class="form-control registroColab" id="txt-cidade" name="txt-cidade" placeholder="Cidade" />
+                            </div>
+                          </div>
+                          <div class="col-md-3 mb-3">
+                            <div class="form-group">
+                              <label for="txt-cep">CEP</label>
+                              <input type="text" class="form-control registroColab" id="txt-cep" name="txt-cep" placeholder="CEP" onblur="pesquisacep(this.value);" />
+                            </div>
+                          </div>
+                          <div class="col-md-3 mb-3">
+                            <div class="form-group">
+                              <label for="txt-uf">UF</label>
+                              <input type="text" class="form-control registroColab" id="txt-uf" name="txt-uf" placeholder="UF" />
+                            </div>
+                          </div>
+                          <div class="col-md-3 mb-3">
+                            <div class="form-group">
+                              <label for="txt-email">E-mail</label>
+                              <input type="email" class="form-control registroColab" id="txt-email" name="txt-email" placeholder="E-mail" />
+                            </div>
+                          </div>
                         </div>
                       </div>
                     </div>
                   </div>
-                </div>
 
+                  <!-- Informações de Trabalho -->
+                  <div class="tab-pane fade" id="trab-tab-pane" role="tabpanel" aria-labelledby="contact-tab" tabindex="0">
                 <!-- Informações de Trabalho -->
                 <div class="card text-bg-light mb-3">
                   <div class="card-header">
@@ -1662,7 +1646,7 @@
                           <label for="txt-matricula">Matricula</label>
                           <input
                             type="text"
-                            class="form-control"
+                            class="form-control registroColab"
                             id="txt-matricula"
                             name="txt-matricula"
                             placeholder="Matricula"
@@ -1674,7 +1658,7 @@
                           <label for="txt-funcao">Função</label>
                           <input
                             type="text"
-                            class="form-control"
+                            class="form-control registroColab"
                             id="txt-funcao"
                             name="txt-funcao"
                             placeholder="Função"
@@ -1686,7 +1670,7 @@
                           <label for="txt-admissao">Admissão</label>
                           <input
                             type="date"
-                            class="form-control"
+                            class="form-control registroColab"
                             id="txt-admissao"
                             name="txt-admissao"
                           />
@@ -1697,7 +1681,7 @@
                           <label for="txt-demitido">Demissão</label>
                           <input
                             type="date"
-                            class="form-control"
+                            class="form-control registroColab"
                             id="txt-demitido"
                             name="txt-demitido"
                           />
@@ -1708,7 +1692,7 @@
                           <label for="txt-nis">NIS</label>
                           <input
                             type="text"
-                            class="form-control"
+                            class="form-control registroColab"
                             id="txt-nis"
                             name="txt-nis"
                             placeholder="NIS"
@@ -1720,7 +1704,7 @@
                           <label for="txt-serieCtps">CTPS Serie</label>
                           <input
                             type="text"
-                            class="form-control"
+                            class="form-control registroColab"
                             id="txt-serieCtps"
                             name="txt-serieCtps"
                             placeholder="Serie"
@@ -1734,7 +1718,7 @@
                           <label for="txt-numeroCtps">CTPS Numero</label>
                           <input
                             type="text"
-                            class="form-control"
+                            class="form-control registroColab"
                             id="txt-numeroCtps"
                             name="txt-numeroCtps"
                             placeholder="CTPS Numero"
@@ -1746,7 +1730,7 @@
                           <label for="txt-pisPasep">PIS PASEP</label>
                           <input
                             type="text"
-                            class="form-control"
+                            class="form-control registroColab"
                             id="txt-pisPasep"
                             name="txt-pisPasep"
                             placeholder="PIS PASEP"
@@ -1758,7 +1742,7 @@
                           <label for="txt-banco">Banco</label>
                           <input
                             type="text"
-                            class="form-control"
+                            class="form-control registroColab"
                             id="txt-banco"
                             name="txt-banco"
                             placeholder="Banco"
@@ -1770,7 +1754,7 @@
                           <label for="txt-conta">Conta</label>
                           <input
                             type="text"
-                            class="form-control"
+                            class="form-control registroColab"
                             id="txt-conta"
                             name="txt-conta"
                             placeholder="Conta"
@@ -1782,7 +1766,7 @@
                           <label for="txt-agencia">Agencia</label>
                           <input
                             type="text"
-                            class="form-control"
+                            class="form-control registroColab"
                             id="txt-agencia"
                             name="txt-agencia"
                             placeholder="Agencia"
@@ -1795,445 +1779,22 @@
 
                 <div class="row mb-4">
                   <div class="col-md-12 text-end">
-                    <button type="submit" class="btn btn-primary">
-                      Enviar
-                      <span
-                        class="spinner-border spinner-border-sm d-none"
-                        role="status"
-                        aria-hidden="true"
-                      ></span>
+                    <button
+                      type="button"
+                      class="btn btn-primary"
+                      data-toggle="button"
+                      aria-pressed="false"
+                      autocomplete="off"
+                      onclick="salvardadosColaborador()"
+                    >
+                      Cadastrar
                     </button>
                   </div>
                 </div>
-              </div>
-            </form>
+                  </div>
+                </div>
+
           </div>
-        </template>
-
-        <template id="cadastroDeColaboradores">
-          <div id="forms">
-            <div class="card">
-              <div class="card-body"></div>
-              <h1>Cadastro de Usuario</h1>
-              <ul class="nav nav-pills card-header-pills">
-                <li class="nav-item">
-                  <a
-                    class="nav-link"
-                    aria-current="true"
-                    href="https://drive.google.com/drive/folders/1liqnDAeM1LK-pKN9Rz_B_S0M7Z2V7gdR?usp=drive_link"
-                    >Pasta Doscs Registros</a
-                  >
-                </li>
-                <li class="nav-item">
-                  <a
-                    class="nav-link"
-                    aria-current="true"
-                    href="https://drive.google.com/drive/folders/1liqnDAeM1LK-pKN9Rz_B_S0M7Z2V7gdR?usp=drive_link"
-                    >Pasta Doscs ASOS</a
-                  >
-                </li>
-              </ul>
-            </div>
-
-            <form class="card">
-              <div class="container mt-4">
-                <!-- Informações Gerais -->
-                <div class="card text-bg-light mb-3">
-                  <div class="card-header">
-                    <h5>Informações Gerais</h5>
-                  </div>
-                  <div class="card-body">
-                    <div class="row g-4">
-                      <div class="col-md-1 mb-3">
-                        <div class="form-group">
-                          <label for="txt-idColaborador">ID Registros</label>
-                          <input
-                            type="text"
-                            class="form-control"
-                            id="txt-idColaborador"
-                            name="txt-idColaborador"
-                          />
-                        </div>
-                      </div>
-                      <div class="col-md-3 mb-3">
-                        <div class="form-group">
-                          <label for="txt-nome">Nome</label>
-                          <input
-                            type="text"
-                            class="form-control"
-                            id="txt-nome"
-                            name="txt-nome"
-                            placeholder="Nome"
-                            required
-                          />
-                        </div>
-                      </div>
-                      <div class="col-md-3 mb-3">
-                        <div class="form-group">
-                          <label for="txt-cpf">CPF</label>
-                          <input
-                            type="text"
-                            class="form-control"
-                            id="txt-cpf"
-                            name="txt-cpf"
-                            placeholder="000.000.000-00"
-                            required
-                            pattern="\d{3}\.\d{3}\.\d{3}-\d{2}"
-                          />
-                        </div>
-                      </div>
-                      <div class="col-md-2 mb-3">
-                        <div class="form-group">
-                          <label for="txt-dataNascimento"
-                            >Data de Nascimento</label
-                          >
-                          <input
-                            type="date"
-                            class="form-control"
-                            id="txt-dataNascimento"
-                            name="txt-dataNascimento"
-                          />
-                        </div>
-                      </div>
-                      <div class="col-md-2 mb-3">
-                        <div class="form-group">
-                          <label for="sc-Sexo">Sexo</label>
-                          <select
-                            id="sc-Sexo"
-                            name="sc-Sexo"
-                            class="form-select"
-                          >
-                            <option>Feminino</option>
-                            <option>Masculino</option>
-                          </select>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="row g-4">
-                      <div class="col-md-3 mb-3">
-                        <div class="form-group">
-                          <label for="txt-LocalNasci"
-                            >Local de Nascimento</label
-                          >
-                          <input
-                            type="text"
-                            class="form-control"
-                            id="txt-LocalNasci"
-                            name="txt-LocalNasci"
-                            placeholder="Local de Nascimento"
-                          />
-                        </div>
-                      </div>
-                      <div class="col-md-2 mb-3">
-                        <div class="form-group">
-                          <label for="sc-EstadoCivil">Estado Civil</label>
-                          <select
-                            id="sc-EstadoCivil"
-                            name="sc-EstadoCivil"
-                            class="form-select"
-                          >
-                            <option>SOLTEIRO</option>
-                            <option>CASADO</option>
-                            <option>DIVORCIADO</option>
-                            <option>SEPARADO</option>
-                          </select>
-                        </div>
-                      </div>
-                      <div class="col-md-3 mb-3">
-                        <div class="form-group">
-                          <label for="txt-nomePai">Nome do Pai</label>
-                          <input
-                            type="text"
-                            class="form-control"
-                            id="txt-nomePai"
-                            name="txt-nomePai"
-                            placeholder="Nome do Pai"
-                          />
-                        </div>
-                      </div>
-                      <div class="col-md-3 mb-3">
-                        <div class="form-group">
-                          <label for="txt-nomeMae">Nome da Mãe</label>
-                          <input
-                            type="text"
-                            class="form-control"
-                            id="txt-nomeMae"
-                            name="txt-nomeMae"
-                            placeholder="Nome da Mãe"
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <!-- Informações de Endereço -->
-                <div class="card text-bg-light mb-3">
-                  <div class="card-header">
-                    <h5>Informações de Endereço</h5>
-                  </div>
-                  <div class="card-body">
-                    <div class="row g-4">
-                      <div class="col-md-3 mb-3">
-                        <div class="form-group">
-                          <label for="txt-endereco">Endereço</label>
-                          <input
-                            type="text"
-                            class="form-control"
-                            id="txt-endereco"
-                            name="txt-endereco"
-                            placeholder="Endereço"
-                          />
-                        </div>
-                      </div>
-                      <div class="col-md-3 mb-3">
-                        <div class="form-group">
-                          <label for="txt-numeroEndereco">Número</label>
-                          <input
-                            type="text"
-                            class="form-control"
-                            id="txt-numeroEndereco"
-                            name="txt-numeroEndereco"
-                            placeholder="Número"
-                          />
-                        </div>
-                      </div>
-                      <div class="col-md-3 mb-3">
-                        <div class="form-group">
-                          <label for="txt-complemento">Complemento</label>
-                          <input
-                            type="text"
-                            class="form-control"
-                            id="txt-complemento"
-                            name="txt-complemento"
-                            placeholder="Complemento"
-                          />
-                        </div>
-                      </div>
-                      <div class="col-md-3 mb-3">
-                        <div class="form-group">
-                          <label for="txt-bairro">Bairro</label>
-                          <input
-                            type="text"
-                            class="form-control"
-                            id="txt-bairro"
-                            name="txt-bairro"
-                            placeholder="Bairro"
-                          />
-                        </div>
-                      </div>
-                    </div>
-                    <div class="row g-4">
-                      <div class="col-md-3 mb-3">
-                        <div class="form-group">
-                          <label for="txt-cidade">Cidade</label>
-                          <input
-                            type="text"
-                            class="form-control"
-                            id="txt-cidade"
-                            name="txt-cidade"
-                            placeholder="Cidade"
-                          />
-                        </div>
-                      </div>
-                      <div class="col-md-3 mb-3">
-                        <div class="form-group">
-                          <label for="txt-cep">CEP</label>
-                          <input
-                            type="text"
-                            class="form-control"
-                            id="txt-cep"
-                            name="txt-cep"
-                            placeholder="CEP"
-                          />
-                        </div>
-                      </div>
-                      <div class="col-md-3 mb-3">
-                        <div class="form-group">
-                          <label for="txt-uf">UF</label>
-                          <input
-                            type="text"
-                            class="form-control"
-                            id="txt-uf"
-                            name="txt-uf"
-                            placeholder="UF"
-                          />
-                        </div>
-                      </div>
-                      <div class="col-md-3 mb-3">
-                        <div class="form-group">
-                          <label for="txt-email">E-mail</label>
-                          <input
-                            type="email"
-                            class="form-control"
-                            id="txt-email"
-                            name="txt-email"
-                            placeholder="E-mail"
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <!-- Informações de Trabalho -->
-                <div class="card text-bg-light mb-3">
-                  <div class="card-header">
-                    <h5>Informações de Trabalho</h5>
-                  </div>
-                  <div class="card-body">
-                    <div class="row g-4">
-                      <div class="col-md-2 mb-3">
-                        <div class="form-group">
-                          <label for="txt-matricula">Matricula</label>
-                          <input
-                            type="text"
-                            class="form-control"
-                            id="txt-matricula"
-                            name="txt-matricula"
-                            placeholder="Matricula"
-                          />
-                        </div>
-                      </div>
-                      <div class="col-md-2 mb-3">
-                        <div class="form-group">
-                          <label for="txt-funcao">Função</label>
-                          <input
-                            type="text"
-                            class="form-control"
-                            id="txt-funcao"
-                            name="txt-funcao"
-                            placeholder="Função"
-                          />
-                        </div>
-                      </div>
-                      <div class="col-md-2 mb-3">
-                        <div class="form-group">
-                          <label for="txt-admissao">Admissão</label>
-                          <input
-                            type="date"
-                            class="form-control"
-                            id="txt-admissao"
-                            name="txt-admissao"
-                          />
-                        </div>
-                      </div>
-                      <div class="col-md-2 mb-3">
-                        <div class="form-group">
-                          <label for="txt-demitido">Demissão</label>
-                          <input
-                            type="date"
-                            class="form-control"
-                            id="txt-demitido"
-                            name="txt-demitido"
-                          />
-                        </div>
-                      </div>
-                      <div class="col-md-2 mb-3">
-                        <div class="form-group">
-                          <label for="txt-nis">NIS</label>
-                          <input
-                            type="text"
-                            class="form-control"
-                            id="txt-nis"
-                            name="txt-nis"
-                            placeholder="NIS"
-                          />
-                        </div>
-                      </div>
-                      <div class="col-md-2 mb-3">
-                        <div class="form-group">
-                          <label for="txt-serieCtps">CTPS Serie</label>
-                          <input
-                            type="text"
-                            class="form-control"
-                            id="txt-serieCtps"
-                            name="txt-serieCtps"
-                            placeholder="Serie"
-                          />
-                        </div>
-                      </div>
-                    </div>
-                    <div class="row g-4">
-                      <div class="col-md-2 mb-3">
-                        <div class="form-group">
-                          <label for="txt-numeroCtps">CTPS Numero</label>
-                          <input
-                            type="text"
-                            class="form-control"
-                            id="txt-numeroCtps"
-                            name="txt-numeroCtps"
-                            placeholder="CTPS Numero"
-                          />
-                        </div>
-                      </div>
-                      <div class="col-md-2 mb-3">
-                        <div class="form-group">
-                          <label for="txt-pisPasep">PIS PASEP</label>
-                          <input
-                            type="text"
-                            class="form-control"
-                            id="txt-pisPasep"
-                            name="txt-pisPasep"
-                            placeholder="PIS PASEP"
-                          />
-                        </div>
-                      </div>
-                      <div class="col-md-2 mb-3">
-                        <div class="form-group">
-                          <label for="txt-banco">Banco</label>
-                          <input
-                            type="text"
-                            class="form-control"
-                            id="txt-banco"
-                            name="txt-banco"
-                            placeholder="Banco"
-                          />
-                        </div>
-                      </div>
-                      <div class="col-md-2 mb-3">
-                        <div class="form-group">
-                          <label for="txt-conta">Conta</label>
-                          <input
-                            type="text"
-                            class="form-control"
-                            id="txt-conta"
-                            name="txt-conta"
-                            placeholder="Conta"
-                          />
-                        </div>
-                      </div>
-                      <div class="col-md-2 mb-3">
-                        <div class="form-group">
-                          <label for="txt-agencia">Agencia</label>
-                          <input
-                            type="text"
-                            class="form-control"
-                            id="txt-agencia"
-                            name="txt-agencia"
-                            placeholder="Agencia"
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="row mb-4">
-                  <div class="col-md-12 text-end">
-                    <button type="submit" class="btn btn-primary">
-                      Enviar
-                      <span
-                        class="spinner-border spinner-border-sm d-none"
-                        role="status"
-                        aria-hidden="true"
-                      ></span>
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </form>
           </div>
         </template>
 
@@ -2511,162 +2072,134 @@
             <div class="card-body">
               <h1 class="card-title">Registro de Pagamento VT</h1>
               <div class="row">
-                <!-- Formulário de Registro de Pagamento -->
-                <div class="col-md-6">
-                  <div class="card mt-4">
-                    <div class="card-body">
-                      <div class="container">
-                        <div class="row g-2">
-                          <div class="card">
-                            <div class="row">
-                              <!-- ID -->
-                              <div class="col-md-2 mb-3">
-                                <div class="form-group">
-                                  <label
-                                    for="idcolaboradorvt"
-                                    class="input-group-text"
-                                    >ID</label
-                                  >
-                                  <input
-                                    id="idcolaboradorvt"
-                                    type="text"
-                                    class="form-control rGVT"
-                                    disabled
-                                  />
-                                </div>
-                              </div>
-                              <!-- Colaborador -->
-                              <div class="col-md-6 mb-3">
-                                <div class="form-group">
-                                  <label
-                                    for="nomecolaboradorvt"
-                                    class="input-group-text"
-                                    >Colaborador</label
-                                  >
-                                  <select
-                                    id="nomecolaboradorvt"
-                                    class="form-control scColaborador rGVT"
-                                    onchange="dadosvt()"
-                                  >
-                                    <option></option>
-                                  </select>
-                                </div>
-                              </div>
+                <div class="col-md-12">
+                  <div class="row">
+                    <!-- ID -->
+                    <div class="col-md-2">
+                      <div class="form-group">
+                        <label for="idcolaboradorvt" class="input-group-text"
+                          >ID</label
+                        >
+                        <input
+                          id="idcolaboradorvt"
+                          type="text"
+                          class="form-control rGVT"
+                          disabled
+                        />
+                      </div>
+                    </div>
+                    <!-- Colaborador -->
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label for="nomecolaboradorvt" class="input-group-text"
+                          >Colaborador</label
+                        >
+                        <select
+                          id="nomecolaboradorvt"
+                          class="form-control scColaborador rGVT"
+                          onchange="dadosvt()"
+                        >
+                          <option></option>
+                        </select>
+                      </div>
+                    </div>
 
-                              <!-- Cartão -->
-                              <div class="col-md-6 mb-3">
-                                <div class="form-group">
-                                  <label
-                                    for="inputcartaoVT"
-                                    class="input-group-text"
-                                    >Cartão</label
-                                  >
-                                  <input
-                                    type="text"
-                                    id="inputcartaoVT"
-                                    class="form-control rGVT"
-                                    disabled
-                                  />
-                                </div>
-                              </div>
+                    <!-- Cartão -->
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label for="inputcartaoVT" class="input-group-text"
+                          >Cartão</label
+                        >
+                        <input
+                          type="text"
+                          id="inputcartaoVT"
+                          class="form-control rGVT"
+                          disabled
+                        />
+                      </div>
+                    </div>
 
-                              <!-- Valor -->
-                              <div class="col-md-6 mb-3">
-                                <div class="form-group">
-                                  <label
-                                    for="inputvalorVT"
-                                    class="input-group-text"
-                                    >Valor do Pagamento</label
-                                  >
-                                  <input
-                                    type="number"
-                                    id="inputvalorVT"
-                                    class="form-control rGVT"
-                                  />
-                                </div>
-                              </div>
-
-                              <!-- Data de Pagamento -->
-                              <div class="col-md-6 mb-3">
-                                <div class="form-group">
-                                  <label
-                                    for="inputDataPagamento"
-                                    class="input-group-text"
-                                    >Data de Pagamento</label
-                                  >
-                                  <input
-                                    type="date"
-                                    id="inputDataPagamento"
-                                    class="form-control rGVT"
-                                  />
-                                </div>
-                              </div>
-
-                              <!-- Meio de Pagamento -->
-                              <div class="col-md-6 mb-3">
-                                <div class="form-group">
-                                  <label
-                                    for="inputMeioPGVT"
-                                    class="input-group-text"
-                                    >Meio de Pagamento</label
-                                  >
-                                  <input
-                                    type="text"
-                                    id="inputMeioPGVT"
-                                    class="form-control rGVT"
-                                  />
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-
-                        <div class="row g-4 p-1">
-                          <div class="col-md-6 mb-3">
-                            <a
-                              class="btn btn-primary btn-sm"
-                              href="#"
-                              role="button"
-                              onclick="salvarPagamentoVT()"
-                            >
-                              Salvar Pagamento</a
-                            >
-                          </div>
-                        </div>
+                    <!-- Valor -->
+                    <div class="col-md-2">
+                      <div class="form-group">
+                        <label for="inputvalorVT" class="input-group-text"
+                          >Valor do Pagamento</label
+                        >
+                        <input
+                          type="number"
+                          id="inputvalorVT"
+                          class="form-control rGVT"
+                        />
                       </div>
                     </div>
                   </div>
-                </div>
 
-                <!-- Tabela de Pagamentos Salvos -->
-                <div class="col-md-6">
-                  <div class="card mt-4">
-                    <div class="card-body w-100">
-                      <h4 class="card-title">Pagamentos Salvos</h4>
-                      <table
-                        class="table table-striped table-bordered nowrap"
-                        width="100%"
-                        id="tablePagamentos"
+                  <div class="row mt-3">
+                    <!-- Data de Pagamento -->
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label for="inputDataPagamento" class="input-group-text"
+                          >Data de Pagamento</label
+                        >
+                        <input
+                          type="date"
+                          id="inputDataPagamento"
+                          class="form-control rGVT"
+                        />
+                      </div>
+                    </div>
+
+                    <!-- Meio de Pagamento -->
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label for="inputMeioPGVT" class="input-group-text"
+                          >Meio de Pagamento</label
+                        >
+                        <input
+                          type="text"
+                          id="inputMeioPGVT"
+                          class="form-control rGVT"
+                        />
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <a
+                        class="btn btn-primary btn-sm"
+                        href="#"
+                        role="button"
+                        onclick="salvarPagamentoVT()"
                       >
-                        <thead>
-                          <tr>
-                            <th>ID</th>
-                            <th>Colaborador</th>
-                            <th>Cartão</th>
-                            <th>Valor</th>
-                            <th>Data de Pagamento</th>
-                          </tr>
-                        </thead>
-                        <tbody id="tabelaPagamentos">
-                          <!-- Os pagamentos serão inseridos aqui dinamicamente -->
-                        </tbody>
-                      </table>
+                        Salvar Pagamento</a
+                      >
                     </div>
                   </div>
-                </div>
-              </div>
-            </div>
-          </div>
+
+                  <!-- Tabela de Pagamentos Salvos -->
+                  <div class="row mt-3">
+                    <div class="card mt-4">
+                      <div class="card-body w-100">
+                        <h4 class="card-title">Pagamentos Salvos</h4>
+                        <table
+                          class="table table-striped table-bordered nowrap"
+                          width="100%"
+                          id="tablePagamentos"
+                        >
+                          <thead>
+                            <tr>
+                              <th>ID</th>
+                              <th>Colaborador</th>
+                              <th>Cartão</th>
+                              <th>Valor</th>
+                              <th>Data de Pagamento</th>
+                            </tr>
+                          </thead>
+                          <tbody id="tabelaPagamentos">
+                            <!-- Os pagamentos serão inseridos aqui dinamicamente -->
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
         </template>
 
         <template id="analiseDeRegistroVT">
@@ -5065,8 +4598,8 @@
     </script>
     <!-- Registro de Solicitações -->
     <script>
-      chamaTemplate("solicitacaoLideranca");
-      toFillTableTarefa();
+      // chamaTemplate("solicitacaoLideranca");
+      // toFillTableTarefa();
 
       function salvarDadosTarefas() {
         // Verifica se todos os campos obrigatórios foram preenchidos
@@ -5296,7 +4829,7 @@
           <ul class="list-group">
           <li class="list-group-item EditslLideranca" id="${
             dado.id
-          }">IDentificação: ${dado.id}</li>
+          }">IDentificação: ${dado.id}</"li>
           <li class="list-group-item">Tarefa: ${dado.tarefaAgendamentoSl}</li>
           <li class="list-group-item">Responsável: ${dado.colaboradorSl}</li>
           <li class="list-group-item">Prazo: ${dado.prazoAgendamento}</li>
@@ -5380,6 +4913,126 @@
           behavior: "smooth",
         });
       }
+    </script>
+    <!-- salvar dados Colaborador -->
+    <script>
+      function salvardadosColaborador(params) {
+        const inputs = document.querySelectorAll(".registroColab");
+        // inputs.forEach((input) => {
+        //   console.log(`${input.name || input.id}: ${input.value}`); // Mostra o nome ou id e o valor do input no console
+        // });
+        const isValid = Array.from(inputs).every((input) => {
+          if (input.hasAttribute("required") && !input.value) {
+            input.classList.add("is-invalid"); // Adiciona classe para destacar o campo vazio
+            return false;
+          } else {
+            input.classList.remove("is-invalid"); // Remove a classe caso esteja preenchido
+            return true;
+          }
+        });
+
+        // Se algum campo obrigatório não estiver preenchido, alerta o usuário e interrompe o processo
+        if (!isValid) {
+          alert("Por favor, preencha todos os campos obrigatórios.");
+          return;
+        }
+
+        const dadosArray = [];
+        mostrarSpinner();
+
+        inputs.forEach((input) => {
+          dadosArray.push({
+            id: input.name || input.id, // Pega o ID do input
+            valor: input.value, // Pega o valor do input
+          });
+        });
+      }
+      // document.getElementById("btt-cadastro-calab").disabled = true;
+
+      $.ajax({
+        type: "POST",
+        url: urlAjax,
+        data: {
+          dados: JSON.stringify(dadosArray),
+          qualFuncao: "salvarDadosNoSheet",
+        }, // Envia os dados diretamente
+        success: function (response) {
+          if (response) {
+            alert("Dados salvos com sucesso");
+          } else {
+            alert("Erro de retorno");
+          }
+        },
+        error: function (error) {
+          console.error("Erro ao autenticar", error);
+        },
+      });
+    </script>
+<!-- Api de cep -->
+    <script>
+function limpa_formulário_cep() {
+  // Limpa valores do formulário de cep.
+  document.getElementById('txt-endereco').value = "";
+  document.getElementById('txt-bairro').value = "";
+  document.getElementById('txt-cidade').value = "";
+  document.getElementById('txt-uf').value = "";
+}
+
+function meu_callback(conteudo) {
+  if (!("erro" in conteudo)) {
+    // Atualiza os campos com os valores retornados pela API.
+    document.getElementById('txt-endereco').value = conteudo.logradouro;
+    document.getElementById('txt-bairro').value = conteudo.bairro;
+    document.getElementById('txt-cidade').value = conteudo.localidade;
+    document.getElementById('txt-uf').value = conteudo.uf;
+  } else {
+    // CEP não encontrado.
+    limpa_formulário_cep();
+    alert("CEP não encontrado.");
+  }
+}
+
+function pesquisacep(valor) {
+  // Nova variável "cep" somente com dígitos.
+  var cep = valor.replace(/\D/g, '');
+
+  // Verifica se campo cep possui valor informado.
+  if (cep != "") {
+    // Expressão regular para validar o CEP.
+    var validacep = /^[0-9]{8}$/;
+
+    // Valida o formato do CEP.
+    if (validacep.test(cep)) {
+      // Preenche os campos com "..." enquanto consulta webservice.
+      document.getElementById('txt-endereco').value = "...";
+      document.getElementById('txt-bairro').value = "...";
+      document.getElementById('txt-cidade').value = "...";
+      document.getElementById('txt-uf').value = "...";
+
+      // Cria um elemento javascript.
+      var script = document.createElement('script');
+
+      // Sincroniza com o callback.
+      script.src = 'https://viacep.com.br/ws/' + cep + '/json/?callback=meu_callback';
+
+      // Insere script no documento e carrega o conteúdo.
+      document.body.appendChild(script);
+    } else {
+      // CEP inválido.
+      limpa_formulário_cep();
+      alert("Formato de CEP inválido.");
+    }
+  } else {
+    // CEP sem valor, limpa formulário.
+    limpa_formulário_cep();
+  }
+}
+
+    </script>
+    <!-- Fazer teste -->
+    <script>
+      // TODO Fazer Teste
+      chamaTemplate("cadastroDeColaboradores");
     </script>
   </body>
 </html>
