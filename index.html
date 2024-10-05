@@ -121,7 +121,7 @@
       #superBody {
         display: grid;
         grid-template-rows: auto 1fr;
-        grid-template-columns: auto 1fr auto;
+        grid-template-columns: 1fr auto;
         background: var(--cor-branco);
         height: 100%;
         width: 100%;
@@ -152,12 +152,15 @@
         padding: 1rem;
       }
 
-      #ladoDireito,
+      /* #ladoDireito,
       conteudo {
         max-width: 100vw;
         margin-left: 0.8vh;
         background: var(--cor-terciaria);
         padding: 1em;
+      } */
+      div#conteudo {
+        width: 98%;
       }
 
       button {
@@ -229,7 +232,44 @@
         justify-content: center;
         align-items: center;
         z-index: 9999;
+        box-sizing: border-box;
+        animation: pulse 1s linear infinite;
         /* Certifique-se de que o overlay esteja acima de outros conteúdos */
+      }
+
+      .spinner-overlay:after {
+        content: "";
+        position: absolute;
+        width: 48px;
+        height: 48px;
+        border: 5px solid #fff;
+        border-radius: 50%;
+        display: inline-block;
+        box-sizing: border-box;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        animation: scaleUp 1s linear infinite;
+      }
+
+      @keyframes scaleUp {
+        0% {
+          transform: translate(-50%, -50%) scale(0);
+        }
+        60%,
+        100% {
+          transform: translate(-50%, -50%) scale(1);
+        }
+      }
+      @keyframes pulse {
+        0%,
+        60%,
+        100% {
+          transform: scale(1);
+        }
+        80% {
+          transform: scale(1.2);
+        }
       }
 
       .card.loginstilo {
@@ -264,15 +304,16 @@
 
         div#accordion {
           width: 100%;
-          font-size: 2rem;
+          font-size: 1rem;
         }
 
         #superBody {
           grid-template-columns: 1fr;
-          grid-template-rows: auto 1fr auto;
+          grid-template-rows: 1fr auto;
           height: 100vh;
           width: 100%;
           gap: 1.8rem;
+          font-size: 1rem;
         }
 
         .ui-accordion .ui-accordion-header .ui-accordion-content {
@@ -390,6 +431,23 @@
       .modal-content {
         width: 20rem;
       }
+      .alert-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(
+          0,
+          0,
+          0,
+          0.5
+        ); /* Fundo escuro com transparência */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+      }
     </style>
   </head>
 
@@ -486,6 +544,11 @@
                 </div>
               </div>
             </div>
+          </div>
+        </template>
+        <template id="menuInicial">
+          <div class="card">
+            <h1>Menu inicial</h1>
           </div>
         </template>
 
@@ -1027,7 +1090,7 @@
                           id="dataExtratoPonto"
                         />
                       </div>
-                      <div class="col-md-3">
+                      <div class="col-md-1">
                         <label for="diaSemana" class="input-group-text"
                           >Dia</label
                         >
@@ -1039,7 +1102,31 @@
                           disabled
                         />
                       </div>
-                      <div class="col-md-3 mt-3">
+                      <div class="col-md-2 mt-3">
+                        <label for="mesRelogio" class="input-group-text"
+                          >Mes</label
+                        >
+                        <input
+                          type="text"
+                          class="form-control"
+                          name="mesRelogio"
+                          id="mesRelogio"
+                          disabled
+                        />
+                      </div>
+                      <div class="col-md-2 mt-3">
+                        <label for="valorAno" class="input-group-text"
+                          >Ano</label
+                        >
+                        <input
+                          type="text"
+                          class="form-control"
+                          name="valorAno"
+                          id="valorAno"
+                          disabled
+                        />
+                      </div>
+                      <div class="col-md-2 mt-3">
                         <label for="trabalhouSelect" class="input-group-text"
                           >Trabalhou?</label
                         >
@@ -1259,7 +1346,7 @@
                       id="openModalBtn"
                       class="btn btn-primary"
                       data-bs-toggle="modal"
-                      data-bs-target="#exampleModal"
+                      onclick="showModalHR()"
                     >
                       Open modal
                     </button>
@@ -1384,429 +1471,722 @@
         </template>
 
         <template id="cadastroDeColaboradores">
-            <div class="card">
-              <div class="card-body">
-                <h1 class="card-title">Cadastro de Colaboradores</h1>
-                <div class="row">
-                  <ul class="nav nav-pills card-header-pills">
-                    <li class="nav-item">
-                      <a
-                        class="nav-link"
-                        aria-current="true"
-                        href="https://drive.google.com/drive/folders/1liqnDAeM1LK-pKN9Rz_B_S0M7Z2V7gdR?usp=drive_link"
-                        >Pasta Doscs Registros</a
-                      >
-                    </li>
-                    <li class="nav-item">
-                      <a
-                        class="nav-link"
-                        aria-current="true"
-                        href="https://drive.google.com/drive/folders/1liqnDAeM1LK-pKN9Rz_B_S0M7Z2V7gdR?usp=drive_link"
-                        >Pasta Doscs ASOS</a
-                      >
-                    </li>
-                  </ul>
-
-                </div>
-                <p class="card"></p>
-                
-                <ul class="nav nav-tabs" id="myTabCadasColab" role="tablist">
-                  <!-- Informações Gerais -->
-                 <i class="bi bi-asterisk "></i>
-                  <li class="nav-item" role="presentation">
-                    <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#gerais-tab-pane" type="button" role="tab" aria-controls="gerais-tab-pane" aria-selected="true">Informações Gerais</button>
+          <div class="card">
+            <div class="card-body">
+              <h1 class="card-title">Cadastro de Colaboradores</h1>
+              <div class="row">
+                <ul class="nav nav-pills card-header-pills">
+                  <li class="nav-item">
+                    <a
+                      class="nav-link"
+                      aria-current="true"
+                      href="https://drive.google.com/drive/folders/1liqnDAeM1LK-pKN9Rz_B_S0M7Z2V7gdR?usp=drive_link"
+                      >Pasta Doscs Registros</a
+                    >
                   </li>
-                 <i class="bi bi-asterisk"></i>
-                  <!-- Informações de Endereço -->
-                  <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#ender-tab-pane" type="button" role="tab" aria-controls="ender-tab-pane" aria-selected="false"> Informações de Endereço</button>
-                  </li>
-                 <i class="bi bi-asterisk text-danger"></i>
-                  <!-- Informações de Trabalho -->
-                  <li class="nav-item " role="presentation">
-                    <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#trab-tab-pane" type="button" role="tab" aria-controls="trab-tab-pane" aria-selected="false">Informações de Trabalho</button>
+                  <li class="nav-item">
+                    <a
+                      class="nav-link"
+                      aria-current="true"
+                      href="https://drive.google.com/drive/folders/1liqnDAeM1LK-pKN9Rz_B_S0M7Z2V7gdR?usp=drive_link"
+                      >Pasta Doscs ASOS</a
+                    >
                   </li>
                 </ul>
-                <!-- Conjunto de dados para o Rolelist -->
-                <div class="tab-content" id="myTabContentCadasColab">
+              </div>
+              <p class="card"></p>
 
-                  <!-- Informações Gerais -->
-                <div class="tab-pane fade show active" id="gerais-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
+              <ul class="nav nav-tabs" id="myTabCadasColab" role="tablist">
                 <!-- Informações Gerais -->
-                <div class="card text-bg-light mb-3">
-                  <div class="card-header">
-                    <h5>Informações Gerais</h5>
-                  </div>
-                  <div class="card-body">
-                    <div class="row g-4">
-                      <div class="col-md-2 mb-3">
-                        <div class="form-group">
-                          <label for="txt-idColaborador">ID Registros</label>
-                          <input
-                            type="text"
-                            class="form-control registroColab"
-                            id="txt-idColaborador"
-                            name="txt-idColaborador"
-                            disabled="disabled"
-                          />
-                        </div>
-                      </div>
-                      <div class="col-md-3 mb-3">
-                        <div class="form-group">
-                          <i class="bi bi-asterisk"></i>
-                          <label for="txt-nome">Nome</label>
-                          <input
-                            type="text"
-                            class="form-control registroColab"
-                            id="txt-nome"
-                            name="txt-nome"
-                            placeholder="Nome"
-                            required
-                          />
-                        </div>
-                      </div>
-                      <div class="col-md-3 mb-3">
-                        <div class="form-group">
-                          <i class="bi bi-asterisk"></i>
-                          <label for="txt-cpf">CPF</label>
-                          <input
-                            type="text"
-                            class="form-control registroColab"
-                            id="txt-cpf"
-                            name="txt-cpf"
-                            placeholder="000.000.000-00"
-                            required
-                            pattern="\d{3}\.\d{3}\.\d{3}-\d{2}"
-                            maxlength="14"
-                          />
-                        </div>
-                      </div>
-                      <div class="col-md-2 mb-3">
-                        <div class="form-group">
-                          <i class="bi bi-asterisk"></i>
-                          <label for="txt-dataNascimento"
-                            >Data de Nascimento</label
-                          >
-                          <input
-                            type="date"
-                            class="form-control registroColab"
-                            id="txt-dataNascimento"
-                            name="txt-dataNascimento"
-                            required
-                            
-                          />
-                        </div>
-                      </div>
-                      <div class="col-md-2 mb-3">
-                        <div class="form-group">
-                          <label for="sc-Sexo">Sexo</label>
-                          <select
-                            id="sc-Sexo"
-                            name="sc-Sexo"
-                            class="form-select registroColab"
-                          >
-                            <option></option>
-                            <option value="Masculino">Masculino</option>
-                            <option value="Feminino">Feminino</option>
-                          </select>
-                        </div>
-                      </div>
-                      
-                    </div>
+                <li class="nav-item" role="presentation">
+                  <button
+                    class="nav-link active"
+                    id="home-tab"
+                    data-bs-toggle="tab"
+                    data-bs-target="#gerais-tab-pane"
+                    type="button"
+                    role="tab"
+                    aria-controls="gerais-tab-pane"
+                    aria-selected="true"
+                  >
+                    <i class="bi bi-asterisk"></i> Informações Gerais
+                  </button>
+                </li>
 
-                    <div class="row g-4">
-                      <div class="col-md-3 mb-3">
-                        <div class="form-group">
-                          <label for="txt-email">E-mail</label>
-                          <input type="email" class="form-control registroColab" id="txt-email" name="txt-email" placeholder="E-mail" />
-                        </div>
-                      </div>
-                      <div class="col-md-3 mb-3">
-                        <div class="form-group">
-                          <label for="txt-LocalNasci"
-                            >Local de Nascimento</label
-                          >
-                          <input
-                            type="text"
-                            class="form-control registroColab"
-                            id="txt-LocalNasci"
-                            name="txt-LocalNasci"
-                            placeholder="Local de Nascimento"
-                          />
-                        </div>
-                      </div>
-                      <div class="col-md-2 mb-3">
-                        <div class="form-group">
-                          <label for="sc-EstadoCivil">Estado Civil</label>
-                          <select
-                            id="sc-EstadoCivil"
-                            name="sc-EstadoCivil"
-                            class="form-select registroColab"
-                          >
-                          <option value=""></option>
-                            <option value="SOLTEIRO">SOLTEIRO</option>
-                            <option value="CASADO">CASADO</option>
-                            <option value="DIVORCIADO">DIVORCIADO</option>
-                            <option value="SEPARADO">SEPARADO</option>
-                          </select>
-                        </div>
-                      </div>
-                      <div class="col-md-3">
-                        <div class="form-group">
-                          <label for="txt-nomePai">Nome do Pai</label>
-                          <input
-                            type="text"
-                            class="form-control registroColab"
-                            id="txt-nomePai"
-                            name="txt-nomePai"
-                            placeholder="Nome do Pai"
+                <!-- Informações de Endereço -->
+                <li class="nav-item" role="presentation">
+                  <button
+                    class="nav-link"
+                    id="profile-tab"
+                    data-bs-toggle="tab"
+                    data-bs-target="#ender-tab-pane"
+                    type="button"
+                    role="tab"
+                    aria-controls="ender-tab-pane"
+                    aria-selected="false"
+                  >
+                    <i class="bi bi-asterisk"></i> Informações de Endereço
+                  </button>
+                </li>
 
-                          />
-                        </div>
-                      </div>
-                      <div class="col-md-3">
-                        <div class="form-group">
-                          <i class="bi bi-asterisk"></i>
-                          <label for="txt-nomeMae">Nome da Mãe</label>
-                          <input
-                            type="text"
-                            class="form-control registroColab"
-                            id="txt-nomeMae"
-                            name="txt-nomeMae"
-                            placeholder="Nome da Mãe"
-                            required
-                          />
-                        </div>
-                      </div>
+                <!-- Informações de Zona Eleitoral -->
+                <li class="nav-item" role="presentation">
+                  <button
+                    class="nav-link"
+                    id="zona-tab"
+                    data-bs-toggle="tab"
+                    data-bs-target="#zona-tab-pane"
+                    type="button"
+                    role="tab"
+                    aria-controls="zona-tab-pane"
+                    aria-selected="false"
+                  >
+                    <i class="bi bi-asterisk text-danger"></i> Informações de
+                    Zona Eleitoral
+                  </button>
+                </li>
+
+                <!-- Informações de Trabalho -->
+                <li class="nav-item" role="presentation">
+                  <button
+                    class="nav-link"
+                    id="contact-tab"
+                    data-bs-toggle="tab"
+                    data-bs-target="#trab-tab-pane"
+                    type="button"
+                    role="tab"
+                    aria-controls="trab-tab-pane"
+                    aria-selected="false"
+                  >
+                    <i class="bi bi-asterisk text-danger"></i> Informações de
+                    Trabalho
+                  </button>
+                </li>
+              </ul>
+
+              <!-- Conjunto de dados para o Rolelist -->
+              <div class="tab-content" id="myTabContentCadasColab">
+                <!-- Informações Gerais -->
+                <div
+                  class="tab-pane fade show active"
+                  id="gerais-tab-pane"
+                  role="tabpanel"
+                  aria-labelledby="home-tab"
+                  tabindex="0"
+                >
+                  <!-- Informações Gerais -->
+                  <div class="card text-bg-light mb-3">
+                    <div class="card-header">
+                      <h5>Informações Gerais</h5>
                     </div>
-                  </div>
-                </div>
-                  </div>
-                  <!-- Informações de Endereço -->
-                  <div class="tab-pane fade" id="ender-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
-                    <!-- Informações de Endereço -->
-                    <div class="card text-bg-light mb-3">
-                      <div class="card-header">
-                        <h5>Informações de Endereço</h5>
+                    <div class="card-body">
+                      <div class="row g-4">
+                        <div class="col-md-2 mb-3">
+                          <div class="form-group">
+                            <label for="txt-idColaborador">ID Registros</label>
+                            <input
+                              type="text"
+                              class="form-control registroColab"
+                              id="txt-idColaborador"
+                              name="txt-idColaborador"
+                              disabled="disabled"
+                            />
+                          </div>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                          <div class="form-group">
+                            <i class="bi bi-asterisk"></i>
+                            <label for="txt-nome">Nome</label>
+                            <input
+                              type="text"
+                              class="form-control registroColab"
+                              id="txt-nome"
+                              name="txt-nome"
+                              placeholder="Nome"
+                              required
+                            />
+                          </div>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                          <div class="form-group">
+                            <i class="bi bi-asterisk"></i>
+                            <label for="txt-cpf">CPF</label>
+                            <input
+                              type="text"
+                              class="form-control registroColab"
+                              id="txt-cpf"
+                              name="txt-cpf"
+                              placeholder="000.000.000-00"
+                              required
+                              pattern="\d{3}\.\d{3}\.\d{3}-\d{2}"
+                              maxlength="14"
+                            />
+                          </div>
+                        </div>
+                        <div class="col-md-2 mb-3">
+                          <div class="form-group">
+                            <i class="bi bi-asterisk"></i>
+                            <label for="txt-dataNascimento"
+                              >Data de Nascimento</label
+                            >
+                            <input
+                              type="date"
+                              class="form-control registroColab"
+                              id="txt-dataNascimento"
+                              name="txt-dataNascimento"
+                              required
+                            />
+                          </div>
+                        </div>
+                        <div class="col-md-2 mb-3">
+                          <div class="form-group">
+                            <label for="sc-Sexo">Sexo</label>
+                            <select
+                              id="sc-Sexo"
+                              name="sc-Sexo"
+                              class="form-select registroColab"
+                            >
+                              <option></option>
+                              <option value="Masculino">Masculino</option>
+                              <option value="Feminino">Feminino</option>
+                            </select>
+                          </div>
+                        </div>
                       </div>
-                      <div class="card-body">
+
+                      <div class="row g-4">
+                        <div class="col-md-3 mb-3">
+                          <div class="form-group">
+                            <label for="txt-email">E-mail</label>
+                            <input
+                              type="email"
+                              class="form-control registroColab"
+                              id="txt-email"
+                              name="txt-email"
+                              placeholder="E-mail"
+                            />
+                          </div>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                          <div class="form-group">
+                            <label for="txt-LocalNasci"
+                              >Local de Nascimento</label
+                            >
+                            <input
+                              type="text"
+                              class="form-control registroColab"
+                              id="txt-LocalNasci"
+                              name="txt-LocalNasci"
+                              placeholder="Local de Nascimento"
+                            />
+                          </div>
+                        </div>
+                        <div class="col-md-2 mb-3">
+                          <div class="form-group">
+                            <label for="sc-EstadoCivil">Estado Civil</label>
+                            <select
+                              id="sc-EstadoCivil"
+                              name="sc-EstadoCivil"
+                              class="form-select registroColab"
+                            >
+                              <option value=""></option>
+                              <option value="SOLTEIRO">SOLTEIRO</option>
+                              <option value="CASADO">CASADO</option>
+                              <option value="DIVORCIADO">DIVORCIADO</option>
+                              <option value="SEPARADO">SEPARADO</option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="col-md-3">
+                          <div class="form-group">
+                            <label for="txt-nomePai">Nome do Pai</label>
+                            <input
+                              type="text"
+                              class="form-control registroColab"
+                              id="txt-nomePai"
+                              name="txt-nomePai"
+                              placeholder="Nome do Pai"
+                            />
+                          </div>
+                        </div>
+                        <div class="col-md-3">
+                          <div class="form-group">
+                            <i class="bi bi-asterisk"></i>
+                            <label for="txt-nomeMae">Nome da Mãe</label>
+                            <input
+                              type="text"
+                              class="form-control registroColab"
+                              id="txt-nomeMae"
+                              name="txt-nomeMae"
+                              placeholder="Nome da Mãe"
+                              required
+                            />
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="row g-4">
+                        <!-- Informações Gerais (Adicionando Telefone) -->
                         <div class="row g-4">
                           <div class="col-md-3 mb-3">
                             <div class="form-group">
-                              <label for="txt-cep">CEP</label>
-                              <input type="text" class="form-control registroColab" id="txt-cep" name="txt-cep" placeholder="CEP" onblur="pesquisacep(this.value);" />
+                              <label for="txt-telefone">Telefone</label>
+                              <input
+                                type="text"
+                                class="form-control registroColab"
+                                id="txt-telefone"
+                                name="txt-telefone"
+                                placeholder="Telefone"
+                              />
                             </div>
                           </div>
-                          <div class="col-md-3 mb-3">
-                            <div class="form-group">
-                              <label for="txt-endereco">Endereço</label>
-                              <input type="text" class="form-control registroColab" id="txt-endereco" name="txt-endereco" placeholder="Endereço" />
-                            </div>
-                          </div>
-                          <div class="col-md-3 mb-3">
-                            <div class="form-group">
-                              <i class="bi bi-asterisk"></i>
-                              <label for="txt-numeroEndereco">Número</label>
-                              <input type="text" class="form-control registroColab" id="txt-numeroEndereco" name="txt-numeroEndereco" placeholder="Número" required />
-                            </div>
-                          </div>
-                          <div class="col-md-3 mb-3">
-                            <div class="form-group">
-                              <label for="txt-complemento">Complemento</label>
-                              <input type="text" class="form-control registroColab" id="txt-complemento" name="txt-complemento" placeholder="Complemento" />
-                            </div>
+                          <!-- Adicionar outros campos como RG, Salário, etc -->
+                        </div>
 
+                        <!-- Informações Adicionais (por exemplo, RG, Data de Emissão) -->
+                        <div class="row">
+                          <div class="col-md-2 mb-3">
+                            <div class="form-group">
+                              <label for="txt-rg">RG</label>
+                              <input
+                                type="text"
+                                class="form-control registroColab"
+                                id="txt-rg"
+                                name="txt-rg"
+                                placeholder="RG"
+                              />
+                            </div>
+                          </div>
+                          <div class="col-md-2 mb-3">
+                            <div class="form-group">
+                              <label for="txt-dataEmissaoRg"
+                                >Data de Emissão do RG</label
+                              >
+                              <input
+                                type="date"
+                                class="form-control registroColab"
+                                id="txt-dataEmissaoRg"
+                                name="txt-dataEmissaoRg"
+                              />
+                            </div>
+                          </div>
+                          <div class="col-md-3 mb-3">
+                            <div class="form-group">
+                              <label for="txt-orgaoEmissor"
+                                >Órgão Emissor</label
+                              >
+                              <input
+                                type="text"
+                                class="form-control registroColab"
+                                id="txt-orgaoEmissor"
+                                name="txt-orgaoEmissor"
+                                placeholder="Órgão Emissor"
+                              />
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- Informações de Endereço -->
+                <div
+                  class="tab-pane fade"
+                  id="ender-tab-pane"
+                  role="tabpanel"
+                  aria-labelledby="profile-tab"
+                  tabindex="1"
+                >
+                  <!-- Informações de Endereço -->
+                  <div class="card text-bg-light mb-3 w-100">
+                    <div class="card-header">
+                      <h5>Informações de Endereço</h5>
+                    </div>
+                    <div class="card-body">
+                      <div class="row g-4">
+                        <div class="col-md-3 mb-3">
+                          <div class="form-group">
+                            <label for="txt-cep">CEP</label>
+                            <input
+                              type="text"
+                              class="form-control registroColab"
+                              id="txt-cep"
+                              name="txt-cep"
+                              placeholder="CEP"
+                              onblur="pesquisacep(this.value);"
+                            />
+                          </div>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                          <div class="form-group">
+                            <label for="txt-endereco">Endereço</label>
+                            <input
+                              type="text"
+                              class="form-control registroColab"
+                              id="txt-endereco"
+                              name="txt-endereco"
+                              placeholder="Endereço"
+                            />
+                          </div>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                          <div class="form-group">
+                            <i class="bi bi-asterisk"></i>
+                            <label for="txt-numeroEndereco">Número</label>
+                            <input
+                              type="text"
+                              class="form-control registroColab"
+                              id="txt-numeroEndereco"
+                              name="txt-numeroEndereco"
+                              placeholder="Número"
+                              required
+                            />
+                          </div>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                          <div class="form-group">
+                            <label for="txt-complemento">Complemento</label>
+                            <input
+                              type="text"
+                              class="form-control registroColab"
+                              id="txt-complemento"
+                              name="txt-complemento"
+                              placeholder="Complemento"
+                            />
+                          </div>
                         </div>
                         <div class="row g-3">
                           <div class="col-md-3 mb-3">
                             <div class="form-group">
                               <label for="txt-cidade">Cidade</label>
-                              <input type="text" class="form-control registroColab" id="txt-cidade" name="txt-cidade" placeholder="Cidade" />
+                              <input
+                                type="text"
+                                class="form-control registroColab"
+                                id="txt-cidade"
+                                name="txt-cidade"
+                                placeholder="Cidade"
+                              />
                             </div>
                           </div>
-      
+
                           <div class="col-md-3 mb-3">
                             <div class="form-group">
                               <label for="txt-uf">UF</label>
-                              <input type="text" class="form-control registroColab" id="txt-uf" name="txt-uf" placeholder="UF" disabled />
+                              <input
+                                type="text"
+                                class="form-control registroColab"
+                                id="txt-uf"
+                                name="txt-uf"
+                                placeholder="UF"
+                                disabled
+                              />
                             </div>
                           </div>
-                        
-                        <div class="col-auto mb-3">
-                          <div class="form-group">
-                            <label for="txt-bairro">Bairro</label>
-                            <input type="text" class="form-control registroColab" id="txt-bairro" name="txt-bairro" placeholder="Bairro" />
+
+                          <div class="col-auto mb-3">
+                            <div class="form-group">
+                              <label for="txt-bairro">Bairro</label>
+                              <input
+                                type="text"
+                                class="form-control registroColab"
+                                id="txt-bairro"
+                                name="txt-bairro"
+                                placeholder="Bairro"
+                              />
+                            </div>
                           </div>
                         </div>
                       </div>
-
-                        </div>
-                      </div>
                     </div>
                   </div>
+                </div>
+                <!-- Informações de Zona Eleitoral -->
+                <div
+                  class="tab-pane fade"
+                  id="zona-tab-pane"
+                  role="tabpanel"
+                  aria-labelledby="zona-tab"
+                  tabindex="2"
+                >
+                  <div class="card text-bg-light mb-3">
+                    <div class="card-header">
+                      <h5>Informações de Zona Eleitoral</h5>
+                    </div>
+                    <div class="card-body">
+                      <div class="row">
+                        <!-- Título Eleitoral -->
+                        <div class="col-md-3 mb-3">
+                          <div class="form-group">
+                            <label for="txt-tituloEleitoral"
+                              >Título Eleitoral</label
+                            >
+                            <input
+                              type="text"
+                              class="form-control registroColab"
+                              id="txt-tituloEleitoral"
+                              name="txt-tituloEleitoral"
+                              placeholder="Título Eleitoral"
+                            />
+                          </div>
+                        </div>
 
-                  <!-- Informações de Trabalho -->
-                  <div class="tab-pane fade" id="trab-tab-pane" role="tabpanel" aria-labelledby="contact-tab" tabindex="0">
+                        <!-- Zona Eleitoral -->
+                        <div class="col-md-3 mb-3">
+                          <div class="form-group">
+                            <label for="txt-zonaEleitoral"
+                              >Zona Eleitoral</label
+                            >
+                            <input
+                              type="text"
+                              class="form-control registroColab"
+                              id="txt-zonaEleitoral"
+                              name="txt-zonaEleitoral"
+                              placeholder="Zona Eleitoral"
+                            />
+                          </div>
+                        </div>
+
+                        <!-- Seção Eleitoral -->
+                        <div class="col-md-3 mb-3">
+                          <div class="form-group">
+                            <label for="txt-secaoEleitoral"
+                              >Seção Eleitoral</label
+                            >
+                            <input
+                              type="text"
+                              class="form-control registroColab"
+                              id="txt-secaoEleitoral"
+                              name="txt-secaoEleitoral"
+                              placeholder="Seção Eleitoral"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row"></div>
+                    </div>
+                  </div>
+                </div>
                 <!-- Informações de Trabalho -->
-                <div class="card text-bg-light mb-3">
-                  <div class="card-header">
-                    <h5>Informações de Trabalho</h5>
-                  </div>
-                  <div class="card-body">
-                    <div class="row">
-                      <div class="col-md-2 mb-3">
-                        <div class="form-group">
-                          <label for="txt-matricula">Matricula</label>
-                          <input
-                            type="text"
-                            class="form-control registroColab"
-                            id="txt-matricula"
-                            name="txt-matricula"
-                            placeholder="Matricula"
-                          />
-                        </div>
-                      </div>
-                      <div class="col-md-2 mb-3">
-                        <div class="form-group">
-                          <label for="txt-funcao">Função</label>
-                          <input
-                            type="text"
-                            class="form-control registroColab"
-                            id="txt-funcao"
-                            name="txt-funcao"
-                            placeholder="Função"
-                          />
-                        </div>
-                      </div>
-                      <div class="col-md-2 mb-3">
-                        <div class="form-group">
-                          <label for="txt-admissao">Admissão</label>
-                          <input
-                            type="date"
-                            class="form-control registroColab"
-                            id="txt-admissao"
-                            name="txt-admissao"
-                          />
-                        </div>
-                      </div>
-                      <div class="col-md-2 mb-3">
-                        <div class="form-group">
-                          <label for="txt-demitido">Demissão</label>
-                          <input
-                            type="date"
-                            class="form-control registroColab"
-                            id="txt-demitido"
-                            name="txt-demitido"
-                          />
-                        </div>
-                      </div>
-                      <div class="col-md-2 mb-3">
-                        <div class="form-group">
-                          <label for="txt-nis">NIS</label>
-                          <input
-                            type="text"
-                            class="form-control registroColab"
-                            id="txt-nis"
-                            name="txt-nis"
-                            placeholder="NIS"
-                          />
-                        </div>
-                      </div>
-                      <div class="col-md-2 mb-3">
-                        <div class="form-group">
-                          <label for="txt-serieCtps">CTPS Serie</label>
-                          <input
-                            type="text"
-                            class="form-control registroColab"
-                            id="txt-serieCtps"
-                            name="txt-serieCtps"
-                            placeholder="Serie"
-                          />
-                        </div>
-                      </div>
+                <div
+                  class="tab-pane fade"
+                  id="trab-tab-pane"
+                  role="tabpanel"
+                  aria-labelledby="contact-tab"
+                  tabindex="3"
+                >
+                  <!-- Informações de Trabalho -->
+                  <div class="card text-bg-light mb-3">
+                    <div class="card-header">
+                      <h5>Informações de Trabalho</h5>
                     </div>
-                    <div class="row">
-                      <div class="col-md-2 mb-3">
-                        <div class="form-group">
-                          <label for="txt-numeroCtps">CTPS Numero</label>
-                          <input
-                            type="text"
-                            class="form-control registroColab"
-                            id="txt-numeroCtps"
-                            name="txt-numeroCtps"
-                            placeholder="CTPS Numero"
-                          />
+                    <div class="card-body">
+                      <div class="row">
+                        <div class="col-md-2 mb-3">
+                          <div class="form-group">
+                            <label for="txt-matricula">Matricula</label>
+                            <input
+                              type="text"
+                              class="form-control registroColab"
+                              id="txt-matricula"
+                              name="txt-matricula"
+                              placeholder="Matricula"
+                            />
+                          </div>
                         </div>
-                      </div>
-                      <div class="col-md-2 mb-3">
-                        <div class="form-group">
-                          <label for="txt-pisPasep">PIS PASEP</label>
-                          <input
-                            type="text"
-                            class="form-control registroColab"
-                            id="txt-pisPasep"
-                            name="txt-pisPasep"
-                            placeholder="PIS PASEP"
-                          />
+                        <div class="col-md-2 mb-3">
+                          <div class="form-group">
+                            <label for="txt-funcao">Função</label>
+                            <input
+                              type="text"
+                              class="form-control registroColab"
+                              id="txt-funcao"
+                              name="txt-funcao"
+                              placeholder="Função"
+                            />
+                          </div>
                         </div>
-                      </div>
-                      <div class="col-md-2 mb-1">
-                        <div class="form-group">
-                          <label for="txt-banco">Banco</label>
-                          <input
-                            type="text"
-                            class="form-control registroColab"
-                            id="txt-banco"
-                            name="txt-banco"
-                            placeholder="Banco"
-                          />
+                        <div class="col-md-2 mb-3">
+                          <div class="form-group">
+                            <label for="txt-admissao">Admissão</label>
+                            <input
+                              type="date"
+                              class="form-control registroColab"
+                              id="txt-admissao"
+                              name="txt-admissao"
+                            />
+                          </div>
                         </div>
-                      </div>
-                      <div class="col-md-2 mb-1">
-                        <div class="form-group">
-                          <label for="txt-conta">Conta</label>
-                          <input
-                            type="text"
-                            class="form-control registroColab"
-                            id="txt-conta"
-                            name="txt-conta"
-                            placeholder="Conta"
-                          />
+                        <div class="col-md-2 mb-3">
+                          <div class="form-group">
+                            <label for="txt-demitido">Demissão</label>
+                            <input
+                              type="date"
+                              class="form-control registroColab"
+                              id="txt-demitido"
+                              name="txt-demitido"
+                            />
+                          </div>
                         </div>
-                      </div>
-                      <div class="col-md-2">
-                        <div class="form-group">
-                          <label for="txt-agencia">Agencia</label>
-                          <input
-                            type="text"
-                            class="form-control registroColab"
-                            id="txt-agencia"
-                            name="txt-agencia"
-                            placeholder="Agencia"
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="row ">
-                  <div class="col-md-12 text-end">
-                    <button
-                      type="button"
-                      class="btn btn-primary"
-                      data-toggle="button"
-                      aria-pressed="false"
-                      autocomplete="off"
-                      onclick="salvardadosColaborador()"
-                    >
-                      Cadastrar
-                    </button>
-                  </div>
-                </div>
-                  </div>
-                </div>
 
-          </div>
+                        <div class="col-md-2 mb-3">
+                          <div class="form-group">
+                            <label for="txt-serieCtps">CTPS Serie</label>
+                            <input
+                              type="text"
+                              class="form-control registroColab"
+                              id="txt-serieCtps"
+                              name="txt-serieCtps"
+                              placeholder="Serie"
+                            />
+                          </div>
+                        </div>
+                        <!-- Situação -->
+                        <div class="col-md-2 mb-3">
+                          <div class="form-group">
+                            <label for="txt-situacao">Situação</label>
+                            <select
+                              id="txt-situacao"
+                              class="form-select registroColab"
+                              name="txt-situacao"
+                            >
+                              <option value="">Selecione</option>
+                              <option value="Ativo">Ativo</option>
+                              <option value="Inativo">Inativo</option>
+                            </select>
+                          </div>
+                        </div>
+
+                        <div class="col-md-2 mb-3">
+                          <div class="form-group">
+                            <label for="txt-ctps">CTPS Numero</label>
+                            <input
+                              type="text"
+                              class="form-control registroColab"
+                              id="txt-ctps"
+                              name="txt-ctps"
+                              placeholder="CTPS Numero"
+                            />
+                          </div>
+                        </div>
+                        <div class="col-md-2 mb-3">
+                          <div class="form-group">
+                            <label for="txt-pisPasep">PIS PASEP</label>
+                            <input
+                              type="text"
+                              class="form-control registroColab"
+                              id="txt-pisPasep"
+                              name="txt-pisPasep"
+                              placeholder="PIS PASEP"
+                            />
+                          </div>
+                        </div>
+                        <div class="col-md-2 mb-1">
+                          <div class="form-group">
+                            <label for="txt-banco">Banco</label>
+                            <input
+                              type="text"
+                              class="form-control registroColab"
+                              id="txt-banco"
+                              name="txt-banco"
+                              placeholder="Banco"
+                            />
+                          </div>
+                        </div>
+                        <div class="col-md-2 mb-1">
+                          <div class="form-group">
+                            <label for="txt-conta">Conta</label>
+                            <input
+                              type="text"
+                              class="form-control registroColab"
+                              id="txt-conta"
+                              name="txt-conta"
+                              placeholder="Conta"
+                            />
+                          </div>
+                        </div>
+                        <div class="col-md-2">
+                          <div class="form-group">
+                            <label for="txt-agencia">Agencia</label>
+                            <input
+                              type="text"
+                              class="form-control registroColab"
+                              id="txt-agencia"
+                              name="txt-agencia"
+                              placeholder="Agencia"
+                            />
+                          </div>
+                        </div>
+                        <!-- PIX -->
+                        <div class="col-md-3 mb-3">
+                          <div class="form-group">
+                            <label for="txt-pix">PIX</label>
+                            <input
+                              type="text"
+                              class="form-control registroColab"
+                              id="txt-pix"
+                              name="txt-pix"
+                              placeholder="Chave PIX"
+                            />
+                          </div>
+                        </div>
+                        <div class="col-md-2 mb-3">
+                          <div class="form-group">
+                            <label for="txt-salario">Salário</label>
+                            <input
+                              type="number"
+                              class="form-control registroColab"
+                              id="txt-salario"
+                              name="txt-salario"
+                              placeholder="Salário"
+                            />
+                          </div>
+                        </div>
+                        <div class="col-md-2 mb-3">
+                          <div class="form-group">
+                            <label for="txt-ajudaTransporte"
+                              >Ajuda de Transporte</label
+                            >
+                            <input
+                              type="number"
+                              class="form-control registroColab"
+                              id="txt-ajudaTransporte"
+                              name="txt-ajudaTransporte"
+                              placeholder="Ajuda de Transporte"
+                            />
+                          </div>
+                        </div>
+                        <div class="col-md-2 mb-3">
+                          <div class="form-group">
+                            <label for="txt-bonificacao">Bonificação</label>
+                            <input
+                              type="number"
+                              class="form-control registroColab"
+                              id="txt-bonificacao"
+                              name="txt-bonificacao"
+                              placeholder="Bonificação"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-12 text-end">
+                      <button
+                        type="button"
+                        class="btn btn-primary"
+                        data-toggle="button"
+                        aria-pressed="false"
+                        autocomplete="off"
+                        onclick="salvardadosColaborador()"
+                      >
+                        Cadastrar
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </template>
 
@@ -2080,145 +2460,195 @@
         </template>
 
         <template id="registroVT">
-          <div class="card">
-            <div class="card-body">
-              <h1 class="card-title">Registro de Pagamento VT</h1>
-              <div class="row">
-                <div class="col-md-12">
-                  <div class="row">
-                    <!-- ID -->
-                    <div class="col-md-2">
-                      <div class="form-group">
-                        <label for="idcolaboradorvt" class="input-group-text"
-                          >ID</label
-                        >
-                        <input
-                          id="idcolaboradorvt"
-                          type="text"
-                          class="form-control rGVT"
-                          disabled
-                        />
+          <div class="container">
+            <div class="row">
+              <!-- Coluna 1: Formulário -->
+              <div class="col-md-4">
+                <div class="card">
+                  <h4 class="card-header">Registro de Pagamento VT</h4>
+                  <div class="card-body">
+                    <div class="row">
+                      <!-- ID -->
+                      <div class="col-12">
+                        <div class="form-group">
+                          <label for="idcolaboradorvt" class="input-group-text"
+                            >ID</label
+                          >
+                          <input
+                            id="idcolaboradorvt"
+                            type="text"
+                            class="form-control rGVT"
+                            disabled
+                          />
+                        </div>
                       </div>
-                    </div>
-                    <!-- Colaborador -->
-                    <div class="col-md-4">
-                      <div class="form-group">
-                        <label for="nomecolaboradorvt" class="input-group-text"
-                          >Colaborador</label
-                        >
-                        <select
-                          id="nomecolaboradorvt"
-                          class="form-control scColaborador rGVT"
-                          onchange="dadosvt()"
-                        >
-                          <option></option>
-                        </select>
-                      </div>
-                    </div>
-
-                    <!-- Cartão -->
-                    <div class="col-md-4">
-                      <div class="form-group">
-                        <label for="inputcartaoVT" class="input-group-text"
-                          >Cartão</label
-                        >
-                        <input
-                          type="text"
-                          id="inputcartaoVT"
-                          class="form-control rGVT"
-                          disabled
-                        />
+                      <!-- Colaborador -->
+                      <div class="col-12">
+                        <div class="form-group">
+                          <label
+                            for="nomecolaboradorvt"
+                            class="input-group-text"
+                            >Colaborador</label
+                          >
+                          <select
+                            id="nomecolaboradorvt"
+                            class="form-control scColaborador rGVT"
+                            onchange="dadosvt()"
+                          >
+                            <option></option>
+                          </select>
+                        </div>
                       </div>
                     </div>
 
-                    <!-- Valor -->
-                    <div class="col-md-2">
-                      <div class="form-group">
-                        <label for="inputvalorVT" class="input-group-text"
-                          >Valor do Pagamento</label
+                    <div class="row g-2">
+                      <!-- Cartão -->
+                      <div class="col-12">
+                        <div class="form-group">
+                          <label for="inputcartaoVT" class="input-group-text"
+                            >Cartão</label
+                          >
+                          <input
+                            type="text"
+                            id="inputcartaoVT"
+                            class="form-control rGVT"
+                            disabled
+                          />
+                        </div>
+                      </div>
+
+                      <!-- Valor -->
+                      <div class="col-12">
+                        <div class="form-group">
+                          <label
+                            for="inputvalorVT"
+                            class="input-group-text form-label"
+                            >Valor do Pagamento</label
+                          >
+                          <input
+                            type="number"
+                            id="inputvalorVT"
+                            class="form-control rGVT"
+                          />
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="row g-2">
+                      <!-- Data de Pagamento -->
+                      <div class="col-12">
+                        <div class="form-group">
+                          <label
+                            for="inputDataPagamento"
+                            class="input-group-text"
+                            >Data de Pagamento</label
+                          >
+                          <input
+                            type="date"
+                            id="inputDataPagamento"
+                            class="form-control rGVT"
+                          />
+                        </div>
+                      </div>
+
+                      <!-- Meio de Pagamento -->
+                      <div class="col-12">
+                        <div class="form-group">
+                          <label for="inputMeioPGVT" class="input-group-text"
+                            >Meio de Pagamento</label
+                          >
+                          <input
+                            type="text"
+                            id="inputMeioPGVT"
+                            class="form-control rGVT"
+                          />
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <!-- Situação -->
+                      <div class="col-12">
+                        <div class="form-group">
+                          <label for="selectEstatusVT" class="input-group-text"
+                            >Situação</label
+                          >
+                          <select
+                            class="form-control rGVT"
+                            id="selectEstatusVT"
+                          >
+                            <option value="0">Selecione</option>
+                            <option value="Pendente">Pendente</option>
+                            <option value="Pago">Pago</option>
+                          </select>
+                        </div>
+                      </div>
+
+                      <!-- Botão Salvar -->
+                      <div class="col-12">
+                        <button
+                          class="btn btn-primary btn-sm"
+                          onclick="salvarPagamentoVT()"
                         >
-                        <input
-                          type="number"
-                          id="inputvalorVT"
-                          class="form-control rGVT"
-                        />
+                          Salvar Pagamento
+                        </button>
                       </div>
                     </div>
                   </div>
-
-                  <div class="row mt-3">
-                    <!-- Data de Pagamento -->
-                    <div class="col-md-4">
-                      <div class="form-group">
-                        <label for="inputDataPagamento" class="input-group-text"
-                          >Data de Pagamento</label
-                        >
-                        <input
-                          type="date"
-                          id="inputDataPagamento"
-                          class="form-control rGVT"
-                        />
-                      </div>
-                    </div>
-
-                    <!-- Meio de Pagamento -->
-                    <div class="col-md-4">
-                      <div class="form-group">
-                        <label for="inputMeioPGVT" class="input-group-text"
-                          >Meio de Pagamento</label
-                        >
-                        <input
-                          type="text"
-                          id="inputMeioPGVT"
-                          class="form-control rGVT"
-                        />
-                      </div>
-                    </div>
-                    <div class="col-md-4">
-                      <a
-                        class="btn btn-primary btn-sm"
-                        href="#"
-                        role="button"
-                        onclick="salvarPagamentoVT()"
-                      >
-                        Salvar Pagamento</a
-                      >
-                    </div>
+                </div>
+              </div>
+              <!-- TODO Tabela -->
+              <!-- Coluna 2: Tabela -->
+              <div class="col-md-8">
+                <div class="card">
+                  <h4 class="card-header">
+                    Pagamentos Salvos
+                    <button
+                      class="btn"
+                      onclick="toFiilIntabePGVT('tabelaPagamentos')"
+                    >
+                      <span class="material-symbols-outlined"> refresh </span>
+                    </button>
+                  </h4>
+                  <div class="card-body">
+                    <!-- class="table table-striped table-bordered nowrap" -->
+                    <table
+                      class="table table-sm"
+                      width="100%"
+                      id="tablePagamentos"
+                    >
+                      <thead class="table-dark">
+                        <tr>
+                          <th>ID</th>
+                          <th>Colaborador</th>
+                          <th>Cartão</th>
+                          <th>Valor</th>
+                          <th>Data de Pagamento</th>
+                          <th>Situação</th>
+                          <th>Ações</th>
+                        </tr>
+                      </thead>
+                      <tbody id="tabelaPagamentos" class="table-group-divider">
+                        <!-- Os pagamentos serão inseridos aqui dinamicamente -->
+                      </tbody>
+                    </table>
                   </div>
-
-                  <!-- Tabela de Pagamentos Salvos -->
-                  <div class="row mt-3">
-                    <div class="card mt-4">
-                      <div class="card-body w-100">
-                        <h4 class="card-title">Pagamentos Salvos</h4>
-                        <table
-                          class="table table-striped table-bordered nowrap"
-                          width="100%"
-                          id="tablePagamentos"
-                        >
-                          <thead>
-                            <tr>
-                              <th>ID</th>
-                              <th>Colaborador</th>
-                              <th>Cartão</th>
-                              <th>Valor</th>
-                              <th>Data de Pagamento</th>
-                            </tr>
-                          </thead>
-                          <tbody id="tabelaPagamentos">
-                            <!-- Os pagamentos serão inseridos aqui dinamicamente -->
-                          </tbody>
-                        </table>
-                      </div>
-                    </div>
-                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </template>
 
         <template id="analiseDeRegistroVT">
           <div class="card">
+            <h1 class="card-header">Descrição de Pagamento VT</h1>
             <div class="card-body">
-              <h1 class="card-title">Descrição de Pagamento VT</h1>
-              <div class="row">
+              <div class="row mt-3">
+                <div class="card">
+                  <h2>Menu</h2>
+                </div>
+              </div>
+              <div class="row mt-3">
                 <!-- Formulário de Registro de Pagamento -->
 
                 <div class="col-md-12">
@@ -2236,6 +2666,7 @@
                             <th>Cartão</th>
                             <th>Valor</th>
                             <th>Data de Pagamento</th>
+                            <th>Situação</th>
                           </tr>
                         </thead>
                         <tbody id="tabelaAnaliseVTPagamentos">
@@ -2346,137 +2777,173 @@
           <div class="card">
             <div class="card-body">
               <h1 class="card-title">
-                Registros de horas extras - Ciclo Verde
+                Registros de Horas Extras - Ciclo Verde
               </h1>
-              <div class="row fs-5 g-2">
+
+              <!-- Seção de Registro de Horas Extras -->
+              <div class="row g-2">
                 <div class="col-md-12">
-                  <div class="card mt-4">
-                    <div class="card-body w-100">
+                  <div class="card">
+                    <div class="card-header">Registro de Horas</div>
+                    <div class="card-body">
                       <div class="row row-cols-lg-auto g-3 align-items-center">
-                        <!-- ID -->
+                        <!-- Cada campo dentro da linha -->
                         <div class="col-sm-3 mb-3">
                           <label for="idHorasExtras">ID</label>
-                          <div class="form-group">
-                            <input
-                              type="text"
-                              name="idHorasExtras"
-                              id="idHorasExtras"
-                              disabled="disabled"
-                              class="form-control HrExtras"
-                            />
-                          </div>
+                          <input
+                            type="text"
+                            name="idHorasExtras"
+                            id="idHorasExtras"
+                            disabled
+                            class="form-control HrExtras"
+                          />
                         </div>
-                        <!--Colaborador  -->
+
                         <div class="col-sm-3 mb-3">
-                          <i class="bi bi-asterisk"></i>
-                          <label for="colaboradorHExtras">Colaborador</label>
-                          <div class="form-group">
-                            <select
-                              class="form-control scColaborador HrExtras"
-                              name="colaboradorHExtras"
-                              id="colaboradorHExtras"
-                              required
-                            ></select>
-                          </div>
+                          <label for="colaboradorHExtras"
+                            ><i class="bi bi-asterisk"></i> Colaborador</label
+                          >
+                          <select
+                            class="form-control scColaborador HrExtras"
+                            name="colaboradorHExtras"
+                            id="colaboradorHExtras"
+                            required
+                          ></select>
                         </div>
-                        <!--Data  -->
+
                         <div class="col-sm-3 mb-3">
-                          <div class="form-group">
-                            <i class="bi bi-asterisk"></i>
-                            <label for="dataAgendamentoHora">Data</label>
-                            <input
-                              type="date"
-                              name="dataAgendamentoHora"
-                              id="dataAgendamentoHora"
-                              class="form-control HrExtras"
-                              required
-                            />
-                          </div>
+                          <label for="dataAgendamentoHora"
+                            ><i class="bi bi-asterisk"></i> Data</label
+                          >
+                          <input
+                            type="date"
+                            name="dataAgendamentoHora"
+                            id="dataAgendamentoHora"
+                            class="form-control HrExtras"
+                            required
+                          />
                         </div>
-                        <!-- Horas Extras -->
+
                         <div class="col-sm-3 mb-3">
-                          <i class="bi bi-asterisk"></i>
-                          <label for="horaAgendamentoHora">Hora Entrada</label>
-                          <div class="form-group">
-                            <input
-                              type="time"
-                              id="horaAgendamentoHora"
-                              name="horaAgendamentoHora"
-                              min="00:00"
-                              max="23:59"
-                              class="form-control HrExtras"
-                              required
-                            />
-                          </div>
+                          <label for="horaEntrada"
+                            ><i class="bi bi-asterisk"></i> Hora de
+                            Entrada</label
+                          >
+                          <input
+                            type="time"
+                            id="horaEntrada"
+                            name="horaEntrada"
+                            class="form-control HrExtras"
+                            required
+                          />
                         </div>
+
                         <div class="col-sm-3 mb-3">
-                          <i class="bi bi-asterisk"></i>
-                          <label for="horaAgendamentoFimHora">Hora Saida</label>
-                          <div class="form-group">
-                            <input
-                              type="time"
-                              id="horaAgendamentoFimHora"
-                              name="horaAgendamentoFimHora"
-                              min="00:00"
-                              max="23:59"
-                              class="form-control HrExtras"
-                              required
-                            />
-                          </div>
+                          <label for="horaSaida"
+                            ><i class="bi bi-asterisk"></i> Hora de Saída</label
+                          >
+                          <input
+                            type="time"
+                            id="horaSaida"
+                            name="horaSaida"
+                            class="form-control HrExtras"
+                            required
+                          />
                         </div>
-                        <!-- situacão -->
+
                         <div class="col-sm-3 mb-3">
-                          <i class="bi bi-asterisk"></i>
-                          <label for="situcaoAgendamentoHora">Situção</label>
-                          <div class="form-group">
-                            <select
-                              name="situcaoAgendamentoHora"
-                              id="situcaoAgendamentoHora"
-                              class="form-control HrExtras"
-                              required
-                            >
-                              <option value="1">Aprovado</option>
-                              <option value="2">Reprovado</option>
-                            </select>
-                          </div>
+                          <label for="horaInicioIntervalo"
+                            ><i class="bi bi-asterisk"></i> Início do
+                            Intervalo</label
+                          >
+                          <input
+                            type="time"
+                            id="horaInicioIntervalo"
+                            name="horaInicioIntervalo"
+                            class="form-control HrExtras"
+                            required
+                          />
                         </div>
-                        <!-- observação -->
+
+                        <div class="col-sm-3 mb-3">
+                          <label for="horaFimIntervalo"
+                            ><i class="bi bi-asterisk"></i> Fim do
+                            Intervalo</label
+                          >
+                          <input
+                            type="time"
+                            id="horaFimIntervalo"
+                            name="horaFimIntervalo"
+                            class="form-control HrExtras"
+                            required
+                          />
+                        </div>
+
+                        <div class="col-sm-3 mb-3">
+                          <label for="totalHorasTrabalhadas"
+                            >Total Horas Trabalhadas</label
+                          >
+                          <input
+                            type="text"
+                            id="totalHorasTrabalhadas"
+                            name="totalHorasTrabalhadas"
+                            disabled
+                            class="form-control HrExtras"
+                          />
+                        </div>
+
+                        <div class="col-sm-3 mb-3">
+                          <label for="totalHorasExtras"
+                            >Total Horas Extras</label
+                          >
+                          <input
+                            type="text"
+                            id="totalHorasExtras"
+                            name="totalHorasExtras"
+                            disabled
+                            class="form-control HrExtras"
+                          />
+                        </div>
+
+                        <div class="col-sm-3 mb-3">
+                          <label for="situacaoAgendamentoHora"
+                            ><i class="bi bi-asterisk"></i> Situação</label
+                          >
+                          <select
+                            name="situacaoAgendamentoHora"
+                            id="situacaoAgendamentoHora"
+                            class="form-control HrExtras"
+                            required
+                          >
+                            <option value="1">Aprovado</option>
+                            <option value="2">Reprovado</option>
+                          </select>
+                        </div>
+
                         <div class="col-sm-3 mb-3">
                           <label for="obsAgendamentoHora">Descrição</label>
-                          <div class="form-group">
-                            <textarea
-                              type="text"
-                              name="obsAgendamentoHora"
-                              id="obsAgendamentoHora"
-                              class="form-control HrExtras"
-                            ></textarea>
-                          </div>
+                          <textarea
+                            name="obsAgendamentoHora"
+                            id="obsAgendamentoHora"
+                            class="form-control HrExtras"
+                          ></textarea>
                         </div>
                       </div>
-                      <!-- Botoes -->
-                      <div class="row g-1 align-items-center">
-                        <div class="col-sm-1 mb-3">
+
+                      <!-- Botões de Ação -->
+                      <div class="row g-1 mt-3">
+                        <div class="col-sm-1">
                           <button
                             type="button"
                             class="btn btn-primary"
-                            data-toggle="button"
-                            aria-pressed="false"
-                            autocomplete="off"
-                            onclick="salvarHorasExtras()"
+                            onclick="calcularHoras()"
                           >
                             Salvar
                           </button>
-                          <!-- TODO Button -->
                         </div>
-                        <div class="col-sm-1 mb-3">
-                          <button
-                            type="button"
-                            class="btn btn-danger"
-                            data-toggle="button"
-                            aria-pressed="false"
-                            autocomplete="off"
-                          >
-                            excluir
+                        <div class="col-sm-1">
+                          <button type="button" class="btn btn-danger">
+                            Excluir
                           </button>
                         </div>
                       </div>
@@ -2485,26 +2952,76 @@
                 </div>
               </div>
 
-              <div class="row fs-5">
-                <!-- Formulário de Registro de Pagamento -->
+              <!-- Seção Total de Horas Mensais -->
+              <div class="row g-2 mt-3">
+                <div class="col-md-4">
+                  <div class="card">
+                    <div class="card-header">Total de Horas Mensais</div>
+                    <div class="card-body">
+                      <select class="form-select">
+                        <option value="">Selecionar mês/ano</option>
+                        <option value="2023-01">Janeiro 2023</option>
+                        <option value="2023-02">Fevereiro 2023</option>
+                        <!-- Adicione mais opções conforme necessário -->
+                      </select>
+                    </div>
+                  </div>
+                </div>
 
-                <div class="col-md-12">
-                  <div class="card mt-4">
-                    <div class="card-body w-100">
+                <div class="col-md-8">
+                  <div class="card">
+                    <div class="card-body">
+                      <ul class="list-group list-group-horizontal-sm">
+                        <li
+                          class="list-group-item list-group-item-action list-group-item-primary"
+                        >
+                          Colaborador
+                        </li>
+                        <li
+                          class="list-group-item list-group-item-primary w-100"
+                        >
+                          Mês Referência
+                        </li>
+                        <li
+                          class="list-group-item list-group-item-primary d-flex justify-content-between align-items-center w-100"
+                        >
+                          Total Horas
+                          <span class="badge text-bg-primary rounded-pill w-50"
+                            >00</span
+                          >
+                        </li>
+                        <li
+                          class="list-group-item list-group-item-primary w-100"
+                        >
+                          Situação
+                        </li>
+                      </ul>
+
+                      <ul id="list-groupHR" class="list-group mt-2">
+                        <!-- Itens dinâmicos vão aqui -->
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Tabela de Horas Extras -->
+                <div class="col-md-12 mt-4">
+                  <div class="card">
+                    <div class="card-body">
                       <table
-                        class="table table-striped table-inverse table-responsive"
+                        class="table table-striped table-bordered table-responsive"
                         id="tableHorasExtras"
                       >
-                        <thead class="thead-default">
+                        <thead class="thead-dark">
                           <tr>
                             <th>ID</th>
                             <th>Nome</th>
                             <th>Data</th>
-                            <th>Hora de entrada</th>
-                            <th>Hora de Saida</th>
+                            <th>Hora de Entrada</th>
+                            <th>Hora de Saída</th>
                             <th>Situação</th>
                             <th>Descrição</th>
-                            <th>Dataupdate</th>
+                            <th>Última Atualização</th>
                           </tr>
                         </thead>
                         <tbody id="tabelaHorasExtras">
@@ -2512,15 +3029,33 @@
                             <td scope="row"></td>
                             <td></td>
                             <td></td>
-                          </tr>
-                          <tr>
-                            <td scope="row"></td>
                             <td></td>
                             <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
                           </tr>
+                          <!-- Mais linhas podem ser geradas dinamicamente -->
                         </tbody>
                       </table>
                     </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Modal de Edição -->
+              <div class="modal" id="modalHorasExtra">
+                <div class="modal-content">
+                  <span class="close" id="closeModalHR">&times;</span>
+                  <div id="modalBodyHR"></div>
+                  <div class="modal-footer">
+                    <button
+                      type="button"
+                      onclick="EditarDadosTarefas()"
+                      class="btn btn-primary"
+                    >
+                      Editar
+                    </button>
                   </div>
                 </div>
               </div>
@@ -2793,314 +3328,315 @@
           <!-- Conteudo sera exebido aqui -->
         </template>
       </div>
-      <!-- Div Auxiliares -->
+      <!-- Alerta -->
+      <div id="liveAlertPlaceholder"></div>
+    </div>
+    <!-- Div Auxiliares -->
 
-      <!-- Spinner Overlay -->
-      <div id="spinner-overlay" class="spinner-overlay d-none">
-        <div class="d-flex justify-content-center align-items-center h-100">
-          <div class="spinner-border" role="status">
-            <span class="visually-hidden">Loading...</span>
-          </div>
+    <!-- Spinner Overlay -->
+    <div id="spinner-overlay" class="spinner-overlay d-none">
+      <div class="d-flex justify-content-center align-items-center h-100">
+        <div class="spinner-border" role="status">
+          <span class="visually-hidden">Loading...</span>
         </div>
       </div>
+    </div>
+    <!-- Offcanvas -->
+    <div
+      class="offcanvas offcanvas-start"
+      tabindex="-1"
+      id="offcanvasMenu"
+      aria-labelledby="offcanvasExampleLabel"
+    >
+      <div class="offcanvas-header">
+        <div class="form-group">
+          <span class="material-symbols-outlined">
+            nest_clock_farsight_analog
+          </span>
+          <div id="clock" class="card-body"></div>
+        </div>
 
-      <!-- Offcanvas -->
-      <div
-        class="offcanvas offcanvas-start"
-        tabindex="-1"
-        id="offcanvasMenu"
-        aria-labelledby="offcanvasExampleLabel"
-      >
-        <div class="offcanvas-header">
-          <div class="form-group">
-            <span class="material-symbols-outlined">
-              nest_clock_farsight_analog
-            </span>
-            <div id="clock" class="card-body"></div>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="offcanvas"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="offcanvas-body" id="ladoEsquerdoSoffcanvas">
+        <!-- Acordeão -->
+        <div id="accordion" class="w-100">
+          <!-- Menu -->
+          <h3><span class="material-icons outlined">menu</span> Menu</h3>
+          <div>Menu</div>
+
+          <!-- Análise -->
+          <h3><i class="bi bi-clipboard2-data-fill"></i> Análise</h3>
+          <div>
+            <button
+              class="ui-button ui-widget ui-corner-all"
+              name="analiseDeRegistroFerias"
+              onclick="chamaTemplate(this.name)"
+            >
+              Análise de Férias
+            </button>
+            <button
+              class="ui-button ui-widget ui-corner-all"
+              name="analiseDeRegistroColaboradores"
+              onclick="chamaTemplate(this.name)"
+            >
+              Análise de Registros
+            </button>
+            <button
+              class="ui-button ui-widget ui-corner-all"
+              name="analiseDeRegistroVT"
+              onclick="chamaTemplate(this.name)"
+            >
+              Analise de VT
+            </button>
           </div>
 
-          <button
-            type="button"
-            class="btn-close"
-            data-bs-dismiss="offcanvas"
-            aria-label="Close"
-          ></button>
-        </div>
-        <div class="offcanvas-body" id="ladoEsquerdoSoffcanvas">
-          <!-- Acordeão -->
-          <div id="accordion" class="w-100">
-            <!-- Menu -->
-            <h3><span class="material-icons outlined">menu</span> Menu</h3>
-            <div>Menu</div>
+          <!-- Registros -->
+          <h3><i class="bi bi-plus-lg"></i> Registros</h3>
+          <div>
+            <button
+              class="ui-button ui-widget ui-corner-all"
+              name="registrosDOC"
+              onclick="chamaTemplate(this.name)"
+            >
+              Registro de Documentação
+            </button>
+            <button
+              class="ui-button ui-widget ui-corner-all"
+              name="registroferias"
+              onclick="chamaTemplate(this.name)"
+            >
+              Férias
+            </button>
+            <button
+              class="ui-button ui-widget ui-corner-all"
+              name="driver"
+              onclick="chamaTemplate(this.name)"
+            >
+              Driver
+            </button>
+            <button
+              class="ui-button ui-widget ui-corner-all"
+              name="registroPagamentosAdiantamento"
+              onclick="chamaTemplate(this.name)"
+            >
+              Registro de Adiantamento
+            </button>
+            <button
+              class="ui-button ui-widget ui-corner-all"
+              name="registroPagamentosColaboradores"
+              onclick="chamaTemplate(this.name)"
+            >
+              Registros de Pagamentos
+            </button>
+            <button
+              class="ui-button ui-widget ui-corner-all"
+              name="registroRelogioDePonto"
+              onclick="chamaTemplate(this.name)"
+            >
+              Relógio De Ponto
+            </button>
+            <button
+              class="ui-button ui-widget ui-corner-all"
+              name="registroVT"
+              onclick="chamaTemplate(this.name)"
+            >
+              Registro VT
+            </button>
+            <button
+              class="ui-button ui-widget ui-corner-all"
+              name="cadastroDeHorasExtras"
+              onclick="chamaTemplate(this.name)"
+            >
+              Registros de Hora extras
+            </button>
+            <button
+              class="ui-button ui-widget ui-corner-all"
+              name="cadastroDeHorasExtras"
+              onclick="chamaTemplate(this.name)"
+            >
+              Registros de Hora extras
+            </button>
+          </div>
+          <!-- RegistrosNivel3 -->
+          <h3><i class="bi bi-plus-lg"></i> Supervisao</h3>
+          <div>
+            <button
+              class="ui-button ui-widget ui-corner-all"
+              name="analiseDeRegistroVT"
+              onclick="chamaTemplate(this.name)"
+            >
+              Analise de VT
+            </button>
+            <button
+              class="ui-button ui-widget ui-corner-all"
+              name="analiseDeRegistroFerias"
+              onclick="chamaTemplate(this.name)"
+            >
+              Análise de Férias
+            </button>
+            <button
+              class="ui-button ui-widget ui-corner-all"
+              name="analiseDeRegistroColaboradores"
+              onclick="chamaTemplate(this.name)"
+            >
+              Análise de Registros
+            </button>
+            <p></p>
 
-            <!-- Análise -->
-            <h3><i class="bi bi-clipboard2-data-fill"></i> Análise</h3>
-            <div>
-              <button
-                class="ui-button ui-widget ui-corner-all"
-                name="analiseDeRegistroFerias"
-                onclick="chamaTemplate(this.name)"
-              >
-                Análise de Férias
-              </button>
-              <button
-                class="ui-button ui-widget ui-corner-all"
-                name="analiseDeRegistroColaboradores"
-                onclick="chamaTemplate(this.name)"
-              >
-                Análise de Registros
-              </button>
-              <button
-                class="ui-button ui-widget ui-corner-all"
-                name="analiseDeRegistroVT"
-                onclick="chamaTemplate(this.name)"
-              >
-                Analise de VT
-              </button>
-              <button
-                class="ui-button ui-widget ui-corner-all"
-                name="cadastroDeHorasExtras"
-                onclick="chamaTemplate(this.name)"
-              >
-                Registros de Hora extras
-              </button>
-            </div>
+            <button
+              class="ui-button ui-widget ui-corner-all"
+              name="cadastroDeHorasExtras"
+              onclick="chamaTemplate(this.name)"
+            >
+              Cadastro de Hora extras
+            </button>
+            <button
+              class="ui-button ui-widget ui-corner-all"
+              name="solicitacaoLideranca"
+              onclick="chamaTemplate(this.name)"
+            >
+              Registros de Tarefas
+            </button>
+          </div>
 
-            <!-- Registros -->
-            <h3><i class="bi bi-plus-lg"></i> Registros</h3>
-            <div>
-              <button
-                class="ui-button ui-widget ui-corner-all"
-                name="registrosDOC"
-                onclick="chamaTemplate(this.name)"
-              >
-                Registro de Documentação
-              </button>
-              <button
-                class="ui-button ui-widget ui-corner-all"
-                name="registroferias"
-                onclick="chamaTemplate(this.name)"
-              >
-                Férias
-              </button>
-              <button
-                class="ui-button ui-widget ui-corner-all"
-                name="driver"
-                onclick="chamaTemplate(this.name)"
-              >
-                Driver
-              </button>
-              <button
-                class="ui-button ui-widget ui-corner-all"
-                name="registroPagamentosAdiantamento"
-                onclick="chamaTemplate(this.name)"
-              >
-                Registro de Adiantamento
-              </button>
-              <button
-                class="ui-button ui-widget ui-corner-all"
-                name="registroPagamentosColaboradores"
-                onclick="chamaTemplate(this.name)"
-              >
-                Registros de Pagamentos
-              </button>
-              <button
-                class="ui-button ui-widget ui-corner-all"
-                name="registroRelogioDePonto"
-                onclick="chamaTemplate(this.name)"
-              >
-                Relógio De Ponto
-              </button>
-              <button
-                class="ui-button ui-widget ui-corner-all"
-                name="registroVT"
-                onclick="chamaTemplate(this.name)"
-              >
-                Registro VT
-              </button>
-              <button
-                class="ui-button ui-widget ui-corner-all"
-                name="cadastroDeHorasExtras"
-                onclick="chamaTemplate(this.name)"
-              >
-                Registros de Hora extras
-              </button>
-            </div>
-            <!-- RegistrosNivel3 -->
-            <h3><i class="bi bi-plus-lg"></i> Supervisao</h3>
-            <div>
-              <button
-                class="ui-button ui-widget ui-corner-all"
-                name="analiseDeRegistroVT"
-                onclick="chamaTemplate(this.name)"
-              >
-                Analise de VT
-              </button>
-              <button
-                class="ui-button ui-widget ui-corner-all"
-                name="analiseDeRegistroFerias"
-                onclick="chamaTemplate(this.name)"
-              >
-                Análise de Férias
-              </button>
-              <button
-                class="ui-button ui-widget ui-corner-all"
-                name="analiseDeRegistroColaboradores"
-                onclick="chamaTemplate(this.name)"
-              >
-                Análise de Registros
-              </button>
-              <p></p>
+          <!-- Cadastro -->
+          <h3><i class="bi bi-file-plus"></i> Cadastro</h3>
+          <div>
+            <button
+              class="ui-button ui-widget ui-corner-all"
+              name="cadastroDeColaboradores"
+              onclick="chamaTemplate(this.name)"
+            >
+              Colaboradores
+            </button>
+            <button
+              class="ui-button ui-widget ui-corner-all"
+              name="cadastroDeFuncao"
+              onclick="chamaTemplate(this.name)"
+            >
+              Função
+            </button>
+            <button
+              class="ui-button ui-widget ui-corner-all"
+              name="exames"
+              onclick="chamaTemplate(this.name)"
+            >
+              Exames
+            </button>
+            <button
+              class="ui-button ui-widget ui-corner-all"
+              name="cursos"
+              onclick="chamaTemplate(this.name)"
+            >
+              Cursos
+            </button>
+            <button
+              class="ui-button ui-widget ui-corner-all"
+              name="cadastroEscala"
+              onclick="chamaTemplate(this.name)"
+            >
+              Escala
+            </button>
+          </div>
 
-              <button
-                class="ui-button ui-widget ui-corner-all"
-                name="cadastroDeHorasExtras"
-                onclick="chamaTemplate(this.name)"
-              >
-                Cadastro de Hora extras
-              </button>
-              <button
-                class="ui-button ui-widget ui-corner-all"
-                name="solicitacaoLideranca"
-                onclick="chamaTemplate(this.name)"
-              >
-                Registros de Tarefas
-              </button>
-            </div>
+          <!-- Acesso Colaborador -->
+          <h3>Acesso Colaborador</h3>
+          <div>
+            <!-- Card 1 -->
+            <button
+              type="button"
+              class="btn btn-secondary"
+              name="fichaDeregistros"
+              onclick="chamaTemplate(this.name)"
+            >
+              <span class="material-symbols-outlined">view_agenda</span> Ficha
+              de Registro/Docs
+            </button>
 
-            <!-- Cadastro -->
-            <h3><i class="bi bi-file-plus"></i> Cadastro</h3>
-            <div>
-              <button
-                class="ui-button ui-widget ui-corner-all"
-                name="cadastroDeColaboradores"
-                onclick="chamaTemplate(this.name)"
-              >
-                Colaboradores
-              </button>
-              <button
-                class="ui-button ui-widget ui-corner-all"
-                name="cadastroDeFuncao"
-                onclick="chamaTemplate(this.name)"
-              >
-                Função
-              </button>
-              <button
-                class="ui-button ui-widget ui-corner-all"
-                name="exames"
-                onclick="chamaTemplate(this.name)"
-              >
-                Exames
-              </button>
-              <button
-                class="ui-button ui-widget ui-corner-all"
-                name="cursos"
-                onclick="chamaTemplate(this.name)"
-              >
-                Cursos
-              </button>
-              <button
-                class="ui-button ui-widget ui-corner-all"
-                name="cadastroEscala"
-                onclick="chamaTemplate(this.name)"
-              >
-                Escala
-              </button>
-            </div>
+            <!-- Card 2 -->
+            <button
+              type="button"
+              class="btn btn-secondary"
+              name="extratoPagamento"
+              onclick="chamaTemplate(this.name)"
+            >
+              <span class="material-symbols-outlined">view_agenda</span>
+              Extrato de Pagamento
+            </button>
 
-            <!-- Acesso Colaborador -->
-            <h3>Acesso Colaborador</h3>
-            <div>
-              <!-- Card 1 -->
-              <button
-                type="button"
-                class="btn btn-secondary"
-                name="fichaDeregistros"
-                onclick="chamaTemplate(this.name)"
-              >
-                <span class="material-symbols-outlined">view_agenda</span> Ficha
-                de Registro/Docs
-              </button>
+            <!-- Card 3 -->
+            <button
+              type="button"
+              class="btn btn-secondary"
+              name="extratoAdiantamento"
+              onclick="chamaTemplate(this.name)"
+            >
+              <span class="material-symbols-outlined">view_agenda</span>
+              Extrato de Adiantamento
+            </button>
 
-              <!-- Card 2 -->
-              <button
-                type="button"
-                class="btn btn-secondary"
-                name="extratoPagamento"
-                onclick="chamaTemplate(this.name)"
-              >
-                <span class="material-symbols-outlined">view_agenda</span>
-                Extrato de Pagamento
-              </button>
+            <!-- Card 4 -->
+            <button
+              type="button"
+              class="btn btn-secondary"
+              name="listaFerias"
+              onclick="chamaTemplate(this.name)"
+            >
+              <span class="material-symbols-outlined">view_agenda</span>
+              Férias
+            </button>
 
-              <!-- Card 3 -->
-              <button
-                type="button"
-                class="btn btn-secondary"
-                name="extratoAdiantamento"
-                onclick="chamaTemplate(this.name)"
-              >
-                <span class="material-symbols-outlined">view_agenda</span>
-                Extrato de Adiantamento
-              </button>
+            <!-- Card 5 -->
+            <button
+              type="button"
+              class="btn btn-secondary"
+              name="planoDeSaude"
+              onclick="chamaTemplate(this.name)"
+            >
+              <span class="material-symbols-outlined">view_agenda</span> Plano
+              de Saúde
+            </button>
 
-              <!-- Card 4 -->
-              <button
-                type="button"
-                class="btn btn-secondary"
-                name="listaFerias"
-                onclick="chamaTemplate(this.name)"
-              >
-                <span class="material-symbols-outlined">view_agenda</span>
-                Férias
-              </button>
+            <!-- Card 6 -->
+            <button
+              type="button"
+              class="btn btn-secondary"
+              name="exames"
+              onclick="chamaTemplate(this.name)"
+            >
+              <span class="material-symbols-outlined">view_agenda</span>
+              Exames
+            </button>
+          </div>
 
-              <!-- Card 5 -->
-              <button
-                type="button"
-                class="btn btn-secondary"
-                name="planoDeSaude"
-                onclick="chamaTemplate(this.name)"
-              >
-                <span class="material-symbols-outlined">view_agenda</span> Plano
-                de Saúde
-              </button>
+          <!-- Logout -->
+          <h3><span class="material-icons outlined">logout</span> Logout</h3>
+          <div>
+            <button
+              class="ui-button ui-widget ui-corner-all"
+              name="Logout"
+              onclick="chamarLogout()"
+            >
+              Logout
+            </button>
+          </div>
 
-              <!-- Card 6 -->
-              <button
-                type="button"
-                class="btn btn-secondary"
-                name="exames"
-                onclick="chamaTemplate(this.name)"
-              >
-                <span class="material-symbols-outlined">view_agenda</span>
-                Exames
-              </button>
-            </div>
-
-            <!-- Logout -->
-            <h3><span class="material-icons outlined">logout</span> Logout</h3>
-            <div>
-              <button
-                class="ui-button ui-widget ui-corner-all"
-                name="Logout"
-                onclick="chamarLogout()"
-              >
-                Logout
-              </button>
-            </div>
-
-            <!-- Login -->
-            <h3><span class="material-icons outlined">login</span> Login</h3>
-            <div>
-              <button
-                class="ui-button ui-widget ui-corner-all"
-                name="car-logar"
-                onclick="chamaTemplate(this.name)"
-              >
-                Login
-              </button>
-            </div>
+          <!-- Login -->
+          <h3><span class="material-icons outlined">login</span> Login</h3>
+          <div>
+            <button
+              class="ui-button ui-widget ui-corner-all"
+              name="car-logar"
+              onclick="chamaTemplate(this.name)"
+            >
+              Login
+            </button>
           </div>
         </div>
       </div>
@@ -3141,12 +3677,17 @@
         } else {
           x = "conteudo";
         }
+        // mostrarAlerta(pagina,1)
         const formularioID = inserirTemplate(pagina, x);
         if (!formularioID) return;
 
         // const formularioID = inserirTemplate(pagina);
-        const paginaB = pagina;
-        switch (paginaB) {
+        // const offcanvas = bootstrap.Offcanvas.getInstance(
+        //   document.getElementById("offcanvasMenu")
+        // );
+        // offcanvas.hide(); // Fecha o offcanvas após selecionar
+        // mostrarAlerta(`pagina==>: ${pagina}`,3)
+        switch (pagina) {
           case "registrosDOC":
             carregarColaboradores();
             break;
@@ -3203,7 +3744,7 @@
     <script id="login">
       function chamarLogout() {
         localStorage.removeItem("usuarioLogado"); // Remove o usuário logado do Local Storage
-        alert("Logout realizado com sucesso");
+        mostrarAlerta("Logout realizado com sucesso", 3);
         controlarExibicaoAccordion(3);
       }
 
@@ -3223,7 +3764,10 @@
         let userData = JSON.parse(localStorage.getItem("usuarioLogado"));
 
         if (!userData) {
-          alert("Usuário não encontrado. Por favor, faça o login novamente.");
+          mostrarAlerta(
+            "Usuário não encontrado. Por favor, faça o login novamente.",
+            2
+          );
           return;
         }
 
@@ -3247,22 +3791,22 @@
             esconderSpinner();
 
             if (response.usuarioAutenticado) {
-              alert("Usuário autenticado com sucesso.");
               // Atualize o localStorage com as informações retornadas
               userData.id = response.id;
               userData.nivel = response.loginResult;
               localStorage.setItem("usuarioLogado", JSON.stringify(userData));
               controlarExibicaoAccordion(response.loginResult);
+              mostrarAlerta("Usuário autenticado com sucesso.", 1);
 
               // document.getElementById("input-user-login").value = "";
               // document.getElementById("input-senha-login").value = "";
             } else {
-              alert("Erro de login: credenciais inválidas.");
+              mostrarAlerta("Erro de login: credenciais inválidas.", 2);
             }
           },
           error: function (error) {
             esconderSpinner();
-            console.error("Erro ao autenticar", error);
+            mostrarAlerta("Erro ao autenticar", 2);
           },
         });
       }
@@ -3306,7 +3850,7 @@
 
               // Expandir apenas o accordion de login
               $("#accordion h3:contains('menu')").next().show();
-              chamaTemplate("menu");
+              chamaTemplate("menuInit");
               bartop.style.display = "flex";
             } else if (nivelUsuario === 2) {
               // Se o nível do usuário for 2, exibe apenas "Acesso Colaborador" e "Logout"
@@ -3341,12 +3885,12 @@
             }
           } else {
             // O usuário não está autenticado, redirecione para a página de login ou faça algo apropriado
-            console.log("Usuário não autenticado");
+            mostrarAlerta("Usuário não autenticado", 2);
             desativarAccodion();
           }
         } else {
           // Se não houver dados de usuário no localStorage, redirecione para a página de login
-          console.log("Usuário não autenticado");
+          console.log("Usuário não autenticado", 2);
           desativarAccodion();
         }
       }
@@ -3425,9 +3969,9 @@
             }, // Envia os dados diretamente
             success: function (response) {
               if (response) {
-                alert("Dados salvos com sucesso");
+                mostrarAlerta("Dados salvos com sucesso", 1);
               } else {
-                alert("Erro de retorno");
+                mostrarAlerta("Erro de retorno", 2);
               }
             },
             error: function (error) {
@@ -3753,19 +4297,6 @@
         });
       }
 
-      // function executarAcaoComData(data, inputId) {
-      //   const diasDaSemana = [
-      //     "Domingo",
-      //     "Segunda-feira",
-      //     "Terça-feira",
-      //     "Quarta-feira",
-      //     "Quinta-feira",
-      //     "Sexta-feira",
-      //     "Sábado",
-      //   ];
-      //   document.getElementById(inputId).value = diasDaSemana[data.getDay()];
-      // }
-
       function executarAcaoComData(data, inputId) {
         // Obter o dia da semana atual
         const diasDaSemana = [
@@ -3822,13 +4353,15 @@
         const dataSelecionada = new Date(inputData.value + "T12:00:00");
 
         if (inputData.value) {
-          executarAcaoComData(dataSelecionada, "diaSemana");
+          executarAcaoComData(dataSelecionada, "diaSemana", "dia");
+          executarAcaoComData(dataSelecionada, "mesRelogio", "mes");
+          executarAcaoComData(dataSelecionada, "valorAno", "ano");
           chamarEscala(); // Preenche o dia da semana no input
         }
       }
 
       // Função usada para preencher o input com o dia da semana
-      function executarAcaoComData(data, inputId) {
+      function executarAcaoComData(data, inputId, tipo) {
         const diasDaSemana = [
           "Domingo",
           "Segunda-feira",
@@ -3838,7 +4371,28 @@
           "Sexta-feira",
           "Sábado",
         ];
-        document.getElementById(inputId).value = diasDaSemana[data.getDay()]; // Preenche o input com o dia da semana
+        const mesesDoAno = [
+          "01",
+          "02",
+          "03",
+          "04",
+          "05",
+          "06",
+          "07",
+          "08",
+          "09",
+          "10",
+          "11",
+          "12",
+        ];
+        const valorAno = ["2024", "2023"];
+        if (tipo === "dia") {
+          document.getElementById(inputId).value = diasDaSemana[data.getDay()];
+        } else if (tipo === "mes") {
+          document.getElementById(inputId).value = mesesDoAno[data.getMonth()];
+        } else if (tipo === "ano") {
+          document.getElementById(inputId).value = valorAno[data.getFullYear()];
+        }
       }
 
       function carregaEscala() {
@@ -3903,6 +4457,14 @@
       }
 
       function preencherCampos(selectedEscala, campoId, valor) {
+        const campo = document.getElementById(campoId);
+        campo.innerHTML = "";
+        let option = document.createElement("option");
+        option.text = valor;
+        option.value = valor;
+        campo.add(option);
+      }
+      function preencherCampoMes(data, campoId, valor) {
         const campo = document.getElementById(campoId);
         campo.innerHTML = "";
         let option = document.createElement("option");
@@ -4169,13 +4731,13 @@
           success: function (response) {
             esconderSpinner();
             if (response.situacao) {
-              alert("Registro salvo com sucesso!");
+              mostrarAlerta("Registro salvo com sucesso!", 1);
               inputs.forEach((input) => {
                 input.value = " "; // Limpar inputs
               });
               toFiilIntabePGVT();
             } else {
-              alert("Erro de retorno: " + response.mensagem);
+              mostrarAlerta(`Erro de retorno: ${response.mensagem}`, 2);
             }
           },
           error: function (error) {
@@ -4196,7 +4758,7 @@
             tabelaID = "tabelaPagamentos";
         }
         const tableBody = document.getElementById("tabelaPagamentos"); // Refere to tbody, not table
-        const dataTableID = "tablePagamentos"; // ID of the table for DataTable initialization
+        // const dataTableID = "tablePagamentos"; // ID of the table for DataTable initialization
 
         $.ajax({
           type: "POST",
@@ -4210,6 +4772,7 @@
               try {
                 // Limpar tabela antes de preencher
                 tableBody.innerHTML = "";
+                const dataTableID = "tablePagamentos"; // ID da tabela para inicialização do DataTable
 
                 // Preencher tabela com os dados retornados
                 response.dados.forEach((dado) => {
@@ -4234,6 +4797,10 @@
                   const cellDataPagamento = document.createElement("td");
                   cellDataPagamento.textContent = dado.dataPagamento;
                   row.appendChild(cellDataPagamento);
+
+                  const cellsitucao = document.createElement("td");
+                  cellsitucao.textContent = dado.situacaoVT;
+                  row.appendChild(cellsitucao);
 
                   // Adicionar coluna de botões (Edição e Exclusão)
                   const cellActions = document.createElement("td");
@@ -4261,7 +4828,6 @@
                     excluirLinha(this);
                   };
                   cellActions.appendChild(deleteButton);
-
                   row.appendChild(cellActions);
 
                   tableBody.appendChild(row);
@@ -4277,8 +4843,16 @@
                       scroller: true,
                       scrollY: 350,
                       scrollX: true,
+                      scrollHeight: 350,
                       autoWidth: false,
                       order: [[0, "desc"]],
+                      dom: "Bfrtip", // Adiciona o layout com botões
+                      buttons: ["copy", "excel", "pdf"],
+                      layout: {
+                        topStart: {
+                          buttons: ["searchPanes"],
+                        },
+                      },
                       columnDefs: [
                         {
                           targets: 1,
@@ -4324,6 +4898,7 @@
             qualFuncao: "carregarPGVT",
           },
           success: function (response) {
+            console.log("response=>", response);
             esconderSpinner();
             if (response.situacao) {
               try {
@@ -4354,6 +4929,10 @@
                   cellDataPagamento.textContent = dado.dataPagamento;
                   row.appendChild(cellDataPagamento);
 
+                  const cellSituacao = document.createElement("td");
+                  cellSituacao.textContent = dado.situacaoVT;
+                  row.appendChild(cellSituacao);
+
                   tableBody.appendChild(row);
                 });
 
@@ -4382,7 +4961,7 @@
                 console.log(error);
               }
             } else {
-              alert("Erro de retorno: " + response.mensagem);
+              mostrarAlerta(`Erro de retorno:${response.mensagem}`, 2);
             }
           },
           error: function (error) {
@@ -4467,7 +5046,7 @@
 
         // Se algum campo obrigatório não estiver preenchido, alerta o usuário e interrompe o processo
         if (!isValid) {
-          alert("Por favor, preencha todos os campos obrigatórios.");
+          mostrarAlerta("Por favor, preencha todos os campos obrigatórios.", 2);
           return;
         }
 
@@ -4493,13 +5072,13 @@
           success: function (response) {
             esconderSpinner();
             if (response.situacao) {
-              alert("Registro salvo com sucesso!");
+              mostrarAlerta("Registro salvo com sucesso!", 1);
               inputs.forEach((input) => {
                 input.value = " "; // Limpar inputs
               });
               toFiilIntabePGVT(); // atualizar tabela
             } else {
-              alert("Erro de retorno: " + response.mensagem);
+              mostrarAlerta(`Erro de retorno: ${response.mensagem}`);
             }
           },
           error: function (error) {
@@ -4508,6 +5087,7 @@
           },
         });
       }
+
       function toFiilIntabeHoraExtra(tabela) {
         // Preencher tabela PG VT
         mostrarSpinner();
@@ -4608,7 +5188,7 @@
                 console.log(error);
               }
             } else {
-              alert("Erro de retorno: " + response.mensagem);
+              mostrarAlerta(`Erro de retorno: ${response.mensagem}`);
             }
           },
           error: function (error) {
@@ -4616,6 +5196,57 @@
             console.error("Erro ==>", error);
           },
         });
+      }
+
+      // Mostrar modal com informações adicionais
+      function showModalHR(dado) {
+        mostrarSpinner();
+        // TODO ScriptModal
+        const modal = document.getElementById("modalHorasExtra");
+        const modalBodyHR = document.getElementById("modalBodyHR");
+        modalBodyHR.innerHTML = `
+          <li class="list-group-item d-flex justify-content-between align-items-center">
+            <h3>Detalhes da Tarefa</h3>
+            <span class="badge bg-primary rounded-pill">${dado.qDiasSl}</span>
+          </li>
+          <ul class="list-group">
+          <li class="list-group-item EditslLideranca" id="${
+            dado.id
+          }">IDentificação: ${dado.id}</"li>
+          <li class="list-group-item">Tarefa: ${dado.tarefaAgendamentoSl}</li>
+          <li class="list-group-item">Responsável: ${dado.colaboradorSl}</li>
+          <li class="list-group-item">Prazo: ${dado.prazoAgendamento}</li>
+          <li class="list-group-item"> 
+          <div>
+            <label for="situacaoSelect">Situação:</label>
+            <select id="situacaoSelect" class="EditslLideranca">
+              <option value="Pendente" ${
+                dado.situcaoAgendamentoSL === "Pendente" ? "selected" : ""
+              }>Pendente</option>
+              <option value="Concluido" ${
+                dado.situcaoAgendamentoSL === "Concluido" ? "selected" : ""
+              }>Concluído</option>
+              <!-- Adicione mais opções, se necessário -->
+            </select>
+          </div></li>
+          <li class="list-group-item">Obersavação:<textarea class="EditslLideranca"> ${
+            dado.obsAgendamentoSl
+          }</textarea></li>
+          <li class="list-group-item">Data de Agendamento: ${
+            dado.dataAgendamentoSl
+          }</li>
+          <li class="list-group-item">Última atualização: ${
+            dado.dataUpdate
+          }</li>
+          </ul>
+        `;
+        modal.style.display = "block";
+
+        // Fechar o modal
+        document.getElementById("closeModalHR").onclick = function () {
+          modal.style.display = "none";
+        };
+        esconderSpinner();
       }
     </script>
     <!-- Registro de Solicitações -->
@@ -4638,7 +5269,7 @@
 
         // Se algum campo obrigatório não estiver preenchido, alerta o usuário e interrompe o processo
         if (!isValid) {
-          alert("Por favor, preencha todos os campos obrigatórios.");
+          mostrarAlerta("Por favor, preencha todos os campos obrigatórios.", 2);
           return;
         }
 
@@ -4665,13 +5296,13 @@
           success: function (response) {
             esconderSpinner();
             if (response.situacao) {
-              alert("Registro salvo com sucesso!");
+              mostrarAlerta("Registro salvo com sucesso!", 1);
               inputs.forEach((input) => {
                 input.value = " "; // Limpar inputs
               });
               toFillTableTarefa();
             } else {
-              alert("Erro de retorno: " + response.mensagem);
+              mostrarAlerta(`Erro de retorno:${response.mensagem}`);
             }
           },
           error: function (error) {
@@ -4696,7 +5327,7 @@
 
         // Se algum campo obrigatório não estiver preenchido, alerta o usuário e interrompe o processo
         if (!isValid) {
-          alert("Por favor, preencha todos os campos obrigatórios.");
+          mostrarAlerta("Por favor, preencha todos os campos obrigatórios.", 2);
           return;
         }
 
@@ -4723,7 +5354,7 @@
           success: function (response) {
             esconderSpinner();
             if (response.situacao) {
-              alert("Registro Editado com sucesso!");
+              mostrarAlerta("Registro Editado com sucesso!", 1);
               inputs.forEach((input) => {
                 input.value = " "; // Limpar inputs
               });
@@ -4935,14 +5566,73 @@
           behavior: "smooth",
         });
       }
+
+      function mostrarAlerta(mensagem, tipo) {
+        const alertPlaceholder = document.getElementById(
+          "liveAlertPlaceholder"
+        );
+
+        // Criando o overlay do alerta
+        const alertOverlay = document.createElement("div");
+        alertOverlay.className = "alert-overlay";
+
+        switch (tipo) {
+          case 1:
+            var classe = "alert alert-success";
+            break;
+          case 2:
+            var classe = "alert alert-danger";
+            break;
+          case 3:
+            var classe = "alert alert-warning";
+            break;
+          default:
+            var classe = "alert alert-info";
+            break;
+        }
+
+        // Criando o conteúdo do alerta
+        const alertContent = `
+    <div class="${classe}">
+      <div class="header">
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" onclick="fecharAlerta()"> </button>
+      </div>
+      <div class="alert-text">
+        <p>${mensagem}</p>
+      </div>
+    </div>
+  `;
+
+        // Inserindo o conteúdo no overlay
+        alertOverlay.innerHTML = alertContent;
+
+        // Inserindo o alerta na página
+        alertPlaceholder.appendChild(alertOverlay);
+      }
+
+      function fecharAlerta() {
+        const alertPlaceholder = document.getElementById(
+          "liveAlertPlaceholder"
+        );
+        alertPlaceholder.innerHTML = ""; // Remove o alerta
+      }
+      // mostrarAlerta("Login efetuado com sucesso!", 1);
+      // // Exemplo de como chamar a função
+      // document.getElementById('liveAlertBtn').addEventListener('click', () => {
+
+      // });
     </script>
     <!-- salvar dados Colaborador -->
     <script>
       function salvardadosColaborador(params) {
         const inputs = document.querySelectorAll(".registroColab");
-        // inputs.forEach((input) => {
-        //   console.log(`${input.name || input.id}: ${input.value}`); // Mostra o nome ou id e o valor do input no console
-        // });
+
+        // Validação e exibição de valores dos inputs
+        inputs.forEach((input) => {
+          console.log(`${input.name || input.id}: ${input.value}`); // Mostra o nome ou id e o valor do input no console
+        });
+
+        // Validação dos inputs
         const isValid = Array.from(inputs).every((input) => {
           if (input.hasAttribute("required") && !input.value) {
             input.classList.add("is-invalid"); // Adiciona classe para destacar o campo vazio
@@ -4955,106 +5645,114 @@
 
         // Se algum campo obrigatório não estiver preenchido, alerta o usuário e interrompe o processo
         if (!isValid) {
-          alert("Por favor, preencha todos os campos obrigatórios.");
+          mostrarAlerta("Por favor, preencha todos os campos obrigatórios.", 2);
           return;
         }
 
+        // Criação do array de dados
         const dadosArray = [];
-        mostrarSpinner();
+        mostrarSpinner(); // Mostra o spinner durante a execução do processo
 
+        // Montagem do array de dados a partir dos inputs
         inputs.forEach((input) => {
           dadosArray.push({
-            id: input.name || input.id, // Pega o ID do input
+            id: input.id, // Pega o ID do input
             valor: input.value, // Pega o valor do input
           });
         });
-      }
-      // document.getElementById("btt-cadastro-calab").disabled = true;
 
-      $.ajax({
-        type: "POST",
-        url: urlAjax,
-        data: {
-          dados: JSON.stringify(dadosArray),
-          qualFuncao: "salvarDadosNoSheet",
-        }, // Envia os dados diretamente
-        success: function (response) {
-          if (response) {
-            alert("Dados salvos com sucesso");
-          } else {
-            alert("Erro de retorno");
-          }
-        },
-        error: function (error) {
-          console.error("Erro ao autenticar", error);
-        },
-      });
+        // Envio dos dados via AJAX
+        $.ajax({
+          type: "POST",
+          url: urlAjax,
+          data: {
+            dados: JSON.stringify(dadosArray), // Envia os dados convertidos para string JSON
+            qualFuncao: "salvarDadosNoSheet", // Função a ser chamada no servidor
+          },
+          success: function (response) {
+            esconderSpinner();
+            console.log(response);
+            if (response.situacao) {
+              mostrarAlerta(response.mensagem, 1); // Exibe sucesso
+            } else {
+              mostrarAlerta(response.mensagem, 2); // Exibe erro se a resposta não for esperada
+            }
+          },
+          error: function (error) {
+            esconderSpinner();
+            console.error("Erro ao autenticar", error); // Exibe erros no console
+            mostrarAlerta("Erro ao salvar os dados.", 2); // Exibe mensagem de erro ao usuário
+          },
+        });
+      }
     </script>
-<!-- Api de cep -->
+
+    <!-- Api de cep -->
     <script>
-    function limpa_formulário_cep() {
-      // Limpa valores do formulário de cep.
-      document.getElementById('txt-endereco').value = "";
-      document.getElementById('txt-bairro').value = "";
-      document.getElementById('txt-cidade').value = "";
-      document.getElementById('txt-uf').value = "";
-    }
-
-    function meu_callback(conteudo) {
-      if (!("erro" in conteudo)) {
-        // Atualiza os campos com os valores retornados pela API.
-        document.getElementById('txt-endereco').value = conteudo.logradouro;
-        document.getElementById('txt-bairro').value = conteudo.bairro;
-        document.getElementById('txt-cidade').value = conteudo.localidade;
-        document.getElementById('txt-uf').value = conteudo.uf;
-      } else {
-        // CEP não encontrado.
-        limpa_formulário_cep();
-        alert("CEP não encontrado.");
+      function limpa_formulário_cep() {
+        document.getElementById("txt-endereco").value = "";
+        document.getElementById("txt-bairro").value = "";
+        document.getElementById("txt-cidade").value = "";
+        document.getElementById("txt-uf").value = "";
       }
-    }
 
-    function pesquisacep(valor) {
-      // Nova variável "cep" somente com dígitos.
-      var cep = valor.replace(/\D/g, '');
-
-      // Verifica se campo cep possui valor informado.
-      if (cep != "") {
-        // Expressão regular para validar o CEP.
-        var validacep = /^[0-9]{8}$/;
-
-        // Valida o formato do CEP.
-        if (validacep.test(cep)) {
-          // Preenche os campos com "..." enquanto consulta webservice.
-          document.getElementById('txt-endereco').value = "...";
-          document.getElementById('txt-bairro').value = "...";
-          document.getElementById('txt-cidade').value = "...";
-          document.getElementById('txt-uf').value = "...";
-
-          // Cria um elemento javascript.
-          var script = document.createElement('script');
-
-          // Sincroniza com o callback.
-          script.src = 'https://viacep.com.br/ws/' + cep + '/json/?callback=meu_callback';
-
-          // Insere script no documento e carrega o conteúdo.
-          document.body.appendChild(script);
+      function meu_callback(conteudo) {
+        if (!("erro" in conteudo)) {
+          // Atualiza os campos com os valores retornados pela API.
+          document.getElementById("txt-endereco").value = conteudo.logradouro;
+          document.getElementById("txt-bairro").value = conteudo.bairro;
+          document.getElementById("txt-cidade").value = conteudo.localidade;
+          document.getElementById("txt-uf").value = conteudo.uf;
         } else {
-          // CEP inválido.
+          // CEP não encontrado.
           limpa_formulário_cep();
-          alert("Formato de CEP inválido.");
+          mostrarAlerta("CEP não encontrado.", 2);
         }
-      } else {
-        // CEP sem valor, limpa formulário.
-        limpa_formulário_cep();
       }
-    }
 
+      function pesquisacep(valor) {
+        // Nova variável "cep" somente com dígitos.
+        var cep = valor.replace(/\D/g, "");
+
+        // Verifica se campo cep possui valor informado.
+        if (cep != "") {
+          // Expressão regular para validar o CEP.
+          var validacep = /^[0-9]{8}$/;
+
+          // Valida o formato do CEP.
+          if (validacep.test(cep)) {
+            // Preenche os campos com "..." enquanto consulta webservice.
+            document.getElementById("txt-endereco").value = "...";
+            document.getElementById("txt-bairro").value = "...";
+            document.getElementById("txt-cidade").value = "...";
+            document.getElementById("txt-uf").value = "...";
+
+            // Cria um elemento javascript.
+            var script = document.createElement("script");
+
+            // Sincroniza com o callback.
+            script.src =
+              "https://viacep.com.br/ws/" +
+              cep +
+              "/json/?callback=meu_callback";
+
+            // Insere script no documento e carrega o conteúdo.
+            document.body.appendChild(script);
+          } else {
+            // CEP inválido.
+            limpa_formulário_cep();
+            mostrarAlerta("Formato de CEP inválido.", 2);
+          }
+        } else {
+          // CEP sem valor, limpa formulário.
+          limpa_formulário_cep();
+        }
+      }
     </script>
     <!-- Fazer teste -->
     <script>
       // TODO Fazer Teste
-      // chamaTemplate("cadastroDeColaboradores");
+      chamaTemplate("cadastroDeColaboradores");
     </script>
   </body>
 </html>
