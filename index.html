@@ -3419,7 +3419,11 @@
                     <span id="dataRegistro"></span>
                   </p>
                   <p><strong>Situação:</strong> <span id="situacao"></span></p>
-                  <p><strong>Arquivo:</strong> <span id="arquivo"></span></p>
+                  <p>
+                    <strong>Arquivo:</strong>
+                    <a class="btn" type="button"><i class="bi bi-archive-fill"> <span id="arquivo"></i></span></i></a>
+                   
+                  </p>
                 </div>
               </div>
             </div>
@@ -6034,6 +6038,8 @@
                       pagamento.data;
                     document.getElementById("situacao").textContent =
                       pagamento.situacao;
+                    document.getElementById("arquivo").textContent =
+                      pagamento.link;
 
                     // Abre o modal de pagamento
                     const pagamentoModal = new bootstrap.Modal(
