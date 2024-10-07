@@ -3381,7 +3381,12 @@
         </template>
         <!-- Template do Extrato de Pagamento -->
         <template id="extratoPagamento">
-          <ul id="conteudoExtratoPagamento" class="list-group"></ul>
+          <div class="card w-100">
+            <h1 class="card-header">Extrato de Pagamento</h1>
+            <div class="card-body">
+              <ul id="conteudoExtratoPagamento" class="list-group"></ul>
+            </div>
+          </div>
 
           <!-- Modal para Exibir Detalhes do Pagamento -->
           <div
@@ -6025,6 +6030,7 @@
                 <small class="text-body-secondary">${pagamento.dataPagamento}</small>
               </div>
               <p class="mb-1">${pagamento.descricao}</p>
+              <p class="mb-1">Nº de Documento:#${pagamento.idDoc}</p>
               <small class="text-body-secondary">Valor Pago:R$ ${pagamento.valordePagamento} Situação:${pagamento.situacao}</small>
             `;
 
@@ -6044,19 +6050,25 @@
                     const arquivoElement =
                       document.getElementById("linkArquivo");
                     const iconElement = document.getElementById("iconArquivo");
-
+                    iconArquivo;
                     if (pagamento.link) {
+                      console.log("Link PG:", pagamento.link);
                       // Se houver link, ativa o ícone e permite clicar para abrir em nova aba
                       iconElement.style.color = "blue"; // Cor do ícone ativo
                       arquivoElement.classList.remove("disabled"); // Remove estado de desabilitado
-                      arquivoElement.addEventListener("click", (e) => {
-                        e.preventDefault(); // Previne o comportamento padrão do link
-                        window.open(pagamento.link, "_blank"); // Abre o PDF em uma nova aba
-                      });
+                      arquivoElement.href = pagamento.link;
+                      arquivoElement.target = "_blank";
+                      // arquivoElement.addEventListener("click", (e) => {
+                      //   console.log("Link:", pagamento.link);
+                      //   e.preventDefault(); // Previne o comportamento padrão do link
+                      //   window.open(pagamento.link, "_blank"); // Abre o PDF em uma nova aba
+                      // });
                     } else {
                       // Se não houver link, desabilita o ícone e o link
                       iconElement.style.color = "gray"; // Cor do ícone desativado
-                      arquivoElement.classList.add("disabled"); // Adiciona estado de desabilitado
+                      arquivoElement.href = "#";
+                      arquivoElement.removeAttribute("target"); // Adiciona estado de desabilitado
+                      arquivoElement.ariaDisabled = "true";
                     }
 
                     // Abre o modal de pagamento
@@ -6093,7 +6105,7 @@
     <!-- Fazer teste -->
     <script>
       // TODO Fazer Teste
-      chamaTemplate("extratoPagamento");
+      // chamaTemplate("extratoPagamento");
     </script>
   </body>
 </html>
