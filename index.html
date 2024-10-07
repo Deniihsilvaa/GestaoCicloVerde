@@ -291,6 +291,7 @@
         justify-content: center;
         margin-top: 2rem;
       }
+      /* TODO CaixaPDF */
       .caixaPDf {
         position: fixed; /* Para que a caixa fique fixa sobre a página */
         top: 0;
@@ -3421,8 +3422,9 @@
                   <p><strong>Situação:</strong> <span id="situacao"></span></p>
                   <p>
                     <strong>Arquivo:</strong>
-                    <a class="btn" type="button"><i class="bi bi-archive-fill"> <span id="arquivo"></i></span></i></a>
-                   
+                    <a id="linkArquivo" href="#" target="_blank">
+                      <i id="iconArquivo" class="bi bi-archive-fill"></i>
+                    </a>
                   </p>
                 </div>
               </div>
@@ -5984,7 +5986,7 @@
           },
           success: function (response) {
             esconderSpinner();
-            console.log("response", response.colaboradores);
+            console.log("response", response);
 
             if (response.situacao) {
               let pagamentos = response.colaboradores;
@@ -6023,10 +6025,10 @@
                 <small class="text-body-secondary">${pagamento.dataPagamento}</small>
               </div>
               <p class="mb-1">${pagamento.descricao}</p>
-              <small class="text-body-secondary">${pagamento.situacao}</small>
+              <small class="text-body-secondary">Valor Pago:R$ ${pagamento.valordePagamento} Situação:${pagamento.situacao}</small>
             `;
 
-                  // Adiciona o evento de clique para abrir o modal com detalhes
+                  // Função para abrir o modal e inserir as informações
                   listItem.addEventListener("click", () => {
                     document.getElementById("colaborador").textContent =
                       pagamento.colaborador;
@@ -6038,8 +6040,24 @@
                       pagamento.data;
                     document.getElementById("situacao").textContent =
                       pagamento.situacao;
-                    document.getElementById("arquivo").textContent =
-                      pagamento.link;
+
+                    const arquivoElement =
+                      document.getElementById("linkArquivo");
+                    const iconElement = document.getElementById("iconArquivo");
+
+                    if (pagamento.link) {
+                      // Se houver link, ativa o ícone e permite clicar para abrir em nova aba
+                      iconElement.style.color = "blue"; // Cor do ícone ativo
+                      arquivoElement.classList.remove("disabled"); // Remove estado de desabilitado
+                      arquivoElement.addEventListener("click", (e) => {
+                        e.preventDefault(); // Previne o comportamento padrão do link
+                        window.open(pagamento.link, "_blank"); // Abre o PDF em uma nova aba
+                      });
+                    } else {
+                      // Se não houver link, desabilita o ícone e o link
+                      iconElement.style.color = "gray"; // Cor do ícone desativado
+                      arquivoElement.classList.add("disabled"); // Adiciona estado de desabilitado
+                    }
 
                     // Abre o modal de pagamento
                     const pagamentoModal = new bootstrap.Modal(
@@ -6064,11 +6082,18 @@
           },
         });
       }
+      // Função para fechar o PDF dentro do iframe
+      function fecharPDFPG() {
+        const pdfContainer = document.getElementById("pdfContainer");
+        const pdfIframe = document.getElementById("pdfIframe");
+        pdfContainer.style.display = "none"; // Esconde o container
+        pdfIframe.src = ""; // Limpa o conteúdo do iframe
+      }
     </script>
     <!-- Fazer teste -->
     <script>
       // TODO Fazer Teste
-      // chamaTemplate("templatefichaDeregistros");
+      chamaTemplate("extratoPagamento");
     </script>
   </body>
 </html>
