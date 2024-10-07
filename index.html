@@ -290,6 +290,28 @@
         justify-content: center;
         margin-top: 2rem;
       }
+      .caixaPDf {
+        position: fixed; /* Para que a caixa fique fixa sobre a página */
+        top: 0;
+        left: 0;
+        width: 100vw; /* Ocupa a largura total da tela */
+        height: 100vh; /* Ocupa a altura total da tela */
+        background-color: rgba(
+          0,
+          0,
+          0,
+          0.8
+        ); /* Fundo semi-transparente para destacar o PDF */
+        display: none; /* Esconde a caixa inicialmente */
+        z-index: 9999; /* Garante que esteja acima de todos os outros elementos */
+      }
+
+      .caixaPDf embed {
+        width: 90%; /* Ajusta a largura do PDF */
+        height: 90%; /* Ajusta a altura do PDF */
+        margin: 5% auto; /* Centraliza verticalmente e horizontalmente */
+        display: block;
+      }
 
       @media (max-width: 400px) {
         #ladoDireito {
@@ -447,6 +469,9 @@
         justify-content: center;
         align-items: center;
         z-index: 9999;
+      }
+      div#ladoDireito {
+        width: 98vw;
       }
     </style>
   </head>
@@ -2644,11 +2669,6 @@
             <h1 class="card-header">Descrição de Pagamento VT</h1>
             <div class="card-body">
               <div class="row mt-3">
-                <div class="card">
-                  <h2>Menu</h2>
-                </div>
-              </div>
-              <div class="row mt-3">
                 <!-- Formulário de Registro de Pagamento -->
 
                 <div class="col-md-12">
@@ -3063,164 +3083,160 @@
           </div>
         </template>
 
-        <template id="solicitacaoLideranca" class="w-100">
-          <div class="card w-100 shadow-lg">
+        <template id="solicitacaoLideranca">
+          <div class="card w-shadow-lg">
+            <h1 class="card-header">Solicitações - Ciclo Verde</h1>
             <div class="card-body">
-              <h1 class="card-title">Solicitações - Ciclo Verde</h1>
-
-              <div class="card mt-4">
-                <div class="card-body w-100">
-                  <div class="row w-auto">
-                    <!-- ID -->
-                    <div class="col-sm-3 mb-3">
-                      <label for="idHorasSl">ID</label>
-                      <div class="form-group">
-                        <input
-                          type="text"
-                          name="idHorasSl"
-                          id="idHorasSl"
-                          disabled="disabled"
-                          class="form-control slLideranca"
-                        />
-                      </div>
-                    </div>
-                    <!--Colaborador  -->
-                    <div class="col-sm-3 mb-3">
-                      <i class="bi bi-asterisk"></i>
-                      <label for="colaboradorSl"
-                        >Responsável pela Solicitação</label
+              <div class="row w-auto">
+                <!-- ID -->
+                <div class="col-sm-3 mb-3">
+                  <label for="idHorasSl">ID</label>
+                  <div class="form-group">
+                    <input
+                      type="text"
+                      name="idHorasSl"
+                      id="idHorasSl"
+                      disabled="disabled"
+                      class="form-control slLideranca"
+                    />
+                  </div>
+                </div>
+                <!--Colaborador  -->
+                <div class="col-sm-3 mb-3">
+                  <i class="bi bi-asterisk"></i>
+                  <label for="colaboradorSl"
+                    >Responsável pela Solicitação</label
+                  >
+                  <div class="form-group">
+                    <select
+                      class="slLideranca form-control scColaborador"
+                      name="colaboradorSl"
+                      id="colaboradorSl"
+                      required
+                    ></select>
+                  </div>
+                </div>
+                <!--Data  -->
+                <div class="col-sm-3 mb-3">
+                  <div class="form-group">
+                    <i class="bi bi-asterisk"></i>
+                    <label for="dataAgendamentoSl">Data</label>
+                    <input
+                      type="date"
+                      name="dataAgendamentoSl"
+                      id="dataAgendamentoSl"
+                      class="form-control slLideranca"
+                      required
+                    />
+                  </div>
+                </div>
+                <!-- situacão -->
+                <div class="col-sm-3 mb-3">
+                  <i class="bi bi-asterisk"></i>
+                  <label for="situcaoAgendamentoSL">Situção</label>
+                  <div class="form-group">
+                    <select
+                      name="situcaoAgendamentoHora"
+                      id="situcaoAgendamentoSL"
+                      class="form-control slLideranca"
+                      required
+                    >
+                      <option value="1">Pendente</option>
+                      <option value="2">Concluido</option>
+                    </select>
+                  </div>
+                </div>
+                <!-- Tarefa -->
+                <div class="col-sm-3 mb-3">
+                  <label for="tarefaAgendamentoSl">Tarefa</label>
+                  <div class="form-group">
+                    <textarea
+                      type="text"
+                      name="tarefaAgendamentoSl"
+                      id="tarefaAgendamentoSl"
+                      class="form-control slLideranca"
+                    ></textarea>
+                  </div>
+                </div>
+                <!-- Obersavação da tarefa -->
+                <div class="col-sm-3 mb-3">
+                  <label for="obsAgendamentoSl">Descrição</label>
+                  <div class="form-group">
+                    <textarea
+                      type="text"
+                      name="obsAgendamentoSl"
+                      id="obsAgendamentoSl"
+                      class="form-control slLideranca"
+                    ></textarea>
+                  </div>
+                </div>
+                <!-- Prazo -->
+                <div class="col-sm-3 mb-3">
+                  <div class="form-group">
+                    <i class="bi bi-asterisk"></i>
+                    <label for="dataAgendamentoPSl">Prazo</label>
+                    <input
+                      type="date"
+                      name="dataAgendamentoPSl"
+                      id="dataAgendamentoPSl"
+                      class="form-control slLideranca"
+                      required
+                    />
+                  </div>
+                </div>
+                <!-- quantidade de de dias -->
+                <div class="col-sm-3 mb-3">
+                  <div class="form-group">
+                    <div class="form-group">
+                      <label for="qDias">Dias</label>
+                      <input
+                        type="text"
+                        class="form-control slLideranca"
+                        name="qDias"
+                        id="qDias"
+                        aria-describedby="helpId"
+                        placeholder="0"
+                        disabled="disabled"
+                      />
+                      <small id="helpId" class="form-text text-muted"
+                        >Quantidade de dias</small
                       >
-                      <div class="form-group">
-                        <select
-                          class="slLideranca form-control scColaborador"
-                          name="colaboradorSl"
-                          id="colaboradorSl"
-                          required
-                        ></select>
-                      </div>
-                    </div>
-                    <!--Data  -->
-                    <div class="col-sm-3 mb-3">
-                      <div class="form-group">
-                        <i class="bi bi-asterisk"></i>
-                        <label for="dataAgendamentoSl">Data</label>
-                        <input
-                          type="date"
-                          name="dataAgendamentoSl"
-                          id="dataAgendamentoSl"
-                          class="form-control slLideranca"
-                          required
-                        />
-                      </div>
-                    </div>
-                    <!-- situacão -->
-                    <div class="col-sm-3 mb-3">
-                      <i class="bi bi-asterisk"></i>
-                      <label for="situcaoAgendamentoSL">Situção</label>
-                      <div class="form-group">
-                        <select
-                          name="situcaoAgendamentoHora"
-                          id="situcaoAgendamentoSL"
-                          class="form-control slLideranca"
-                          required
-                        >
-                          <option value="1">Pendente</option>
-                          <option value="2">Concluido</option>
-                        </select>
-                      </div>
-                    </div>
-                    <!-- Tarefa -->
-                    <div class="col-sm-3 mb-3">
-                      <label for="tarefaAgendamentoSl">Tarefa</label>
-                      <div class="form-group">
-                        <textarea
-                          type="text"
-                          name="tarefaAgendamentoSl"
-                          id="tarefaAgendamentoSl"
-                          class="form-control slLideranca"
-                        ></textarea>
-                      </div>
-                    </div>
-                    <!-- Obersavação da tarefa -->
-                    <div class="col-sm-3 mb-3">
-                      <label for="obsAgendamentoSl">Descrição</label>
-                      <div class="form-group">
-                        <textarea
-                          type="text"
-                          name="obsAgendamentoSl"
-                          id="obsAgendamentoSl"
-                          class="form-control slLideranca"
-                        ></textarea>
-                      </div>
-                    </div>
-                    <!-- Prazo -->
-                    <div class="col-sm-3 mb-3">
-                      <div class="form-group">
-                        <i class="bi bi-asterisk"></i>
-                        <label for="dataAgendamentoPSl">Prazo</label>
-                        <input
-                          type="date"
-                          name="dataAgendamentoPSl"
-                          id="dataAgendamentoPSl"
-                          class="form-control slLideranca"
-                          required
-                        />
-                      </div>
-                    </div>
-                    <!-- quantidade de de dias -->
-                    <div class="col-sm-3 mb-3">
-                      <div class="form-group">
-                        <div class="form-group">
-                          <label for="qDias">Dias</label>
-                          <input
-                            type="text"
-                            class="form-control slLideranca"
-                            name="qDias"
-                            id="qDias"
-                            aria-describedby="helpId"
-                            placeholder="0"
-                            disabled="disabled"
-                          />
-                          <small id="helpId" class="form-text text-muted"
-                            >Quantidade de dias</small
-                          >
-                        </div>
-                      </div>
-                    </div>
-                    <!--Reponsavel pela tarefa  -->
-                    <div class="col-sm-3 mb-3">
-                      <i class="bi bi-asterisk"></i>
-                      <label for="colaboradorRespoonsavelTSl"
-                        >Responsável pela tarefa</label
-                      >
-                      <div class="form-group">
-                        <select
-                          class="slLideranca form-control scColaborador"
-                          name="colaboradorRespoonsavelTSl"
-                          id="colaboradorRespoonsavelTSl"
-                          required
-                        ></select>
-                      </div>
                     </div>
                   </div>
-                  <!-- Botoes -->
-                  <div class="row g-1 align-items-center">
-                    <div class="col-sm-1 mb-3">
-                      <button
-                        type="button"
-                        class="btn btn-primary"
-                        data-toggle="button"
-                        aria-pressed="false"
-                        autocomplete="off"
-                        onclick="salvarDadosTarefas()"
-                      >
-                        Salvar
-                      </button>
-                    </div>
-                    <div class="col-sm-1 mb-3"></div>
+                </div>
+                <!--Reponsavel pela tarefa  -->
+                <div class="col-sm-3 mb-3">
+                  <i class="bi bi-asterisk"></i>
+                  <label for="colaboradorRespoonsavelTSl"
+                    >Responsável pela tarefa</label
+                  >
+                  <div class="form-group">
+                    <select
+                      class="slLideranca form-control scColaborador"
+                      name="colaboradorRespoonsavelTSl"
+                      id="colaboradorRespoonsavelTSl"
+                      required
+                    ></select>
                   </div>
                 </div>
               </div>
+              <!-- Botoes -->
+              <div class="row g-1 align-items-center">
+                <div class="col-sm-1 mb-3">
+                  <button
+                    type="button"
+                    class="btn btn-primary"
+                    data-toggle="button"
+                    aria-pressed="false"
+                    autocomplete="off"
+                    onclick="salvarDadosTarefas()"
+                  >
+                    Salvar
+                  </button>
+                </div>
+                <div class="col-sm-1 mb-3"></div>
+              </div>
+
               <div class="card mt-4">
                 <div class="card w-100">
                   <!-- Filtro de Situação -->
@@ -3326,6 +3342,40 @@
         <template id="templtelogin">
           <div id="menuLogin"></div>
           <!-- Conteudo sera exebido aqui -->
+        </template>
+
+        <template id="templatefichaDeregistros">
+          <div class="card w-100">
+            <h1 class="card-header">Ficha de Registro</h1>
+            <div class="card-body">
+              <div id="list-FichaREgistro" class="list-group"></div>
+            </div>
+          </div>
+          <div class="caixaPDf">
+            <button
+              onclick="fecharPDF()"
+              style="
+                position: absolute;
+                top: 10px;
+                right: 20px;
+                z-index: 10000;
+                background-color: red;
+                color: white;
+              "
+            >
+              Fechar
+            </button>
+            <iframe
+              id="pdfFichaRegistro"
+              type="application/pdf"
+              width="100%"
+              height="100%"
+            ></iframe>
+          </div>
+        </template>
+
+        <template id="areaColaborador">
+          <div id="conteudoAprese"></div>
         </template>
       </div>
       <!-- Alerta -->
@@ -3496,13 +3546,14 @@
             >
               Cadastro de Hora extras
             </button>
-            <button
+            <!-- <button
               class="ui-button ui-widget ui-corner-all"
+              enabled
               name="solicitacaoLideranca"
               onclick="chamaTemplate(this.name)"
             >
               Registros de Tarefas
-            </button>
+            </button> -->
           </div>
 
           <!-- Cadastro -->
@@ -3552,7 +3603,7 @@
             <button
               type="button"
               class="btn btn-secondary"
-              name="fichaDeregistros"
+              name="templatefichaDeregistros"
               onclick="chamaTemplate(this.name)"
             >
               <span class="material-symbols-outlined">view_agenda</span> Ficha
@@ -3735,6 +3786,10 @@
             toFillTableTarefa();
 
             break;
+          case "templatefichaDeregistros":
+            carregarFichaColaboradores();
+
+            break;
 
           default:
             break;
@@ -3794,8 +3849,11 @@
               // Atualize o localStorage com as informações retornadas
               userData.id = response.id;
               userData.nivel = response.loginResult;
+              userData.nome = response.nome;
+
               localStorage.setItem("usuarioLogado", JSON.stringify(userData));
               controlarExibicaoAccordion(response.loginResult);
+
               mostrarAlerta("Usuário autenticado com sucesso.", 1);
 
               // document.getElementById("input-user-login").value = "";
@@ -3817,6 +3875,7 @@
         if (userData) {
           let user = userData.login;
           let nivelUsuario = userData.nivel;
+          let nome = userData.nome;
 
           // Inicializa o accordion com todas as seções
           $("#accordion").accordion({
@@ -3863,9 +3922,9 @@
               $("#accordion h3:contains('Logout')").next().hide();
 
               chamaTemplate("areaColaborador");
-              bartop.style.display = "none";
+              bartop.style.display = "flex";
               // Remove a classe 'grid-template-rows: auto 1fr;'
-              elemento.style.gridTemplateRows = "";
+              // elemento.style.gridTemplateRows = "";
             } else if (nivelUsuario === 3) {
               // Se o nível do usuário for 2, exibe apenas "Acesso Colaborador" e "Logout"
               // Exibir apenas os cabeçalhos desejados
@@ -5628,9 +5687,9 @@
         const inputs = document.querySelectorAll(".registroColab");
 
         // Validação e exibição de valores dos inputs
-        inputs.forEach((input) => {
-          console.log(`${input.name || input.id}: ${input.value}`); // Mostra o nome ou id e o valor do input no console
-        });
+        // inputs.forEach((input) => {
+        //   console.log(`${input.name || input.id}: ${input.value}`); // Mostra o nome ou id e o valor do input no console
+        // });
 
         // Validação dos inputs
         const isValid = Array.from(inputs).every((input) => {
@@ -5749,10 +5808,105 @@
         }
       }
     </script>
+    <script id="templatefichaDeregistros">
+      function abrirFichaRegistroPDF(urlPDF) {
+        const pdfElement = document.getElementById("pdfFichaRegistro");
+        const caixaPDF = document.querySelector(".caixaPDf");
+
+        if (pdfElement && caixaPDF) {
+          pdfElement.src = urlPDF; // Define o URL do PDF
+          caixaPDF.style.display = "block"; // Mostra a caixa do PDF
+        } else {
+          console.error("Elemento PDF ou caixa não encontrado.");
+        }
+      }
+      function fecharPDF() {
+        const caixaPDF = document.querySelector(".caixaPDf");
+        if (caixaPDF) {
+          caixaPDF.style.display = "none"; // Esconde a caixa do PDF
+        }
+      }
+
+      function carregarFichaColaboradores() {
+        let user = "";
+        let userData = JSON.parse(localStorage.getItem("usuarioLogado"));
+
+        if (userData) {
+          user = userData.nome; // Removi o 'let' para não redeclarar a variável
+        }
+        console.log(user);
+        mostrarSpinner();
+        $.ajax({
+          type: "POST",
+          url: urlAjax,
+          data: {
+            qualFuncao: "carregaFichaDeColaboradores",
+            dados: user,
+          },
+          success: function (response) {
+            esconderSpinner();
+            if (response.situacao) {
+              let colaboradores = response.colaboradores;
+              try {
+                console.log("response", response);
+                // Verifica se a lista de colaboradores não está vazia
+                if (!colaboradores || colaboradores.length === 0) {
+                  console.warn("Nenhum colaborador encontrado.");
+                  return;
+                }
+
+                const elementodados =
+                  document.getElementById("list-FichaREgistro");
+
+                // Verifica se o elemento foi encontrado
+                if (!elementodados) {
+                  console.error(
+                    "Elemento com ID 'list-FichaREgistro' não encontrado."
+                  );
+                  return;
+                }
+
+                elementodados.innerHTML = ""; // Limpa a lista de colaboradores
+
+                // Cria os botões para cada colaborador
+                colaboradores.forEach((colab) => {
+                  const button = document.createElement("button");
+                  button.type = "button";
+                  button.className = "list-group-item list-group-item-action ";
+                  button.textContent = `Nome: ${colab.nome}  CPF: ${colab.cpf}`;
+
+                  button.name = colab.id;
+
+                  // Atribui o evento de clique para abrir o PDF
+                  button.onclick = function () {
+                    abrirFichaRegistroPDF(colab.link);
+                  };
+
+                  elementodados.appendChild(button);
+                });
+
+                // Marca o primeiro item como selecionado
+                if (elementodados.firstChild) {
+                  elementodados.firstChild.classList.add("active");
+                }
+              } catch (error) {
+                console.error("Erro ao carregar colaboradores: ", error);
+              }
+            } else {
+              alert("Erro ao carregar os colaboradores.");
+            }
+          },
+          error: function (error) {
+            esconderSpinner();
+            console.error("Erro na requisição AJAX:", error);
+          },
+        });
+      }
+    </script>
     <!-- Fazer teste -->
     <script>
       // TODO Fazer Teste
-      chamaTemplate("cadastroDeColaboradores");
+      chamaTemplate("templatefichaDeregistros");
     </script>
   </body>
 </html>
