@@ -3377,6 +3377,53 @@
         <template id="areaColaborador">
           <div id="conteudoAprese"></div>
         </template>
+        <!-- Template do Extrato de Pagamento -->
+        <template id="extratoPagamento">
+          <ul id="conteudoExtratoPagamento" class="list-group"></ul>
+
+          <!-- Modal para Exibir Detalhes do Pagamento -->
+          <div
+            class="modal fade"
+            id="pagamentoModal"
+            tabindex="-1"
+            aria-labelledby="pagamentoModalLabel"
+            aria-hidden="true"
+          >
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="pagamentoModalLabel">
+                    Detalhes do Pagamento
+                  </h5>
+                  <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                  ></button>
+                </div>
+                <div class="modal-body">
+                  <p>
+                    <strong>Colaborador:</strong> <span id="colaborador"></span>
+                  </p>
+                  <p>
+                    <strong>Valor do Pagamento:</strong>
+                    <span id="valordePagamento"></span>
+                  </p>
+                  <p>
+                    <strong>Descrição:</strong> <span id="descricao"></span>
+                  </p>
+                  <p>
+                    <strong>Data de Registro:</strong>
+                    <span id="dataRegistro"></span>
+                  </p>
+                  <p><strong>Situação:</strong> <span id="situacao"></span></p>
+                  <p><strong>Arquivo:</strong> <span id="arquivo"></span></p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </template>
       </div>
       <!-- Alerta -->
       <div id="liveAlertPlaceholder"></div>
@@ -3788,6 +3835,10 @@
             break;
           case "templatefichaDeregistros":
             carregarFichaColaboradores();
+
+            break;
+          case "extratoPagamento":
+            carregarFichaPagamentos();
 
             break;
 
@@ -5894,6 +5945,110 @@
               }
             } else {
               alert("Erro ao carregar os colaboradores.");
+            }
+          },
+          error: function (error) {
+            esconderSpinner();
+            console.error("Erro na requisição AJAX:", error);
+          },
+        });
+      }
+    </script>
+    <script>
+      function carregarFichaPagamentos() {
+        let userData = JSON.parse(localStorage.getItem("usuarioLogado"));
+
+        if (!userData) {
+          console.error("ID de usuário não encontrado no localStorage.");
+          return;
+        }
+
+        let userId = userData.id;
+        let nivel = userData.nivel;
+
+        console.log("User ID:", userId);
+        mostrarSpinner();
+
+        $.ajax({
+          type: "POST",
+          url: urlAjax,
+          data: {
+            qualFuncao: "carregaFichaDePagamentos",
+            dados: userId,
+            nivel: nivel,
+          },
+          success: function (response) {
+            esconderSpinner();
+            console.log("response", response.colaboradores);
+
+            if (response.situacao) {
+              let pagamentos = response.colaboradores;
+
+              try {
+                if (!pagamentos || pagamentos.length === 0) {
+                  console.warn("Nenhum pagamento encontrado.");
+                  return;
+                }
+
+                const conteudoExtrato = document.getElementById(
+                  "conteudoExtratoPagamento"
+                );
+
+                if (!conteudoExtrato) {
+                  console.error(
+                    "Elemento com ID 'conteudoExtratoPagamento' não encontrado."
+                  );
+                  return;
+                }
+
+                conteudoExtrato.innerHTML = ""; // Limpa a lista de pagamentos
+
+                pagamentos.forEach((pagamento, index) => {
+                  const listItem = document.createElement("a");
+                  listItem.href = "#";
+                  listItem.classList.add(
+                    "list-group-item",
+                    "list-group-item-action"
+                  );
+
+                  // Cria o conteúdo do item
+                  listItem.innerHTML = `
+              <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1">${pagamento.colaborador}</h5>
+                <small class="text-body-secondary">${pagamento.dataPagamento}</small>
+              </div>
+              <p class="mb-1">${pagamento.descricao}</p>
+              <small class="text-body-secondary">${pagamento.situacao}</small>
+            `;
+
+                  // Adiciona o evento de clique para abrir o modal com detalhes
+                  listItem.addEventListener("click", () => {
+                    document.getElementById("colaborador").textContent =
+                      pagamento.colaborador;
+                    document.getElementById("valordePagamento").textContent =
+                      pagamento.valordePagamento;
+                    document.getElementById("descricao").textContent =
+                      pagamento.descricao;
+                    document.getElementById("dataRegistro").textContent =
+                      pagamento.data;
+                    document.getElementById("situacao").textContent =
+                      pagamento.situacao;
+
+                    // Abre o modal de pagamento
+                    const pagamentoModal = new bootstrap.Modal(
+                      document.getElementById("pagamentoModal")
+                    );
+                    pagamentoModal.show();
+                  });
+
+                  // Adiciona o item ao conteúdo da lista
+                  conteudoExtrato.appendChild(listItem);
+                });
+              } catch (error) {
+                console.error("Erro ao carregar pagamentos: ", error);
+              }
+            } else {
+              alert("Erro ao carregar os pagamentos.");
             }
           },
           error: function (error) {
