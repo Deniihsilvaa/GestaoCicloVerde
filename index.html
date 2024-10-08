@@ -3442,11 +3442,17 @@
                   </p>
                   <p><strong>Situação:</strong> <span id="situacao"></span></p>
                   <p>
-                    <strong>Arquivo:</strong>
+                    <strong>Comprovante:</strong>
                     <a id="linkArquivo" href="#" target="_blank">
                       <i id="iconArquivo" class="bi bi-archive-fill"></i>
                     </a>
                   </p>
+                </p>
+                <strong>Documento:</strong>
+                <a id="linkArquivoComprovante" href="#" target="_blank">
+                  <i id="iconArquivoComprovante" class="bi bi-archive-fill"></i>
+                </a>
+              </p>
                 </div>
               </div>
             </div>
@@ -4110,7 +4116,7 @@
           }
         } else {
           // Se não houver dados de usuário no localStorage, redirecione para a página de login
-          console.log("Usuário não autenticado", 2);
+          mostrarAlerta("Usuário não autenticado", 2);
           desativarAccodion();
         }
       }
@@ -5502,7 +5508,6 @@
             valor: input.value, // Pega o valor do input
           });
         });
-        console.log("Dados que serao salvos", dadosArray);
 
         let mod = "new";
         $.ajax({
@@ -5560,7 +5565,6 @@
             valor: input.value, // Pega o valor do input
           });
         });
-        console.log("Dados que Editado salvos", dadosArray);
 
         let mod = "edit";
         $.ajax({
@@ -5638,7 +5642,6 @@
                     "rounded"
                   );
                   cardTitle.textContent = `Tarefa: ${dado.tarefaAgendamentoSl}`;
-                  console.log(`Tarefa: ${dado.tarefaAgendamentoSl}`);
                   cardTitle.style.color =
                     dado.situcaoAgendamentoSL === "Pendente" ? "red" : "green";
 
@@ -5667,7 +5670,6 @@
 
                 // Preencher os containers com as tarefas
                 response.dados.forEach((dado) => {
-                  console.log(dado);
                   const card = createCard(dado);
                   if (dado.situcaoAgendamentoSL === "Pendente") {
                     pendenteContainer.appendChild(card);
@@ -5891,7 +5893,6 @@
           },
           success: function (response) {
             esconderSpinner();
-            console.log(response);
             if (response.situacao) {
               mostrarAlerta(response.mensagem, 1); // Exibe sucesso
             } else {
@@ -5995,7 +5996,6 @@
         if (userData) {
           user = userData.nome; // Removi o 'let' para não redeclarar a variável
         }
-        console.log(user);
         mostrarSpinner();
         $.ajax({
           type: "POST",
@@ -6009,7 +6009,6 @@
             if (response.situacao) {
               let colaboradores = response.colaboradores;
               try {
-                console.log("response", response);
                 // Verifica se a lista de colaboradores não está vazia
                 if (!colaboradores || colaboradores.length === 0) {
                   console.warn("Nenhum colaborador encontrado.");
@@ -6076,7 +6075,6 @@
         let userId = userData.id;
         let nivel = userData.nivel;
 
-        console.log("User ID:", userId);
         mostrarSpinner();
 
         $.ajax({
@@ -6089,7 +6087,6 @@
           },
           success: function (response) {
             esconderSpinner();
-            console.log("response", response);
 
             if (response.situacao) {
               let pagamentos = response.colaboradores;
@@ -6150,7 +6147,6 @@
                     const iconElement = document.getElementById("iconArquivo");
                     iconArquivo;
                     if (pagamento.link) {
-                      console.log("Link PG:", pagamento.link);
                       // Se houver link, ativa o ícone e permite clicar para abrir em nova aba
                       iconElement.style.color = "blue"; // Cor do ícone ativo
                       arquivoElement.classList.remove("disabled"); // Remove estado de desabilitado
@@ -6167,6 +6163,25 @@
                       arquivoElement.href = "#";
                       arquivoElement.removeAttribute("target"); // Adiciona estado de desabilitado
                       arquivoElement.ariaDisabled = "true";
+                    }
+                    
+
+                    const arquivoElementCompr =
+                      document.getElementById("linkArquivoComprovante");
+                    const iconElementCompr = document.getElementById("iconArquivoComprovante");
+
+                    if (pagamento.linkHolerite) {
+                      // Se houver link, ativa o ícone e permite clicar para abrir em nova aba
+                      iconElementCompr.style.color = "blue"; // Cor do ícone ativo
+                      arquivoElementCompr.classList.remove("disabled"); // Remove estado de desabilitado
+                      arquivoElementCompr.href = pagamento.linkHolerite;
+                      arquivoElementCompr.target = "_blank";
+                    } else {
+                      // Se não houver link, desabilita o ícone e o link
+                      iconElementCompr.style.color = "gray"; // Cor do ícone desativado
+                      arquivoElementCompr.href = "#";
+                      arquivoElementCompr.removeAttribute("target"); // Adiciona estado de desabilitado
+                      arquivoElementCompr.ariaDisabled = "true";
                     }
 
                     // Abre o modal de pagamento
@@ -6216,7 +6231,6 @@
         let userId = userData.id;
         let nivel = userData.nivel;
 
-        console.log("User ID:", userId);
         mostrarSpinner();
 
         $.ajax({
@@ -6229,7 +6243,6 @@
           },
           success: function (response) {
             esconderSpinner();
-            console.log("response", response);
 
             if (response.situacao) {
               let pagamentos = response.colaboradores;
@@ -6295,7 +6308,6 @@
                     );
                     linkArquivoMarcacao;
                     if (pagamento.link) {
-                      console.log("Link PG:", pagamento.link);
                       // Se houver link, ativa o ícone e permite clicar para abrir em nova aba
                       iconElement.style.color = "blue"; // Cor do ícone ativo
                       arquivoElement.classList.remove("disabled"); // Remove estado de desabilitado
@@ -6323,10 +6335,7 @@
                 console.error("Erro ao carregar pagamentos: ", error);
               }
             } else {
-              mostrarAlerta(
-                "Erro ao carregar os pagamentos. Verificar com o RH",
-                2
-              );
+              mostrarAlerta("Erro ao carregar os pagamentos. Verificar com o RH",2);
             }
           },
           error: function (error) {
