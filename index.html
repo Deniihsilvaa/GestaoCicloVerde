@@ -318,12 +318,15 @@
       @media (max-width: 400px) {
         #ladoDireito {
           height: 100vh;
-          max-width: 93vw;
+          max-width: 98vw;
         }
 
         #ladoEsquerdo {
           /* height: 50vh; */
           width: 100%;
+        }
+        html {
+          scroll-behavior: smooth;
         }
 
         div#accordion {
@@ -474,6 +477,30 @@
       }
       div#ladoDireito {
         width: 98vw;
+        padding-left: 1.1rem;
+      }
+      /* Estilo para a logo */
+      .navbar-logo {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .logo-img {
+        max-width: 150px; /* Tamanho máximo da logo */
+        height: auto;
+        transition: transform 0.3s ease; /* Animação suave */
+      }
+
+      .logo-img:hover {
+        transform: scale(1.1); /* Efeito de hover para aumentar a logo */
+      }
+
+      /* Estilos adicionais para responsividade */
+      @media (max-width: 768px) {
+        .logo-img {
+          max-width: 120px; /* Reduz o tamanho da logo em telas menores */
+        }
       }
     </style>
   </head>
@@ -485,7 +512,9 @@
         class="container-fluid shadow w-100 p-3 mb-1 bg-body rounded"
       >
         <nav class="navbar navbar-expand-lg bg-body-tertiary">
-          <div class="container-fluid">
+          <div
+            class="container-fluid d-flex justify-content-between align-items-center"
+          >
             <!-- Botão para abrir o Offcanvas -->
             <a
               class="btn"
@@ -497,34 +526,17 @@
             >
               <span class="material-icons outlined">menu</span>
             </a>
-            <!-- <button
-              class="navbar-toggler"
-              type="button"
-              data-bs-toggle="collapse"
-              data-bs-target="#navbarSupportedContent"
-              aria-controls="navbarSupportedContent"
-              aria-expanded="false"
-              aria-label="Toggle navigation"
-            >
-              <span class="navbar-toggler-icon"></span>
-            </button> -->
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-              <ul class="navbar-nav me-auto mb-2 mb-lg-0"></ul>
-              <!-- <form class="d-flex" role="search">
-                <input
-                  class="form-control me-2"
-                  type="search"
-                  placeholder="Search"
-                  aria-label="Search"
-                />
-                <button class="btn btn-outline-success" type="submit">
-                  Search
-                </button>
-              </form> -->
+
+            <!-- Logo no centro -->
+            <div class="navbar-logo mx-auto">
+              <a href="#">
+                <img src="./img/logo.jpg" class="logo-img" alt="Logo" />
+              </a>
             </div>
 
+            <!-- Botão de logout -->
             <a class="btn" type="button" onclick="chamarLogout()">
-              <span class="material-icons"></span>
+              <span class="material-icons">logout</span>
             </a>
           </div>
         </nav>
@@ -3377,7 +3389,11 @@
         </template>
 
         <template id="areaColaborador">
-          <div id="conteudoAprese"></div>
+          <div class="card w-100">
+            <div class="card-body">
+              <h3>Area Colaborador - Ciclo Verde</h3>
+            </div>
+          </div>
         </template>
         <!-- Template do Extrato de Pagamento -->
         <template id="extratoPagamento">
@@ -3429,6 +3445,72 @@
                     <strong>Arquivo:</strong>
                     <a id="linkArquivo" href="#" target="_blank">
                       <i id="iconArquivo" class="bi bi-archive-fill"></i>
+                    </a>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </template>
+        <!-- Template do Extrato de Pagamento -->
+        <template id="extratoPontosMarcacao">
+          <div class="card w-100">
+            <h1 class="card-header">Marcação de ponto</h1>
+            <div class="card-body">
+              <ul id="conteudoMarcacaoDePontos" class="list-group"></ul>
+            </div>
+          </div>
+
+          <!-- Modal para Exibir Detalhes do Pagamento -->
+          <div
+            class="modal fade"
+            id="extratoMarcacaoModal"
+            tabindex="-1"
+            aria-labelledby="marcacaoModalLabel"
+            aria-hidden="true"
+          >
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="marcacaoModalLabel">
+                    Detalhes do Marcacao
+                  </h5>
+                  <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                  ></button>
+                </div>
+                <div class="modal-body">
+                  <p>
+                    <strong>Colaborador:</strong>
+                    <span id="colaboradorMarcacao"></span>
+                  </p>
+                  <p>
+                    <strong>Data:</strong>
+                    <span id="dataMarcacao"></span>
+                  </p>
+                  <p>
+                    <strong>Horas Trabalhadas:</strong>
+                    <span id="totaldeHorasTrabalhadasMarcacao"></span>
+                  </p>
+                  <p>
+                    <strong>Horas Saída:</strong>
+                    <span id="totaldehorasSaidasMarcacao"></span>
+                  </p>
+                  <p>
+                    <strong>Horas Extra:</strong>
+                    <span id="totalDehorasExtrasMarcacao"></span>
+                  </p>
+
+                  <p>
+                    <strong>Arquivo:</strong>
+                    <a id="linkArquivoMarcacao" href="#" target="_blank">
+                      <i
+                        id="iconArquivoMarcacao"
+                        class="bi bi-archive-fill"
+                      ></i>
                     </a>
                   </p>
                 </div>
@@ -3690,6 +3772,16 @@
               <span class="material-symbols-outlined">view_agenda</span>
               Extrato de Adiantamento
             </button>
+            <!-- Card 3 -->
+            <button
+              type="button"
+              class="btn btn-secondary"
+              name="extratoPontosMarcacao"
+              onclick="chamaTemplate(this.name)"
+            >
+              <span class="material-symbols-outlined">view_agenda</span>
+              Marcação de Ponto
+            </button>
 
             <!-- Card 4 -->
             <button
@@ -3791,11 +3883,14 @@
         const formularioID = inserirTemplate(pagina, x);
         if (!formularioID) return;
 
-        // const formularioID = inserirTemplate(pagina);
-        // const offcanvas = bootstrap.Offcanvas.getInstance(
-        //   document.getElementById("offcanvasMenu")
-        // );
-        // offcanvas.hide(); // Fecha o offcanvas após selecionar
+        const offcanvasElement = document.getElementById("offcanvasMenu");
+        if (offcanvasElement) {
+          const offcanvas = bootstrap.Offcanvas.getInstance(offcanvasElement);
+          if (offcanvas) {
+            offcanvas.hide(); // Fecha o offcanvas após selecionar
+          }
+        }
+
         // mostrarAlerta(`pagina==>: ${pagina}`,3)
         switch (pagina) {
           case "registrosDOC":
@@ -3852,6 +3947,9 @@
           case "extratoPagamento":
             carregarFichaPagamentos();
 
+            break;
+          case "extratoPontosMarcacao":
+            carregaFichaDeMarcacao();
             break;
 
           default:
@@ -6085,7 +6183,10 @@
                 console.error("Erro ao carregar pagamentos: ", error);
               }
             } else {
-              alert("Erro ao carregar os pagamentos.");
+              mostrarAlerta(
+                "Erro ao carregar os pagamentos. Verificar com o RH",
+                2
+              );
             }
           },
           error: function (error) {
@@ -6094,6 +6195,7 @@
           },
         });
       }
+
       // Função para fechar o PDF dentro do iframe
       function fecharPDFPG() {
         const pdfContainer = document.getElementById("pdfContainer");
@@ -6102,6 +6204,139 @@
         pdfIframe.src = ""; // Limpa o conteúdo do iframe
       }
     </script>
+    <script>
+      function carregaFichaDeMarcacao() {
+        let userData = JSON.parse(localStorage.getItem("usuarioLogado"));
+
+        if (!userData) {
+          console.error("ID de usuário não encontrado no localStorage.");
+          return;
+        }
+
+        let userId = userData.id;
+        let nivel = userData.nivel;
+
+        console.log("User ID:", userId);
+        mostrarSpinner();
+
+        $.ajax({
+          type: "POST",
+          url: urlAjax,
+          data: {
+            qualFuncao: "carregaFichaDeMarcacao",
+            dados: userId,
+            nivel: nivel,
+          },
+          success: function (response) {
+            esconderSpinner();
+            console.log("response", response);
+
+            if (response.situacao) {
+              let pagamentos = response.colaboradores;
+
+              try {
+                if (!pagamentos || pagamentos.length === 0) {
+                  console.warn("Nenhum pagamento encontrado.");
+                  return;
+                }
+
+                const conteudoExtrato = document.getElementById(
+                  "conteudoMarcacaoDePontos"
+                );
+
+                if (!conteudoExtrato) {
+                  console.error(
+                    "Elemento com ID 'conteudoMarcacaoDePontos' não encontrado."
+                  );
+                  return;
+                }
+
+                conteudoExtrato.innerHTML = ""; // Limpa a lista de pagamentos
+
+                pagamentos.forEach((pagamento, index) => {
+                  const listItem = document.createElement("a");
+                  listItem.href = "#";
+                  listItem.classList.add(
+                    "list-group-item",
+                    "list-group-item-action"
+                  );
+
+                  // Cria o conteúdo do item
+                  listItem.innerHTML = `
+              <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1">${pagamento.colaborador}</h5>
+                <small class="text-body-secondary">${pagamento.data}</small>
+              </div>
+              <p class="mb-1"> Data de Fechamento:${pagamento.dataFechamento}</p>
+              <p class="mb-1">Nº de Documento:#${pagamento.idDoc}</p>
+              <small class="text-body-secondary">Situação:${pagamento.situacao}</small>
+            `;
+                  // Função para abrir o modal e inserir as informações
+                  listItem.addEventListener("click", () => {
+                    document.getElementById("colaboradorMarcacao").textContent =
+                      pagamento.colaborador;
+                    document.getElementById("dataMarcacao").textContent =
+                      pagamento.data;
+                    document.getElementById(
+                      "totaldeHorasTrabalhadasMarcacao"
+                    ).textContent = pagamento.totalHorasTrab;
+                    document.getElementById(
+                      "totaldehorasSaidasMarcacao"
+                    ).textContent = pagamento.totalSaida;
+                    document.getElementById(
+                      "totalDehorasExtrasMarcacao"
+                    ).textContent = pagamento.horasExtra;
+
+                    const arquivoElement = document.getElementById(
+                      "linkArquivoMarcacao"
+                    );
+                    const iconElement = document.getElementById(
+                      "linkArquivoMarcacao"
+                    );
+                    linkArquivoMarcacao;
+                    if (pagamento.link) {
+                      console.log("Link PG:", pagamento.link);
+                      // Se houver link, ativa o ícone e permite clicar para abrir em nova aba
+                      iconElement.style.color = "blue"; // Cor do ícone ativo
+                      arquivoElement.classList.remove("disabled"); // Remove estado de desabilitado
+                      arquivoElement.href = pagamento.link;
+                      arquivoElement.target = "_blank";
+                    } else {
+                      // Se não houver link, desabilita o ícone e o link
+                      iconElement.style.color = "gray"; // Cor do ícone desativado
+                      arquivoElement.href = "#";
+                      arquivoElement.removeAttribute("target"); // Adiciona estado de desabilitado
+                      arquivoElement.ariaDisabled = "true";
+                    }
+
+                    // Abre o modal de pagamento
+                    const extratoMarcacaoModal = new bootstrap.Modal(
+                      document.getElementById("extratoMarcacaoModal")
+                    );
+                    extratoMarcacaoModal.show();
+                  });
+
+                  // Adiciona o item ao conteúdo da lista
+                  conteudoExtrato.appendChild(listItem);
+                });
+              } catch (error) {
+                console.error("Erro ao carregar pagamentos: ", error);
+              }
+            } else {
+              mostrarAlerta(
+                "Erro ao carregar os pagamentos. Verificar com o RH",
+                2
+              );
+            }
+          },
+          error: function (error) {
+            esconderSpinner();
+            console.error("Erro na requisição AJAX:", error);
+          },
+        });
+      }
+    </script>
+
     <!-- Fazer teste -->
     <script>
       // TODO Fazer Teste
