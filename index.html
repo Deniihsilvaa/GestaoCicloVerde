@@ -3447,12 +3447,15 @@
                       <i id="iconArquivo" class="bi bi-archive-fill"></i>
                     </a>
                   </p>
-                </p>
-                <strong>Documento:</strong>
-                <a id="linkArquivoComprovante" href="#" target="_blank">
-                  <i id="iconArquivoComprovante" class="bi bi-archive-fill"></i>
-                </a>
-              </p>
+                  <p>
+                    <strong>Documento:</strong>
+                    <a id="linkArquivoComprovante" href="#" target="_blank">
+                      <i
+                        id="iconArquivoComprovante"
+                        class="bi bi-archive-fill"
+                      ></i>
+                    </a>
+                  </p>
                 </div>
               </div>
             </div>
@@ -3879,13 +3882,9 @@
       };
 
       function chamaTemplate(pagina) {
-        let x;
-        if (pagina === "car-logar21") {
-          x = "menuLogin";
-        } else {
-          x = "conteudo";
-        }
-        // mostrarAlerta(pagina,1)
+        let x = "conteudo";
+
+        // mostrarAlerta(pagina, 1);
         const formularioID = inserirTemplate(pagina, x);
         if (!formularioID) return;
 
@@ -3953,6 +3952,9 @@
           case "extratoPagamento":
             carregarFichaPagamentos();
 
+            break;
+          case "extratoPontosMarcacao":
+            carregaFichaDeMarcacao();
             break;
           case "extratoPontosMarcacao":
             carregaFichaDeMarcacao();
@@ -4127,7 +4129,7 @@
         chamaTemplate("car-logar");
         document.getElementById("barTop").style.display = "none";
       }
-      controlarExibicaoAccordion();
+      // controlarExibicaoAccordion();
     </script>
     <script id="CadastroDeColaborador">
       /////////////////////////////////Registro de colaborador////////////////////////////////////////////
@@ -6164,11 +6166,13 @@
                       arquivoElement.removeAttribute("target"); // Adiciona estado de desabilitado
                       arquivoElement.ariaDisabled = "true";
                     }
-                    
 
-                    const arquivoElementCompr =
-                      document.getElementById("linkArquivoComprovante");
-                    const iconElementCompr = document.getElementById("iconArquivoComprovante");
+                    const arquivoElementCompr = document.getElementById(
+                      "linkArquivoComprovante"
+                    );
+                    const iconElementCompr = document.getElementById(
+                      "iconArquivoComprovante"
+                    );
 
                     if (pagamento.linkHolerite) {
                       // Se houver link, ativa o ícone e permite clicar para abrir em nova aba
@@ -6335,7 +6339,10 @@
                 console.error("Erro ao carregar pagamentos: ", error);
               }
             } else {
-              mostrarAlerta("Erro ao carregar os pagamentos. Verificar com o RH",2);
+              mostrarAlerta(
+                "Erro ao carregar os pagamentos. Verificar com o RH",
+                2
+              );
             }
           },
           error: function (error) {
@@ -6349,7 +6356,8 @@
     <!-- Fazer teste -->
     <script>
       // TODO Fazer Teste
-      // chamaTemplate("extratoPagamento");
+      // chamaTemplate("car-logar");
+      controlarExibicaoAccordion();
     </script>
   </body>
 </html>
