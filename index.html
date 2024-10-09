@@ -5135,7 +5135,7 @@
             qualFuncao: "carregarPGVT",
           },
           success: function (response) {
-            console.log("response=>", response);
+            // console.log("response=>", response);
             esconderSpinner();
             if (response.situacao) {
               try {
@@ -5213,7 +5213,7 @@
 
           // Obtém a linha (tr) que contém o botão clicado
           const row = button.closest("tr");
-          console.log(row);
+          // console.log(row);
           // Verifica se a linha foi encontrada
           if (!row) {
             throw new Error("Linha não encontrada");
@@ -5253,7 +5253,7 @@
             dataPagamento.value = data;
 
             // Log dos valores
-            console.log({ id, nome, cartao, meio, valor, data });
+            // console.log({ id, nome, cartao, meio, valor, data });
           } else {
             throw new Error("Número insuficiente de células na linha.");
           }
@@ -5341,8 +5341,8 @@
           },
           success: function (response) {
             esconderSpinner();
-            console.log(response);
-            console.log(JSON.stringify(response));
+            // console.log(response);
+            // console.log(JSON.stringify(response));
             if (response.situacao) {
               try {
                 // Limpar tabela antes de preencher
@@ -6005,7 +6005,7 @@
         let userData = JSON.parse(localStorage.getItem("usuarioLogado"));
 
         if (userData) {
-          user = userData.nome; // Removi o 'let' para não redeclarar a variável
+          user = userData.id; // Removi o 'let' para não redeclarar a variável
         }
         mostrarSpinner();
         $.ajax({
@@ -6044,11 +6044,8 @@
                   const button = document.createElement("button");
                   button.type = "button";
                   button.className = "list-group-item list-group-item-action ";
-                  button.textContent = `Nome: ${colab.nome}  CPF: ${colab.cpf}`;
-
-                  button.name = colab.id;
-
-                  // Atribui o evento de clique para abrir o PDF
+                  button.textContent = `Nome: ${colab.nome}  CPF: ${colab.cpf}  Nº Documento: ${colab.idDoc}`;
+                  button.name = colab.id; // Atribui o evento de clique para abrir o PDF
                   button.onclick = function () {
                     abrirFichaRegistroPDF(colab.link);
                   };
@@ -6377,8 +6374,8 @@
           conteudoAreaColaborador.innerHTML = `
           <div class="card">
             <div class="card-body">
-              <h5 class="card-title">Bem vindo, ${nome}</h5>
-              <p class="card-text">Aqui ficam as informações do colaborador</p>
+              <h5 class="card-title">Ola! ${nome}</h5>
+              <p class="card-text">Abaixo possui alguns links para te auxiliar na suas opções</p>
               <div class="list-group">
                 <a href="#" class="list-group-item list-group-item-action list-group-item-success" onclick="chamaTemplate('templatefichaDeregistros')">Ficha de Registro</a>
                 <a href="#" class="list-group-item list-group-item-action list-group-item-success" onclick="chamaTemplate('extratoPagamento')">Extrato de Pagamentos</a>
