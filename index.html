@@ -529,7 +529,7 @@
 
             <!-- Logo no centro -->
             <div class="navbar-logo mx-auto">
-              <a href="#">
+              <a href="#" onclick="chamaTemplate('areaColaborador')">
                 <img src="./img/logo.jpg" class="logo-img" alt="Logo" />
               </a>
             </div>
@@ -550,44 +550,41 @@
             <div class="card-body text-dark">
               <div id="login" class="w-100 p-5 bg-body-tertiary rounded">
                 <div class="text-center">
-
-                <!-- Adicione a logo aqui -->
-                <img src="./img/logo.jpg" class="logo-img mb-4" alt="Logo" />
-                <div class="div-login">
-                  <label for="input-user-login" class="input-group-text"
-                    >Login</label
-                  >
-                  <input
-                    id="input-user-login"
-                    type="text"
-                    placeholder="User"
-                    class="form-control"
-                  />
+                  <!-- Adicione a logo aqui -->
+                  <img src="./img/logo.jpg" class="logo-img mb-4" alt="Logo" />
+                  <div class="div-login">
+                    <label for="input-user-login" class="input-group-text"
+                      >Login</label
+                    >
+                    <input
+                      id="input-user-login"
+                      type="text"
+                      placeholder="User"
+                      class="form-control"
+                    />
+                  </div>
+                  <div class="div-login">
+                    <label for="input-senha-login" class="input-group-text"
+                      >Senha</label
+                    >
+                    <input
+                      id="input-senha-login"
+                      type="password"
+                      class="form-control"
+                      placeholder="Digite sua senha"
+                    />
+                  </div>
+                  <div class="div-login">
+                    <button
+                      class="btt"
+                      id="btt-login"
+                      type="button"
+                      onclick="chamarLogin()"
+                    >
+                      <span class="material-symbols-outlined">login</span>Login
+                    </button>
+                  </div>
                 </div>
-                <div class="div-login">
-                  <label for="input-senha-login" class="input-group-text"
-                    >Senha</label
-                  >
-                  <input
-                    id="input-senha-login"
-                    type="password"
-                    class="form-control"
-                    placeholder="Digite sua senha"
-                  />
-                </div>
-                <div class="div-login">
-                  <button
-                    class="btt"
-                    id="btt-login"
-                    type="button"
-                    onclick="chamarLogin()"
-                  >
-                    <span class="material-symbols-outlined">login</span>Login
-                  </button>
-                </div>
-              </div>
-
-              </div>
               </div>
             </div>
           </div>
@@ -3399,6 +3396,7 @@
           <div class="card w-100">
             <div class="card-body">
               <h3>Area Colaborador - Ciclo Verde</h3>
+              <div id="conteudoAreaColaborador"></div>
             </div>
           </div>
         </template>
@@ -3967,6 +3965,9 @@
             carregaFichaDeMarcacao();
             break;
 
+          case "areaColaborador":
+            carregarMenuAreaColaborador();
+            break;
           default:
             break;
         }
@@ -6131,11 +6132,11 @@
                   listItem.innerHTML = `
               <div class="d-flex w-100 justify-content-between">
                 <h5 class="mb-1">${pagamento.colaborador}</h5>
-                <small class="text-body-secondary">${pagamento.dataPagamento}</small>
+                <small class="text-body-secondary">${pagamento.data}</small>
               </div>
               <p class="mb-1">${pagamento.descricao}</p>
               <p class="mb-1">Nº de Documento:#${pagamento.idDoc}</p>
-              <small class="text-body-secondary">Valor Pago:R$ ${pagamento.valordePagamento} Situação:${pagamento.situacao}</small>
+              <small class="text-body-secondary">Valor Pago:R$ ${pagamento.valordePagamento} || Situação:${pagamento.situacao}</small>
             `;
 
                   // Função para abrir o modal e inserir as informações
@@ -6359,7 +6360,41 @@
         });
       }
     </script>
+    <script id="MenuInicialColaborador">
+      function carregarMenuAreaColaborador() {
+        let userData = JSON.parse(localStorage.getItem("usuarioLogado"));
 
+        if (!userData) {
+          console.error("ID de usuário não encontrado no localStorage.");
+          return;
+        }
+        let nome = userData.nome;
+        let conteudoAreaColaborador = document.getElementById(
+          "conteudoAreaColaborador"
+        );
+        if (conteudoAreaColaborador) {
+          conteudoAreaColaborador.innerHTML = `
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Bem vindo, ${nome}</h5>
+              <p class="card-text">Aqui ficam as informações do colaborador</p>
+              <div class="list-group">
+                <a href="#" class="list-group-item list-group-item-action list-group-item-success" onclick="chamaTemplate('templatefichaDeregistros')">Ficha de Registro</a>
+                <a href="#" class="list-group-item list-group-item-action list-group-item-success" onclick="chamaTemplate('extratoPagamento')">Extrato de Pagamentos</a>
+                <a href="#" class="list-group-item list-group-item-action list-group-item-success" onclick="chamaTemplate('extratoPontosMarcacao')">Extrato de marcação de pontos</a>
+                </div>
+
+
+              
+              
+            </div>
+          </div>
+        `;
+        } else {
+          console.error("Elemento 'conteudoAreaColaborador' não encontrado");
+        }
+      }
+    </script>
     <!-- Fazer teste -->
     <script>
       // TODO Fazer Teste
