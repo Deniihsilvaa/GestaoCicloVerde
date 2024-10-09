@@ -284,8 +284,8 @@
 
       div#login {
         display: flex;
-        flex-flow: column wrap;
-        gap: 1.8rem;
+        flex-flow: column nowrap;
+        /* gap: 1.8rem; */
         width: 19vw;
         height: 70vh;
         justify-content: center;
@@ -352,17 +352,16 @@
           font-size: 1.2rem;
           text-align: justify;
           border: none;
-          height: 66vh;
+          max-width: 66vh;
         }
 
         div#login {
           display: flex;
-          flex-flow: column wrap;
-          gap: 1.2rem;
+          flex-flow: column nowrap;
+          /* gap: 1.2rem; */
           justify-content: center;
           margin-top: 2rem;
           width: 100%;
-          height: 51vh;
         }
       }
 
@@ -546,49 +545,51 @@
         <div id="conteudo"></div>
 
         <template id="car-logar">
-          <div class="card loginstilo cardlogar shadow">
+          <div class="card loginstilo cardlogar shadow-lg border-0">
             <div class="card-body text-dark">
-              <div id="login" class="w-100 p-5 bg-body-tertiary rounded">
-                <div class="text-center">
-                  <!-- Adicione a logo aqui -->
-                  <img src="./img/logo.jpg" class="logo-img mb-4" alt="Logo" />
-                  <div class="div-login">
-                    <label for="input-user-login" class="input-group-text"
-                      >Login</label
-                    >
-                    <input
-                      id="input-user-login"
-                      type="text"
-                      placeholder="User"
-                      class="form-control"
-                    />
-                  </div>
-                  <div class="div-login">
-                    <label for="input-senha-login" class="input-group-text"
-                      >Senha</label
-                    >
-                    <input
-                      id="input-senha-login"
-                      type="password"
-                      class="form-control"
-                      placeholder="Digite sua senha"
-                    />
-                  </div>
-                  <div class="div-login">
-                    <button
-                      class="btt"
-                      id="btt-login"
-                      type="button"
-                      onclick="chamarLogin()"
-                    >
-                      <span class="material-symbols-outlined">login</span>Login
-                    </button>
-                  </div>
+              <div id="login" class="w-100 p-4 bg-body-tertiary rounded">
+                <div class="text-center mb-4">
+                  <img
+                    src="./img/logo.jpg"
+                    class="logo-img mb-3 img-fluid"
+                    alt="Logo"
+                  />
+                </div>
+                <div class="mb-3">
+                  <label for="input-user-login" class="form-label">Login</label>
+                  <input
+                    id="input-user-login"
+                    type="text"
+                    placeholder="Usuário"
+                    class="form-control"
+                  />
+                </div>
+                <div class="mb-4">
+                  <label for="input-senha-login" class="form-label"
+                    >Senha</label
+                  >
+                  <input
+                    id="input-senha-login"
+                    type="password"
+                    class="form-control"
+                    placeholder="Digite sua senha"
+                  />
+                </div>
+                <div class="mb-4">
+                  <button
+                    class="btn btn-primary w-100 py-2"
+                    id="btt-login"
+                    type="button"
+                    onclick="chamarLogin()"
+                  >
+                    <span class="material-symbols-outlined">login</span> Login
+                  </button>
                 </div>
               </div>
             </div>
           </div>
         </template>
+
         <template id="menuInicial">
           <div class="card">
             <h1>Menu inicial</h1>
