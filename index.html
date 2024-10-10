@@ -6017,6 +6017,7 @@
           },
           success: function (response) {
             esconderSpinner();
+            console.log(response);
             if (response.situacao) {
               let colaboradores = response.colaboradores;
               try {
