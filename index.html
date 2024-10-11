@@ -143,7 +143,7 @@
         color: #070606;
         padding: 1em;
         text-align: center;
-        width: 97vw;
+        flex-flow: column;
       }
 
       #ladoEsquerdo {
@@ -335,7 +335,7 @@
         }
 
         #superBody {
-          grid-template-columns: 1fr;
+          /* grid-template-columns: 1fr; */
           grid-template-rows: 1fr auto;
           height: 100vh;
           width: 100%;
@@ -494,6 +494,28 @@
       .logo-img:hover {
         transform: scale(1.1); /* Efeito de hover para aumentar a logo */
       }
+      /* Estilização do botão flutuante */
+      .feedback-btn {
+        position: fixed;
+        bottom: 3em;
+        right: 20px;
+        border-radius: 50%;
+        width: 60px;
+        height: 60px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        z-index: 1000;
+        transition: transform 0.3s ease;
+      }
+      .feedback-btn:hover {
+        transform: scale(1.1); /* Efeito de hover para aumentar a logo */
+      }
+
+      .feedback-btn .material-icons {
+        font-size: 24px;
+      }
 
       /* Estilos adicionais para responsividade */
       @media (max-width: 768px) {
@@ -506,10 +528,7 @@
 
   <body>
     <div id="superBody">
-      <div
-        id="barTop"
-        class="container-fluid shadow w-100 p-3 mb-1 bg-body rounded"
-      >
+      <div id="barTop" class="container-fluid shadow w-100">
         <nav class="navbar navbar-expand-lg bg-body-tertiary">
           <div
             class="container-fluid d-flex justify-content-between align-items-center"
@@ -539,6 +558,72 @@
             </a>
           </div>
         </nav>
+      </div>
+
+      <!-- Botão flutuante para abrir o modal de feedback -->
+      <button
+        class="btn btn-primary feedback-btn"
+        type="button"
+        data-bs-toggle="modal"
+        data-bs-target="#feedbackModal"
+      >
+        <span class="material-icons">feedback</span>
+      </button>
+
+      <!-- Modal de Feedback -->
+      <div
+        class="modal fade"
+        id="feedbackModal"
+        tabindex="-1"
+        aria-labelledby="feedbackModalLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="feedbackModalLabel">
+                Envie seu Feedback
+              </h5>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body">
+              <form id="feedbackForm">
+                <div class="mb-3">
+                  <label for="feedbackTextarea" class="form-label"
+                    >Sua solicitação</label
+                  >
+                  <textarea
+                    class="form-control"
+                    id="feedbackTextarea"
+                    rows="3"
+                    placeholder="Digite seu feedback"
+                  ></textarea>
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >
+                Fechar
+              </button>
+              <button
+                type="button"
+                class="btn btn-primary"
+                onclick="enviarFeedback()"
+              >
+                Enviar
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
 
       <div id="ladoDireito">
@@ -6391,6 +6476,53 @@
         } else {
           console.error("Elemento 'conteudoAreaColaborador' não encontrado");
         }
+      }
+    </script>
+    <script id="coletarFedBakc">
+      function enviarFeedback() {
+        let userData = JSON.parse(localStorage.getItem("usuarioLogado"));
+
+        if (!userData) {
+          console.error("ID de usuário não encontrado no localStorage.");
+          return;
+        }
+
+        const nome = userData.nome;
+        const idCliente = userData.id;
+        const solicitacao = document.getElementById("feedbackTextarea").value;
+        const dataAtual = new Date().toISOString(); // Pega a data atual no formato ISO
+
+        if (!solicitacao) {
+          mostrarAlerta("Por favor, preencha a solicitação.", 2);
+          return;
+        }
+
+        // Dados que serão enviados
+        const dados = {
+          id: idCliente,
+          nome: nome,
+          solicitacao: solicitacao,
+          data: dataAtual,
+        };
+        mostrarSpinner();
+        // Enviando os dados via AJAX
+        $.ajax({
+          type: "POST",
+          url: urlAjax,
+          data: {
+            qualFuncao: "salvarDadosFeedBack",
+            dados: JSON.stringify(dados),
+          },
+          success: function (response) {
+            esconderSpinner();
+            mostrarAlerta(response.mensagem, 1);
+            $("#feedbackModal").modal("hide"); // Fechar o modal após o envio
+          },
+          error: function (error) {
+            esconderSpinner();
+            mostrarAlerta(response.mensagem, 2);
+          },
+        });
       }
     </script>
     <!-- Fazer teste -->
