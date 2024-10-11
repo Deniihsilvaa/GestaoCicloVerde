@@ -551,7 +551,14 @@
                 <img src="./img/logo.jpg" class="logo-img" alt="Logo" />
               </a>
             </div>
-
+            <a
+              class="btn"
+              type="button"
+              name="configGerais"
+              onclick="chamaTemplate(this.name)"
+            >
+              <span class="material-symbols-outlined"> tab </span>
+            </a>
             <!-- Botão de logout -->
             <a class="btn" type="button" onclick="chamarLogout()">
               <span class="material-icons">logout</span>
@@ -674,6 +681,64 @@
             </div>
           </div>
         </template>
+        <template id="configGerais">
+          <div class="card shadow-lg border-0">
+            <div class="card-body text-dark">
+              <div class="container">
+                <div class="row">
+                  <a
+                    type="button"
+                    class="btn btn-primary"
+                    onclick="chamaTemplateGerais('trocarSenha')"
+                    >Trocar Senha</a
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+        </template>
+
+        <!-- Modal EstruturaConfiguração Gerais -->
+        <div
+          class="modal fade"
+          id="configModal"
+          tabindex="-1"
+          aria-labelledby="modalLabel"
+          aria-hidden="true"
+        >
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="modalLabel">Configurações</h5>
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                ></button>
+              </div>
+              <div class="modal-body" id="modalBodyConfiGerais">
+                <!-- O conteúdo do modal será inserido aqui dinamicamente -->
+              </div>
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  data-bs-dismiss="modal"
+                >
+                  Fechar
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-primary"
+                  onclick="submitForm()"
+                >
+                  Salvar
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
 
         <template id="menuInicial">
           <div class="card">
@@ -6521,6 +6586,104 @@
           error: function (error) {
             esconderSpinner();
             mostrarAlerta(response.mensagem, 2);
+          },
+        });
+      }
+    </script>
+    <script id="templateGerais">
+      // Função para carregar o template específico ao clicar nos botões
+      function chamaTemplateGerais(acao) {
+        let userData = JSON.parse(localStorage.getItem("usuarioLogado"));
+
+        if (!userData) {
+          console.error("ID de usuário não encontrado no localStorage.");
+          return;
+        }
+
+        const nomeUsuario = userData.nome;
+        const idCliente = userData.id;
+
+        if (acao === "trocarSenha") {
+          criarFormularioTrocaSenha(nomeUsuario);
+        }
+
+        // Abrir modal
+        let modal = new bootstrap.Modal(document.getElementById("configModal"));
+        modal.show();
+      }
+
+      // Função para criar o formulário de troca de senha
+      function criarFormularioTrocaSenha(nomeUsuario) {
+        // Conteúdo do formulário de troca de senha
+        const formulario = `
+    <form id="trocaSenhaForm">
+      <div class="mb-3">
+        <label class="form-label">Usuário</label>
+        <input type="text" class="form-control" value="${nomeUsuario}" disabled>
+      </div>
+      <div class="mb-3">
+        <label for="senhaAtual" class="form-label">Senha Atual</label>
+        <input type="password" class="form-control" id="senhaAtual" required>
+      </div>
+      <div class="mb-3">
+        <label for="novaSenha" class="form-label">Nova Senha</label>
+        <input type="password" class="form-control" id="novaSenha" required>
+      </div>
+      <div class="mb-3">
+        <label for="confirmarSenha" class="form-label">Confirmar Nova Senha</label>
+        <input type="password" class="form-control" id="confirmarSenha" required>
+      </div>
+    </form>
+  `;
+
+        // Inserir o formulário no modal
+        document.getElementById("modalBodyConfiGerais").innerHTML = formulario;
+      }
+
+      // Função de envio do formulário
+      function submitForm() {
+        mostrarSpinner();
+        const senhaAtual = document.getElementById("senhaAtual").value;
+        const novaSenha = document.getElementById("novaSenha").value;
+        const confirmarSenha = document.getElementById("confirmarSenha").value;
+
+        if (novaSenha !== confirmarSenha) {
+          mostrarAlerta(
+            "As senhas não coincidem. Por favor, tente novamente.",
+            2
+          );
+          return;
+        }
+
+        // Aqui você pode implementar o envio da senha via Ajax, por exemplo.
+        const userData = JSON.parse(localStorage.getItem("usuarioLogado"));
+        const dadosParaEnvio = {
+          id: userData.id,
+          senhaAtual,
+          novaSenha,
+        };
+        console.log(dadosParaEnvio);
+        // Exemplo de envio via AJAX
+        $.ajax({
+          type: "POST",
+          url: urlAjax,
+          data: {
+            qualFuncao: "salvarAtualizacaoDeSenha",
+            dados: JSON.stringify(dadosParaEnvio),
+          },
+          success: function (response) {
+            esconderSpinner();
+            let s = response.situacao;
+            if (s) {
+              mostrarAlerta(response.mensagem, 1);
+              $("#configModal").modal("hide");
+            } else {
+              mostrarAlerta(response.mensagem, 2);
+            }
+          },
+          error: function (error) {
+            esconderSpinner();
+            mostrarAlerta("Erro ao alterar a senha. Tente novamente.", 2);
           },
         });
       }
