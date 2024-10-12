@@ -257,17 +257,20 @@
         0% {
           transform: translate(-50%, -50%) scale(0);
         }
+
         60%,
         100% {
           transform: translate(-50%, -50%) scale(1);
         }
       }
+
       @keyframes pulse {
         0%,
         60%,
         100% {
           transform: scale(1);
         }
+
         80% {
           transform: scale(1.2);
         }
@@ -291,27 +294,32 @@
         justify-content: center;
         margin-top: 2rem;
       }
+
       /* TODO CaixaPDF */
       .caixaPDf {
-        position: fixed; /* Para que a caixa fique fixa sobre a página */
+        position: fixed;
+        /* Para que a caixa fique fixa sobre a página */
         top: 0;
         left: 0;
-        width: 100vw; /* Ocupa a largura total da tela */
-        height: 100vh; /* Ocupa a altura total da tela */
-        background-color: rgba(
-          0,
-          0,
-          0,
-          0.8
-        ); /* Fundo semi-transparente para destacar o PDF */
-        display: none; /* Esconde a caixa inicialmente */
-        z-index: 9999; /* Garante que esteja acima de todos os outros elementos */
+        width: 100vw;
+        /* Ocupa a largura total da tela */
+        height: 100vh;
+        /* Ocupa a altura total da tela */
+        background-color: rgba(0, 0, 0, 0.8);
+        /* Fundo semi-transparente para destacar o PDF */
+        display: none;
+        /* Esconde a caixa inicialmente */
+        z-index: 9999;
+        /* Garante que esteja acima de todos os outros elementos */
       }
 
       .caixaPDf embed {
-        width: 90%; /* Ajusta a largura do PDF */
-        height: 90%; /* Ajusta a altura do PDF */
-        margin: 5% auto; /* Centraliza verticalmente e horizontalmente */
+        width: 90%;
+        /* Ajusta a largura do PDF */
+        height: 90%;
+        /* Ajusta a altura do PDF */
+        margin: 5% auto;
+        /* Centraliza verticalmente e horizontalmente */
         display: block;
       }
 
@@ -325,6 +333,7 @@
           /* height: 50vh; */
           width: 100%;
         }
+
         html {
           scroll-behavior: smooth;
         }
@@ -368,15 +377,18 @@
       barTop {
         display: none;
       }
+
       div#offcanvasMenu {
         max-width: 17rem;
       }
+
       #clock {
         font-size: 24px;
         font-family: Arial, sans-serif;
         font-weight: bold;
         color: #07637a;
       }
+
       .dt-body-nowrap {
         white-space: nowrap;
       }
@@ -386,6 +398,7 @@
         box-shadow: 0 0 5px 0 #07637a;
         transition: 0.5s;
       }
+
       .modal {
         display: none;
         position: fixed;
@@ -417,6 +430,7 @@
         text-decoration: none;
         cursor: pointer;
       }
+
       .carousel-container {
         display: flex;
         align-items: center;
@@ -429,7 +443,8 @@
         overflow-x: auto;
         scroll-behavior: smooth;
         white-space: nowrap;
-        width: calc(100% - 80px); /* Ajuste conforme necessário */
+        width: calc(100% - 80px);
+        /* Ajuste conforme necessário */
       }
 
       .carousel::-webkit-scrollbar {
@@ -451,33 +466,35 @@
       }
 
       .card-body {
-        flex: 0 0 250px; /* Largura fixa dos cards */
-        margin-right: 20px; /* Espaço entre cards */
+        flex: 0 0 250px;
+        /* Largura fixa dos cards */
+        margin-right: 20px;
+        /* Espaço entre cards */
       }
+
       .modal-content {
         width: 20rem;
       }
+
       .alert-overlay {
         position: fixed;
         top: 0;
         left: 0;
         width: 100%;
         height: 100%;
-        background-color: rgba(
-          0,
-          0,
-          0,
-          0.5
-        ); /* Fundo escuro com transparência */
+        background-color: rgba(0, 0, 0, 0.5);
+        /* Fundo escuro com transparência */
         display: flex;
         justify-content: center;
         align-items: center;
         z-index: 9999;
       }
+
       div#ladoDireito {
         width: 98vw;
         padding-left: 1.1rem;
       }
+
       /* Estilo para a logo */
       .navbar-logo {
         display: flex;
@@ -486,16 +503,20 @@
       }
 
       .logo-img {
-        max-width: 150px; /* Tamanho máximo da logo */
+        max-width: 150px;
+        /* Tamanho máximo da logo */
         height: auto;
-        transition: transform 0.3s ease; /* Animação suave */
+        transition: transform 0.3s ease;
+        /* Animação suave */
       }
 
       .logo-img:hover {
-        transform: scale(1.1); /* Efeito de hover para aumentar a logo */
+        transform: scale(1.1);
+        /* Efeito de hover para aumentar a logo */
       }
+
       /* Estilização do botão flutuante */
-      .feedback-btn {
+      #feedback-btn {
         position: fixed;
         bottom: 3em;
         right: 20px;
@@ -509,18 +530,21 @@
         z-index: 1000;
         transition: transform 0.3s ease;
       }
-      .feedback-btn:hover {
-        transform: scale(1.1); /* Efeito de hover para aumentar a logo */
+
+      #feedback-btn:hover {
+        transform: scale(1.1);
+        /* Efeito de hover para aumentar a logo */
       }
 
-      .feedback-btn .material-icons {
+      #feedback-btn .material-icons {
         font-size: 24px;
       }
 
       /* Estilos adicionais para responsividade */
       @media (max-width: 768px) {
         .logo-img {
-          max-width: 120px; /* Reduz o tamanho da logo em telas menores */
+          max-width: 120px;
+          /* Reduz o tamanho da logo em telas menores */
         }
       }
     </style>
@@ -565,72 +589,6 @@
             </a>
           </div>
         </nav>
-      </div>
-
-      <!-- Botão flutuante para abrir o modal de feedback -->
-      <button
-        class="btn btn-primary feedback-btn"
-        type="button"
-        data-bs-toggle="modal"
-        data-bs-target="#feedbackModal"
-      >
-        <span class="material-icons">feedback</span>
-      </button>
-
-      <!-- Modal de Feedback -->
-      <div
-        class="modal fade"
-        id="feedbackModal"
-        tabindex="-1"
-        aria-labelledby="feedbackModalLabel"
-        aria-hidden="true"
-      >
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="feedbackModalLabel">
-                Envie seu Feedback
-              </h5>
-              <button
-                type="button"
-                class="btn-close"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-              ></button>
-            </div>
-            <div class="modal-body">
-              <form id="feedbackForm">
-                <div class="mb-3">
-                  <label for="feedbackTextarea" class="form-label"
-                    >Sua solicitação</label
-                  >
-                  <textarea
-                    class="form-control"
-                    id="feedbackTextarea"
-                    rows="3"
-                    placeholder="Digite seu feedback"
-                  ></textarea>
-                </div>
-              </form>
-            </div>
-            <div class="modal-footer">
-              <button
-                type="button"
-                class="btn btn-secondary"
-                data-bs-dismiss="modal"
-              >
-                Fechar
-              </button>
-              <button
-                type="button"
-                class="btn btn-primary"
-                onclick="enviarFeedback()"
-              >
-                Enviar
-              </button>
-            </div>
-          </div>
-        </div>
       </div>
 
       <div id="ladoDireito">
@@ -697,7 +655,6 @@
             </div>
           </div>
         </template>
-
         <!-- Modal EstruturaConfiguração Gerais -->
         <div
           class="modal fade"
@@ -731,7 +688,7 @@
                 <button
                   type="button"
                   class="btn btn-primary"
-                  onclick="submitForm()"
+                  onclick="submitFormTrocaSenha()"
                 >
                   Salvar
                 </button>
@@ -3683,6 +3640,81 @@
             </div>
           </div>
         </template>
+
+        <!-- Modal de Feedback -->
+        <div
+          class="modal fade"
+          id="feedbackModal"
+          tabindex="-1"
+          aria-labelledby="feedbackModalLabel"
+          aria-hidden="true"
+          style="display: none"
+        >
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="feedbackModalLabel">
+                  Enviar Solicitação
+                </h5>
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                  submit
+                ></button>
+              </div>
+              <div class="modal-body">
+                <div class="form-group">
+                  <label for="tipoDeSolicitacao">Tipo de Solicitação</label>
+                  <select
+                    class="form-control fmrFeedback"
+                    name="tipoDeSolicitacao  "
+                    id="tipoDeSolicitacao"
+                    onchange=" acaoFeedBack(this.id)"
+                  >
+                    <option value="">Selecione o tipo de solicitação</option>
+                    <option value="1">Reclamação</option>
+                    <option value="2">Sugestão</option>
+                    <option value="3">Pergunta Frequentemente</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <div id="conteudoFeedback"></div>
+                </div>
+                <form id="feedbackForm">
+                  <div class="mb-3">
+                    <label for="feedbackTextarea" class="form-label"
+                      >Sua solicitação</label
+                    >
+                    <textarea
+                      class="form-control fmrFeedback"
+                      id="feedbackTextarea"
+                      rows="3"
+                      placeholder="Digite seu feedback"
+                    ></textarea>
+                  </div>
+                </form>
+              </div>
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  data-bs-dismiss="modal"
+                >
+                  Fechar
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-primary"
+                  onclick="enviarFeedback()"
+                >
+                  Enviar
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
       <!-- Alerta -->
       <div id="liveAlertPlaceholder"></div>
@@ -4008,6 +4040,16 @@
         </div>
       </div>
     </div>
+    <!-- Botão flutuante para abrir o modal de feedback -->
+    <button
+      class="btn btn-primary d-none"
+      id="feedback-btn"
+      type="button"
+      data-bs-toggle="modal"
+      data-bs-target="#feedbackModal"
+    >
+      <span class="material-icons">feedback</span>
+    </button>
 
     <script id="MetodoPost">
       let urlAjax =
@@ -4040,7 +4082,6 @@
       function chamaTemplate(pagina) {
         let x = "conteudo";
 
-        // mostrarAlerta(pagina, 1);
         const formularioID = inserirTemplate(pagina, x);
         if (!formularioID) return;
 
@@ -4225,8 +4266,7 @@
           var elemento = document.getElementById("superBody");
 
           if (user && nivelUsuario) {
-            ladoesquerdo.style.display = "flex";
-
+            mostrarBtnFeedback();
             // Se o nível do usuário for 1, exibe todas as seções
             if (nivelUsuario === 1) {
               // Mostrar todos os cabeçalhos
@@ -4251,11 +4291,7 @@
 
               chamaTemplate("areaColaborador");
               bartop.style.display = "flex";
-              // Remove a classe 'grid-template-rows: auto 1fr;'
-              // elemento.style.gridTemplateRows = "";
             } else if (nivelUsuario === 3) {
-              // Se o nível do usuário for 2, exibe apenas "Acesso Colaborador" e "Logout"
-              // Exibir apenas os cabeçalhos desejados
               $("#accordion h3:contains('Acesso Colaborador')").show();
               $("#accordion h3:contains('Logout')").show();
               $("#accordion h3:contains('Supervisao')").show();
@@ -4277,7 +4313,8 @@
           }
         } else {
           // Se não houver dados de usuário no localStorage, redirecione para a página de login
-          mostrarAlerta("Usuário não autenticado", 2);
+          // mostrarAlerta("Usuário não autenticado", 2);
+          esconderBtnFeedback();
           desativarAccodion();
         }
       }
@@ -4505,10 +4542,15 @@
       function mostrarSpinner() {
         document.getElementById("spinner-overlay").classList.remove("d-none");
       }
-
       // Função para esconder o spinner
       function esconderSpinner() {
         document.getElementById("spinner-overlay").classList.add("d-none");
+      }
+      function mostrarBtnFeedback() {
+        document.getElementById("feedback-btn").classList.remove("d-none");
+      }
+      function esconderBtnFeedback() {
+        document.getElementById("feedback-btn").classList.add("d-none");
       }
 
       function carregarColaboradores() {
@@ -4730,6 +4772,21 @@
             console.error("Erro Escala ==>", error);
           },
         });
+      }
+
+      // Função para alternar a visibilidade da senha
+      function togglePasswordVisibility(inputId) {
+        const inputField = document.getElementById(inputId);
+        const icon =
+          inputField.nextElementSibling.querySelector(".material-icons");
+
+        if (inputField.type === "password") {
+          inputField.type = "text";
+          icon.textContent = "visibility_off";
+        } else {
+          inputField.type = "password";
+          icon.textContent = "visibility";
+        }
       }
     </script>
 
@@ -6548,28 +6605,49 @@
         let userData = JSON.parse(localStorage.getItem("usuarioLogado"));
 
         if (!userData) {
-          console.error("ID de usuário não encontrado no localStorage.");
+          console.error("Usuário não encontrado no localStorage.");
           return;
         }
-
         const nome = userData.nome;
         const idCliente = userData.id;
         const solicitacao = document.getElementById("feedbackTextarea").value;
-        const dataAtual = new Date().toISOString(); // Pega a data atual no formato ISO
+        const dataAtual = new Date().toISOString(); // Data atual no formato ISO
+        const tipo = extrairNomefeedBack("tipoDeSolicitacao");
 
+        // Verifica se a solicitação está preenchida
         if (!solicitacao) {
           mostrarAlerta("Por favor, preencha a solicitação.", 2);
           return;
         }
 
+        // Verifica se os checkboxes existem antes de acessar seus estados
+        const mostrarCheckbox = document.getElementById("flexCheckMostrar");
+        const naoMostrarCheckbox = document.getElementById(
+          "flexCheckNaoMostrar"
+        );
+
+        let mostrarIdentificacao = true;
+
+        if (mostrarCheckbox && mostrarCheckbox.checked) {
+          mostrarIdentificacao = true;
+        } else if (naoMostrarCheckbox && naoMostrarCheckbox.checked) {
+          mostrarIdentificacao = false;
+        }
+
+        // Se "Mostrar identificação" estiver marcado, usar o nome do colaborador, caso contrário, "Anônimo"
+        let nomeColaborador = mostrarIdentificacao ? nome : "Anônimo";
+
         // Dados que serão enviados
         const dados = {
           id: idCliente,
-          nome: nome,
+          nome: nomeColaborador, // Usar o nome ou "Anônimo" dependendo do checkbox
           solicitacao: solicitacao,
           data: dataAtual,
+          tipoSolicitcao: tipo,
         };
-        mostrarSpinner();
+
+        mostrarSpinner(); // Mostra o spinner enquanto faz o envio
+
         // Enviando os dados via AJAX
         $.ajax({
           type: "POST",
@@ -6580,14 +6658,86 @@
           },
           success: function (response) {
             esconderSpinner();
-            mostrarAlerta(response.mensagem, 1);
-            $("#feedbackModal").modal("hide"); // Fechar o modal após o envio
+            mostrarAlerta(response.mensagem, 1); // Mostra mensagem de sucesso
+            $("#feedbackModal").modal("hide"); // Fecha o modal após o envio
           },
           error: function (error) {
             esconderSpinner();
-            mostrarAlerta(response.mensagem, 2);
+            mostrarAlerta("Erro ao enviar o feedback. Tente novamente.", 2); // Mostra mensagem de erro
           },
         });
+      }
+      function extrairNomefeedBack(inputId) {
+        // Obtendo o elemento de select pelo ID
+        let selectElement = document.getElementById(inputId);
+
+        // Verificando se o elemento existe no DOM
+        if (!selectElement) {
+          console.error("Elemento não encontrado.");
+          return false;
+        }
+
+        // Capturando o índice da opção selecionada
+        const selectedIndex = selectElement.selectedIndex;
+
+        // Verificando se há uma opção selecionada válida
+        if (selectedIndex === -1) {
+          console.error("Nenhuma opção selecionada.");
+          return false;
+        }
+
+        // Retornando o texto da opção selecionada
+        return selectElement.options[selectedIndex].text;
+      }
+
+      function acaoFeedBack(inputId) {
+        let conteudo = document.getElementById("conteudoFeedback");
+
+        let nomeInput = document.getElementById(inputId);
+
+        // Verificando se o nomeInput existe e capturando o valor corretamente
+        if (!nomeInput) {
+          console.error("Input não encontrado.");
+          return;
+        }
+
+        let select = nomeInput.value;
+
+        // Verifica se o valor do select é 1 (ou o que você deseja usar como critério)
+        if (select === "1") {
+          // Conteúdo HTML dinâmico para o feedback
+          conteudo.innerHTML = `
+      <div class="card">
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" value="mostrar" id="flexCheckMostrar" checked onchange="alternarCheck('mostrar')">
+          <label class="form-check-label" for="flexCheckMostrar">
+            Mostrar identificação
+          </label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" value="naoMostrar" id="flexCheckNaoMostrar" onchange="alternarCheck('naoMostrar')">
+          <label class="form-check-label" for="flexCheckNaoMostrar">
+            Não mostrar identificação
+          </label>
+        </div>
+      </div>
+    `;
+        } else {
+          conteudo.innerHTML = ""; // Limpa o conteúdo caso o valor não seja '1'
+        }
+      }
+
+      // Função para alternar a seleção dos checkboxes
+      function alternarCheck(opcao) {
+        const checkMostrar = document.getElementById("flexCheckMostrar");
+        const checkNaoMostrar = document.getElementById("flexCheckNaoMostrar");
+
+        if (opcao === "mostrar") {
+          checkNaoMostrar.checked = !checkMostrar.checked;
+        } else if (opcao === "naoMostrar") {
+          mostrarAlerta("Seu nome não sera mostrado na solicitação.", 2);
+          checkMostrar.checked = !checkNaoMostrar.checked;
+        }
       }
     </script>
     <script id="templateGerais">
@@ -6602,9 +6752,10 @@
 
         const nomeUsuario = userData.nome;
         const idCliente = userData.id;
+        const loginusuario = userData.login;
 
         if (acao === "trocarSenha") {
-          criarFormularioTrocaSenha(nomeUsuario);
+          criarFormularioTrocaSenha(nomeUsuario, loginusuario);
         }
 
         // Abrir modal
@@ -6613,25 +6764,62 @@
       }
 
       // Função para criar o formulário de troca de senha
-      function criarFormularioTrocaSenha(nomeUsuario) {
+      function criarFormularioTrocaSenha(nomeUsuario, loginusuario) {
         // Conteúdo do formulário de troca de senha
         const formulario = `
     <form id="trocaSenhaForm">
-      <div class="mb-3">
-        <label class="form-label">Usuário</label>
-        <input type="text" class="form-control" value="${nomeUsuario}" disabled>
+      <div class="row">
+          <div class="mb-3">
+            <label class="form-label">Usuário</label>
+            <input type="text" class="form-control" value="${nomeUsuario}" disabled>
+          </div>
+        <div class="col">
+          <div class="mb-3">
+            <label class="form-label">Login</label>
+            <input type="text" class="form-control" id="loginUsuarioC" value="${loginusuario}" disabled>
+          </div>
+          
+        </div>
+                <div class="col">
+          <div class="mb-3">
+            <label for="senhaAtual" class="form-label">Senha Atual</label>
+            <div class="input-group">
+              <input type="password" class="form-control" id="senhaAtual" required>
+              <button class="btn btn-outline-secondary" type="button" onclick="togglePasswordVisibility('senhaAtual')">
+                <span class="material-icons">visibility</span>
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="mb-3">
-        <label for="senhaAtual" class="form-label">Senha Atual</label>
-        <input type="password" class="form-control" id="senhaAtual" required>
+
+      <div class="row">
+        <div class="col">
+          <div class="mb-3">
+            <label for="novaSenha" class="form-label">Nova Senha</label>
+            <div class="input-group">
+              <input type="password" class="form-control" id="novaSenha" required>
+              <button class="btn btn-outline-secondary" type="button" onclick="togglePasswordVisibility('novaSenha')">
+                <span class="material-icons">visibility</span>
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="mb-3">
-        <label for="novaSenha" class="form-label">Nova Senha</label>
-        <input type="password" class="form-control" id="novaSenha" required>
-      </div>
-      <div class="mb-3">
-        <label for="confirmarSenha" class="form-label">Confirmar Nova Senha</label>
-        <input type="password" class="form-control" id="confirmarSenha" required>
+
+      <div class="row">
+
+        <div class="col">
+          <div class="mb-3">
+            <label for="confirmarSenha" class="form-label">Confirmar Nova Senha</label>
+            <div class="input-group">
+              <input type="password" class="form-control" id="confirmarSenha" required>
+              <button class="btn btn-outline-secondary" type="button" onclick="togglePasswordVisibility('confirmarSenha')">
+                <span class="material-icons">visibility</span>
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
     </form>
   `;
@@ -6641,7 +6829,7 @@
       }
 
       // Função de envio do formulário
-      function submitForm() {
+      function submitFormTrocaSenha() {
         mostrarSpinner();
         const senhaAtual = document.getElementById("senhaAtual").value;
         const novaSenha = document.getElementById("novaSenha").value;
