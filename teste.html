@@ -121,7 +121,7 @@
       #superBody {
         display: grid;
         grid-template-rows: auto 1fr;
-        grid-template-columns: auto 1fr auto;
+        grid-template-columns: 1fr auto;
         background: var(--cor-branco);
         height: 100%;
         width: 100%;
@@ -143,7 +143,7 @@
         color: #070606;
         padding: 1em;
         text-align: center;
-        width: 97vw;
+        flex-flow: column;
       }
 
       #ladoEsquerdo {
@@ -152,12 +152,15 @@
         padding: 1rem;
       }
 
-      #ladoDireito,
+      /* #ladoDireito,
       conteudo {
         max-width: 100vw;
         margin-left: 0.8vh;
         background: var(--cor-terciaria);
         padding: 1em;
+      } */
+      div#conteudo {
+        width: 98%;
       }
 
       button {
@@ -170,6 +173,7 @@
 
       .ui-accordion .ui-accordion-content {
         display: grid;
+        gap: 0.2rem;
       }
 
       button.btn.btn-light.btn-acc {
@@ -229,7 +233,47 @@
         justify-content: center;
         align-items: center;
         z-index: 9999;
+        box-sizing: border-box;
+        animation: pulse 1s linear infinite;
         /* Certifique-se de que o overlay esteja acima de outros conteúdos */
+      }
+
+      .spinner-overlay:after {
+        content: "";
+        position: absolute;
+        width: 48px;
+        height: 48px;
+        border: 5px solid #fff;
+        border-radius: 50%;
+        display: inline-block;
+        box-sizing: border-box;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        animation: scaleUp 1s linear infinite;
+      }
+
+      @keyframes scaleUp {
+        0% {
+          transform: translate(-50%, -50%) scale(0);
+        }
+
+        60%,
+        100% {
+          transform: translate(-50%, -50%) scale(1);
+        }
+      }
+
+      @keyframes pulse {
+        0%,
+        60%,
+        100% {
+          transform: scale(1);
+        }
+
+        80% {
+          transform: scale(1.2);
+        }
       }
 
       .card.loginstilo {
@@ -243,18 +287,46 @@
 
       div#login {
         display: flex;
-        flex-flow: column wrap;
-        gap: 1.8rem;
+        flex-flow: column nowrap;
+        /* gap: 1.8rem; */
         width: 19vw;
         height: 70vh;
         justify-content: center;
         margin-top: 2rem;
       }
 
+      /* TODO CaixaPDF */
+      .caixaPDf {
+        position: fixed;
+        /* Para que a caixa fique fixa sobre a página */
+        top: 0;
+        left: 0;
+        width: 100vw;
+        /* Ocupa a largura total da tela */
+        height: 100vh;
+        /* Ocupa a altura total da tela */
+        background-color: rgba(0, 0, 0, 0.8);
+        /* Fundo semi-transparente para destacar o PDF */
+        display: none;
+        /* Esconde a caixa inicialmente */
+        z-index: 9999;
+        /* Garante que esteja acima de todos os outros elementos */
+      }
+
+      .caixaPDf embed {
+        width: 90%;
+        /* Ajusta a largura do PDF */
+        height: 90%;
+        /* Ajusta a altura do PDF */
+        margin: 5% auto;
+        /* Centraliza verticalmente e horizontalmente */
+        display: block;
+      }
+
       @media (max-width: 400px) {
         #ladoDireito {
           height: 100vh;
-          max-width: 93vw;
+          max-width: 98vw;
         }
 
         #ladoEsquerdo {
@@ -262,17 +334,22 @@
           width: 100%;
         }
 
+        html {
+          scroll-behavior: smooth;
+        }
+
         div#accordion {
           width: 100%;
-          font-size: 2rem;
+          font-size: 1rem;
         }
 
         #superBody {
-          grid-template-columns: 1fr;
-          grid-template-rows: auto 1fr auto;
+          /* grid-template-columns: 1fr; */
+          grid-template-rows: 1fr auto;
           height: 100vh;
           width: 100%;
           gap: 1.8rem;
+          font-size: 1rem;
         }
 
         .ui-accordion .ui-accordion-header .ui-accordion-content {
@@ -284,32 +361,34 @@
           font-size: 1.2rem;
           text-align: justify;
           border: none;
-          height: 66vh;
+          max-width: 66vh;
         }
 
         div#login {
           display: flex;
-          flex-flow: column wrap;
-          gap: 1.2rem;
+          flex-flow: column nowrap;
+          /* gap: 1.2rem; */
           justify-content: center;
           margin-top: 2rem;
           width: 100%;
-          height: 51vh;
         }
       }
 
       barTop {
         display: none;
       }
+
       div#offcanvasMenu {
         max-width: 17rem;
       }
+
       #clock {
         font-size: 24px;
         font-family: Arial, sans-serif;
         font-weight: bold;
         color: #07637a;
       }
+
       .dt-body-nowrap {
         white-space: nowrap;
       }
@@ -319,6 +398,7 @@
         box-shadow: 0 0 5px 0 #07637a;
         transition: 0.5s;
       }
+
       .modal {
         display: none;
         position: fixed;
@@ -350,6 +430,7 @@
         text-decoration: none;
         cursor: pointer;
       }
+
       .carousel-container {
         display: flex;
         align-items: center;
@@ -362,7 +443,8 @@
         overflow-x: auto;
         scroll-behavior: smooth;
         white-space: nowrap;
-        width: calc(100% - 80px); /* Ajuste conforme necessário */
+        width: calc(100% - 80px);
+        /* Ajuste conforme necessário */
       }
 
       .carousel::-webkit-scrollbar {
@@ -384,23 +466,97 @@
       }
 
       .card-body {
-        flex: 0 0 250px; /* Largura fixa dos cards */
-        margin-right: 20px; /* Espaço entre cards */
+        flex: 0 0 250px;
+        /* Largura fixa dos cards */
+        margin-right: 20px;
+        /* Espaço entre cards */
       }
+
       .modal-content {
         width: 20rem;
+      }
+
+      .alert-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        /* Fundo escuro com transparência */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+      }
+
+      div#ladoDireito {
+        width: 98vw;
+        padding-left: 1.1rem;
+      }
+
+      /* Estilo para a logo */
+      .navbar-logo {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .logo-img {
+        max-width: 150px;
+        /* Tamanho máximo da logo */
+        height: auto;
+        transition: transform 0.3s ease;
+        /* Animação suave */
+      }
+
+      .logo-img:hover {
+        transform: scale(1.1);
+        /* Efeito de hover para aumentar a logo */
+      }
+
+      /* Estilização do botão flutuante */
+      #feedback-btn {
+        position: fixed;
+        bottom: 3em;
+        right: 20px;
+        border-radius: 50%;
+        width: 60px;
+        height: 60px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        z-index: 1000;
+        transition: transform 0.3s ease;
+      }
+
+      #feedback-btn:hover {
+        transform: scale(1.1);
+        /* Efeito de hover para aumentar a logo */
+      }
+
+      #feedback-btn .material-icons {
+        font-size: 24px;
+      }
+
+      /* Estilos adicionais para responsividade */
+      @media (max-width: 768px) {
+        .logo-img {
+          max-width: 120px;
+          /* Reduz o tamanho da logo em telas menores */
+        }
       }
     </style>
   </head>
 
   <body>
     <div id="superBody">
-      <div
-        id="barTop"
-        class="container-fluid shadow w-100 p-3 mb-1 bg-body rounded"
-      >
+      <div id="barTop" class="container-fluid shadow w-100">
         <nav class="navbar navbar-expand-lg bg-body-tertiary">
-          <div class="container-fluid">
+          <div
+            class="container-fluid d-flex justify-content-between align-items-center"
+          >
             <!-- Botão para abrir o Offcanvas -->
             <a
               class="btn"
@@ -412,34 +568,24 @@
             >
               <span class="material-icons outlined">menu</span>
             </a>
-            <!-- <button
-              class="navbar-toggler"
-              type="button"
-              data-bs-toggle="collapse"
-              data-bs-target="#navbarSupportedContent"
-              aria-controls="navbarSupportedContent"
-              aria-expanded="false"
-              aria-label="Toggle navigation"
-            >
-              <span class="navbar-toggler-icon"></span>
-            </button> -->
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-              <ul class="navbar-nav me-auto mb-2 mb-lg-0"></ul>
-              <!-- <form class="d-flex" role="search">
-                <input
-                  class="form-control me-2"
-                  type="search"
-                  placeholder="Search"
-                  aria-label="Search"
-                />
-                <button class="btn btn-outline-success" type="submit">
-                  Search
-                </button>
-              </form> -->
-            </div>
 
+            <!-- Logo no centro -->
+            <div class="navbar-logo mx-auto">
+              <a href="#" onclick="chamaTemplate('areaColaborador')">
+                <img src="./img/logo.jpg" class="logo-img" alt="Logo" />
+              </a>
+            </div>
+            <a
+              class="btn"
+              type="button"
+              name="configGerais"
+              onclick="chamaTemplate(this.name)"
+            >
+              <span class="material-symbols-outlined"> tab </span>
+            </a>
+            <!-- Botão de logout -->
             <a class="btn" type="button" onclick="chamarLogout()">
-              <span class="material-icons"></span>
+              <span class="material-icons">logout</span>
             </a>
           </div>
         </nav>
@@ -448,587 +594,458 @@
       <div id="ladoDireito">
         <div id="conteudo"></div>
 
-        <template id="registrarGRA" class="w-100">
-          <div class="card w-100 shadow-lg">
-            <div class="card-body">
-              <h1 class="card-title">Registro GRA - Ciclo Verde</h1>
+        <template id="registrosDOC">
+          <div class="card text-bg-light mb-3 w-100">
+            <div class="card-header">Registro de Documentação</div>
+            <div class="card-body mb-3" id="fmr-registros">
+              <div class="list-group">
+                <ul class="list-group list-group-flush">
+                  <button
+                    type="button"
+                    class="list-group-item list-group-item-action"
+                    id="abrirModalBtn"
+                    onclick="abrirModalDocFicha()"
+                  >
+                    Doc - Ficha de Registros
+                  </button>
 
-              <div class="card mb-3">
-                <div class="card-body">
-                  <div class="row g-sm-2">
-                    <!-- ID -->
-                    <div class="col-sm-2 mb-3">
-                      <label for="idHorasSl">ID:</label>
-                      <div class="form-group">
-                        <input
-                          type="text"
-                          name="idHorasSl"
-                          id="idHorasSl"
-                          disabled="disabled"
-                          class="form-control slLideranca"
-                        />
-                      </div>
-                    </div>
-                    <!--Request  -->
-                    <div class="col-sm-4 mb-3">
-                      <label for="requestGRA">NºRequest#: </label>
-                      <div class="form-group">
-                        <input
-                          type="text"
-                          name="requestGRA"
-                          id="requestGRA"
-                          placeholder="NºRequest#"
-                          class="form-control slLideranca"
-                        />
-                      </div>
-                    </div>
-                    <!--Data  -->
-                    <div class="col-sm-4 mb-3">
-                      <div class="form-group">
-                        <label for="dataAgendamentoSl">Data:</label>
-                        <input
-                          type="date"
-                          name="dataAgendamentoSl"
-                          id="dataAgendamentoSl"
-                          class="form-control slLideranca"
-                          required
-                        />
-                      </div>
-                    </div>
-                    <!-- Material -->
-                    <div class="col-sm-3 mb-3">
-                      <label for="situcaoGRA">Situção:</label>
-                      <div class="form-group">
-                        <select
-                          name="situcaoGRA"
-                          id="situcaoGRA"
-                          class="form-control"
-                          required
-                        >
-                          <option value="1">Complete</option>
-                          <option value="2">Confirmation</option>
-                          <option value="3">negado</option>
-                        </select>
-                      </div>
-                    </div>
-                    <!-- situacão -->
-                    <div class="col-sm-3 mb-3">
-                      <label for="situcaoGRA">Material:</label>
-                      <div class="form-group">
-                        <select
-                          name="materiaisGRA"
-                          id="materiaisGRA"
-                          class="form-control"
-                          required
-                        ></select>
-                      </div>
-                    </div>
-                    <!--Valor  -->
-                    <div class="col-sm-3 mb-3">
-                      <label for="valorRequestGRA">Valor: </label>
-                      <div class="form-group">
-                        <input
-                          type="text"
-                          name="valorRequestGRA"
-                          id="valorRequestGRA"
-                          placeholder="R$ 0,00"
-                          class="form-control"
-                        />
-                      </div>
-                    </div>
-                    <!--Quantidade  -->
-                    <div class="col-sm-3 mb-3">
-                      <label for="quantidadeRequestGRA">Quantidade: </label>
-                      <div class="form-group">
-                        <input
-                          type="text"
-                          name="quantidadeRequestGRA"
-                          id="quantidadeRequestGRA"
-                          placeholder="0,00"
-                          class="form-control"
-                        />
-                      </div>
-                    </div>
-                    <!--Total  -->
-                    <div class="col-sm-3 mb-3">
-                      <label for="totalRequestGRA">Total: </label>
-                      <div class="form-group">
-                        <input
-                          type="text"
-                          name="totalRequestGRA"
-                          id="totalRequestGRA"
-                          placeholder="R$ 0,00"
-                          class="form-control"
-                          disabled="disabled"
-                        />
-                      </div>
-                    </div>
-                  </div>
-                  <!-- Botoes -->
-                  <div class="row">
-                    <div class="col-sm-3 mb-3">
-                      <button
-                        type="button"
-                        class="btn btn-primary"
-                        data-toggle="button"
-                        aria-pressed="false"
-                        autocomplete="off"
-                        onclick="salvarDadosTarefas()"
-                      >
-                        Salvar
-                      </button>
-                    </div>
-                    <div class="col">
-                      <button
-                        type="button"
-                        class="btn btn-dark"
-                        data-toggle="button"
-                        aria-pressed="false"
-                        autocomplete="off"
-                        onclick="showModalGRA()"
-                      >
-                        Registrar NFe
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="card mt-4">
-                <div class="card w-100">
-                  <!-- Filtro de Situação -->
-                  <div class="form-group">
-                    <label class="custom-control custom-radio">
-                      <input
-                        type="radio"
-                        name="filterStatus"
-                        id="radioTodos"
-                        value="Todos"
-                        class="custom-control-input"
-                        checked
-                      />
-                      <span class="custom-control-indicator">Todos</span>
-                    </label>
-                    <label class="custom-control custom-radio">
-                      <input
-                        type="radio"
-                        name="filterStatus"
-                        id="radioPendente"
-                        value="Pendente"
-                        class="custom-control-input"
-                      />
-                      <span class="custom-control-indicator">Pendente</span>
-                    </label>
-                    <label class="custom-control custom-radio">
-                      <input
-                        type="radio"
-                        name="filterStatus"
-                        id="radioConcluido"
-                        value="Concluido"
-                        class="custom-control-input"
-                      />
-                      <span class="custom-control-indicator">Concluido</span>
-                    </label>
-                  </div>
-                  <div class="card w-100">
-                    <h5 class="card-header">Pendente</h5>
-                    <!-- Carrossel de Tarefas Pendentes -->
-                    <div class="carousel-container">
-                      <button
-                        class="carousel-prev"
-                        onclick="scrollLeftCarousel('divTarefasPendentes')"
-                      >
-                        ←
-                      </button>
-                      <div id="divTarefasPendentes" class="carousel">
-                        <!-- Tarefas Pendentes vão aqui -->
-                      </div>
-                      <button
-                        class="carousel-next"
-                        onclick="scrollRightCarousel('divTarefasPendentes')"
-                      >
-                        →
-                      </button>
-                    </div>
-                  </div>
-
-                  <div class="card w-100">
-                    <h5 class="card-header">Concluido</h5>
-                    <!-- Carrossel de Tarefas Concluídas -->
-                    <div class="carousel-container">
-                      <button
-                        class="carousel-prev"
-                        onclick="scrollLeftCarousel('divTarefasConcluidas')"
-                      >
-                        ←
-                      </button>
-                      <div id="divTarefasConcluidas" class="carousel">
-                        <!-- Tarefas Concluídas vão aqui -->
-                      </div>
-                      <button
-                        class="carousel-next"
-                        onclick="scrollRightCarousel('divTarefasConcluidas')"
-                      >
-                        →
-                      </button>
-                    </div>
-                  </div>
-                </div>
-                <div class="card-group">
-                  <div class="card">
-                    <h5>Registar NFe </h5>
-                  </div>
-                  <div class="card">
-                  <div class="col">
-                    <div class="form-group">
-                      <label for="">NFE:</label>
-                      <input type="text" name="nfeGRA" id="nfeGRA" class="form-control" placeholder="">
-                    </div>
-
-                  </div>
-                    <h5>NFE</h5>
-                    <h5>Valor</h5>
-                    <h5>Produto</h5>
-                    <h5>Quantidade</h5>
-                    <h5>ORDEM DE VENDA</h5>
-                    <h5>Data Emissao</h5>
-                    </div>
-                  </div>
-                </div>
-
+                  <button
+                    type="button"
+                    class="list-group-item list-group-item-action"
+                  >
+                    A second button item
+                  </button>
+                  <button
+                    type="button"
+                    class="list-group-item list-group-item-action"
+                  >
+                    A second button item
+                  </button>
+                </ul>
               </div>
 
-              <!-- TODO Modal para mostrar detalhes -->
-              <div class="modal" id="taskModalGRA">
-                <div class="modal-content">
-                  <span class="close" id="closeModaGRAl">&times;</span>
-                  <div id="modalBodyGRA"></div>
-                  <div class="modal-footer">
-                    <button
-                      type="button"
-                      onclick="EditarDadosTarefas()"
-                      class="btn btn-primary"
-                    >
-                      Editar
-                    </button>
-                  </div>
-                </div>
+              <div class="row">
+                <span class="placeholder col-6"></span>
+                <h2>Tabela</h2>
+                <ul id="list-exportaDadosFichaRegistro" class="list-group"></ul>
+                <span class="placeholder col-6"></span>
               </div>
             </div>
           </div>
         </template>
-      </div>
-      <!-- Div Auxiliares -->
 
-      <!-- Spinner Overlay -->
-      <div id="spinner-overlay" class="spinner-overlay d-none">
-        <div class="d-flex justify-content-center align-items-center h-100">
-          <div class="spinner-border" role="status">
-            <span class="visually-hidden">Loading...</span>
+        <!-- Modal Structure Placeholder -->
+        <div id="modalPlaceholder"></div>
+
+        <!-- Modal de Feedback -->
+        <div
+          class="modal fade"
+          id="feedbackModal"
+          tabindex="-1"
+          aria-labelledby="feedbackModalLabel"
+          aria-hidden="true"
+          style="display: none"
+        >
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="feedbackModalLabel">
+                  Enviar Solicitação
+                </h5>
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                  submit
+                ></button>
+              </div>
+              <div class="modal-body">
+                <div class="form-group">
+                  <label for="tipoDeSolicitacao">Tipo de Solicitação</label>
+                  <select
+                    class="form-control fmrFeedback"
+                    name="tipoDeSolicitacao  "
+                    id="tipoDeSolicitacao"
+                    onchange=" acaoFeedBack(this.id)"
+                  >
+                    <option value="">Selecione o tipo de solicitação</option>
+                    <option value="1">Reclamação</option>
+                    <option value="2">Sugestão</option>
+                    <option value="3">Pergunta Frequentemente</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <div id="conteudoFeedback"></div>
+                </div>
+                <form id="feedbackForm">
+                  <div class="mb-3">
+                    <label for="feedbackTextarea" class="form-label"
+                      >Sua solicitação</label
+                    >
+                    <textarea
+                      class="form-control fmrFeedback"
+                      id="feedbackTextarea"
+                      rows="3"
+                      placeholder="Digite seu feedback"
+                    ></textarea>
+                  </div>
+                </form>
+              </div>
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  data-bs-dismiss="modal"
+                >
+                  Fechar
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-primary"
+                  onclick="enviarFeedback()"
+                >
+                  Enviar
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
+      <!-- Alerta -->
+      <div id="liveAlertPlaceholder"></div>
+    </div>
+    <!-- Div Auxiliares -->
 
-      <!-- Offcanvas -->
-      <div
-        class="offcanvas offcanvas-start"
-        tabindex="-1"
-        id="offcanvasMenu"
-        aria-labelledby="offcanvasExampleLabel"
-      >
-        <div class="offcanvas-header">
-          <div class="form-group">
-            <span class="material-symbols-outlined">
-              nest_clock_farsight_analog
-            </span>
-            <div id="clock" class="card-body"></div>
+    <!-- Spinner Overlay -->
+    <div id="spinner-overlay" class="spinner-overlay d-none">
+      <div class="d-flex justify-content-center align-items-center h-100">
+        <div class="spinner-border" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+      </div>
+    </div>
+    <!-- Offcanvas -->
+    <div
+      class="offcanvas offcanvas-start"
+      tabindex="-1"
+      id="offcanvasMenu"
+      aria-labelledby="offcanvasExampleLabel"
+    >
+      <div class="offcanvas-header">
+        <div class="form-group">
+          <span class="material-symbols-outlined">
+            nest_clock_farsight_analog
+          </span>
+          <div id="clock" class="card-body"></div>
+        </div>
+
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="offcanvas"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="offcanvas-body" id="ladoEsquerdoSoffcanvas">
+        <!-- Acordeão -->
+        <div id="accordion" class="w-100">
+          <!-- Menu -->
+          <h3><span class="material-icons outlined">menu</span> Menu</h3>
+          <div>Menu</div>
+
+          <!-- Análise -->
+          <h3><i class="bi bi-clipboard2-data-fill"></i> Análise</h3>
+          <div>
+            <button
+              class="ui-button ui-widget ui-corner-all"
+              name="analiseDeRegistroFerias"
+              onclick="chamaTemplate(this.name)"
+            >
+              Análise de Férias
+            </button>
+            <button
+              class="ui-button ui-widget ui-corner-all"
+              name="analiseDeRegistroColaboradores"
+              onclick="chamaTemplate(this.name)"
+            >
+              Análise de Registros
+            </button>
+            <button
+              class="ui-button ui-widget ui-corner-all"
+              name="analiseDeRegistroVT"
+              onclick="chamaTemplate(this.name)"
+            >
+              Analise de VT
+            </button>
           </div>
 
-          <button
-            type="button"
-            class="btn-close"
-            data-bs-dismiss="offcanvas"
-            aria-label="Close"
-          ></button>
-        </div>
-        <div class="offcanvas-body" id="ladoEsquerdoSoffcanvas">
-          <!-- Acordeão -->
-          <div id="accordion" class="w-100">
-            <!-- Menu -->
-            <h3><span class="material-icons outlined">menu</span> Menu</h3>
-            <div>Menu</div>
+          <!-- Registros -->
+          <h3><i class="bi bi-plus-lg"></i> Registros</h3>
+          <div>
+            <button
+              class="ui-button ui-widget ui-corner-all"
+              name="registrosDOC"
+              onclick="chamaTemplate(this.name)"
+            >
+              Registro de Documentação
+            </button>
+            <button
+              class="ui-button ui-widget ui-corner-all"
+              name="registroferias"
+              onclick="chamaTemplate(this.name)"
+            >
+              Férias
+            </button>
+            <button
+              class="ui-button ui-widget ui-corner-all"
+              name="driver"
+              onclick="chamaTemplate(this.name)"
+            >
+              Driver
+            </button>
+            <button
+              class="ui-button ui-widget ui-corner-all"
+              name="registroPagamentosAdiantamento"
+              onclick="chamaTemplate(this.name)"
+            >
+              Registro de Adiantamento
+            </button>
+            <button
+              class="ui-button ui-widget ui-corner-all"
+              name="registroPagamentosColaboradores"
+              onclick="chamaTemplate(this.name)"
+            >
+              Registros de Pagamentos
+            </button>
+            <button
+              class="ui-button ui-widget ui-corner-all"
+              name="registroRelogioDePonto"
+              onclick="chamaTemplate(this.name)"
+            >
+              Relógio De Ponto
+            </button>
+            <button
+              class="ui-button ui-widget ui-corner-all"
+              name="registroVT"
+              onclick="chamaTemplate(this.name)"
+            >
+              Registro VT
+            </button>
+            <button
+              class="ui-button ui-widget ui-corner-all"
+              name="cadastroDeHorasExtras"
+              onclick="chamaTemplate(this.name)"
+            >
+              Registros de Hora extras
+            </button>
+            <button
+              class="ui-button ui-widget ui-corner-all"
+              name="cadastroDeHorasExtras"
+              onclick="chamaTemplate(this.name)"
+            >
+              Registros de Hora extras
+            </button>
+          </div>
+          <!-- RegistrosNivel3 -->
+          <h3><i class="bi bi-plus-lg"></i> Supervisao</h3>
+          <div>
+            <button
+              class="ui-button ui-widget ui-corner-all"
+              name="analiseDeRegistroVT"
+              onclick="chamaTemplate(this.name)"
+            >
+              Analise de VT
+            </button>
+            <button
+              class="ui-button ui-widget ui-corner-all"
+              name="analiseDeRegistroFerias"
+              onclick="chamaTemplate(this.name)"
+            >
+              Análise de Férias
+            </button>
+            <button
+              class="ui-button ui-widget ui-corner-all"
+              name="analiseDeRegistroColaboradores"
+              onclick="chamaTemplate(this.name)"
+            >
+              Análise de Registros
+            </button>
+            <p></p>
 
-            <!-- Análise -->
-            <h3><i class="bi bi-clipboard2-data-fill"></i> Análise</h3>
-            <div>
-              <button
-                class="ui-button ui-widget ui-corner-all"
-                name="analiseDeRegistroFerias"
-                onclick="chamaTemplate(this.name)"
-              >
-                Análise de Férias
-              </button>
-              <button
-                class="ui-button ui-widget ui-corner-all"
-                name="analiseDeRegistroColaboradores"
-                onclick="chamaTemplate(this.name)"
-              >
-                Análise de Registros
-              </button>
-              <button
-                class="ui-button ui-widget ui-corner-all"
-                name="analiseDeRegistroVT"
-                onclick="chamaTemplate(this.name)"
-              >
-                Analise de VT
-              </button>
-              <button
-                class="ui-button ui-widget ui-corner-all"
-                name="cadastroDeHorasExtras"
-                onclick="chamaTemplate(this.name)"
-              >
-                Registros de Hora extras
-              </button>
-            </div>
+            <button
+              class="ui-button ui-widget ui-corner-all"
+              name="cadastroDeHorasExtras"
+              onclick="chamaTemplate(this.name)"
+            >
+              Cadastro de Hora extras
+            </button>
+            <!-- <button
+              class="ui-button ui-widget ui-corner-all"
+              enabled
+              name="solicitacaoLideranca"
+              onclick="chamaTemplate(this.name)"
+            >
+              Registros de Tarefas
+            </button> -->
+          </div>
 
-            <!-- Registros -->
-            <h3><i class="bi bi-plus-lg"></i> Registros</h3>
-            <div>
-              <button
-                class="ui-button ui-widget ui-corner-all"
-                name="registrosDOC"
-                onclick="chamaTemplate(this.name)"
-              >
-                Registro de Documentação
-              </button>
-              <button
-                class="ui-button ui-widget ui-corner-all"
-                name="registroferias"
-                onclick="chamaTemplate(this.name)"
-              >
-                Férias
-              </button>
-              <button
-                class="ui-button ui-widget ui-corner-all"
-                name="driver"
-                onclick="chamaTemplate(this.name)"
-              >
-                Driver
-              </button>
-              <button
-                class="ui-button ui-widget ui-corner-all"
-                name="registroPagamentosAdiantamento"
-                onclick="chamaTemplate(this.name)"
-              >
-                Registro de Adiantamento
-              </button>
-              <button
-                class="ui-button ui-widget ui-corner-all"
-                name="registroPagamentosColaboradores"
-                onclick="chamaTemplate(this.name)"
-              >
-                Registros de Pagamentos
-              </button>
-              <button
-                class="ui-button ui-widget ui-corner-all"
-                name="registroRelogioDePonto"
-                onclick="chamaTemplate(this.name)"
-              >
-                Relógio De Ponto
-              </button>
-              <button
-                class="ui-button ui-widget ui-corner-all"
-                name="registroVT"
-                onclick="chamaTemplate(this.name)"
-              >
-                Registro VT
-              </button>
-              <button
-                class="ui-button ui-widget ui-corner-all"
-                name="cadastroDeHorasExtras"
-                onclick="chamaTemplate(this.name)"
-              >
-                Registros de Hora extras
-              </button>
-            </div>
-            <!-- RegistrosNivel3 -->
-            <h3><i class="bi bi-plus-lg"></i> Supervisao</h3>
-            <div>
-              <button
-                class="ui-button ui-widget ui-corner-all"
-                name="analiseDeRegistroVT"
-                onclick="chamaTemplate(this.name)"
-              >
-                Analise de VT
-              </button>
-              <button
-                class="ui-button ui-widget ui-corner-all"
-                name="analiseDeRegistroFerias"
-                onclick="chamaTemplate(this.name)"
-              >
-                Análise de Férias
-              </button>
-              <button
-                class="ui-button ui-widget ui-corner-all"
-                name="analiseDeRegistroColaboradores"
-                onclick="chamaTemplate(this.name)"
-              >
-                Análise de Registros
-              </button>
-              <p></p>
+          <!-- Cadastro -->
+          <h3><i class="bi bi-file-plus"></i> Cadastro</h3>
+          <div>
+            <button
+              class="ui-button ui-widget ui-corner-all"
+              name="cadastroDeColaboradores"
+              onclick="chamaTemplate(this.name)"
+            >
+              Colaboradores
+            </button>
+            <button
+              class="ui-button ui-widget ui-corner-all"
+              name="cadastroDeFuncao"
+              onclick="chamaTemplate(this.name)"
+            >
+              Função
+            </button>
+            <button
+              class="ui-button ui-widget ui-corner-all"
+              name="exames"
+              onclick="chamaTemplate(this.name)"
+            >
+              Exames
+            </button>
+            <button
+              class="ui-button ui-widget ui-corner-all"
+              name="cursos"
+              onclick="chamaTemplate(this.name)"
+            >
+              Cursos
+            </button>
+            <button
+              class="ui-button ui-widget ui-corner-all"
+              name="cadastroEscala"
+              onclick="chamaTemplate(this.name)"
+            >
+              Escala
+            </button>
+          </div>
 
-              <button
-                class="ui-button ui-widget ui-corner-all"
-                name="cadastroDeHorasExtras"
-                onclick="chamaTemplate(this.name)"
-              >
-                Cadastro de Hora extras
-              </button>
-              <button
-                class="ui-button ui-widget ui-corner-all"
-                name="solicitacaoLideranca"
-                onclick="chamaTemplate(this.name)"
-              >
-                Registros de Tarefas
-              </button>
-            </div>
+          <!-- Acesso Colaborador -->
+          <h3>Acesso Colaborador</h3>
+          <div>
+            <!-- Card 1 -->
+            <button
+              type="button"
+              class="btn btn-secondary"
+              name="templatefichaDeregistros"
+              onclick="chamaTemplate(this.name)"
+            >
+              <span class="material-symbols-outlined">view_agenda</span> Ficha
+              de Registro/Docs
+            </button>
 
-            <!-- Cadastro -->
-            <h3><i class="bi bi-file-plus"></i> Cadastro</h3>
-            <div>
-              <button
-                class="ui-button ui-widget ui-corner-all"
-                name="cadastroDeColaboradores"
-                onclick="chamaTemplate(this.name)"
-              >
-                Colaboradores
-              </button>
-              <button
-                class="ui-button ui-widget ui-corner-all"
-                name="cadastroDeFuncao"
-                onclick="chamaTemplate(this.name)"
-              >
-                Função
-              </button>
-              <button
-                class="ui-button ui-widget ui-corner-all"
-                name="exames"
-                onclick="chamaTemplate(this.name)"
-              >
-                Exames
-              </button>
-              <button
-                class="ui-button ui-widget ui-corner-all"
-                name="cursos"
-                onclick="chamaTemplate(this.name)"
-              >
-                Cursos
-              </button>
-              <button
-                class="ui-button ui-widget ui-corner-all"
-                name="cadastroEscala"
-                onclick="chamaTemplate(this.name)"
-              >
-                Escala
-              </button>
-            </div>
+            <!-- Card 2 -->
+            <button
+              type="button"
+              class="btn btn-secondary"
+              name="extratoPagamento"
+              onclick="chamaTemplate(this.name)"
+            >
+              <span class="material-symbols-outlined">view_agenda</span>
+              Extrato de Pagamento
+            </button>
 
-            <!-- Acesso Colaborador -->
-            <h3>Acesso Colaborador</h3>
-            <div>
-              <!-- Card 1 -->
-              <button
-                type="button"
-                class="btn btn-secondary"
-                name="fichaDeregistros"
-                onclick="chamaTemplate(this.name)"
-              >
-                <span class="material-symbols-outlined">view_agenda</span> Ficha
-                de Registro/Docs
-              </button>
+            <!-- Card 3 -->
+            <button
+              type="button"
+              class="btn btn-secondary"
+              name="extratoAdiantamento"
+              onclick="chamaTemplate(this.name)"
+            >
+              <span class="material-symbols-outlined">view_agenda</span>
+              Extrato de Adiantamento
+            </button>
+            <!-- Card 3 -->
+            <button
+              type="button"
+              class="btn btn-secondary"
+              name="extratoPontosMarcacao"
+              onclick="chamaTemplate(this.name)"
+            >
+              <span class="material-symbols-outlined">view_agenda</span>
+              Marcação de Ponto
+            </button>
 
-              <!-- Card 2 -->
-              <button
-                type="button"
-                class="btn btn-secondary"
-                name="extratoPagamento"
-                onclick="chamaTemplate(this.name)"
-              >
-                <span class="material-symbols-outlined">view_agenda</span>
-                Extrato de Pagamento
-              </button>
+            <!-- Card 4 -->
+            <button
+              type="button"
+              class="btn btn-secondary"
+              name="listaFerias"
+              onclick="chamaTemplate(this.name)"
+            >
+              <span class="material-symbols-outlined">view_agenda</span>
+              Férias
+            </button>
 
-              <!-- Card 3 -->
-              <button
-                type="button"
-                class="btn btn-secondary"
-                name="extratoAdiantamento"
-                onclick="chamaTemplate(this.name)"
-              >
-                <span class="material-symbols-outlined">view_agenda</span>
-                Extrato de Adiantamento
-              </button>
+            <!-- Card 5 -->
+            <button
+              type="button"
+              class="btn btn-secondary"
+              name="planoDeSaude"
+              onclick="chamaTemplate(this.name)"
+            >
+              <span class="material-symbols-outlined">view_agenda</span> Plano
+              de Saúde
+            </button>
 
-              <!-- Card 4 -->
-              <button
-                type="button"
-                class="btn btn-secondary"
-                name="listaFerias"
-                onclick="chamaTemplate(this.name)"
-              >
-                <span class="material-symbols-outlined">view_agenda</span>
-                Férias
-              </button>
+            <!-- Card 6 -->
+            <button
+              type="button"
+              class="btn btn-secondary"
+              name="exames"
+              onclick="chamaTemplate(this.name)"
+            >
+              <span class="material-symbols-outlined">view_agenda</span>
+              Exames
+            </button>
+          </div>
 
-              <!-- Card 5 -->
-              <button
-                type="button"
-                class="btn btn-secondary"
-                name="planoDeSaude"
-                onclick="chamaTemplate(this.name)"
-              >
-                <span class="material-symbols-outlined">view_agenda</span> Plano
-                de Saúde
-              </button>
+          <!-- Logout -->
+          <h3><span class="material-icons outlined">logout</span> Logout</h3>
+          <div>
+            <button
+              class="ui-button ui-widget ui-corner-all"
+              name="Logout"
+              onclick="chamarLogout()"
+            >
+              Logout
+            </button>
+          </div>
 
-              <!-- Card 6 -->
-              <button
-                type="button"
-                class="btn btn-secondary"
-                name="exames"
-                onclick="chamaTemplate(this.name)"
-              >
-                <span class="material-symbols-outlined">view_agenda</span>
-                Exames
-              </button>
-            </div>
-
-            <!-- Logout -->
-            <h3><span class="material-icons outlined">logout</span> Logout</h3>
-            <div>
-              <button
-                class="ui-button ui-widget ui-corner-all"
-                name="Logout"
-                onclick="chamarLogout()"
-              >
-                Logout
-              </button>
-            </div>
-
-            <!-- Login -->
-            <h3><span class="material-icons outlined">login</span> Login</h3>
-            <div>
-              <button
-                class="ui-button ui-widget ui-corner-all"
-                name="car-logar"
-                onclick="chamaTemplate(this.name)"
-              >
-                Login
-              </button>
-            </div>
+          <!-- Login -->
+          <h3><span class="material-icons outlined">login</span> Login</h3>
+          <div>
+            <button
+              class="ui-button ui-widget ui-corner-all"
+              name="car-logar"
+              onclick="chamaTemplate(this.name)"
+            >
+              Login
+            </button>
           </div>
         </div>
       </div>
     </div>
+    <!-- Botão flutuante para abrir o modal de feedback -->
+    <button
+      class="btn btn-primary d-none"
+      id="feedback-btn"
+      type="button"
+      data-bs-toggle="modal"
+      data-bs-target="#feedbackModal"
+    >
+      <span class="material-icons">feedback</span>
+    </button>
 
     <script id="MetodoPost">
       let urlAjax =
@@ -1059,20 +1076,23 @@
       };
 
       function chamaTemplate(pagina) {
-        let x;
-        if (pagina === "car-logar21") {
-          x = "menuLogin";
-        } else {
-          x = "conteudo";
-        }
+        let x = "conteudo";
+
         const formularioID = inserirTemplate(pagina, x);
         if (!formularioID) return;
 
-        // const formularioID = inserirTemplate(pagina);
-        const paginaB = pagina;
-        switch (paginaB) {
+        const offcanvasElement = document.getElementById("offcanvasMenu");
+        if (offcanvasElement) {
+          const offcanvas = bootstrap.Offcanvas.getInstance(offcanvasElement);
+          if (offcanvas) {
+            offcanvas.hide(); // Fecha o offcanvas após selecionar
+          }
+        }
+
+        // mostrarAlerta(`pagina==>: ${pagina}`,3)
+        switch (pagina) {
           case "registrosDOC":
-            carregarColaboradores();
+            carregaDadosFichaRegistro();
             break;
           case "registroPagamentosColaboradores":
             carregarColaboradores();
@@ -1118,21 +1138,53 @@
             toFillTableTarefa();
 
             break;
+          case "templatefichaDeregistros":
+            carregarFichaColaboradores();
 
+            break;
+          case "extratoPagamento":
+            carregarFichaPagamentos();
+
+            break;
+          case "extratoPontosMarcacao":
+            carregaFichaDeMarcacao();
+            break;
+          case "extratoPontosMarcacao":
+            carregaFichaDeMarcacao();
+            break;
+
+          case "areaColaborador":
+            carregarMenuAreaColaborador();
+            break;
           default:
             break;
         }
       }
     </script>
-    <!-- Registrar Gra -->
-    <script>
-      function inputMaterial(inputName) {
+
+    <script id="function aux">
+      // Função para mostrar o spinner
+      function mostrarSpinner() {
+        document.getElementById("spinner-overlay").classList.remove("d-none");
+      }
+      // Função para esconder o spinner
+      function esconderSpinner() {
+        document.getElementById("spinner-overlay").classList.add("d-none");
+      }
+      function mostrarBtnFeedback() {
+        document.getElementById("feedback-btn").classList.remove("d-none");
+      }
+      function esconderBtnFeedback() {
+        document.getElementById("feedback-btn").classList.add("d-none");
+      }
+
+      function carregarColaboradores() {
         mostrarSpinner();
         $.ajax({
           type: "POST",
           url: urlAjax,
           data: {
-            qualFuncao: "carregarMateriais",
+            qualFuncao: "carregarColaboradores",
           },
           success: function (response) {
             esconderSpinner();
@@ -1178,79 +1230,451 @@
           },
         });
       }
-    </script>
 
-    <!-- salvar dados Colaborador -->
-    <script>
-      chamaTemplate("registrarGRA");
-      function showModalGRA(dado) {
-        // mostrarSpinner();
-        const modal = document.getElementById("taskModalGRA");
-        const modalBodySL = document.getElementById("modalBodyGRA");
-        modalBodySL.innerHTML = `
-          
-        `;
-        
-        modal.style.display = "block";
+      function carregarFuncao() {
+        mostrarSpinner();
+        $.ajax({
+          type: "POST",
+          url: urlAjax,
+          data: {
+            qualFuncao: "carregarFuncao",
+          }, // Envia os dados diretamente
+          success: function (response) {
+            esconderSpinner();
+            if (response.situacao) {
+              try {
+                const funcoes = response.colaboradores;
 
-        // Fechar o modal
-        document.getElementById("closeModaGRAl").onclick = function () {
-          modal.style.display = "none";
-        };
-        // esconderSpinner();
+                // Seleciona todos os <select> com a classe 'scColaborador'
+                const selects = document.querySelectorAll(
+                  ".FuncaocolaboradorFuncao"
+                );
+
+                // Limpa as opções existentes
+                selects.forEach((select) => {
+                  select.innerHTML = "";
+                });
+
+                // Adiciona uma opção vazia no início
+                selects.forEach((select) => {
+                  let option = document.createElement("option");
+                  option.text = "";
+                  option.value = "";
+                  select.add(option);
+                });
+
+                // Preenche os selects com as novas opções
+                colaboradores.forEach((colaborador) => {
+                  selects.forEach((select) => {
+                    let option = document.createElement("option");
+                    option.text = colaborador.descricao; // Supondo que 'nome' seja uma propriedade do colaborador
+                    option.value = colaborador.id; // Supondo que 'id' seja uma propriedade do colaborador
+                    select.add(option);
+                  });
+                });
+              } catch (error) {}
+            } else {
+              alert("Erro de retorno");
+            }
+          },
+          error: function (error) {
+            esconderSpinner();
+            console.error("Erro ==>", error);
+          },
+        });
       }
 
-      function salvardadosColaborador(params) {
-        const inputs = document.querySelectorAll(".registroColab");
-        // inputs.forEach((input) => {
-        //   console.log(`${input.name || input.id}: ${input.value}`); // Mostra o nome ou id e o valor do input no console
-        // });
-        const isValid = Array.from(inputs).every((input) => {
-          if (input.hasAttribute("required") && !input.value) {
-            input.classList.add("is-invalid"); // Adiciona classe para destacar o campo vazio
-            return false;
-          } else {
-            input.classList.remove("is-invalid"); // Remove a classe caso esteja preenchido
-            return true;
-          }
-        });
+      function extratirFuncao(input) {
+        mostrarSpinner();
+        // Selecionar o elemento select pelo ID
+        let selectElement = document.getElementById(input);
 
-        // Se algum campo obrigatório não estiver preenchido, alerta o usuário e interrompe o processo
-        if (!isValid) {
-          alert("Por favor, preencha todos os campos obrigatórios.");
-          return;
+        // Obter o valor selecionado
+        let nomeInput = selectElement.value;
+
+        // Verificar se nenhum valor foi selecionado
+        if (!nomeInput) {
+          // Limpar os campos se nenhum valor estiver selecionado
+          if (input === "scColaboradorRP") {
+            const funcaoInput = document.getElementById("funcaoColab");
+            const scalaInput = document.getElementById("escalaRelogiodePonto");
+
+            const cHorario = document.getElementById("CargaRelogiodePonto");
+            const cHorariointer = document.getElementById(
+              "intervaloRelogiodePonto"
+            );
+
+            // Limpar os valores dos campos
+            funcaoInput.value = "";
+            scalaInput.value = "";
+            cHorario.value = "";
+            cHorariointer.value = "";
+          }
+          return; // Saia da função se não houver valor
         }
 
-        const dadosArray = [];
-        mostrarSpinner();
+        // Fazer a requisição AJAX se um valor foi selecionado
+        $.ajax({
+          type: "POST",
+          url: urlAjax,
+          data: {
+            qualFuncao: "carregarExtrairFuncao",
+            nome: nomeInput,
+          },
+          success: function (response) {
+            esconderSpinner();
 
-        inputs.forEach((input) => {
-          dadosArray.push({
-            id: input.name || input.id, // Pega o ID do input
-            valor: input.value, // Pega o valor do input
-          });
+            if (response.situacao) {
+              const funcao = response.funcao;
+              const scala = response.scala;
+              if (input === "scColaboradorRP") {
+                const funcaoInput = document.getElementById("funcaoColab");
+                const scalaInput = document.getElementById(
+                  "escalaRelogiodePonto"
+                );
+
+                // Atualiza o valor do input com a função do colaborador
+                funcaoInput.value = funcao;
+                scalaInput.value = scala;
+
+                chamarEscala();
+              }
+            } else {
+              esconderSpinner();
+              alert("Erro de retorno");
+            }
+          },
+          error: function (error) {
+            esconderSpinner();
+            console.error("Erro ==>", error);
+          },
         });
       }
-      // document.getElementById("btt-cadastro-calab").disabled = true;
 
-      $.ajax({
-        type: "POST",
-        url: urlAjax,
-        data: {
-          dados: JSON.stringify(dadosArray),
-          qualFuncao: "salvarDadosNoSheet",
-        }, // Envia os dados diretamente
-        success: function (response) {
-          if (response) {
-            alert("Dados salvos com sucesso");
-          } else {
-            alert("Erro de retorno");
+      function executarAcaoComData(data, inputId) {
+        // Obter o dia da semana atual
+        const diasDaSemana = [
+          "Domingo",
+          "Segunda-feira",
+          "Terça-feira",
+          "Quarta-feira",
+          "Quinta-feira",
+          "Sexta-feira",
+          "Sábado",
+        ];
+
+        // Fazer a requisição AJAX para obter os dados
+        $.ajax({
+          type: "POST",
+          url: urlAjax,
+          data: {
+            qualFuncao: "carregarScalaDias",
+          },
+          success: function (response) {
+            if (response.situacao) {
+              // Parsear dados JSON se necessário
+              const dados = response.dados; // Supondo que response.dados é o JSON
+              // processarDadosSemanal(userData)
+              // Definir o valor no input correto
+              if (
+                [
+                  "Segunda-feira",
+                  "Terça-feira",
+                  "Quarta-feira",
+                  "Quinta-feira",
+                  "Sexta-feira",
+                ].includes(diaAtual)
+              ) {
+                document.getElementById(inputId).value = valorHora;
+              } else if (["Sábado", "Domingo"].includes(diaAtual)) {
+                document.getElementById(inputId).value = valorHora;
+              }
+            } else {
+              alert("Erro de retorno");
+            }
+          },
+          error: function (error) {
+            console.error("Erro Escala ==>", error);
+          },
+        });
+      }
+
+      // Função para alternar a visibilidade da senha
+      function togglePasswordVisibility(inputId) {
+        const inputField = document.getElementById(inputId);
+        const icon =
+          inputField.nextElementSibling.querySelector(".material-icons");
+
+        if (inputField.type === "password") {
+          inputField.type = "text";
+          icon.textContent = "visibility_off";
+        } else {
+          inputField.type = "password";
+          icon.textContent = "visibility";
+        }
+      }
+    </script>
+
+    <script id="registroDcoumentacao">
+      function abrirModalDocFicha() {
+        // Verifica se o modal já foi criado, se não, cria um novo
+        if (!document.getElementById("dynamicModal")) {
+          const modalContent = `
+   <div class="modal fade" id="dynamicModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+
+  <div class="modal-dialog">
+    <div class="modal-content w-100">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalLabel">Novo Registro</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form id="registroForm">                
+
+                  <div class="input-group mb-3">
+                    <span class="input-group-text" for="selectColaborador">Colaborador</span>
+                    <select class="form-control scColaborador" id="selectColaborador" required>
+                      <option value="" selected>Selecione um colaborador</option>
+                      <option value="1">Colaborador 1</option>
+                      <option value="2">Colaborador 2</option>
+                    </select>
+                  </div>
+
+                  <div class="input-group mb-3">
+                    <span class="input-group-text" for="modalInputDocumento">Número do Documento</span>
+                    <input type="text" class="form-control scDocumento" id="modalInputDocumento" placeholder="Número do documento" required>
+                  </div>
+
+
+                <div class="input-group mb-3">
+                  <span for="modalInputData" class="input-group-text">Data</span>
+                  <input type="date" class="form-control scData" id="modalInputData" required>
+                </div>
+                
+
+                  <div class="input-group mb-5">
+                    <input type="file" class="form-control scArquivo" id="inputGroupFile02" required>
+                    <label class="input-group-text" for="inputGroupFile02">Upload</label>
+                  </div>
+
+
+
+            </form>
+        </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+        <button type="button" class="btn btn-primary" onclick="salvarDados()">Salvar</button>
+      </div>
+    </div>
+  </div>
+</div>
+  `;
+
+          // Inserindo o modal no DOM
+          document.getElementById("modalPlaceholder").innerHTML = modalContent;
+        }
+
+        // Inicializando o modal e abrindo
+        const modal = new bootstrap.Modal(
+          document.getElementById("dynamicModal"),
+          {
+            keyboard: false,
           }
-        },
-        error: function (error) {
-          console.error("Erro ao autenticar", error);
-        },
-      });
+        );
+        carregarColaboradores();
+        modal.show();
+      }
+
+      function salvarDados() {
+        // Função para salvar os dados do modal (pode ser alterada para integração com backend)
+
+        const iDcolaborador = document.querySelector(".scColaborador").value;
+        const colaborador = extrairNomefeedBack("selectColaborador");
+        const numeroDocumento = document.querySelector(".scDocumento").value;
+        const dataRegistro = document.querySelector(".scData").value;
+        const arquivoInput = document.querySelector(".scArquivo"); // Campo de arquivo
+
+        if (
+          !colaborador ||
+          !numeroDocumento ||
+          !dataRegistro ||
+          !arquivoInput.files.length
+        ) {
+          mostrarAlerta("Por favor, preencha todos os campos.", 2);
+          return;
+        }
+        mostrarSpinner();
+
+        const arquivo = arquivoInput.files[0];
+
+        // Ler o arquivo como base64
+        const reader = new FileReader();
+        reader.onloadend = function () {
+          const arquivoBase64 = reader.result.split(",")[1]; // Remove a parte 'data:' do base64
+
+          const formData = new FormData();
+          formData.append("iDcolaborador", iDcolaborador);
+          formData.append("colaborador", colaborador);
+          formData.append("numeroDocumento", numeroDocumento);
+          formData.append("dataRegistro", dataRegistro);
+          formData.append("arquivo", arquivoBase64); // Arquivo codificado em base64
+          formData.append("mimeType", arquivo.type); // Tipo MIME do arquivo
+          formData.append("filename", arquivo.name); // Nome original do arquivo
+          formData.append("qualFuncao", "salvarFichaRegistros");
+
+          console.log(`
+          ID: ${formData.get("iDcolaborador")}
+          Nome: ${formData.get("colaborador")}
+          Numero do Documento: ${formData.get("numeroDocumento")}
+          Data do Registro: ${formData.get("dataRegistro")}
+          Arquivo: ${
+            formData.get("arquivo")
+              ? formData.get("arquivo").name
+              : "Nenhum arquivo"
+          }
+        `);
+
+          // Envio via AJAX
+          $.ajax({
+            type: "POST",
+            url: urlAjax,
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function (response) {
+              console.log(response);
+              esconderSpinner();
+              if (response.situacao === true) {
+                mostrarAlerta(response.mensagem, 1);
+              } else {
+                mostrarAlerta(response.mensagem, 2);
+              }
+            },
+            error: function (err) {
+              esconderSpinner();
+              mostrarAlerta("Ocorreu um erro ao enviar os dados.", 2);
+            },
+          });
+        };
+
+        reader.readAsDataURL(arquivo); // Lê o arquivo como uma URL de dados (base64)
+      }
+
+      function carregaDadosFichaRegistro() {
+        mostrarSpinner();
+
+        $.ajax({
+          type: "POST",
+          url: urlAjax,
+          data: {
+            qualFuncao: "exportaDadosFichaRegistro",
+          },
+          success: function (response) {
+            esconderSpinner();
+            console.log(response);
+            if (response.situacao) {
+              let colaboradores = response.colaboradores;
+              try {
+                // Verifica se a lista de colaboradores não está vazia
+                if (!colaboradores || colaboradores.length === 0) {
+                  console.warn("Nenhum colaborador encontrado.");
+                  return;
+                }
+
+                const elementodados = document.getElementById(
+                  "list-exportaDadosFichaRegistro"
+                );
+
+                // Verifica se o elemento foi encontrado
+                if (!elementodados) {
+                  console.error(
+                    "Elemento com ID 'list-exportaDadosFichaRegistro' não encontrado."
+                  );
+                  return;
+                }
+
+                elementodados.innerHTML = ""; // Limpa a lista de colaboradores
+
+                // Cria os botões para cada dorador
+                colaboradores.forEach((d) => {
+                  const button = document.createElement("button");
+                  button.type = "button";
+                  button.className = "list-group-item list-group-item-action ";
+                  button.textContent = `Nome: ${d.nome}  Data Criacao: ${d.dataCriacao}  tamanho: ${d.tamanho}`;
+                  button.name = d.nome; // Atribui o evento de clique para abrir o PDF
+                  button.onclick = function () {
+                    abrirFichaRegistroPDF(d.link);
+                  };
+
+                  elementodados.appendChild(button);
+                });
+
+                // Marca o primeiro item como selecionado
+                if (elementodados.firstChild) {
+                  elementodados.firstChild.classList.add("active");
+                }
+              } catch (error) {
+                console.error("Erro ao carregar Dados: ", error);
+              }
+            } else {
+              alert("Erro ao carregar os Dados.");
+            }
+          },
+          error: function (error) {
+            esconderSpinner();
+            console.error("Erro na requisição AJAX:", error);
+          },
+        });
+      }
+    </script>
+    <!-- Fazer teste -->
+    <script>
+      function extrairNomefeedBack(inputId) {
+        // Obtendo o elemento de select pelo ID
+        let selectElement = document.getElementById(inputId);
+
+        // Verificando se o elemento existe no DOM
+        if (!selectElement) {
+          console.error("Elemento não encontrado.");
+          return false;
+        }
+
+        // Capturando o índice da opção selecionada
+        const selectedIndex = selectElement.selectedIndex;
+
+        // Verificando se há uma opção selecionada válida
+        if (selectedIndex === -1) {
+          console.error("Nenhuma opção selecionada.");
+          return false;
+        }
+
+        // Retornando o texto da opção selecionada
+        return selectElement.options[selectedIndex].text;
+      }
+
+      // TODO Fazer Teste
+      chamaTemplate("registrosDOC");
+      // controlarExibicaoAccordion();
     </script>
   </body>
 </html>
+<div class="list-group">
+  <a
+    href="#"
+    class="list-group-item list-group-item-action list-group-item-success"
+    onclick="chamaTemplate('templatefichaDeregistros')"
+    >Ficha de Registro</a
+  >
+  <a
+    href="#"
+    class="list-group-item list-group-item-action list-group-item-success"
+    onclick="chamaTemplate('extratoPagamento')"
+    >Extrato de Pagamentos</a
+  >
+  <a
+    href="#"
+    class="list-group-item list-group-item-action list-group-item-success"
+    onclick="chamaTemplate('extratoPontosMarcacao')"
+    >Extrato de marcação de pontos</a
+  >
+</div>

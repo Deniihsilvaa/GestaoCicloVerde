@@ -703,284 +703,6 @@
           </div>
         </template>
 
-        <template id="registrosDOC">
-          <div class="card">
-            <div class="card text-bg-light mb-3" style="max-width: 100%">
-              <div class="card-header">Registro de Documentação</div>
-              <div class="card-body mb-3" id="fmr-registros">
-                <div class="row">
-                  <div class="col-md-3">
-                    <label for="idRegistro" class="form-label">ID</label>
-                    <input
-                      type="text"
-                      class="form-control"
-                      id="idRegistro"
-                      placeholder="00"
-                    />
-                  </div>
-                  <div class="col-md-3">
-                    <label for="nomeColaboradorREGISTRO" class="form-label"
-                      >Nome</label
-                    >
-                    <select
-                      class="form-select"
-                      id="nomeColaboradorREGISTRO"
-                      aria-label="Colaborador"
-                    >
-                      <option selected>Selecione um colaborador</option>
-                      <option value="1">1</option>
-                    </select>
-                  </div>
-                  <div class="col-md-3">
-                    <label for="dataREGISTRO" class="form-label">Data</label>
-                    <input type="date" class="form-control" id="dataREGISTRO" />
-                  </div>
-                </div>
-
-                <div class="row mt-3">
-                  <div class="col-md-6">
-                    <div class="card">
-                      <h5 class="card-header">Upload Documentação</h5>
-                      <div class="card-body">
-                        <div class="row">
-                          <div class="col-md-6">
-                            <button id="opener" onclick="dlTipoDocumentacao()">
-                              <span
-                                class="material-symbols-outlined icon-tipoDoC"
-                                >add_task</span
-                              >
-                            </button>
-                            <label for="tipoDocumentacao" class="form-label"
-                              >Tipo de Documentação</label
-                            >
-                            <select
-                              class="form-select"
-                              id="tipoDocumentacao"
-                              aria-label="Tipo de Documentação"
-                            >
-                              <option selected>Selecione o tipo</option>
-                              <option value="1">Ficha de registro</option>
-                              <option value="2">Two</option>
-                              <option value="3">Three</option>
-                            </select>
-                          </div>
-                          <div class="col-md-6">
-                            <label for="scColaboradorDoc" class="form-label"
-                              >Colaborador</label
-                            >
-                            <select
-                              class="form-control scColaborador"
-                              name="scColaborador"
-                              id="scColaboradorDoc"
-                            >
-                              <option selected>Selecione um colaborador</option>
-                              <option></option>
-                            </select>
-                          </div>
-                        </div>
-                        <div class="input-group mt-3">
-                          <input
-                            type="file"
-                            class="form-control"
-                            id="inputDocumentacaoFile"
-                            aria-describedby="inputGroupFileAddon04"
-                            aria-label="Upload"
-                          />
-                          <button
-                            class="btn btn-outline-secondary"
-                            type="button"
-                            onclick="uploadFile()"
-                          >
-                            Enviar
-                          </button>
-                        </div>
-                        <div class="row mt-3">
-                          <div class="col-md-12">
-                            <button
-                              type="button"
-                              class="btn btn-success"
-                              style="max-width: 18vh"
-                            >
-                              Registrar
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="col-md-6">
-                    <div class="card">
-                      <h5 class="card-header">Upload Exame</h5>
-                      <div class="card-body">
-                        <div class="row">
-                          <div class="col-md-6">
-                            <button id="opener2" onclick="dlTipoExame()">
-                              <span
-                                class="material-symbols-outlined icon-tipoDoC"
-                                >add_task</span
-                              >
-                            </button>
-                            <label for="tipodeExame" class="form-label"
-                              >Tipo de Exame</label
-                            >
-                            <select
-                              class="form-select"
-                              id="tipodeExame"
-                              aria-label="Tipo de Exame"
-                            >
-                              <option selected>Selecione o tipo</option>
-                              <!-- <option value="1">ASO</option>
-                                <option value="2">Atestado</option>
-                                <option value="3">Outro</option> -->
-                            </select>
-                          </div>
-                          <div class="col-md-6">
-                            <label for="scColaboradorExame" class="form-label"
-                              >Colaborador</label
-                            >
-                            <select
-                              class="form-control scColaborador"
-                              name="scColaborador"
-                              id="scColaboradorExame"
-                            >
-                              <option selected>Selecione um colaborador</option>
-                              <option></option>
-                            </select>
-                          </div>
-                        </div>
-                        <div class="input-group mt-3">
-                          <input
-                            type="file"
-                            class="form-control"
-                            id="inputExameFile"
-                            aria-describedby="inputGroupFileAddon04"
-                            aria-label="Upload"
-                          />
-                          <button
-                            class="btn btn-outline-secondary"
-                            type="button"
-                            onclick="uploadFile()"
-                          >
-                            Enviar
-                          </button>
-                        </div>
-                        <div class="row mt-3">
-                          <div class="col-md-12">
-                            <button
-                              type="button"
-                              class="btn btn-success"
-                              style="max-width: 18vh"
-                            >
-                              Registrar
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="card">
-              <div class="card text-bg-light mb-3" style="max-width: 100%">
-                <div class="card-header">Documentação</div>
-                <div class="card-body mb-3">
-                  <div class="row mt-3">
-                    <div class="col-md-6">
-                      <div class="card">
-                        <h5 class="card-header">Atestado Médico</h5>
-                        <div class="card-body">
-                          <div class="row">
-                            <div class="col-md-6">
-                              <label for="inputDataAtestado" class="form-label"
-                                >Data de Atestado</label
-                              >
-                              <input
-                                type="date"
-                                class="form-control mb-2"
-                                id="inputDataAtestado"
-                              />
-                            </div>
-                            <div class="col-md-6">
-                              <label for="input-sumOfDays" class="form-label"
-                                >Total de dias Afastado</label
-                              >
-                              <input
-                                type="number"
-                                name="input-sumOfDays"
-                                id="input-sumOfDays"
-                                class="form-control"
-                              />
-                            </div>
-                            <div class="col-md-6">
-                              <label
-                                for="inputDataAtestadoretorno"
-                                class="form-label"
-                                >Data de retorno</label
-                              >
-                              <input
-                                type="date"
-                                class="form-control mb-2"
-                                id="inputDataAtestadoretorno"
-                              />
-                            </div>
-                            <div class="col-md-6">
-                              <label
-                                for="scColaboradorAtestado"
-                                class="form-label"
-                                >Colaborador</label
-                              >
-                              <select
-                                class="form-control scColaborador"
-                                name="scColaborador"
-                                id="scColaboradorAtestado"
-                              >
-                                <option selected>
-                                  Selecione um colaborador
-                                </option>
-                                <option></option>
-                              </select>
-                            </div>
-                          </div>
-                          <div class="input-group mt-3">
-                            <input
-                              type="file"
-                              class="form-control"
-                              id="inputAtestadoFile"
-                              aria-describedby="inputGroupFileAddon04"
-                              aria-label="Upload"
-                            />
-                            <button
-                              class="btn btn-outline-secondary"
-                              type="button"
-                              onclick="uploadFile()"
-                            >
-                              Enviar
-                            </button>
-                          </div>
-                          <div class="row mt-3">
-                            <div class="col-md-12">
-                              <button
-                                type="button"
-                                class="btn btn-success"
-                                style="max-width: 18vh"
-                              >
-                                Registrar
-                              </button>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </template>
-
         <template id="registroPagamentosColaboradores">
           <div class="card">
             <div class="card text-bg-light mb-3" style="max-width: 100%">
@@ -3640,7 +3362,47 @@
             </div>
           </div>
         </template>
+        <template id="registrosDOC">
+          <div class="card text-bg-light mb-3 w-100">
+            <div class="card-header">Registro de Documentação</div>
+            <div class="card-body mb-3" id="fmr-registros">
+              <div class="list-group">
+                <ul class="list-group list-group-flush">
+                  <button
+                    type="button"
+                    class="list-group-item list-group-item-action"
+                    id="abrirModalBtn"
+                    onclick="abrirModalDocFicha()"
+                  >
+                    Doc - Ficha de Registros
+                  </button>
 
+                  <button
+                    type="button"
+                    class="list-group-item list-group-item-action"
+                  >
+                    A second button item
+                  </button>
+                  <button
+                    type="button"
+                    class="list-group-item list-group-item-action"
+                  >
+                    A second button item
+                  </button>
+                </ul>
+              </div>
+
+              <div class="row">
+                <span class="placeholder col-6"></span>
+                <h2>Dados</h2>
+                <span class="placeholder col-6"></span>
+              </div>
+            </div>
+          </div>
+        </template>
+
+        <!-- Modal Structure Placeholder -->
+        <div id="modalPlaceholder"></div>
         <!-- Modal de Feedback -->
         <div
           class="modal fade"
@@ -6223,6 +5985,7 @@
             dados: user,
           },
           success: function (response) {
+            console.log("Retorno", response);
             esconderSpinner();
             if (response.situacao) {
               let colaboradores = response.colaboradores;
@@ -6876,6 +6639,7 @@
         });
       }
     </script>
+
     <!-- Fazer teste -->
     <script>
       // TODO Fazer Teste
