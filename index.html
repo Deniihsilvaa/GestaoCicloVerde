@@ -6472,15 +6472,9 @@
           conteudo.innerHTML = `
       <div class="card">
         <div class="form-check">
-          <input class="form-check-input" type="checkbox" value="mostrar" id="flexCheckMostrar" checked onchange="alternarCheck('mostrar')">
+          <input class="form-check-input" type="checkbox" value="mostrar" id="flexCheckMostrar" checked onchange="alternarCheck()">
           <label class="form-check-label" for="flexCheckMostrar">
             Mostrar identificação
-          </label>
-        </div>
-        <div class="form-check">
-          <input class="form-check-input" type="checkbox" value="naoMostrar" id="flexCheckNaoMostrar" onchange="alternarCheck('naoMostrar')">
-          <label class="form-check-label" for="flexCheckNaoMostrar">
-            Não mostrar identificação
           </label>
         </div>
       </div>
@@ -6493,13 +6487,10 @@
       // Função para alternar a seleção dos checkboxes
       function alternarCheck(opcao) {
         const checkMostrar = document.getElementById("flexCheckMostrar");
-        const checkNaoMostrar = document.getElementById("flexCheckNaoMostrar");
-
-        if (opcao === "mostrar") {
-          checkNaoMostrar.checked = !checkMostrar.checked;
-        } else if (opcao === "naoMostrar") {
+        const checkInf = checkMostrar.checked;
+        
+        if (!checkInf) {
           mostrarAlerta("Seu nome não sera mostrado na solicitação.", 2);
-          checkMostrar.checked = !checkNaoMostrar.checked;
         }
       }
     </script>
