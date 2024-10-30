@@ -6328,41 +6328,109 @@
         });
       }
     </script>
-    <script id="MenuInicialColaborador">
-      function carregarMenuAreaColaborador() {
-        let userData = JSON.parse(localStorage.getItem("usuarioLogado"));
+<script id="MenuInicialColaborador">
+  function carregarMenuAreaColaborador() {
+    let userData = JSON.parse(localStorage.getItem("usuarioLogado"));
+    
+    if (!userData) {
+      console.error("Usuário não encontrado no localStorage.");
+      return;
+    }
 
-        if (!userData) {
-          console.error("ID de usuário não encontrado no localStorage.");
-          return;
-        }
-        let nome = userData.nome;
-        let conteudoAreaColaborador = document.getElementById(
-          "conteudoAreaColaborador"
-        );
-        if (conteudoAreaColaborador) {
-          conteudoAreaColaborador.innerHTML = `
-          <div class="card">
-            <div class="card-body">
-              <h5 class="card-title">Ola! ${nome}</h5>
-              <p class="card-text">Abaixo possui alguns links para te auxiliar na suas opções</p>
-              <div class="list-group">
-                <a href="#" class="list-group-item list-group-item-action list-group-item-success" onclick="chamaTemplate('templatefichaDeregistros')">Ficha de Registro</a>
-                <a href="#" class="list-group-item list-group-item-action list-group-item-success" onclick="chamaTemplate('extratoPagamento')">Extrato de Pagamentos</a>
-                <a href="#" class="list-group-item list-group-item-action list-group-item-success" onclick="chamaTemplate('extratoPontosMarcacao')">Extrato de marcação de pontos</a>
+    let idLocalStorage = userData.id;
+    let nome = userData.nome;
+    
+    if (!idLocalStorage) {
+      console.error("ID de usuário não encontrado no localStorage.");
+      return;
+    }
+
+    const conncetAjax = $.ajax({
+      type: "POST",
+      url: urlAjax,
+      data: {
+        qualFuncao: "carregarDadosiniciais",
+        dados: JSON.stringify(idLocalStorage),
+      },
+      success: function (response) {
+        esconderSpinner();
+        
+        
+        let situacao = response.situacao;
+        if (situacao) {
+          // Preenchendo informações da resposta
+          let { dataEntrada, idade, funcao, salario, valeTransporte} = response.dados[0] || {};
+          let tempoEmpresa = response.dados[0].tempoEmpresa;
+        // Formata o objeto 'tempoEmpresa' para uma string com apenas os valores
+        let tempoEmpresaFormatado = `${tempoEmpresa.anos} anos, ${tempoEmpresa.meses} meses, ${tempoEmpresa.dias} dias`;
+
+        console.log(response.dados[0]);
+          // Carregar o conteúdo do colaborador
+          let conteudoAreaColaborador = document.getElementById("conteudoAreaColaborador");
+          if (conteudoAreaColaborador) {
+            conteudoAreaColaborador.innerHTML = `
+              <div class="card">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col shadow">
+                      <h5 class="card-title">Olá, ${nome}!</h5>
+                      <p class="card-text">Abaixo estão alguns links para te auxiliar nas suas opções:</p>
+                      <div class="list-group">
+                        <a href="#" class="list-group-item list-group-item-action list-group-item-success" onclick="chamaTemplate('templatefichaDeregistros')">Ficha de Registro</a>
+                        <a href="#" class="list-group-item list-group-item-action list-group-item-success" onclick="chamaTemplate('extratoPagamento')">Extrato de Pagamentos</a>
+                        <a href="#" class="list-group-item list-group-item-action list-group-item-success" onclick="chamaTemplate('extratoPontosMarcacao')">Extrato de marcação de pontos</a>
+                      </div>
+                    </div>
+                    <div class="col shadow">
+                      <div class="table-responsive">
+                        <table class="table">
+                          <thead>
+                            <tr>
+                              <th scope="col">#</th>
+                              <th scope="col">Nome</th>
+                              <th scope="col">Data de entrada</th>
+                              <th scope="col">Tempo de empresa</th>
+                              <th scope="col">Idade</th>
+                              <th scope="col">Cargo</th>
+                              <th scope="col">Salário</th>
+                              <th scope="col">Vale Transporte</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <th scope="row">1</th>
+                              <td>${nome}</td>
+                              <td>${dataEntrada || '-'}</td>
+                              <td>${tempoEmpresaFormatado || '-'}</td>
+                              <td>${idade || '-'}</td>
+                              <td>${funcao || '-'}</td>
+                              <td>${salario || '-'}</td>
+                              <td>${valeTransporte || '-'}</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-
-
-              
-              
-            </div>
-          </div>
-        `;
+              </div>
+            `;
+          } else {
+            console.error("Elemento 'conteudoAreaColaborador' não encontrado.");
+          }
+          
         } else {
-          console.error("Elemento 'conteudoAreaColaborador' não encontrado");
+          mostrarAlerta(response.mensagem, 2);
         }
+      },
+      error: function (error) {
+        esconderSpinner();
+        mostrarAlerta("Erro ao carregar dados. Tente novamente.", 2);
       }
-    </script>
+    });
+  }
+</script>
+
     <script id="coletarFedBakc">
       function enviarFeedback() {
         let userData = JSON.parse(localStorage.getItem("usuarioLogado"));
