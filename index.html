@@ -6331,7 +6331,7 @@
 <script id="MenuInicialColaborador">
   function carregarMenuAreaColaborador() {
     let userData = JSON.parse(localStorage.getItem("usuarioLogado"));
-    
+    mostrarSpinner();
     if (!userData) {
       console.error("Usuário não encontrado no localStorage.");
       return;
@@ -6354,7 +6354,6 @@
       },
       success: function (response) {
         esconderSpinner();
-        
         
         let situacao = response.situacao;
         if (situacao) {
