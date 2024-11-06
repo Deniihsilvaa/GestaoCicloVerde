@@ -473,8 +473,9 @@
       }
 
       .modal-content {
-        width: 20rem;
-      }
+    width: 62vw;
+    top: -10rem;
+  }
 
       .alert-overlay {
         position: fixed;
@@ -2552,45 +2553,28 @@
         </template>
 
         <template id="analiseDeRegistroColaboradores">
-          <div class="card">
+          <div class="card p-lg-2">
+            <h1 class="card-header">Extrato de Colaboradores - Ciclo Verde</h1>
             <div class="card-body">
-              <h1 class="card-title">Extrato de Colaboradores - Ciclo Verde</h1>
-              <div class="row">
-                <!-- Formulário de Registro de Pagamento -->
-
-                <div class="col-md-12">
-                  <div class="card mt-4">
-                    <div class="card-body w-100">
-                      <table
-                        class="table table-striped table-inverse table-responsive"
-                      >
-                        <thead class="thead-default">
-                          <tr>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr>
-                            <td scope="row"></td>
-                            <td></td>
-                            <td></td>
-                          </tr>
-                          <tr>
-                            <td scope="row"></td>
-                            <td></td>
-                            <td></td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
-                </div>
+              <div id="template_analiseDeRegistroColaboradores"></div>
+            </div>
+          </div>
+          <!-- Modal de Edição -->
+          <div class="modal" id="modalAnaliseRegistros">
+            <div class="modal-content">
+              <span class="close" id="closeModalAnaliseRegistros">&times;</span>
+              <div id="modalBodyAnaliseRegistros"></div>
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  onclick="EditarDadosTarefas()"
+                  class="btn btn-primary"
+                >
+                  Editar
+                </button>
               </div>
             </div>
           </div>
-
           <!-- Conteúdo que será carregado dinamicamente -->
         </template>
 
@@ -3891,6 +3875,7 @@
 
             break;
           case "analiseDeRegistroColaboradores":
+            montarAnaliseRG();
             break;
           case "analiseDeRegistroFerias":
             break;
@@ -5985,7 +5970,6 @@
             dados: user,
           },
           success: function (response) {
-            console.log("Retorno", response);
             esconderSpinner();
             if (response.situacao) {
               let colaboradores = response.colaboradores;
@@ -6328,46 +6312,48 @@
         });
       }
     </script>
-<script id="MenuInicialColaborador">
-  function carregarMenuAreaColaborador() {
-    let userData = JSON.parse(localStorage.getItem("usuarioLogado"));
-    mostrarSpinner();
-    if (!userData) {
-      console.error("Usuário não encontrado no localStorage.");
-      return;
-    }
+    <script id="MenuInicialColaborador">
+      function carregarMenuAreaColaborador() {
+        let userData = JSON.parse(localStorage.getItem("usuarioLogado"));
+        mostrarSpinner();
+        if (!userData) {
+          console.error("Usuário não encontrado no localStorage.");
+          return;
+        }
 
-    let idLocalStorage = userData.id;
-    let nome = userData.nome;
-    
-    if (!idLocalStorage) {
-      console.error("ID de usuário não encontrado no localStorage.");
-      return;
-    }
+        let idLocalStorage = userData.id;
+        let nome = userData.nome;
 
-    const conncetAjax = $.ajax({
-      type: "POST",
-      url: urlAjax,
-      data: {
-        qualFuncao: "carregarDadosiniciais",
-        dados: JSON.stringify(idLocalStorage),
-      },
-      success: function (response) {
-        esconderSpinner();
-        
-        let situacao = response.situacao;
-        if (situacao) {
-          // Preenchendo informações da resposta
-          let { dataEntrada, idade, funcao, salario, valeTransporte} = response.dados[0] || {};
-          let tempoEmpresa = response.dados[0].tempoEmpresa;
-        // Formata o objeto 'tempoEmpresa' para uma string com apenas os valores
-        let tempoEmpresaFormatado = `${tempoEmpresa.anos} anos, ${tempoEmpresa.meses} meses, ${tempoEmpresa.dias} dias`;
+        if (!idLocalStorage) {
+          console.error("ID de usuário não encontrado no localStorage.");
+          return;
+        }
 
-        console.log(response.dados[0]);
-          // Carregar o conteúdo do colaborador
-          let conteudoAreaColaborador = document.getElementById("conteudoAreaColaborador");
-          if (conteudoAreaColaborador) {
-            conteudoAreaColaborador.innerHTML = `
+        const conncetAjax = $.ajax({
+          type: "POST",
+          url: urlAjax,
+          data: {
+            qualFuncao: "carregarDadosiniciais",
+            dados: JSON.stringify(idLocalStorage),
+          },
+          success: function (response) {
+            esconderSpinner();
+
+            let situacao = response.situacao;
+            if (situacao) {
+              // Preenchendo informações da resposta
+              let { dataEntrada, idade, funcao, salario, valeTransporte } =
+                response.dados[0] || {};
+              let tempoEmpresa = response.dados[0].tempoEmpresa;
+              // Formata o objeto 'tempoEmpresa' para uma string com apenas os valores
+              let tempoEmpresaFormatado = `${tempoEmpresa.anos} anos, ${tempoEmpresa.meses} meses, ${tempoEmpresa.dias} dias`;
+
+              // Carregar o conteúdo do colaborador
+              let conteudoAreaColaborador = document.getElementById(
+                "conteudoAreaColaborador"
+              );
+              if (conteudoAreaColaborador) {
+                conteudoAreaColaborador.innerHTML = `
               <div class="card">
                 <div class="card-body">
                   <div class="row">
@@ -6399,12 +6385,12 @@
                             <tr>
                               <th scope="row">1</th>
                               <td>${nome}</td>
-                              <td>${dataEntrada || '-'}</td>
-                              <td>${tempoEmpresaFormatado || '-'}</td>
-                              <td>${idade || '-'}</td>
-                              <td>${funcao || '-'}</td>
-                              <td>${salario || '-'}</td>
-                              <td>${valeTransporte || '-'}</td>
+                              <td>${dataEntrada || "-"}</td>
+                              <td>${tempoEmpresaFormatado || "-"}</td>
+                              <td>${idade || "-"}</td>
+                              <td>${funcao || "-"}</td>
+                              <td>${salario || "-"}</td>
+                              <td>${valeTransporte || "-"}</td>
                             </tr>
                           </tbody>
                         </table>
@@ -6414,21 +6400,22 @@
                 </div>
               </div>
             `;
-          } else {
-            console.error("Elemento 'conteudoAreaColaborador' não encontrado.");
-          }
-          
-        } else {
-          mostrarAlerta(response.mensagem, 2);
-        }
-      },
-      error: function (error) {
-        esconderSpinner();
-        mostrarAlerta("Erro ao carregar dados. Tente novamente.", 2);
+              } else {
+                console.error(
+                  "Elemento 'conteudoAreaColaborador' não encontrado."
+                );
+              }
+            } else {
+              mostrarAlerta(response.mensagem, 2);
+            }
+          },
+          error: function (error) {
+            esconderSpinner();
+            mostrarAlerta("Erro ao carregar dados. Tente novamente.", 2);
+          },
+        });
       }
-    });
-  }
-</script>
+    </script>
 
     <script id="coletarFedBakc">
       function enviarFeedback() {
@@ -6555,7 +6542,7 @@
       function alternarCheck(opcao) {
         const checkMostrar = document.getElementById("flexCheckMostrar");
         const checkInf = checkMostrar.checked;
-        
+
         if (!checkInf) {
           mostrarAlerta("Seu nome não sera mostrado na solicitação.", 2);
         }
@@ -6671,7 +6658,7 @@
           senhaAtual,
           novaSenha,
         };
-        console.log(dadosParaEnvio);
+        // console.log(dadosParaEnvio);
         // Exemplo de envio via AJAX
         $.ajax({
           type: "POST",
@@ -6697,12 +6684,301 @@
         });
       }
     </script>
+    <!-- Script template_analiseDeRegistros -->
+    <script>
+      // Funcao Generica
+      function chamarAjax(qualFuncao, dados, callbackSucesso) {
+        $.ajax({
+          type: "POST",
+          url: urlAjax,
+          data: {
+            qualFuncao: qualFuncao,
+            dados: JSON.stringify(dados),
+          },
+          success: function (response) {
+            esconderSpinner();
 
+            if (response.situacao) {
+              // Chama a função de callback com a resposta como argumento
+              callbackSucesso(response);
+              // mostrarAlerta(response.mensagem, 1);
+            } else {
+              mostrarAlerta(response.mensagem, 2);
+            }
+          },
+          error: function () {
+            esconderSpinner();
+            mostrarAlerta("Erro ao carregar dados. Tente novamente.", 2);
+          },
+        });
+      }
+      // Funcao Generica
+      function montarAnaliseRG() {
+        const tpl = document.getElementById(
+          "template_analiseDeRegistroColaboradores"
+        );
+
+        if (!tpl) {
+          console.error(
+            "Elemento 'template_analiseDeRegistroColaboradores' não encontrado."
+          );
+          return;
+        }
+
+        const divCard = (title, content) => {
+          return `
+      <div class="col-md-3 mb-3 coluCard d-grid">
+        <div class="divCard shadow border-1">
+          <h5 class="card-header">${title}</h5>
+          <div class="card-body text-center">
+            <p class="card-text">${content}</p>
+          </div>
+        </div>
+      </div>`;
+        };
+
+        // Primeira chamada AJAX para carregar os dados do card
+        chamarAjax("carregarAnaliseDeRegistros", null, function (response) {
+          let {
+            colabAtivos,
+            colabInativos,
+            totalCestaBasica,
+            totalSalario,
+            totalVt,
+          } = response.dados || {};
+          // console.log('retorno',response)
+          tpl.innerHTML = `
+      <div class="card">
+        <div class="card-header">Análise de Registros de Colaboradores</div>
+        <div class="card-body">
+          
+          <!-- Linha de Cards com Informações Principais -->
+          <div class="row justify-content-between">
+            ${divCard("Colaboradores Ativos", colabAtivos)}
+            ${divCard("Colaboradores Inativos", colabInativos)}
+            ${divCard("Total Salário", totalSalario)}
+            ${divCard("Total Vale Transporte", totalVt)}
+            ${divCard("Total Cesta Básica", totalCestaBasica)}
+            
+          </div>
+          
+          <!-- Linha com Links e Tabela -->
+          <div class="row">
+            <div class="col-md-4 shadow">
+              <div class="list-group mb-3">
+                <a href="#" class="list-group-item list-group-item-action list-group-item-success" onclick="chamaTemplate('templatefichaDeregistros')">Ficha de Registro</a>
+                <a href="#" class="list-group-item list-group-item-action list-group-item-success" onclick="chamaTemplate('extratoPagamento')">Extrato de Pagamentos</a>
+                <a href="#" class="list-group-item list-group-item-action list-group-item-success" onclick="chamaTemplate('extratoPontosMarcacao')">Extrato de Marcação de Pontos</a>
+              </div>
+            </div>
+            
+            <div class="col-md-8 shadow">
+              <div class="table-responsive">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th scope="col">#</th>
+                      <th scope="col">Nome</th>
+                      <th scope="col">Data de Entrada</th>
+                      <th scope="col">Tempo de Empresa</th>
+                      <th scope="col">Idade</th>
+                      <th scope="col">Cargo</th>
+                      <th scope="col">Salário</th>
+                      <th scope="col">Vale Transporte</th>
+                    </tr>
+                  </thead>
+                  <tbody id="tabelaRegistros">
+                    <!-- Linhas serão inseridas dinamicamente -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          
+        </div>
+      </div>`;
+
+          // Segunda chamada AJAX para carregar os dados da tabela
+          chamarAjax("carregarAnaliseColaboradores", null, function (response) {
+            const tabelaRegistros = document.getElementById("tabelaRegistros");
+
+            if (!tabelaRegistros) {
+              console.error("Elemento 'tabelaRegistros' não encontrado.");
+              return;
+            }
+
+            if (response.dados && Array.isArray(response.dados)) {
+              // Adiciona cada item como uma nova linha na tabela
+              response.dados.forEach((item, index) => {
+                let tempoEmpresaFormatado;
+                if (item.tempoEmpresa.dias) {
+                  tempoEmpresaFormatado = `${item.tempoEmpresa.anos} anos, ${item.tempoEmpresa.meses} meses, ${item.tempoEmpresa.dias} dias`;
+                } else {
+                  tempoEmpresaFormatado = item.tempoEmpresa;
+                }
+
+                tabelaRegistros.innerHTML += `
+            <tr>
+              <th scope="row">${item.id}</th>
+              <td>${item.nome || "-"}</td>
+              <td>${item.dataEntrada || "-"}</td>
+              <td>${tempoEmpresaFormatado || "-"}</td>
+              <td>${item.idade || "-"}</td>
+              <td>${item.funcao || "-"}</td>
+              <td>${item.salario || "-"}</td>
+              <td>${item.valeTransporte || "-"}</td>
+              <td><button type="button" class="btn" onclick="editlineColaboradores(${
+                item.id
+              })"><span class="material-symbols-outlined">edit</span></button>
+      </td>
+            </tr>`;
+              });
+            } else {
+              tabelaRegistros.innerHTML = `<tr><td colspan="8">Nenhum dado encontrado</td></tr>`;
+            }
+          });
+        });
+      }
+      // TODO_Linha Atual Editando
+      function editlineColaboradores(id) {
+        // Mostrar o spinner enquanto carrega os dados
+        mostrarSpinner();
+        console.log("Verificação de id para envio:", id);
+        // Chamar a função AJAX com o ID do colaborador
+        chamarAjax(
+          "carregarDadosColaborador",
+          { idColaborador: id },
+          function (response) {
+            // Verifica se os dados foram recebidos com sucesso
+            // console.log('Retorno:',response)
+            if (response && response.situacao) {
+              // Preencher o modal com os dados do colaborador
+              const dados = response.colaboradores[0];
+              console.log("Retorno ", dados);
+              showModalAnaliseRG(dados);
+              // Exibir o modal
+              $("#modalEditarColaborador").modal("show");
+            } else {
+              mostrarAlerta("Erro ao carregar os dados do colaborador.", 2);
+            }
+          }
+        );
+      }
+      
+      function showModalAnaliseRG(dados) {
+      try {
+        mostrarSpinner();
+
+        const modal = document.getElementById("modalAnaliseRegistros");
+        const modalBody = document.getElementById("modalBodyAnaliseRegistros");
+        modalBody.innerHTML = ""; // Limpa o conteúdo do modal
+        modal.style.display = "block";
+
+        // Segunda chamada AJAX para carregar os dados da tabela
+        chamarAjax("carregarInputsCadastroColaboradores", null, function (response) {
+          if (response.situacao) {
+            const inputsText = response.inputs.inputsText || [];
+            const inputsSelect = response.inputs.inputsSelect || [];
+            const inputsData = response.inputs.inputsData || [];
+            const optionsSelect = response.inputs.optionsSelect || [];
+
+            let html = '<div class="container"><div class="row">';
+
+            // Função para criar inputs de texto
+            const createTextInput = (item) => {
+              const value = dados[item.id] || "";
+              return `
+                <div class="col-md-3 mb-3">
+                  <label for="${item.id}" class="form-label">${item.label}</label>
+                  <input type="text" class="form-control" id="${item.id}" name="${item.id}" value="${value}">
+                </div>
+              `;
+            };
+
+            // Função para criar selects com placeholder inicial
+            const createSelectInput = (item) => {
+              const value = dados[item.id] || "";
+              return `
+                <div class="col-md-3 mb-3">
+                  <label for="${item.id}" class="form-label">${item.label}</label>
+                  <select class="form-select" id="${item.id}" name="${item.id}">
+                    <option value="">Selecione...</option>
+                  </select>
+                </div>
+              `;
+            };
+
+            // Função para criar inputs de data
+            const createDateInput = (item) => {
+              const value = dados[item.id] || "";
+              return `
+                <div class="col-md-3 mb-3">
+                  <label for="${item.id}" class="form-label">${item.label}</label>
+                  <input type="date" class="form-control" id="${item.id}" name="${item.id}" value="${value}">
+                </div>
+              `;
+            };
+
+            // Montagem dos inputs de texto, selects e datas
+            inputsText.forEach((item) => {
+              html += createTextInput(item);
+            });
+            inputsSelect.forEach((item) => {
+              html += createSelectInput(item);
+            });
+            inputsData.forEach((item) => {
+              html += createDateInput(item);
+            });
+
+            html += '</div></div>'; // Fecha a linha e o container
+            modalBody.innerHTML = html; // Insere o conteúdo gerado no modal
+
+            // Função para preencher os selects com opções
+            const populateSelectOptions = () => {
+              optionsSelect.forEach((selectOption) => {
+                const selectElement = document.getElementById(selectOption.id);
+                if (selectElement) {
+                  selectOption.options.forEach((optionValue) => {
+                    const optionElement = document.createElement("option");
+                    optionElement.value = optionValue;
+                    optionElement.textContent = optionValue;
+                    // Seleciona a opção se corresponde ao valor existente em 'dados'
+                    if (dados[selectOption.id] === optionValue) {
+                      optionElement.selected = true;
+                    }
+                    selectElement.appendChild(optionElement);
+                  });
+                }
+              });
+            };
+
+            // Chama a função para preencher os selects após o modal estar no DOM
+            populateSelectOptions();
+
+            // Configuração do botão de fechamento do modal
+            document.getElementById("closeModalAnaliseRegistros").onclick = function () {
+              modal.style.display = "none";
+            };
+          } else {
+            console.log("Erro ao carregar os dados da tabela." + response);
+            mostrarAlerta("Erro ao carregar os dados da tabela.", 2);
+          }
+        });
+      } catch (error) {
+        mostrarAlerta("Erro ao carregar os dados do colaborador.", 2);
+      } finally {
+        esconderSpinner();
+      }
+    }
+
+      // Funções para executar com o teste
+      montarAnaliseRG();
+    </script>
     <!-- Fazer teste -->
     <script>
       // TODO Fazer Teste
-      // chamaTemplate("car-logar");
-      controlarExibicaoAccordion();
+      chamaTemplate("analiseDeRegistroColaboradores");
+      // controlarExibicaoAccordion();
     </script>
   </body>
 </html>
