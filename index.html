@@ -617,72 +617,96 @@
           <div class="card text-bg-light mb-3" style="max-width: 100%">
             <div class="card-header">Pagamento - Ciclo Verde</div>
             <div class="card-body mb-3" id="fmr-registros">
-              <div class="row">
-                <div class="row mt-3">
-                  <div class="col-md-6">
-                    <div class="card">
-                      <h5 class="card-header"></h5>
-                      <div class="card-body">
-                        <div class="row">
-                          <div class="col-md-6">
-                            <label for="">Colaborador</label>
-                            <select class="form-control scColaborador" name="scColaborador">
-                            </select>
-                          </div>
-                          <div class="col-md-6">
-                            <label for="">Tipo de pagamento</label>
-                            <select class="form-control" name="sctipoPagamento sc-tipoPagamento" id="sctipoPagamento">
-                              <option value="">Selecione o tipo de Pagamento</option>
-                              <option value="salario">Salario</option>
-                              <option value="adiantamento">Adiantamento</option>
-                              <option value="aerias">Ferias</option>
-                              <option value="decimoTerceiro">Decimo Terceiro</option>
-                            </select>
-                          </div>
+              <div class="row mt-3">
 
-                          <div class="col-md-6 p-3">
-                            <label for="">Valor</label>
-                            <input type="number" name="" id="" />
-                          </div>
-                          <div class="col-md-6 p3">
-                            <label for="">Situação</label>
-                            <select class="form-control" name="sctiposituacao sc-situacao" id="sctiposituacao">
-                              <option>Pago</option>
-                              <option>Pendente</option>
-                              <option>Cancelado</option>
-                              <option>Negado</option>
-                            </select>
-                          </div>
+                <div class="card">
+                  <h5 class="card-header"></h5>
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col-md-4 p-3">
+                        <div class="form-floating">
+                          <select class="form-select scColaborador formRPC valid" aria-label="Selecione um colaborador"
+                            id="colaboradorRPC">
+                          </select>
+                          <label for="colaboradorRPC">Colaborador</label>
                         </div>
-
-                        <div class="row mt-3">
-                          <div class="col-md-12">
-                            <button type="button" class="btn btn-success" style="max-width: 18vh">
-                              Registrar
-                            </button>
-                          </div>
+                      </div>
+                      <div class="col-md-4 p-3">
+                        <div class="form-floating">
+                          <select class="form-select formRPC valid" name="sctipoPagamento"
+                            aria-label="Tipo de Pagamento" id="sctipoPagamento">
+                            <option value="">Selecione o tipo de Pagamento</option>
+                            <option value="salario">Salario</option>
+                            <option value="adiantamento">Adiantamento</option>
+                            <option value="ferias">Ferias</option>
+                            <option value="decimoTerceiro">Decimo Terceiro</option>
+                          </select>
+                          <label for="sctipoPagamento">Tipo de pagamento</label>
+                        </div>
+                      </div>
+                      <div class="col-md-4 p-3">
+                        <div class="form-floating">
+                          <textarea class="form-control formRPC" placeholder="Leave a comment here" id=descricaoRPC
+                            style="height: 100px"></textarea>
+                          <label for=descricaoRPC>Descrição</label>
+                        </div>
+                      </div>
+                      <div class="col-md-4 p-3">
+                        <div class="form-floating">
+                          <input type="number" class="form-control formRPC" name="valorRPC" id="valorRPC" />
+                          <label for="valorRPC">Valor</label>
+                        </div>
+                      </div>
+                      <div class="col-md-4 p-3">
+                        <div class="form-floating">
+                          <input type="date" class="form-control formRPC" name="dataAgendamentoRPC"
+                            id="dataAgendamentoRPC" />
+                          <label for="dataAgendamentoRPC">Data</label>
+                        </div>
+                      </div>
+                      <div class="col-md-4 p-3">
+                        <div class="form-floating">
+                          <select class="form-select formRPC" aria-label="Situação" name="sctiposituacao"
+                            id="sctiposituacao">
+                            <option>Pago</option>
+                            <option>Pendente</option>
+                            <option>Cancelado</option>
+                            <option>Negado</option>
+                          </select>
+                          <label for="sctiposituacao">Situação</label>
                         </div>
                       </div>
                     </div>
-                  </div>
 
-                  <div class="row">
-                    <div class="card">
-                      <h5 class="card-header">Extrato</h5>
-                      <div class="card-body">
-                        <div class="row" id="conteudoRPC">
-                          <p class="placeholder-glow">
-                            <span class="placeholder col-12"></span>
-                          </p>
-                          <p class="placeholder-glow">
-                            <span class="placeholder col-12"></span>
-                          </p>
-                        </div>
+                    <div class="row mt-3">
+                      <div class="col-md-12">
+                        <button type="button" class="btn btn-success" style="max-width: 18vh" onclick="saveDataRPC()">
+                          >
+                          Registrar
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <p></p>
+                <div class="row">
+                  <div class="card">
+                    <h5 class="card-header">Extrato</h5>
+                    <div class="card-body">
+                      <div class="row" id="conteudoRPC">
+                        <p class="placeholder-glow">
+                          <span class="placeholder col-12"></span>
+                        </p>
+                        <p class="placeholder-glow">
+                          <span class="placeholder col-12"></span>
+                        </p>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
+
             </div>
           </div>
         </div>
@@ -730,45 +754,47 @@
 
               // Cabeçalho da Tabela
               let cabecalho = `
-          <thead>
-            <tr>
-              <th>Id</th>
-              <th>ID Colaborador</th>
-              <th>Colaborador</th>
-              <th>Valor de Pagamento</th>
-              <th>Descrição</th>
-              <th>Data</th>
-              <th>Situação</th>
-              <th>Data de Pagamento</th>
-              <th>Data de Registro</th>
-              <th>Id Doc Holerite</th>
-              <th>Link Comprovante</th>
-              <th>ID Doc</th>
-            </tr>
-          </thead>
-        `;
+        <thead>
+          <tr>
+            <th>Id</th>
+            <th>ID Colaborador</th>
+            <th>Colaborador</th>
+            <th>Valor de Pagamento</th>
+            <th>Descrição</th>
+            <th>Data</th>
+            <th>Situação</th>
+            <th></th>
+            <th>Data de Pagamento</th>
+          </tr>
+        </thead>
+      `;
               tabela.innerHTML = cabecalho;
 
               // Corpo da Tabela
               let corpoTabela = document.createElement("tbody");
+              let icone = '<img src="./img/iconeVisible1.png" class="logo-img mb-3 img-fluid" alt="Logo" />'
 
               response.forEach((dados) => {
                 let linha = document.createElement("tr");
+                let linkDocu = dados.LinkComprovante
+                let dLink = []
+                if (linkDocu) {
+                  dLink = `<td><a href="${dados.LinkComprovante}" class="btt" target="_blank">${icone}</a></td>`
+                } else {
+                  dLink = '<td><a href="#" target="_blank"></a></td>'
 
+                }
                 linha.innerHTML = `
-                <td>${dados.Id}</td>
-                <td>${dados.IDColab}</td>
-                <td>${dados.Colaborador}</td>
-                <td>${dados.Valor_De_Pagamento}</td>
-                <td>${dados.Descricao}</td>
-                <td>${dados.Data}</td>
-                <td>${dados.Situacao}</td>
-                <td>${dados.Data_de_Pagamento}</td>
-                <td>${dados.Data_Registro}</td>
-                <td>${dados.IdDocHolerite}</td>
-                <td><a href="${dados.LinkComprovante}" target="_blank">Comprovante</a></td>
-                <td>${dados.IDDoc}</td>
-            `;
+              <td>${dados.Id}</td>
+              <td>${dados.IDColab}</td>
+              <td>${dados.Colaborador}</td>
+              <td>${formatarMoeda(dados.Valor_De_Pagamento)}</td>
+              <td>${dados.Descricao}</td>
+              <td>${dados.Data}</td>
+              <td>${dados.Situacao}</td>
+              ${dLink}
+              <td>${dados.DataAgendamento}</td>
+          `;
                 corpoTabela.appendChild(linha);
               });
 
@@ -786,14 +812,18 @@
                     scrollY: 350,
                     scrollX: true,
                     autoWidth: false,
-                    order: [[0, "desc"]],
+                    order: [[5, "desc"]],
                     dom: "Bfrtip",
                     buttons: ["copy", "excel", "pdf"],
                     columnDefs: [
                       {
-                        targets: 1,
-                        className: "dt-body-center",
+                        targets: [0, 1, 8],
+                        visible: false
                       },
+                      {
+                        targets: [7],
+                        className: "dt-body-center"
+                      }
                     ],
                   });
                 }
@@ -804,6 +834,87 @@
             }
           }
 
+          async function saveDataRPC() {
+            let formularioRPC = document.querySelectorAll('.formRPC');
+            let dados = [];
+            let valor;
+            let idSelect;
+            let classInput;
+            let validacaoFalhou = false;
+
+            formularioRPC.forEach((element) => {
+              if (element.classList.contains('valid') && !element.value) {
+                element.classList.add('is-invalid');
+                validacaoFalhou = true;
+                console.log('validacao falhou');
+              } else {
+                element.classList.remove('is-invalid');
+              }
+            })
+
+            formularioRPC.forEach((element) => {
+              if (element.type === 'select-one') {
+                let option = element.options[element.selectedIndex];
+                valor = option.textContent;
+                idSelect = option.value;
+              } else {
+                valor = element.value;
+              }
+
+              dados.push({
+                type: element.type,
+                idSelect: idSelect || "",
+                id: element.id,
+                valor: valor
+              });
+            });
+
+            if (!validacaoFalhou) {
+              loadSaveDataRPC(dados).then((response) => {
+                esconderSpinner();
+              if (response) {
+                setTimeout(() => {
+                  mostrarAlerta(response, 1);
+                  console.log(response)
+                  criarTabelaRPC();
+                  formularioRPC.forEach((elementos)=>{
+                    elementos.value = '';
+                  })
+                }, 1000);
+              }
+            });
+            }
+            
+          }
+          async function loadSaveDataRPC(dados) {
+            // console.log('Dados para Salvar: ' + JSON.stringify(dados));
+            mostrarSpinner(); // Mostra um spinner enquanto os dados são carregados
+            return new Promise((resolve, reject) => {
+              // Faz a requisição AJAX para buscar colaboradores
+              $.ajax({
+                type: "POST",
+                url: urlAjax,
+                data: {
+                  qualFuncao: "salvarDadosPagamentos",
+                  dados:JSON.stringify(dados)
+                },
+                success: function (response) {
+                  esconderSpinner(); // Esconde o spinner após o carregamento
+                  if (response.situacao) {
+                    resolve(response.mensagem);
+                  } else {
+                    alert("Erro de retorno: " + response.mensagem);
+                  }
+                },
+                error: function (error) {
+                  esconderSpinner();
+                  console.error("Erro ao carregar Dados do Drive:", error);
+                },
+              });
+            });
+          }
+        
+        
         </script>
       </template>
 
@@ -2469,13 +2580,13 @@
         </div>
         <div class="caixaPDf">
           <button onclick="fecharPDF()" style="
-                position: absolute;
-                top: 10px;
-                right: 20px;
-                z-index: 10000;
-                background-color: red;
-                color: white;
-              ">
+              position: absolute;
+              top: 10px;
+              right: 20px;
+              z-index: 10000;
+              background-color: red;
+              color: white;
+            ">
             Fechar
           </button>
           <iframe id="pdfFichaRegistro" type="application/pdf" width="100%" height="100%"></iframe>
@@ -2718,29 +2829,29 @@
             Registros de Pagamentos
           </button>
           <!-- <button
-              class="ui-button ui-widget ui-corner-all"
-              name="registroRelogioDePonto"
-              onclick="chamaTemplate(this.name)"
-            >
-              Relógio De Ponto
-            </button> -->
+            class="ui-button ui-widget ui-corner-all"
+            name="registroRelogioDePonto"
+            onclick="chamaTemplate(this.name)"
+          >
+            Relógio De Ponto
+          </button> -->
           <button class="ui-button ui-widget ui-corner-all" name="registroVT" onclick="chamaTemplate(this.name)">
             Registro VT
           </button>
           <!-- <button
-              class="ui-button ui-widget ui-corner-all"
-              name="cadastroDeHorasExtras"
-              onclick="chamaTemplate(this.name)"
-            >
-              Registros de Hora extras
-            </button>
-            <button
-              class="ui-button ui-widget ui-corner-all"
-              name="cadastroDeHorasExtras"
-              onclick="chamaTemplate(this.name)"
-            >
-              Registros de Hora extras
-            </button> -->
+            class="ui-button ui-widget ui-corner-all"
+            name="cadastroDeHorasExtras"
+            onclick="chamaTemplate(this.name)"
+          >
+            Registros de Hora extras
+          </button>
+          <button
+            class="ui-button ui-widget ui-corner-all"
+            name="cadastroDeHorasExtras"
+            onclick="chamaTemplate(this.name)"
+          >
+            Registros de Hora extras
+          </button> -->
         </div>
         <!-- RegistrosNivel3 -->
         <h3><i class="bi bi-plus-lg"></i> Supervisao</h3>
@@ -2764,13 +2875,13 @@
             Cadastro de Hora extras
           </button>
           <!-- <button
-              class="ui-button ui-widget ui-corner-all"
-              enabled
-              name="solicitacaoLideranca"
-              onclick="chamaTemplate(this.name)"
-            >
-              Registros de Tarefas
-            </button> -->
+            class="ui-button ui-widget ui-corner-all"
+            enabled
+            name="solicitacaoLideranca"
+            onclick="chamaTemplate(this.name)"
+          >
+            Registros de Tarefas
+          </button> -->
         </div>
         <!-- Configuração -->
         <h3><i class="bi bi-file-plus"></i> Configuração</h3>
@@ -4471,35 +4582,35 @@
       const modal = document.getElementById("modalHorasExtra");
       const modalBodyHR = document.getElementById("modalBodyHR");
       modalBodyHR.innerHTML = `
-          <li class="list-group-item d-flex justify-content-between align-items-center">
-            <h3>Detalhes da Tarefa</h3>
-            <span class="badge bg-primary rounded-pill">${dado.qDiasSl}</span>
-          </li>
-          <ul class="list-group">
-          <li class="list-group-item EditslLideranca" id="${dado.id
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          <h3>Detalhes da Tarefa</h3>
+          <span class="badge bg-primary rounded-pill">${dado.qDiasSl}</span>
+        </li>
+        <ul class="list-group">
+        <li class="list-group-item EditslLideranca" id="${dado.id
         }">IDentificação: ${dado.id}</"li>
-          <li class="list-group-item">Tarefa: ${dado.tarefaAgendamentoSl}</li>
-          <li class="list-group-item">Responsável: ${dado.colaboradorSl}</li>
-          <li class="list-group-item">Prazo: ${dado.prazoAgendamento}</li>
-          <li class="list-group-item"> 
-          <div>
-            <label for="situacaoSelect">Situação:</label>
-            <select id="situacaoSelect" class="EditslLideranca">
-              <option value="Pendente" ${dado.situcaoAgendamentoSL === "Pendente" ? "selected" : ""
+        <li class="list-group-item">Tarefa: ${dado.tarefaAgendamentoSl}</li>
+        <li class="list-group-item">Responsável: ${dado.colaboradorSl}</li>
+        <li class="list-group-item">Prazo: ${dado.prazoAgendamento}</li>
+        <li class="list-group-item"> 
+        <div>
+          <label for="situacaoSelect">Situação:</label>
+          <select id="situacaoSelect" class="EditslLideranca">
+            <option value="Pendente" ${dado.situcaoAgendamentoSL === "Pendente" ? "selected" : ""
         }>Pendente</option>
-              <option value="Concluido" ${dado.situcaoAgendamentoSL === "Concluido" ? "selected" : ""
+            <option value="Concluido" ${dado.situcaoAgendamentoSL === "Concluido" ? "selected" : ""
         }>Concluído</option>
-              <!-- Adicione mais opções, se necessário -->
-            </select>
-          </div></li>
-          <li class="list-group-item">Obersavação:<textarea class="EditslLideranca"> ${dado.obsAgendamentoSl
+            <!-- Adicione mais opções, se necessário -->
+          </select>
+        </div></li>
+        <li class="list-group-item">Obersavação:<textarea class="EditslLideranca"> ${dado.obsAgendamentoSl
         }</textarea></li>
-          <li class="list-group-item">Data de Agendamento: ${dado.dataAgendamentoSl
+        <li class="list-group-item">Data de Agendamento: ${dado.dataAgendamentoSl
         }</li>
-          <li class="list-group-item">Última atualização: ${dado.dataUpdate
+        <li class="list-group-item">Última atualização: ${dado.dataUpdate
         }</li>
-          </ul>
-        `;
+        </ul>
+      `;
       modal.style.display = "block";
 
       // Fechar o modal
@@ -4685,8 +4796,8 @@
                 const cardText = document.createElement("p");
                 cardText.classList.add("card-text", "text-muted", "p-3");
                 cardText.innerHTML = `
-              Responsável: ${dado.colaboradorSl}<br>
-            `;
+            Responsável: ${dado.colaboradorSl}<br>
+          `;
 
                 cardBodyDiv.appendChild(cardTitle);
                 cardBodyDiv.appendChild(cardPrazo);
@@ -4731,35 +4842,35 @@
       const modal = document.getElementById("taskModal");
       const modalBodySL = document.getElementById("modalBodySL");
       modalBodySL.innerHTML = `
-          <li class="list-group-item d-flex justify-content-between align-items-center">
-            <h3>Detalhes da Tarefa</h3>
-            <span class="badge bg-primary rounded-pill">${dado.qDiasSl}</span>
-          </li>
-          <ul class="list-group">
-          <li class="list-group-item EditslLideranca" id="${dado.id
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          <h3>Detalhes da Tarefa</h3>
+          <span class="badge bg-primary rounded-pill">${dado.qDiasSl}</span>
+        </li>
+        <ul class="list-group">
+        <li class="list-group-item EditslLideranca" id="${dado.id
         }">IDentificação: ${dado.id}</"li>
-          <li class="list-group-item">Tarefa: ${dado.tarefaAgendamentoSl}</li>
-          <li class="list-group-item">Responsável: ${dado.colaboradorSl}</li>
-          <li class="list-group-item">Prazo: ${dado.prazoAgendamento}</li>
-          <li class="list-group-item"> 
-          <div>
-            <label for="situacaoSelect">Situação:</label>
-            <select id="situacaoSelect" class="EditslLideranca">
-              <option value="Pendente" ${dado.situcaoAgendamentoSL === "Pendente" ? "selected" : ""
+        <li class="list-group-item">Tarefa: ${dado.tarefaAgendamentoSl}</li>
+        <li class="list-group-item">Responsável: ${dado.colaboradorSl}</li>
+        <li class="list-group-item">Prazo: ${dado.prazoAgendamento}</li>
+        <li class="list-group-item"> 
+        <div>
+          <label for="situacaoSelect">Situação:</label>
+          <select id="situacaoSelect" class="EditslLideranca">
+            <option value="Pendente" ${dado.situcaoAgendamentoSL === "Pendente" ? "selected" : ""
         }>Pendente</option>
-              <option value="Concluido" ${dado.situcaoAgendamentoSL === "Concluido" ? "selected" : ""
+            <option value="Concluido" ${dado.situcaoAgendamentoSL === "Concluido" ? "selected" : ""
         }>Concluído</option>
-              <!-- Adicione mais opções, se necessário -->
-            </select>
-          </div></li>
-          <li class="list-group-item">Obersavação:<textarea class="EditslLideranca"> ${dado.obsAgendamentoSl
+            <!-- Adicione mais opções, se necessário -->
+          </select>
+        </div></li>
+        <li class="list-group-item">Obersavação:<textarea class="EditslLideranca"> ${dado.obsAgendamentoSl
         }</textarea></li>
-          <li class="list-group-item">Data de Agendamento: ${dado.dataAgendamentoSl
+        <li class="list-group-item">Data de Agendamento: ${dado.dataAgendamentoSl
         }</li>
-          <li class="list-group-item">Última atualização: ${dado.dataUpdate
+        <li class="list-group-item">Última atualização: ${dado.dataUpdate
         }</li>
-          </ul>
-        `;
+        </ul>
+      `;
       modal.style.display = "block";
 
       // Fechar o modal
@@ -4843,15 +4954,15 @@
 
       // Criando o conteúdo do alerta
       const alertContent = `
-    <div class="${classe}">
-      <div class="header">
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" onclick="fecharAlerta()"> </button>
-      </div>
-      <div class="alert-text">
-        <p>${mensagem}</p>
-      </div>
+  <div class="${classe}">
+    <div class="header">
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" onclick="fecharAlerta()"> </button>
     </div>
-  `;
+    <div class="alert-text">
+      <p>${mensagem}</p>
+    </div>
+  </div>
+`;
 
       // Inserindo o conteúdo no overlay
       alertOverlay.innerHTML = alertContent;
@@ -5145,14 +5256,14 @@
 
                 // Cria o conteúdo do item
                 listItem.innerHTML = `
-              <div class="d-flex w-100 justify-content-between">
-                <h5 class="mb-1">${pagamento.colaborador}</h5>
-                <small class="text-body-secondary">${pagamento.data}</small>
-              </div>
-              <p class="mb-1">${pagamento.descricao}</p>
-              <p class="mb-1">Nº de Documento:#${pagamento.idDoc}</p>
-              <small class="text-body-secondary">Valor Pago:R$ ${pagamento.valordePagamento} || Situação:${pagamento.situacao}</small>
-            `;
+            <div class="d-flex w-100 justify-content-between">
+              <h5 class="mb-1">${pagamento.colaborador}</h5>
+              <small class="text-body-secondary">${pagamento.data}</small>
+            </div>
+            <p class="mb-1">${pagamento.descricao}</p>
+            <p class="mb-1">Nº de Documento:#${pagamento.idDoc}</p>
+            <small class="text-body-secondary">Valor Pago:R$ ${pagamento.valordePagamento} || Situação:${pagamento.situacao}</small>
+          `;
 
                 // Função para abrir o modal e inserir as informações
                 listItem.addEventListener("click", () => {
@@ -5303,14 +5414,14 @@
 
                 // Cria o conteúdo do item
                 listItem.innerHTML = `
-              <div class="d-flex w-100 justify-content-between">
-                <h5 class="mb-1">${pagamento.colaborador}</h5>
-                <small class="text-body-secondary">${pagamento.data}</small>
-              </div>
-              <p class="mb-1"> Data de Fechamento:${pagamento.dataFechamento}</p>
-              <p class="mb-1">Nº de Documento:#${pagamento.idDoc}</p>
-              <small class="text-body-secondary">Situação:${pagamento.situacao}</small>
-            `;
+            <div class="d-flex w-100 justify-content-between">
+              <h5 class="mb-1">${pagamento.colaborador}</h5>
+              <small class="text-body-secondary">${pagamento.data}</small>
+            </div>
+            <p class="mb-1"> Data de Fechamento:${pagamento.dataFechamento}</p>
+            <p class="mb-1">Nº de Documento:#${pagamento.idDoc}</p>
+            <small class="text-body-secondary">Situação:${pagamento.situacao}</small>
+          `;
                 // Função para abrir o modal e inserir as informações
                 listItem.addEventListener("click", () => {
                   document.getElementById("colaboradorMarcacao").textContent =
@@ -5417,52 +5528,52 @@
             );
             if (conteudoAreaColaborador) {
               conteudoAreaColaborador.innerHTML = `
-              <div class="card">
-                <div class="card-body">
-                  <div class="row">
-                    <div class="col shadow">
-                      <h5 class="card-title">Olá, ${nome}!</h5>
-                      <p class="card-text">Abaixo estão alguns links para te auxiliar nas suas opções:</p>
-                      <div class="list-group">
-                        <a href="#" class="list-group-item list-group-item-action list-group-item-success" onclick="chamaTemplate('templatefichaDeregistros')">Ficha de Registro</a>
-                        <a href="#" class="list-group-item list-group-item-action list-group-item-success" onclick="chamaTemplate('extratoPagamento')">Extrato de Pagamentos</a>
-                        <a href="#" class="list-group-item list-group-item-action list-group-item-success" onclick="chamaTemplate('extratoPontosMarcacao')">Extrato de marcação de pontos</a>
-                      </div>
+            <div class="card">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col shadow">
+                    <h5 class="card-title">Olá, ${nome}!</h5>
+                    <p class="card-text">Abaixo estão alguns links para te auxiliar nas suas opções:</p>
+                    <div class="list-group">
+                      <a href="#" class="list-group-item list-group-item-action list-group-item-success" onclick="chamaTemplate('templatefichaDeregistros')">Ficha de Registro</a>
+                      <a href="#" class="list-group-item list-group-item-action list-group-item-success" onclick="chamaTemplate('extratoPagamento')">Extrato de Pagamentos</a>
+                      <a href="#" class="list-group-item list-group-item-action list-group-item-success" onclick="chamaTemplate('extratoPontosMarcacao')">Extrato de marcação de pontos</a>
                     </div>
-                    <div class="col shadow">
-                      <div class="table-responsive">
-                        <table class="table">
-                          <thead>
-                            <tr>
-                              <th scope="col">#</th>
-                              <th scope="col">Nome</th>
-                              <th scope="col">Data de entrada</th>
-                              <th scope="col">Tempo de empresa</th>
-                              <th scope="col">Idade</th>
-                              <th scope="col">Cargo</th>
-                              <th scope="col">Salário</th>
-                              <th scope="col">Vale Transporte</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            <tr>
-                              <th scope="row">1</th>
-                              <td>${nome}</td>
-                              <td>${dataEntrada || "-"}</td>
-                              <td>${tempoEmpresaFormatado || "-"}</td>
-                              <td>${idade || "-"}</td>
-                              <td>${funcao || "-"}</td>
-                              <td>${salario || "-"}</td>
-                              <td>${valeTransporte || "-"}</td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
+                  </div>
+                  <div class="col shadow">
+                    <div class="table-responsive">
+                      <table class="table">
+                        <thead>
+                          <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Nome</th>
+                            <th scope="col">Data de entrada</th>
+                            <th scope="col">Tempo de empresa</th>
+                            <th scope="col">Idade</th>
+                            <th scope="col">Cargo</th>
+                            <th scope="col">Salário</th>
+                            <th scope="col">Vale Transporte</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <th scope="row">1</th>
+                            <td>${nome}</td>
+                            <td>${dataEntrada || "-"}</td>
+                            <td>${tempoEmpresaFormatado || "-"}</td>
+                            <td>${idade || "-"}</td>
+                            <td>${funcao || "-"}</td>
+                            <td>${salario || "-"}</td>
+                            <td>${valeTransporte || "-"}</td>
+                          </tr>
+                        </tbody>
+                      </table>
                     </div>
                   </div>
                 </div>
               </div>
-            `;
+            </div>
+          `;
             } else {
               console.error(
                 "Elemento 'conteudoAreaColaborador' não encontrado."
@@ -5587,15 +5698,15 @@
       if (select === "1") {
         // Conteúdo HTML dinâmico para o feedback
         conteudo.innerHTML = `
-      <div class="card">
-        <div class="form-check">
-          <input class="form-check-input" type="checkbox" value="mostrar" id="flexCheckMostrar" checked onchange="alternarCheck()">
-          <label class="form-check-label" for="flexCheckMostrar">
-            Mostrar identificação
-          </label>
-        </div>
+    <div class="card">
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" value="mostrar" id="flexCheckMostrar" checked onchange="alternarCheck()">
+        <label class="form-check-label" for="flexCheckMostrar">
+          Mostrar identificação
+        </label>
       </div>
-    `;
+    </div>
+  `;
       } else {
         conteudo.innerHTML = ""; // Limpa o conteúdo caso o valor não seja '1'
       }
@@ -5638,62 +5749,62 @@
     function criarFormularioTrocaSenha(nomeUsuario, loginusuario) {
       // Conteúdo do formulário de troca de senha
       const formulario = `
-    <form id="trocaSenhaForm">
-      <div class="row">
-          <div class="mb-3">
-            <label class="form-label">Usuário</label>
-            <input type="text" class="form-control" value="${nomeUsuario}" disabled>
-          </div>
-        <div class="col">
-          <div class="mb-3">
-            <label class="form-label">Login</label>
-            <input type="text" class="form-control" id="loginUsuarioC" value="${loginusuario}" disabled>
-          </div>
-          
+  <form id="trocaSenhaForm">
+    <div class="row">
+        <div class="mb-3">
+          <label class="form-label">Usuário</label>
+          <input type="text" class="form-control" value="${nomeUsuario}" disabled>
         </div>
-                <div class="col">
-          <div class="mb-3">
-            <label for="senhaAtual" class="form-label">Senha Atual</label>
-            <div class="input-group">
-              <input type="password" class="form-control" id="senhaAtual" required>
-              <button class="btn btn-outline-secondary" type="button" onclick="togglePasswordVisibility('senhaAtual')">
-                <span class="material-icons">visibility</span>
-              </button>
-            </div>
+      <div class="col">
+        <div class="mb-3">
+          <label class="form-label">Login</label>
+          <input type="text" class="form-control" id="loginUsuarioC" value="${loginusuario}" disabled>
+        </div>
+        
+      </div>
+              <div class="col">
+        <div class="mb-3">
+          <label for="senhaAtual" class="form-label">Senha Atual</label>
+          <div class="input-group">
+            <input type="password" class="form-control" id="senhaAtual" required>
+            <button class="btn btn-outline-secondary" type="button" onclick="togglePasswordVisibility('senhaAtual')">
+              <span class="material-icons">visibility</span>
+            </button>
           </div>
         </div>
       </div>
+    </div>
 
-      <div class="row">
-        <div class="col">
-          <div class="mb-3">
-            <label for="novaSenha" class="form-label">Nova Senha</label>
-            <div class="input-group">
-              <input type="password" class="form-control" id="novaSenha" required>
-              <button class="btn btn-outline-secondary" type="button" onclick="togglePasswordVisibility('novaSenha')">
-                <span class="material-icons">visibility</span>
-              </button>
-            </div>
+    <div class="row">
+      <div class="col">
+        <div class="mb-3">
+          <label for="novaSenha" class="form-label">Nova Senha</label>
+          <div class="input-group">
+            <input type="password" class="form-control" id="novaSenha" required>
+            <button class="btn btn-outline-secondary" type="button" onclick="togglePasswordVisibility('novaSenha')">
+              <span class="material-icons">visibility</span>
+            </button>
           </div>
         </div>
       </div>
+    </div>
 
-      <div class="row">
+    <div class="row">
 
-        <div class="col">
-          <div class="mb-3">
-            <label for="confirmarSenha" class="form-label">Confirmar Nova Senha</label>
-            <div class="input-group">
-              <input type="password" class="form-control" id="confirmarSenha" required>
-              <button class="btn btn-outline-secondary" type="button" onclick="togglePasswordVisibility('confirmarSenha')">
-                <span class="material-icons">visibility</span>
-              </button>
-            </div>
+      <div class="col">
+        <div class="mb-3">
+          <label for="confirmarSenha" class="form-label">Confirmar Nova Senha</label>
+          <div class="input-group">
+            <input type="password" class="form-control" id="confirmarSenha" required>
+            <button class="btn btn-outline-secondary" type="button" onclick="togglePasswordVisibility('confirmarSenha')">
+              <span class="material-icons">visibility</span>
+            </button>
           </div>
         </div>
       </div>
-    </form>
-  `;
+    </div>
+  </form>
+`;
 
       // Inserir o formulário no modal
       document.getElementById("modalBodyConfiGerais").innerHTML = formulario;
@@ -5790,14 +5901,14 @@
 
       const divCard = (title, content) => {
         return `
-      <div class="col-md-3 mb-3 coluCard d-grid">
-        <div class="divCard shadow border-1">
-          <h5 class="card-header">${title}</h5>
-          <div class="card-body text-center">
-            <p class="card-text">${content}</p>
-          </div>
+    <div class="col-md-3 mb-3 coluCard d-grid">
+      <div class="divCard shadow border-1">
+        <h5 class="card-header">${title}</h5>
+        <div class="card-body text-center">
+          <p class="card-text">${content}</p>
         </div>
-      </div>`;
+      </div>
+    </div>`;
       };
 
       // Primeira chamada AJAX para carregar os dados do card
@@ -5811,55 +5922,55 @@
         } = response.dados || {};
         // console.log('retorno',response)
         tpl.innerHTML = `
-      <div class="card">
-        <div class="card-header">Análise de Registros de Colaboradores</div>
-        <div class="card-body">
-          
-          <!-- Linha de Cards com Informações Principais -->
-          <div class="row justify-content-between">
-            ${divCard("Colaboradores Ativos", colabAtivos)}
-            ${divCard("Colaboradores Inativos", colabInativos)}
-            ${divCard("Total Salário", totalSalario)}
-            ${divCard("Total Vale Transporte", totalVt)}
-            ${divCard("Total Cesta Básica", totalCestaBasica)}
-            
-          </div>
-          
-          <!-- Linha com Links e Tabela -->
-          <div class="row">
-            <div class="col-md-4 shadow">
-              <div class="list-group mb-3">
-                <a href="#" class="list-group-item list-group-item-action list-group-item-success" onclick="chamaTemplate('templatefichaDeregistros')">Ficha de Registro</a>
-                <a href="#" class="list-group-item list-group-item-action list-group-item-success" onclick="chamaTemplate('extratoPagamento')">Extrato de Pagamentos</a>
-                <a href="#" class="list-group-item list-group-item-action list-group-item-success" onclick="chamaTemplate('extratoPontosMarcacao')">Extrato de Marcação de Pontos</a>
-              </div>
-            </div>
-            
-            <div class="col-md-8 shadow">
-              <div class="table-responsive">
-                <table class="table">
-                  <thead>
-                    <tr>
-                      <th scope="col">#</th>
-                      <th scope="col">Nome</th>
-                      <th scope="col">Data de Entrada</th>
-                      <th scope="col">Tempo de Empresa</th>
-                      <th scope="col">Idade</th>
-                      <th scope="col">Cargo</th>
-                      <th scope="col">Salário</th>
-                      <th scope="col">Vale Transporte</th>
-                    </tr>
-                  </thead>
-                  <tbody id="tabelaRegistros">
-                    <!-- Linhas serão inseridas dinamicamente -->
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
+    <div class="card">
+      <div class="card-header">Análise de Registros de Colaboradores</div>
+      <div class="card-body">
+        
+        <!-- Linha de Cards com Informações Principais -->
+        <div class="row justify-content-between">
+          ${divCard("Colaboradores Ativos", colabAtivos)}
+          ${divCard("Colaboradores Inativos", colabInativos)}
+          ${divCard("Total Salário", totalSalario)}
+          ${divCard("Total Vale Transporte", totalVt)}
+          ${divCard("Total Cesta Básica", totalCestaBasica)}
           
         </div>
-      </div>`;
+        
+        <!-- Linha com Links e Tabela -->
+        <div class="row">
+          <div class="col-md-4 shadow">
+            <div class="list-group mb-3">
+              <a href="#" class="list-group-item list-group-item-action list-group-item-success" onclick="chamaTemplate('templatefichaDeregistros')">Ficha de Registro</a>
+              <a href="#" class="list-group-item list-group-item-action list-group-item-success" onclick="chamaTemplate('extratoPagamento')">Extrato de Pagamentos</a>
+              <a href="#" class="list-group-item list-group-item-action list-group-item-success" onclick="chamaTemplate('extratoPontosMarcacao')">Extrato de Marcação de Pontos</a>
+            </div>
+          </div>
+          
+          <div class="col-md-8 shadow">
+            <div class="table-responsive">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Nome</th>
+                    <th scope="col">Data de Entrada</th>
+                    <th scope="col">Tempo de Empresa</th>
+                    <th scope="col">Idade</th>
+                    <th scope="col">Cargo</th>
+                    <th scope="col">Salário</th>
+                    <th scope="col">Vale Transporte</th>
+                  </tr>
+                </thead>
+                <tbody id="tabelaRegistros">
+                  <!-- Linhas serão inseridas dinamicamente -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        
+      </div>
+    </div>`;
 
         // Segunda chamada AJAX para carregar os dados da tabela
         chamarAjax("carregarAnaliseColaboradores", null, function (response) {
@@ -5881,19 +5992,19 @@
               }
 
               tabelaRegistros.innerHTML += `
-            <tr>
-              <th scope="row">${item.id}</th>
-              <td>${item.nome || "-"}</td>
-              <td>${item.dataEntrada || "-"}</td>
-              <td>${tempoEmpresaFormatado || "-"}</td>
-              <td>${item.idade || "-"}</td>
-              <td>${item.funcao || "-"}</td>
-              <td>${item.salario || "-"}</td>
-              <td>${item.valeTransporte || "-"}</td>
-              <td><button type="button" class="btn" onclick="editlineColaboradores(${item.id
+          <tr>
+            <th scope="row">${item.id}</th>
+            <td>${item.nome || "-"}</td>
+            <td>${item.dataEntrada || "-"}</td>
+            <td>${tempoEmpresaFormatado || "-"}</td>
+            <td>${item.idade || "-"}</td>
+            <td>${item.funcao || "-"}</td>
+            <td>${item.salario || "-"}</td>
+            <td>${item.valeTransporte || "-"}</td>
+            <td><button type="button" class="btn" onclick="editlineColaboradores(${item.id
                 })"><span class="material-symbols-outlined">edit</span></button>
-      </td>
-            </tr>`;
+    </td>
+          </tr>`;
             });
           } else {
             tabelaRegistros.innerHTML = `<tr><td colspan="8">Nenhum dado encontrado</td></tr>`;
@@ -5955,35 +6066,35 @@
               const createTextInput = (item) => {
                 const value = dados[item.id] || "";
                 return `
-                <div class="col-md-3 mb-3">
-                  <label for="${item.id}" class="form-label">${item.label}</label>
-                  <input type="text" class="form-control" id="${item.id}" name="${item.id}" value="${value}">
-                </div>
-              `;
+              <div class="col-md-3 mb-3">
+                <label for="${item.id}" class="form-label">${item.label}</label>
+                <input type="text" class="form-control" id="${item.id}" name="${item.id}" value="${value}">
+              </div>
+            `;
               };
 
               // Função para criar selects com placeholder inicial
               const createSelectInput = (item) => {
                 const value = dados[item.id] || "";
                 return `
-                <div class="col-md-3 mb-3">
-                  <label for="${item.id}" class="form-label">${item.label}</label>
-                  <select class="form-select" id="${item.id}" name="${item.id}">
-                    <option value="">Selecione...</option>
-                  </select>
-                </div>
-              `;
+              <div class="col-md-3 mb-3">
+                <label for="${item.id}" class="form-label">${item.label}</label>
+                <select class="form-select" id="${item.id}" name="${item.id}">
+                  <option value="">Selecione...</option>
+                </select>
+              </div>
+            `;
               };
 
               // Função para criar inputs de data
               const createDateInput = (item) => {
                 const value = dados[item.id] || "";
                 return `
-                <div class="col-md-3 mb-3">
-                  <label for="${item.id}" class="form-label">${item.label}</label>
-                  <input type="date" class="form-control" id="${item.id}" name="${item.id}" value="${value}">
-                </div>
-              `;
+              <div class="col-md-3 mb-3">
+                <label for="${item.id}" class="form-label">${item.label}</label>
+                <input type="date" class="form-control" id="${item.id}" name="${item.id}" value="${value}">
+              </div>
+            `;
               };
 
               // Montagem dos inputs de texto, selects e datas
@@ -6060,78 +6171,78 @@
 
       // Template do formulário
       const bodyDriver = `
-        <div class="card">
-  <div class="card-header">Upload de Arquivo</div>
-  <div class="card-body">
-    <div class="row">
-      <div class="col-md-6">
-        <div class="form-group mt-3">
-          <div>
-            <label for="escolhaDriver" class="form-label">Arquivo</label>
-            <button
-              type="button"
-              class="btn"
-              onclick="habilitarElemento('escolhaDriver')"
-            >
-              <img
-                src="https://img.icons8.com/pulsar-gradient/48/loading-sign.png"
-                class="imgLoader"
-              />
-            </button>
-          </div>
-          <select
-            class="form-select"
-            id="escolhaDriver"
-            name="escolhaDriver"
-            onchange="acaoDriver(this.id)"
+      <div class="card">
+<div class="card-header">Upload de Arquivo</div>
+<div class="card-body">
+  <div class="row">
+    <div class="col-md-6">
+      <div class="form-group mt-3">
+        <div>
+          <label for="escolhaDriver" class="form-label">Arquivo</label>
+          <button
+            type="button"
+            class="btn"
+            onclick="habilitarElemento('escolhaDriver')"
           >
-            <option value="">Selecione...</option>
-            <option value="fichaColaboradores">Ficha de Registros</option>
-            <option value="fichaHolerite">Holerites</option>
-            <option value="fichaPagamento">DOCS Pagamentos</option>
-            <option value="fichaMarcacao">Extrato de Ponto</option>
-          </select>
+            <img
+              src="https://img.icons8.com/pulsar-gradient/48/loading-sign.png"
+              class="imgLoader"
+            />
+          </button>
         </div>
+        <select
+          class="form-select"
+          id="escolhaDriver"
+          name="escolhaDriver"
+          onchange="acaoDriver(this.id)"
+        >
+          <option value="">Selecione...</option>
+          <option value="fichaColaboradores">Ficha de Registros</option>
+          <option value="fichaHolerite">Holerites</option>
+          <option value="fichaPagamento">DOCS Pagamentos</option>
+          <option value="fichaMarcacao">Extrato de Ponto</option>
+        </select>
       </div>
-      <div class="col-md-6" id="conteudoDriverSecundario"></div>
     </div>
-	<div class="row">
-		<div class="col-6">
-            <div class="form-group mt-3">
-        <label for="arquivoDriver" class="form-label">Arquivo</label>
-        <input
-          type="file"
-          class="form-control"
-          id="arquivoDriver"
-          name="arquivoDriver"
-        />
-      </div>
-      <button type="button" class="btn btn-primary mt-3" onclick="processarArquivo()">Enviar</button>
-		</div>
-		<div class="col-6">
-      <div class="form-group mt-3"">
-        			<label for="numeroDocumentoDrive" class="form-label">N° Documento</label>
-      <input
-        type="text"
-        class="form-control"
-        id="numeroDocumentoDrive"
-        name="numeroDocumentoDrive"
-      />
-        </div>
-		</div>
-	</div>
+    <div class="col-md-6" id="conteudoDriverSecundario"></div>
   </div>
-    <div class="card w-50" id='conteudoformListDrive'>
+<div class="row">
+  <div class="col-6">
+          <div class="form-group mt-3">
+      <label for="arquivoDriver" class="form-label">Arquivo</label>
+      <input
+        type="file"
+        class="form-control"
+        id="arquivoDriver"
+        name="arquivoDriver"
+      />
     </div>
-  <div class="card-footer text-muted">
-    <a
-      href="https://drive.google.com/file/d/1a6fCQnT7yM0Dk9wBwqWZdQj5LjZb2m9W/view?usp=sharing"
-      target="_blank"
-      >Clique aqui para baixar o arquivo</a
-    >
+    <button type="button" class="btn btn-primary mt-3" onclick="processarArquivo()">Enviar</button>
+  </div>
+  <div class="col-6">
+    <div class="form-group mt-3"">
+            <label for="numeroDocumentoDrive" class="form-label">N° Documento</label>
+    <input
+      type="text"
+      class="form-control"
+      id="numeroDocumentoDrive"
+      name="numeroDocumentoDrive"
+    />
+      </div>
   </div>
 </div>
-  `;
+</div>
+  <div class="card w-50" id='conteudoformListDrive'>
+  </div>
+<div class="card-footer text-muted">
+  <a
+    href="https://drive.google.com/file/d/1a6fCQnT7yM0Dk9wBwqWZdQj5LjZb2m9W/view?usp=sharing"
+    target="_blank"
+    >Clique aqui para baixar o arquivo</a
+  >
+</div>
+</div>
+`;
 
 
       conteudoDriver.innerHTML = bodyDriver;
@@ -6328,13 +6439,29 @@
       }
     }
 
+
   </script>
   <!-- Fazer teste -->
   <script>
 
-    // chamaTemplate("template_driver");
+    // chamaTemplate("registroPagamentosColaboradores");
     controlarExibicaoAccordion();
   </script>
+  <script id="ScriptAuxi">
+    function formatarMoeda(moeda) {
+      if (isNaN(moeda)) {
+        return `R$ ${moeda}`
+      } else if (!moeda) {
+        return null
+      }
+      return Intl.NumberFormat('pt-br', { style: 'currency', currency: 'BRL' }).format(moeda)
+    }
+
+
+  </script>
 </body>
+
+
+
 
 </html>
