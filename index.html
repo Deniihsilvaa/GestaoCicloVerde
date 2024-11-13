@@ -482,6 +482,21 @@
       /* Efeito de hover para aumentar a logo */
     }
 
+    ///
+
+    .bttIcone-img {
+      max-width: 2rem;
+      /* Tamanho máximo da logo */
+      height: auto;
+      transition: transform 0.3s ease;
+      /* Animação suave */
+    }
+
+    .bttIcone-img:hover {
+      transform: scale(1.1);
+      cursor: pointer;
+    }
+
     /* Estilização do botão flutuante */
     #feedback-btn {
       position: fixed;
@@ -618,16 +633,20 @@
             <div class="card-header">Pagamento - Ciclo Verde</div>
             <div class="card-body mb-3" id="fmr-registros">
               <div class="row mt-3">
-
                 <div class="card">
                   <h5 class="card-header"></h5>
                   <div class="card-body">
                     <div class="row">
                       <div class="col-md-4 p-3">
                         <div class="form-floating">
+                          <input type="text" class="form-control formRPC" id="idRPC" disabled="disabled" />
+                          <label for="idRPC">ID</label>
+                        </div>
+                      </div>
+                      <div class="col-md-4 p-3">
+                        <div class="form-floating">
                           <select class="form-select scColaborador formRPC valid" aria-label="Selecione um colaborador"
-                            id="colaboradorRPC">
-                          </select>
+                            id="colaboradorRPC"></select>
                           <label for="colaboradorRPC">Colaborador</label>
                         </div>
                       </div>
@@ -635,38 +654,51 @@
                         <div class="form-floating">
                           <select class="form-select formRPC valid" name="sctipoPagamento"
                             aria-label="Tipo de Pagamento" id="sctipoPagamento">
-                            <option value="">Selecione o tipo de Pagamento</option>
+                            <option value="">
+                              Selecione o tipo de Pagamento
+                            </option>
                             <option value="salario">Salario</option>
                             <option value="adiantamento">Adiantamento</option>
                             <option value="ferias">Ferias</option>
-                            <option value="decimoTerceiro">Decimo Terceiro</option>
+                            <option value="decimoTerceiro">
+                              Decimo Terceiro
+                            </option>
                           </select>
                           <label for="sctipoPagamento">Tipo de pagamento</label>
                         </div>
                       </div>
                       <div class="col-md-4 p-3">
                         <div class="form-floating">
-                          <textarea class="form-control formRPC" placeholder="Leave a comment here" id=descricaoRPC
-                            style="height: 100px"></textarea>
-                          <label for=descricaoRPC>Descrição</label>
+                          <textarea class="form-control formRPC valid" placeholder="Leave a comment here"
+                            id="descricaoRPC" style="height: 100px"></textarea>
+                          <label for="descricaoRPC">Descrição</label>
                         </div>
                       </div>
                       <div class="col-md-4 p-3">
                         <div class="form-floating">
-                          <input type="number" class="form-control formRPC" name="valorRPC" id="valorRPC" />
+                          <input type="text" class="form-control formRPC valid" name="valorRPC" id="valorRPC" />
                           <label for="valorRPC">Valor</label>
                         </div>
                       </div>
                       <div class="col-md-4 p-3">
                         <div class="form-floating">
-                          <input type="date" class="form-control formRPC" name="dataAgendamentoRPC"
+                          <input type="date" class="form-control formRPC valid" name="dataAgendamentoRPC"
                             id="dataAgendamentoRPC" />
-                          <label for="dataAgendamentoRPC">Data</label>
+                          <label for="dataAgendamentoRPC">Data de Pagamento</label>
                         </div>
                       </div>
+
                       <div class="col-md-4 p-3">
                         <div class="form-floating">
-                          <select class="form-select formRPC" aria-label="Situação" name="sctiposituacao"
+                          <input type="date" class="form-control formRPC" name="dataCompetenciaRPC"
+                            id="dataCompetenciaRPC" />
+                          <label for="dataCompetenciaRPC">Data de Competencia</label>
+                        </div>
+                      </div>
+
+                      <div class="col-md-4 p-3">
+                        <div class="form-floating">
+                          <select class="form-select formRPC valid" aria-label="Situação" name="sctiposituacao"
                             id="sctiposituacao">
                             <option>Pago</option>
                             <option>Pendente</option>
@@ -676,13 +708,22 @@
                           <label for="sctiposituacao">Situação</label>
                         </div>
                       </div>
+                      <div class="col-md-4 p-3">
+                        <div class="form-floating">
+                          <input type="url" class="form-control formRPC" name="arquivoRPC" id="arquivoRPC" />
+                          <label for="arquivoRPC">Arquivo</label>
+                        </div>
+                      </div>
                     </div>
 
-                    <div class="row mt-3">
+                    <!-- Botão de Registro -->
+                    <div class="row">
                       <div class="col-md-12">
-                        <button type="button" class="btn btn-success" style="max-width: 18vh" onclick="saveDataRPC()">
-                          >
+                        <button type="button" class="btn btn-success" onclick="saveDataRPC()">
                           Registrar
+                        </button>
+                        <button type="button" class="btn btn-warning" onclick="limparRPC()">
+                          Limpar
                         </button>
                       </div>
                     </div>
@@ -706,14 +747,13 @@
                   </div>
                 </div>
               </div>
-
             </div>
           </div>
         </div>
         <script>
           // TODO:
 
-          async function loadRPC() {
+          async function loadRPC(send) {
             mostrarSpinner(); // Mostra um spinner enquanto os dados são carregados
             return new Promise((resolve, reject) => {
               // Faz a requisição AJAX para buscar colaboradores
@@ -722,7 +762,9 @@
                 url: urlAjax,
                 data: {
                   qualFuncao: "retornaDadosBasePagamento",
+                  dados: JSON.stringify(send)
                 },
+
                 success: function (response) {
                   esconderSpinner(); // Esconde o spinner após o carregamento
                   if (response.situacao) {
@@ -739,62 +781,72 @@
             });
           }
           async function criarTabelaRPC() {
-            let conteudo = document.getElementById('conteudoRPC');
+            let conteudo = document.getElementById("conteudoRPC");
 
             const response = await loadRPC();
-            console.log(response);
-
+            console.log(response)
             if (response.length > 0) {
               conteudo.innerHTML = ""; // Limpa o conteúdo
 
-              // Cria a tabela com um ID específico
               let tabela = document.createElement("table");
-              tabela.id = "dataTableRPC"; // Adicione um ID para referência
+              tabela.id = "dataTableRPC";
               tabela.classList.add("table", "table-striped");
 
-              // Cabeçalho da Tabela
               let cabecalho = `
-        <thead>
-          <tr>
-            <th>Id</th>
-            <th>ID Colaborador</th>
-            <th>Colaborador</th>
-            <th>Valor de Pagamento</th>
-            <th>Descrição</th>
-            <th>Data</th>
-            <th>Situação</th>
-            <th></th>
-            <th>Data de Pagamento</th>
-          </tr>
-        </thead>
-      `;
+      <thead>
+        <tr>
+          <th>Id</th>
+          <th>ID Colaborador</th>
+          <th>__</th>
+          <th>Colaborador</th>
+          <th>Valor de Pagamento</th>
+          <th>Descrição</th>
+          <th>Data</th>
+          <th>Situação</th>
+          <th>__</th>
+          <th>__</th>
+          <th>Status</th>
+          <th>Data de Competencia</th>
+        </tr>
+      </thead>
+    `;
               tabela.innerHTML = cabecalho;
 
-              // Corpo da Tabela
               let corpoTabela = document.createElement("tbody");
-              let icone = '<img src="./img/iconeVisible1.png" class="logo-img mb-3 img-fluid" alt="Logo" />'
+              let iView =
+                '<img src="./img/iconeVisible1.png" class="bttIcone-img mb-3 img-fluid" alt="Logo" />';
+              let iEdit =
+                '<img src="./img/pencil.png" class="bttIcone-img mb-3 img-fluid" alt="Logo" />';
+              let iDelet =
+                '<img src="./img/trashcan.png" class="bttIcone-img mb-3 img-fluid" alt="Logo" />';
 
               response.forEach((dados) => {
                 let linha = document.createElement("tr");
-                let linkDocu = dados.LinkComprovante
-                let dLink = []
-                if (linkDocu) {
-                  dLink = `<td><a href="${dados.LinkComprovante}" class="btt" target="_blank">${icone}</a></td>`
-                } else {
-                  dLink = '<td><a href="#" target="_blank"></a></td>'
+                let linkDocu = dados.LinkComprovante;
+                let viewdataIcone = [];
+                let editdataIcone = `<td><a href="#" class="btt" onclick="carregarDadosParaEdicao(${dados.Id})">${iEdit}</a></td>`;
+                let deletataIcone = `<td><a  class="btt" onclick="deletarRPC(${dados.Id})">${iDelet}</a></td>`;
 
+                if (linkDocu) {
+                  viewdataIcone = `<td><a href="${dados.LinkComprovante}" class="btt" target="_blank">${iView}</a></td>`;
+                } else {
+                  viewdataIcone = '<td><a href="#" target="_blank"></a></td>';
                 }
+
                 linha.innerHTML = `
-              <td>${dados.Id}</td>
-              <td>${dados.IDColab}</td>
-              <td>${dados.Colaborador}</td>
-              <td>${formatarMoeda(dados.Valor_De_Pagamento)}</td>
-              <td>${dados.Descricao}</td>
-              <td>${dados.Data}</td>
-              <td>${dados.Situacao}</td>
-              ${dLink}
-              <td>${dados.DataAgendamento}</td>
-          `;
+        <td>${dados.Id}</td>
+        <td>${dados.IDColab}</td>
+        ${viewdataIcone}
+        <td>${dados.Colaborador}</td>
+        <td>${formatarMoeda(dados.Valor_De_Pagamento)}</td>
+        <td>${dados.Descricao}</td>
+        <td>${dados.DataPagamento}</td>
+        <td>${dados.Situacao}</td>
+        ${editdataIcone}
+        ${deletataIcone}
+        <td>${dados.Situacao}</td>
+        <td>${dados.DataCompetencia ? dados.DataCompetencia : "-"}</td>
+      `;
                 corpoTabela.appendChild(linha);
               });
 
@@ -803,39 +855,93 @@
 
               // Inicializa o DataTable com as opções
               $(document).ready(function () {
-                if (!$.fn.DataTable.isDataTable('#dataTableRPC')) {
-                  $('#dataTableRPC').DataTable({
-                    destroy: true, // Reinitialize if needed
+                if (!$.fn.DataTable.isDataTable("#dataTableRPC")) {
+                  $("#dataTableRPC").DataTable({
+                    destroy: true,
                     deferRender: true,
                     scrollCollapse: true,
                     scroller: true,
                     scrollY: 350,
                     scrollX: true,
                     autoWidth: false,
-                    order: [[5, "desc"]],
+                    order: [[0, "desc"]],
                     dom: "Bfrtip",
                     buttons: ["copy", "excel", "pdf"],
                     columnDefs: [
                       {
-                        targets: [0, 1, 8],
-                        visible: false
+                        targets: [1],
+                        visible: false,
                       },
                       {
-                        targets: [7],
-                        className: "dt-body-center"
+                        targets: [7, 8],
+                        className: "dt-body-center",
+                      },
+                      {
+                        targets: [2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
+                        orderable: false,
                       }
                     ],
                   });
                 }
               });
             } else {
-              console.log('Erro: Nenhum dado encontrado');
+              console.log("Erro: Nenhum dado encontrado");
               conteudo.innerHTML = "<p>Nenhum dado encontrado</p>";
             }
           }
 
+          // Função para carregar os dados da linha selecionada nos inputs
+          async function carregarDadosParaEdicao(id) {
+    mostrarSpinner();
+    
+    // Faz a chamada AJAX para obter os dados com o ID especificado
+    chamarAjax('retornaDadosBasePagamento', id, function (response) {
+        esconderSpinner();
+        if (response && response.situacao) {
+            const dados = response.dados[0];
+            console.log("Dados retornados:", dados); // Verifica se os dados estão no formato correto
+
+            if (dados) {
+                // Função para formatar a data no formato 'yyyy-mm-dd'
+                function formatarData(data) {
+                    if (!data) return '';
+                    const dateObj = new Date(data);
+                    const year = dateObj.getFullYear();
+                    const month = String(dateObj.getMonth() + 1).padStart(2, '0'); // mês começa do 0, então somamos 1
+                    const day = String(dateObj.getDate()).padStart(2, '0');
+                    return `${year}-${month}-${day}`; // Retorna no formato 'yyyy-mm-dd'
+                }
+
+                // Preenchendo os campos do formulário
+                document.getElementById("idRPC").value = dados.Id || '';
+                document.getElementById("colaboradorRPC").value = dados.IDColab || '';
+                document.getElementById("sctipoPagamento").value = dados.TipoDePagamento || '';
+                document.getElementById("descricaoRPC").value = dados.Descricao || '';
+                document.getElementById("valorRPC").value = dados.Valor_De_Pagamento || '';
+
+                // Formatar e atribuir as datas
+                document.getElementById("dataAgendamentoRPC").value = dados.DataPagamento || '';
+                document.getElementById("dataCompetenciaRPC").value = dados.DataCompetencia || '';
+
+                document.getElementById("sctiposituacao").value = dados.Situacao || '';
+                document.getElementById("arquivoRPC").value = dados.LinkComprovante || '';
+            } else {
+                console.error("Dados não encontrados no response.");
+                alert("Nenhum dado encontrado para o ID fornecido.");
+            }
+        } else {
+            console.error("Erro no response ou situação não é verdadeira:", response);
+            alert("Erro ao carregar dados para edição: " + (response ? response.mensagem : "Nenhuma resposta válida"));
+        }
+    });
+}
+
+
+// Função para formatar a data
+
           async function saveDataRPC() {
-            let formularioRPC = document.querySelectorAll('.formRPC');
+            let formularioRPC = document.querySelectorAll(".formRPC");
+            
             let dados = [];
             let valor;
             let idSelect;
@@ -843,17 +949,17 @@
             let validacaoFalhou = false;
 
             formularioRPC.forEach((element) => {
-              if (element.classList.contains('valid') && !element.value) {
-                element.classList.add('is-invalid');
+              if (element.classList.contains("valid") && !element.value) {
+                element.classList.add("is-invalid");
                 validacaoFalhou = true;
-                console.log('validacao falhou');
+                console.log("validacao falhou");
               } else {
-                element.classList.remove('is-invalid');
+                element.classList.remove("is-invalid");
               }
-            })
+            });
 
             formularioRPC.forEach((element) => {
-              if (element.type === 'select-one') {
+              if (element.type === "select-one") {
                 let option = element.options[element.selectedIndex];
                 valor = option.textContent;
                 idSelect = option.value;
@@ -865,29 +971,26 @@
                 type: element.type,
                 idSelect: idSelect || "",
                 id: element.id,
-                valor: valor
+                valor: valor,
               });
             });
 
             if (!validacaoFalhou) {
               loadSaveDataRPC(dados).then((response) => {
                 esconderSpinner();
-              if (response) {
-                setTimeout(() => {
-                  mostrarAlerta(response, 1);
-                  console.log(response)
-                  criarTabelaRPC();
-                  formularioRPC.forEach((elementos)=>{
-                    elementos.value = '';
-                  })
-                }, 1000);
-              }
-            });
+                if (response) {
+
+                  setTimeout(() => {
+                    mostrarAlerta(response, 1);
+                    criarTabelaRPC();
+                    limparRPC();
+                  }, 1000);
+                }
+              });
             }
-            
           }
           async function loadSaveDataRPC(dados) {
-            // console.log('Dados para Salvar: ' + JSON.stringify(dados));
+            console.log('dados', dados);
             mostrarSpinner(); // Mostra um spinner enquanto os dados são carregados
             return new Promise((resolve, reject) => {
               // Faz a requisição AJAX para buscar colaboradores
@@ -896,9 +999,10 @@
                 url: urlAjax,
                 data: {
                   qualFuncao: "salvarDadosPagamentos",
-                  dados:JSON.stringify(dados)
+                  dados: JSON.stringify(dados),
                 },
                 success: function (response) {
+                  console.log('Retorno', response);
                   esconderSpinner(); // Esconde o spinner após o carregamento
                   if (response.situacao) {
                     resolve(response.mensagem);
@@ -913,8 +1017,25 @@
               });
             });
           }
-        
-        
+          async function deletarRPC(id) {
+            mostrarSpinner();
+            chamarAjax("deletarRPC", id, function (response) {
+              setTimeout(() => {
+                criarTabelaRPC();
+                response.situacao
+                  ? mostrarAlerta(response.mensagem, 1)
+                  : mostrarAlerta(response.mensagem, 2);
+                esconderSpinner();
+              }, 1000);
+            });
+          }
+
+          async function limparRPC() {
+            let formularioRPC = document.querySelectorAll(".formRPC");
+            formularioRPC.forEach((elementos) => {
+                      elementos.value = "";
+                    });
+          }
         </script>
       </template>
 
@@ -2550,7 +2671,6 @@
               </div>
             </div>
 
-
             <div class="modal" id="taskModal">
               <div class="modal-content">
                 <span class="close" id="closeModal">&times;</span>
@@ -2580,13 +2700,13 @@
         </div>
         <div class="caixaPDf">
           <button onclick="fecharPDF()" style="
-              position: absolute;
-              top: 10px;
-              right: 20px;
-              z-index: 10000;
-              background-color: red;
-              color: white;
-            ">
+                position: absolute;
+                top: 10px;
+                right: 20px;
+                z-index: 10000;
+                background-color: red;
+                color: white;
+              ">
             Fechar
           </button>
           <iframe id="pdfFichaRegistro" type="application/pdf" width="100%" height="100%"></iframe>
@@ -2654,7 +2774,7 @@
           </div>
         </div>
       </template>
-      <!-- Template do Extrato de Pagamento -->
+      <!-- Template do Extrato de Pontos Marcacao -->
       <template id="extratoPontosMarcacao">
         <div class="card w-100">
           <h1 class="card-header">Marcação de ponto</h1>
@@ -2886,9 +3006,9 @@
         <!-- Configuração -->
         <h3><i class="bi bi-file-plus"></i> Configuração</h3>
         <div>
-          <button class="ui-button ui-widget ui-corner-all" name="cadastroDeFuncao"
-            onclick="chamaTemplate(this.name)">Funçoes de carreira</button>
-
+          <button class="ui-button ui-widget ui-corner-all" name="cadastroDeFuncao" onclick="chamaTemplate(this.name)">
+            Funçoes de carreira
+          </button>
         </div>
         <!-- Cadastro -->
         <h3><i class="bi bi-file-plus"></i> Cadastro</h3>
@@ -2981,7 +3101,7 @@
 
   <script id="MetodoPost">
     let urlAjax =
-      "https://script.google.com/macros/s/AKfycbwrfbMFYCkSAQ-rZdxuYBX_TUlFevl-SBk2c_8qM4BnLgqwEcJa5mbRTkMxtspf9tXRfg/exec";
+      "https://script.google.com/macros/s/AKfycbx-xoGq0q4Pw1C9cGrC-CZw8wzKPEiwuq0LkzhE4aZjV6aNgm9NBVX7xZUX6hQIt4TKYw/exec";
 
     $("#accordion").accordion({
       active: false,
@@ -3143,22 +3263,27 @@
           qualFuncao: "verificarCredenciais",
           password: password,
         }, // Envia os dados diretamente
-        success: function (response) {
+        success: function (b) {
           esconderSpinner();
 
-          if (response.usuarioAutenticado) {
+          if (b.usuarioAutenticado) {
             // Atualize o localStorage com as informações retornadas
-            userData.id = response.id;
-            userData.nivel = response.loginResult;
-            userData.nome = response.nome;
-
+            userData.id = b.id;
+            userData.nivel = b.loginResult;
+            userData.nome = b.nome;
+            setTimeout(() => {
+              if (!b.update) {
+                mostrarAlerta("É necessário a atualização de sua senha", 3);
+                chamaTemplateGerais("trocarSenha");
+              } else {
+                mostrarAlerta("Usuário autenticado com sucesso.", 1);
+              }
+            }, 1000);
+            fecharAlerta();
             localStorage.setItem("usuarioLogado", JSON.stringify(userData));
-            controlarExibicaoAccordion(response.loginResult);
+            controlarExibicaoAccordion(b.loginResult);
 
             mostrarAlerta("Usuário autenticado com sucesso.", 1);
-
-            // document.getElementById("input-user-login").value = "";
-            // document.getElementById("input-senha-login").value = "";
           } else {
             mostrarAlerta("Erro de login: credenciais inválidas.", 2);
           }
@@ -3233,6 +3358,7 @@
             $("#accordion h3:contains('Logout')").next().hide();
             $("#accordion h3:contains('Supervisao')").next().hide();
             chamaTemplate("areaColaborador");
+            bartop.style.display = "flex";
             // bartop.style.display = "none ";
             elemento.style.gridTemplateRows = " ";
           } else if (!nivelUsuario) {
@@ -4238,7 +4364,6 @@
                   });
                 }
               });
-
             } catch (error) {
               console.log(error);
             }
@@ -4275,7 +4400,6 @@
           qualFuncao: "carregarPGVT",
         },
         success: function (response) {
-          // console.log("response=>", response);
           esconderSpinner();
           if (response.situacao) {
             try {
@@ -4353,7 +4477,6 @@
 
         // Obtém a linha (tr) que contém o botão clicado
         const row = button.closest("tr");
-        // console.log(row);
         // Verifica se a linha foi encontrada
         if (!row) {
           throw new Error("Linha não encontrada");
@@ -4408,9 +4531,6 @@
   <script>
     function salvarHorasExtras() {
       const inputs = document.querySelectorAll(".HrExtras");
-      // inputs.forEach((input) => {
-      //   console.log(`${input.name || input.id}: ${input.value}`); // Mostra o nome ou id e o valor do input no console
-      // });
       const isValid = Array.from(inputs).every((input) => {
         if (input.hasAttribute("required") && !input.value) {
           input.classList.add("is-invalid"); // Adiciona classe para destacar o campo vazio
@@ -4481,8 +4601,6 @@
         },
         success: function (response) {
           esconderSpinner();
-          // console.log(response);
-          // console.log(JSON.stringify(response));
           if (response.situacao) {
             try {
               // Limpar tabela antes de preencher
@@ -4607,8 +4725,7 @@
         }</textarea></li>
         <li class="list-group-item">Data de Agendamento: ${dado.dataAgendamentoSl
         }</li>
-        <li class="list-group-item">Última atualização: ${dado.dataUpdate
-        }</li>
+        <li class="list-group-item">Última atualização: ${dado.dataUpdate}</li>
         </ul>
       `;
       modal.style.display = "block";
@@ -4867,8 +4984,7 @@
         }</textarea></li>
         <li class="list-group-item">Data de Agendamento: ${dado.dataAgendamentoSl
         }</li>
-        <li class="list-group-item">Última atualização: ${dado.dataUpdate
-        }</li>
+        <li class="list-group-item">Última atualização: ${dado.dataUpdate}</li>
         </ul>
       `;
       modal.style.display = "block";
@@ -4987,12 +5103,6 @@
   <script>
     function salvardadosColaborador(params) {
       const inputs = document.querySelectorAll(".registroColab");
-
-      // Validação e exibição de valores dos inputs
-      // inputs.forEach((input) => {
-      //   console.log(`${input.name || input.id}: ${input.value}`); // Mostra o nome ou id e o valor do input no console
-      // });
-
       // Validação dos inputs
       const isValid = Array.from(inputs).every((input) => {
         if (input.hasAttribute("required") && !input.value) {
@@ -5129,19 +5239,15 @@
     }
 
     function carregarFichaColaboradores() {
-      let user = "";
       let userData = JSON.parse(localStorage.getItem("usuarioLogado"));
 
-      if (userData) {
-        user = userData.id; // Removi o 'let' para não redeclarar a variável
-      }
       mostrarSpinner();
       $.ajax({
         type: "POST",
         url: urlAjax,
         data: {
-          qualFuncao: "carregaFichaDeColaboradores",
-          dados: user,
+          qualFuncao: "uploadEmployeeFile",
+          dados: JSON.stringify(userData.id),
         },
         success: function (response) {
           esconderSpinner();
@@ -5155,16 +5261,11 @@
               }
 
               const elementodados =
-                document.getElementById("list-FichaREgistro");
-
-              // Verifica se o elemento foi encontrado
-              if (!elementodados) {
-                console.error(
-                  "Elemento com ID 'list-FichaREgistro' não encontrado."
+                document.getElementById("list-FichaREgistro") ??
+                mostrarAlerta(
+                  "Elemento com ID 'list-FichaREgistro' não encontrado.",
+                  2
                 );
-                return;
-              }
-
               elementodados.innerHTML = ""; // Limpa a lista de colaboradores
 
               // Cria os botões para cada colaborador
@@ -5832,7 +5933,6 @@
         senhaAtual,
         novaSenha,
       };
-      // console.log(dadosParaEnvio);
       // Exemplo de envio via AJAX
       $.ajax({
         type: "POST",
@@ -5920,7 +6020,6 @@
           totalSalario,
           totalVt,
         } = response.dados || {};
-        // console.log('retorno',response)
         tpl.innerHTML = `
     <div class="card">
       <div class="card-header">Análise de Registros de Colaboradores</div>
@@ -6016,7 +6115,6 @@
     function editlineColaboradores(id) {
       // Mostrar o spinner enquanto carrega os dados
       mostrarSpinner();
-      console.log("Verificação de id para envio:", id);
       // Chamar a função AJAX com o ID do colaborador
       chamarAjax(
         "carregarDadosColaborador",
@@ -6244,7 +6342,6 @@
 </div>
 `;
 
-
       conteudoDriver.innerHTML = bodyDriver;
     }
 
@@ -6252,7 +6349,6 @@
     function processarArquivo() {
       const arquivo = document.getElementById("arquivoDriver").files[0];
       if (arquivo) {
-        console.log("Arquivo selecionado:", arquivo.name);
         // Aqui você pode adicionar lógica para processar o arquivo
       } else {
         console.warn("Nenhum arquivo selecionado.");
@@ -6262,7 +6358,6 @@
     async function acaoDriver(inputId) {
       let conteudo = document.getElementById("conteudoDriverSecundario");
       let nomeInput = document.getElementById(inputId);
-      console.log()
       // Verificando se o nomeInput existe
       if (!nomeInput) {
         console.error("Input não encontrado.");
@@ -6270,12 +6365,16 @@
       }
 
       let select = nomeInput.value;
-      let inputPermitido = ["fichaColaboradores", "fichaHolerite", "fichaMarcacao"];
+      let inputPermitido = [
+        "fichaColaboradores",
+        "fichaHolerite",
+        "fichaMarcacao",
+      ];
       let destino = {
         idColaborador: null,
-        destino: select
-      }
-      await mostrartListaDrive(destino)
+        destino: select,
+      };
+      await mostrartListaDrive(destino);
       if (inputPermitido.includes(select)) {
         desabilitarElemento(nomeInput);
         // Limpa o conteúdo anterior
@@ -6307,8 +6406,6 @@
       }
     }
     const habilitarElemento = (elementoName) => {
-      console.log(elementoName); // Isso imprimirá o nome do elemento
-
       // Use o name ou id do elemento para selecioná-lo do DOM
       const elemento =
         document.getElementsByName(elementoName)[0] ||
@@ -6404,15 +6501,12 @@
       });
     }
 
-
     async function mostrartListaDrive(dadosReceber) {
-
       let conteudo = document.getElementById("conteudoformListDrive");
       let dadosRes = {
         idColaborador: dadosReceber.idColaborador || null,
         destino: dadosReceber.destino,
       };
-      console.log('dadosRes', dadosRes)
       const dadosList = await loadformDrive(dadosRes);
 
       if (dadosList) {
@@ -6438,30 +6532,25 @@
         conteudo.appendChild(driveListGroup);
       }
     }
-
-
   </script>
   <!-- Fazer teste -->
   <script>
-
     // chamaTemplate("registroPagamentosColaboradores");
     controlarExibicaoAccordion();
   </script>
   <script id="ScriptAuxi">
     function formatarMoeda(moeda) {
       if (isNaN(moeda)) {
-        return `R$ ${moeda}`
+        return `R$ ${moeda}`;
       } else if (!moeda) {
-        return null
+        return null;
       }
-      return Intl.NumberFormat('pt-br', { style: 'currency', currency: 'BRL' }).format(moeda)
+      return Intl.NumberFormat("pt-br", {
+        style: "currency",
+        currency: "BRL",
+      }).format(moeda);
     }
-
-
   </script>
 </body>
-
-
-
 
 </html>
