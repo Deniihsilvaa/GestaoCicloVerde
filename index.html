@@ -892,56 +892,56 @@
 
           // Função para carregar os dados da linha selecionada nos inputs
           async function carregarDadosParaEdicao(id) {
-    mostrarSpinner();
-    
-    // Faz a chamada AJAX para obter os dados com o ID especificado
-    chamarAjax('retornaDadosBasePagamento', id, function (response) {
-        esconderSpinner();
-        if (response && response.situacao) {
-            const dados = response.dados[0];
-            console.log("Dados retornados:", dados); // Verifica se os dados estão no formato correto
+            mostrarSpinner();
 
-            if (dados) {
-                // Função para formatar a data no formato 'yyyy-mm-dd'
-                function formatarData(data) {
+            // Faz a chamada AJAX para obter os dados com o ID especificado
+            chamarAjax('retornaDadosBasePagamento', id, function (response) {
+              esconderSpinner();
+              if (response && response.situacao) {
+                const dados = response.dados[0];
+                console.log("Dados retornados:", dados); // Verifica se os dados estão no formato correto
+
+                if (dados) {
+                  // Função para formatar a data no formato 'yyyy-mm-dd'
+                  function formatarData(data) {
                     if (!data) return '';
                     const dateObj = new Date(data);
                     const year = dateObj.getFullYear();
                     const month = String(dateObj.getMonth() + 1).padStart(2, '0'); // mês começa do 0, então somamos 1
                     const day = String(dateObj.getDate()).padStart(2, '0');
                     return `${year}-${month}-${day}`; // Retorna no formato 'yyyy-mm-dd'
+                  }
+
+                  // Preenchendo os campos do formulário
+                  document.getElementById("idRPC").value = dados.Id || '';
+                  document.getElementById("colaboradorRPC").value = dados.IDColab || '';
+                  document.getElementById("sctipoPagamento").value = dados.TipoDePagamento || '';
+                  document.getElementById("descricaoRPC").value = dados.Descricao || '';
+                  document.getElementById("valorRPC").value = dados.Valor_De_Pagamento || '';
+
+                  // Formatar e atribuir as datas
+                  document.getElementById("dataAgendamentoRPC").value = dados.DataPagamento || '';
+                  document.getElementById("dataCompetenciaRPC").value = dados.DataCompetencia || '';
+
+                  document.getElementById("sctiposituacao").value = dados.Situacao || '';
+                  document.getElementById("arquivoRPC").value = dados.LinkComprovante || '';
+                } else {
+                  console.error("Dados não encontrados no response.");
+                  alert("Nenhum dado encontrado para o ID fornecido.");
                 }
-
-                // Preenchendo os campos do formulário
-                document.getElementById("idRPC").value = dados.Id || '';
-                document.getElementById("colaboradorRPC").value = dados.IDColab || '';
-                document.getElementById("sctipoPagamento").value = dados.TipoDePagamento || '';
-                document.getElementById("descricaoRPC").value = dados.Descricao || '';
-                document.getElementById("valorRPC").value = dados.Valor_De_Pagamento || '';
-
-                // Formatar e atribuir as datas
-                document.getElementById("dataAgendamentoRPC").value = dados.DataPagamento || '';
-                document.getElementById("dataCompetenciaRPC").value = dados.DataCompetencia || '';
-
-                document.getElementById("sctiposituacao").value = dados.Situacao || '';
-                document.getElementById("arquivoRPC").value = dados.LinkComprovante || '';
-            } else {
-                console.error("Dados não encontrados no response.");
-                alert("Nenhum dado encontrado para o ID fornecido.");
-            }
-        } else {
-            console.error("Erro no response ou situação não é verdadeira:", response);
-            alert("Erro ao carregar dados para edição: " + (response ? response.mensagem : "Nenhuma resposta válida"));
-        }
-    });
-}
+              } else {
+                console.error("Erro no response ou situação não é verdadeira:", response);
+                alert("Erro ao carregar dados para edição: " + (response ? response.mensagem : "Nenhuma resposta válida"));
+              }
+            });
+          }
 
 
-// Função para formatar a data
+          // Função para formatar a data
 
           async function saveDataRPC() {
             let formularioRPC = document.querySelectorAll(".formRPC");
-            
+
             let dados = [];
             let valor;
             let idSelect;
@@ -1033,8 +1033,8 @@
           async function limparRPC() {
             let formularioRPC = document.querySelectorAll(".formRPC");
             formularioRPC.forEach((elementos) => {
-                      elementos.value = "";
-                    });
+              elementos.value = "";
+            });
           }
         </script>
       </template>
@@ -2726,7 +2726,7 @@
         <div class="card w-100">
           <h1 class="card-header">Extrato de Pagamento</h1>
           <div class="card-body">
-            <ul id="conteudoExtratoPagamento" class="list-group"></ul>
+            <div id="conteudoExtratoPagamento" class="table-responsive"></div>
           </div>
         </div>
 
@@ -5301,154 +5301,221 @@
     }
   </script>
   <script>
-    function carregarFichaPagamentos() {
-      let userData = JSON.parse(localStorage.getItem("usuarioLogado"));
+function carregarFichaPagamentos() {
+    let userData = JSON.parse(localStorage.getItem("usuarioLogado"));
 
-      if (!userData) {
+    if (!userData) {
         console.error("ID de usuário não encontrado no localStorage.");
         return;
-      }
+    }
 
-      let userId = userData.id;
-      let nivel = userData.nivel;
+    let userId = userData.id;
+    let nivel = userData.nivel;
 
-      mostrarSpinner();
+    mostrarSpinner();
 
-      $.ajax({
+    $.ajax({
         type: "POST",
         url: urlAjax,
         data: {
-          qualFuncao: "carregaFichaDePagamentos",
-          dados: userId,
-          nivel: nivel,
+            qualFuncao: "carregaFichaDePagamentos",
+            dados: userId,
+            nivel: nivel,
         },
         success: function (response) {
-          esconderSpinner();
+            esconderSpinner();
 
-          if (response.situacao) {
-            let pagamentos = response.colaboradores;
+            if (response.situacao) {
+                let pagamentos = response.colaboradores;
 
-            try {
-              if (!pagamentos || pagamentos.length === 0) {
-                console.warn("Nenhum pagamento encontrado.");
-                return;
-              }
+                try {
+                    if (!pagamentos || pagamentos.length === 0) {
+                        console.warn("Nenhum pagamento encontrado.");
+                        return;
+                    }
 
-              const conteudoExtrato = document.getElementById(
-                "conteudoExtratoPagamento"
-              );
+                    const conteudoExtrato = document.getElementById("conteudoExtratoPagamento");
 
-              if (!conteudoExtrato) {
-                console.error(
-                  "Elemento com ID 'conteudoExtratoPagamento' não encontrado."
-                );
-                return;
-              }
+                    if (!conteudoExtrato) {
+                        console.error("Elemento com ID 'conteudoExtratoPagamento' não encontrado.");
+                        return;
+                    }
 
-              conteudoExtrato.innerHTML = ""; // Limpa a lista de pagamentos
+                    conteudoExtrato.innerHTML = ""; // Limpa a tabela de pagamentos
 
-              pagamentos.forEach((pagamento, index) => {
-                const listItem = document.createElement("a");
-                listItem.href = "#";
-                listItem.classList.add(
-                  "list-group-item",
-                  "list-group-item-action"
-                );
+                    // Ordena os pagamentos por data, do mais recente para o mais antigo
+                    pagamentos.sort((a, b) => new Date(b.data) - new Date(a.data));
 
-                // Cria o conteúdo do item
-                listItem.innerHTML = `
-            <div class="d-flex w-100 justify-content-between">
-              <h5 class="mb-1">${pagamento.colaborador}</h5>
-              <small class="text-body-secondary">${pagamento.data}</small>
-            </div>
-            <p class="mb-1">${pagamento.descricao}</p>
-            <p class="mb-1">Nº de Documento:#${pagamento.idDoc}</p>
-            <small class="text-body-secondary">Valor Pago:R$ ${pagamento.valordePagamento} || Situação:${pagamento.situacao}</small>
-          `;
+                    // Cria a tabela e o cabeçalho
+                    const tabela = document.createElement("table");
+                    tabela.classList.add("table","table-houver", "table-striped", "table-bordered");
 
-                // Função para abrir o modal e inserir as informações
-                listItem.addEventListener("click", () => {
-                  document.getElementById("colaborador").textContent =
-                    pagamento.colaborador;
-                  document.getElementById("valordePagamento").textContent =
-                    pagamento.valordePagamento;
-                  document.getElementById("descricao").textContent =
-                    pagamento.descricao;
-                  document.getElementById("dataRegistro").textContent =
-                    pagamento.data;
-                  document.getElementById("situacao").textContent =
-                    pagamento.situacao;
+                    tabela.innerHTML = `
+                        <thead>
+                            <tr>
+                                <th>Colaborador</th>
+                                <th>Data</th>
+                                <th>Descrição</th>
+                                <th>Nº de Documento</th>
+                                <th>Valor Pago</th>
+                                <th>Situação</th>
+                                <th>Ação</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    `;
 
-                  const arquivoElement =
-                    document.getElementById("linkArquivo");
-                  const iconElement = document.getElementById("iconArquivo");
-                  iconArquivo;
-                  if (pagamento.link) {
-                    // Se houver link, ativa o ícone e permite clicar para abrir em nova aba
-                    iconElement.style.color = "blue"; // Cor do ícone ativo
-                    arquivoElement.classList.remove("disabled"); // Remove estado de desabilitado
-                    arquivoElement.href = pagamento.link;
-                    arquivoElement.target = "_blank";
-                    // arquivoElement.addEventListener("click", (e) => {
-                    //   console.log("Link:", pagamento.link);
-                    //   e.preventDefault(); // Previne o comportamento padrão do link
-                    //   window.open(pagamento.link, "_blank"); // Abre o PDF em uma nova aba
-                    // });
-                  } else {
-                    // Se não houver link, desabilita o ícone e o link
-                    iconElement.style.color = "gray"; // Cor do ícone desativado
-                    arquivoElement.href = "#";
-                    arquivoElement.removeAttribute("target"); // Adiciona estado de desabilitado
-                    arquivoElement.ariaDisabled = "true";
-                  }
+                    const tbody = tabela.querySelector("tbody");
 
-                  const arquivoElementCompr = document.getElementById(
-                    "linkArquivoComprovante"
-                  );
-                  const iconElementCompr = document.getElementById(
-                    "iconArquivoComprovante"
-                  );
+                    // Limite de 5 itens visíveis
+                    const limiteExibicao = 5;
 
-                  if (pagamento.linkHolerite) {
-                    // Se houver link, ativa o ícone e permite clicar para abrir em nova aba
-                    iconElementCompr.style.color = "blue"; // Cor do ícone ativo
-                    arquivoElementCompr.classList.remove("disabled"); // Remove estado de desabilitado
-                    arquivoElementCompr.href = pagamento.linkHolerite;
-                    arquivoElementCompr.target = "_blank";
-                  } else {
-                    // Se não houver link, desabilita o ícone e o link
-                    iconElementCompr.style.color = "gray"; // Cor do ícone desativado
-                    arquivoElementCompr.href = "#";
-                    arquivoElementCompr.removeAttribute("target"); // Adiciona estado de desabilitado
-                    arquivoElementCompr.ariaDisabled = "true";
-                  }
+                    pagamentos.forEach((pagamento, index) => {
+                        if (index < limiteExibicao) {
+                            const row = document.createElement("tr");
 
-                  // Abre o modal de pagamento
-                  const pagamentoModal = new bootstrap.Modal(
-                    document.getElementById("pagamentoModal")
-                  );
-                  pagamentoModal.show();
-                });
+                            row.innerHTML = `
+                                <td>${pagamento.colaborador}</td>
+                                <td>${pagamento.data}</td>
+                                <td>${pagamento.descricao}</td>
+                                <td>#${pagamento.idDoc}</td>
+                                <td>R$ ${pagamento.valordePagamento}</td>
+                                <td>${pagamento.situacao}</td>
+                                <td>
+                                    <button class="btn btn-primary btn-sm">Ver</button>
+                                </td>
+                            `;
 
-                // Adiciona o item ao conteúdo da lista
-                conteudoExtrato.appendChild(listItem);
-              });
-            } catch (error) {
-              console.error("Erro ao carregar pagamentos: ", error);
+                            // Evento do botão "Ver" para abrir o modal
+                            row.querySelector("button").addEventListener("click", () => {
+                                document.getElementById("colaborador").textContent = pagamento.colaborador;
+                                document.getElementById("valordePagamento").textContent = pagamento.valordePagamento;
+                                document.getElementById("descricao").textContent = pagamento.descricao;
+                                document.getElementById("dataRegistro").textContent = pagamento.data;
+                                document.getElementById("situacao").textContent = pagamento.situacao;
+
+                                const arquivoElement = document.getElementById("linkArquivo");
+                                const iconElement = document.getElementById("iconArquivo");
+
+                                if (pagamento.link) {
+                                    iconElement.style.color = "blue";
+                                    arquivoElement.classList.remove("disabled");
+                                    arquivoElement.href = pagamento.link;
+                                    arquivoElement.target = "_blank";
+                                } else {
+                                    iconElement.style.color = "gray";
+                                    arquivoElement.href = "#";
+                                    arquivoElement.ariaDisabled = "true";
+                                }
+
+                                const arquivoElementCompr = document.getElementById("linkArquivoComprovante");
+                                const iconElementCompr = document.getElementById("iconArquivoComprovante");
+
+                                if (pagamento.linkHolerite) {
+                                    iconElementCompr.style.color = "blue";
+                                    arquivoElementCompr.classList.remove("disabled");
+                                    arquivoElementCompr.href = pagamento.linkHolerite;
+                                    arquivoElementCompr.target = "_blank";
+                                } else {
+                                    iconElementCompr.style.color = "gray";
+                                    arquivoElementCompr.href = "#";
+                                    arquivoElementCompr.ariaDisabled = "true";
+                                }
+
+                                const pagamentoModal = new bootstrap.Modal(document.getElementById("pagamentoModal"));
+                                pagamentoModal.show();
+                            });
+
+                            tbody.appendChild(row);
+                        }
+                    });
+
+                    conteudoExtrato.appendChild(tabela);
+
+                    // Adiciona o botão "Mais Informações" se houver mais de 5 itens
+                    if (pagamentos.length > limiteExibicao) {
+                        const botaoMais = document.createElement("button");
+                        botaoMais.classList.add("btn", "btn-secondary", "mt-3");
+                        botaoMais.textContent = "Mais Informações";
+
+                        botaoMais.addEventListener("click", () => {
+                            for (let i = limiteExibicao; i < pagamentos.length; i++) {
+                                const pagamento = pagamentos[i];
+
+                                const row = document.createElement("tr");
+
+                                row.innerHTML = `
+                                    <td>${pagamento.colaborador}</td>
+                                    <td>${pagamento.data}</td>
+                                    <td>${pagamento.descricao}</td>
+                                    <td>#${pagamento.idDoc}</td>
+                                    <td>R$ ${pagamento.valordePagamento}</td>
+                                    <td>${pagamento.situacao}</td>
+                                    <td>
+                                        <button class="btn btn-primary btn-sm">Ver</button>
+                                    </td>
+                                `;
+
+                                row.querySelector("button").addEventListener("click", () => {
+                                    document.getElementById("colaborador").textContent = pagamento.colaborador;
+                                    document.getElementById("valordePagamento").textContent = pagamento.valordePagamento;
+                                    document.getElementById("descricao").textContent = pagamento.descricao;
+                                    document.getElementById("dataRegistro").textContent = pagamento.data;
+                                    document.getElementById("situacao").textContent = pagamento.situacao;
+
+                                    const arquivoElement = document.getElementById("linkArquivo");
+                                    const iconElement = document.getElementById("iconArquivo");
+
+                                    if (pagamento.link) {
+                                        iconElement.style.color = "blue";
+                                        arquivoElement.classList.remove("disabled");
+                                        arquivoElement.href = pagamento.link;
+                                        arquivoElement.target = "_blank";
+                                    } else {
+                                        iconElement.style.color = "gray";
+                                        arquivoElement.href = "#";
+                                        arquivoElement.ariaDisabled = "true";
+                                    }
+
+                                    const arquivoElementCompr = document.getElementById("linkArquivoComprovante");
+                                    const iconElementCompr = document.getElementById("iconArquivoComprovante");
+
+                                    if (pagamento.linkHolerite) {
+                                        iconElementCompr.style.color = "blue";
+                                        arquivoElementCompr.classList.remove("disabled");
+                                        arquivoElementCompr.href = pagamento.linkHolerite;
+                                        arquivoElementCompr.target = "_blank";
+                                    } else {
+                                        iconElementCompr.style.color = "gray";
+                                        arquivoElementCompr.href = "#";
+                                        arquivoElementCompr.ariaDisabled = "true";
+                                    }
+
+                                    const pagamentoModal = new bootstrap.Modal(document.getElementById("pagamentoModal"));
+                                    pagamentoModal.show();
+                                });
+
+                                tbody.appendChild(row);
+                            }
+
+                            botaoMais.style.display = "none"; // Oculta o botão "Mais Informações" após o clique
+                        });
+
+                        conteudoExtrato.appendChild(botaoMais);
+                    }
+                } catch (error) {
+                    console.error("Erro ao carregar pagamentos: ", error);
+                }
+            } else {
+                mostrarAlerta("Erro ao carregar os pagamentos. Verificar com o RH", 2);
             }
-          } else {
-            mostrarAlerta(
-              "Erro ao carregar os pagamentos. Verificar com o RH",
-              2
-            );
-          }
         },
         error: function (error) {
-          esconderSpinner();
-          console.error("Erro na requisição AJAX:", error);
+            esconderSpinner();
+            console.error("Erro na requisição AJAX:", error);
         },
-      });
-    }
+    });
+}
 
     // Função para fechar o PDF dentro do iframe
     function fecharPDFPG() {
