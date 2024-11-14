@@ -4,6 +4,10 @@
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
     charset="UTF-8" />
+
+  <!-- Incluir o GSAP e o TextPlugin -->
+  <link rel="stylesheet" href="style.css">
+
   <link href="https://cdn.datatables.net/v/dt/jq-3.7.0/dt-2.0.2/b-3.0.1/sp-2.3.0/sl-2.0.0/datatables.min.css"
     rel="stylesheet" />
   <script src="https://cdn.datatables.net/v/dt/jq-3.7.0/dt-2.0.2/b-3.0.1/sp-2.3.0/sl-2.0.0/datatables.min.js"></script>
@@ -55,7 +59,9 @@
   <script src="https://cdn.datatables.net/scroller/2.4.3/js/dataTables.scroller.js"></script>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" />
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-
+  <!-- Incluir o GSAP e o TextPlugin -->
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/TextPlugin.min.js"></script>
   <style>
     :root {
       /* Paleta de cores */
@@ -78,6 +84,12 @@
       font-family: "Rubik", sans-serif;
       font-size: 0.8rem;
     }
+    .animarTexto {
+  font-size: 1.5em;
+  margin: 20px 0;
+  color: #333;
+  opacity: 0; /* Começa invisível para aparecer com a animação */
+}
 
     #superBody {
       display: grid;
@@ -333,9 +345,10 @@
         margin-top: 2rem;
         width: 100%;
       }
+      
     }
 
-    barTop {
+    #barTop {
       display: none;
     }
 
@@ -375,7 +388,7 @@
       margin: 15% auto;
       padding: 20px;
       border: 1px solid #888;
-      width: 80%;
+      /* max-width: 28vw; */
     }
 
     .close {
@@ -438,10 +451,10 @@
       /* Espaço entre cards */
     }
 
-    .modal-content {
+    /* .modal-content {
       width: 62vw;
       top: -10rem;
-    }
+    } */
 
     .alert-overlay {
       position: fixed;
@@ -623,8 +636,11 @@
 
       <template id="menuInicial">
         <div class="card">
-          <h1>Menu inicial</h1>
+          <h1 id="animatedText">Menu inicial</h1>
         </div>
+        <script>
+          
+        </script>
       </template>
 
       <template id="registroPagamentosColaboradores">
@@ -2716,10 +2732,11 @@
       <template id="areaColaborador">
         <div class="card w-100">
           <div class="card-body">
-            <h3>Area Colaborador - Ciclo Verde</h3>
+            <div class="animarTexto" data-texto="Area Colaborador - Ciclo Verde">Area Colaborador - Ciclo Verde</div>
             <div id="conteudoAreaColaborador"></div>
           </div>
         </div>
+
       </template>
       <!-- Template do Extrato de Pagamento -->
       <template id="extratoPagamento">
@@ -2736,10 +2753,11 @@
           <div class="modal-dialog">
             <div class="modal-content">
               <div class="modal-header">
-                <h5 class="modal-title" id="pagamentoModalLabel">
+                <h5 class="modal-header" id="pagamentoModalLabel">
                   Detalhes do Pagamento
                 </h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <!-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> -->
+                
               </div>
               <div class="modal-body">
                 <p>
@@ -2765,7 +2783,7 @@
                 </p>
                 <p>
                   <strong>Documento:</strong>
-                  <a id="linkArquivoComprovante" href="#" target="_blank">
+                  <a id="linkArquivoComprovante" href="#" target="_blank" aria-disabled="true">
                     <i id="iconArquivoComprovante" class="bi bi-archive-fill"></i>
                   </a>
                 </p>
@@ -2984,10 +3002,10 @@
             onclick="chamaTemplate(this.name)">
             Análise de Férias
           </button>
-          <button class="ui-button ui-widget ui-corner-all" name="analiseDeRegistroColaboradores"
+          <!-- <button class="ui-button ui-widget ui-corner-all" name="analiseDeRegistroColaboradores"
             onclick="chamaTemplate(this.name)">
             Análise de Registros
-          </button>
+          </button> -->
           <p></p>
 
           <button class="ui-button ui-widget ui-corner-all" name="cadastroDeHorasExtras"
@@ -3042,12 +3060,6 @@
           <button type="button" class="btn btn-secondary" name="extratoPagamento" onclick="chamaTemplate(this.name)">
             <span class="material-symbols-outlined">view_agenda</span>
             Extrato de Pagamento
-          </button>
-
-          <!-- Card 3 -->
-          <button type="button" class="btn btn-secondary" name="extratoAdiantamento" onclick="chamaTemplate(this.name)">
-            <span class="material-symbols-outlined">view_agenda</span>
-            Extrato de Adiantamento
           </button>
           <!-- Card 3 -->
           <button type="button" class="btn btn-secondary" name="extratoPontosMarcacao"
@@ -3194,9 +3206,10 @@
 
           break;
         case "extratoPagamento":
-          carregarFichaPagamentos();
+          carregarFichaPagamentos('e');
 
           break;
+
         case "extratoPontosMarcacao":
           carregaFichaDeMarcacao();
           break;
@@ -5301,221 +5314,185 @@
     }
   </script>
   <script>
-function carregarFichaPagamentos() {
-    let userData = JSON.parse(localStorage.getItem("usuarioLogado"));
-
-    if (!userData) {
+    async function carregarFichaPagamentos() {
+      const userData = JSON.parse(localStorage.getItem("usuarioLogado"));
+      if (!userData) {
         console.error("ID de usuário não encontrado no localStorage.");
         return;
+      }
+      let a= ""
+      const { id: userId, nivel } = userData;
+      const base = a === "a" ? "adiantamento" : undefined;
+      mostrarSpinner();
+
+      try {
+        const response = await $.post(urlAjax, {
+          qualFuncao: "carregaFichaDePagamentos",
+          dados: userId,
+          nivel: nivel,
+          filter: base,
+        });
+
+        esconderSpinner();
+        console.log("retorno", response);
+        if (!response.situacao) {
+          mostrarAlerta("Erro ao carregar os pagamentos. Verificar com o RH", 2);
+          return;
+        }
+
+        const pagamentos = response.colaboradores || [];
+        if (pagamentos.length === 0) {
+          console.warn("Nenhum pagamento encontrado.");
+          return;
+        }
+
+        renderizarTabelaPagamentos(pagamentos);
+        configurarDataTables();
+      } catch (error) {
+        esconderSpinner();
+        console.error("Erro na requisição AJAX:", error);
+      }
     }
 
-    let userId = userData.id;
-    let nivel = userData.nivel;
+    function renderizarTabelaPagamentos(pagamentos) {
+      const conteudoExtrato = document.getElementById("conteudoExtratoPagamento");
+      if (!conteudoExtrato) {
+        console.error("Elemento com ID 'conteudoExtratoPagamento' não encontrado.");
+        return;
+      }
 
-    mostrarSpinner();
+      conteudoExtrato.innerHTML = ""; // Limpa a tabela de pagamentos
 
-    $.ajax({
-        type: "POST",
-        url: urlAjax,
-        data: {
-            qualFuncao: "carregaFichaDePagamentos",
-            dados: userId,
-            nivel: nivel,
-        },
-        success: function (response) {
-            esconderSpinner();
+      const tabela = document.createElement("table");
+      tabela.classList.add("table", "table-houver", "table-striped", "table-bordered");
+      tabela.id = "dataTableIDPG";
+      tabela.innerHTML = `
+    <thead>
+      <tr>
+        <th>Data Pagamento
+        
+          </th>
+        <th>Descrição</th>
+        <th>Valor Pago</th>
+        <th>Situação</th>
+        <th>Categoria</th>
+        <th>Data Competencia</th>
+        <th>Ação</th>
+      </tr>
+    </thead>
+    <tbody>
+      ${pagamentos.slice(0, 8).map(pagamento => criarLinhaPagamento(pagamento)).join("")}
+    </tbody>
+  `;
 
-            if (response.situacao) {
-                let pagamentos = response.colaboradores;
-
-                try {
-                    if (!pagamentos || pagamentos.length === 0) {
-                        console.warn("Nenhum pagamento encontrado.");
-                        return;
-                    }
-
-                    const conteudoExtrato = document.getElementById("conteudoExtratoPagamento");
-
-                    if (!conteudoExtrato) {
-                        console.error("Elemento com ID 'conteudoExtratoPagamento' não encontrado.");
-                        return;
-                    }
-
-                    conteudoExtrato.innerHTML = ""; // Limpa a tabela de pagamentos
-
-                    // Ordena os pagamentos por data, do mais recente para o mais antigo
-                    pagamentos.sort((a, b) => new Date(b.data) - new Date(a.data));
-
-                    // Cria a tabela e o cabeçalho
-                    const tabela = document.createElement("table");
-                    tabela.classList.add("table","table-houver", "table-striped", "table-bordered");
-
-                    tabela.innerHTML = `
-                        <thead>
-                            <tr>
-                                <th>Colaborador</th>
-                                <th>Data</th>
-                                <th>Descrição</th>
-                                <th>Nº de Documento</th>
-                                <th>Valor Pago</th>
-                                <th>Situação</th>
-                                <th>Ação</th>
-                            </tr>
-                        </thead>
-                        <tbody></tbody>
-                    `;
-
-                    const tbody = tabela.querySelector("tbody");
-
-                    // Limite de 5 itens visíveis
-                    const limiteExibicao = 5;
-
-                    pagamentos.forEach((pagamento, index) => {
-                        if (index < limiteExibicao) {
-                            const row = document.createElement("tr");
-
-                            row.innerHTML = `
-                                <td>${pagamento.colaborador}</td>
-                                <td>${pagamento.data}</td>
-                                <td>${pagamento.descricao}</td>
-                                <td>#${pagamento.idDoc}</td>
-                                <td>R$ ${pagamento.valordePagamento}</td>
-                                <td>${pagamento.situacao}</td>
-                                <td>
-                                    <button class="btn btn-primary btn-sm">Ver</button>
-                                </td>
-                            `;
-
-                            // Evento do botão "Ver" para abrir o modal
-                            row.querySelector("button").addEventListener("click", () => {
-                                document.getElementById("colaborador").textContent = pagamento.colaborador;
-                                document.getElementById("valordePagamento").textContent = pagamento.valordePagamento;
-                                document.getElementById("descricao").textContent = pagamento.descricao;
-                                document.getElementById("dataRegistro").textContent = pagamento.data;
-                                document.getElementById("situacao").textContent = pagamento.situacao;
-
-                                const arquivoElement = document.getElementById("linkArquivo");
-                                const iconElement = document.getElementById("iconArquivo");
-
-                                if (pagamento.link) {
-                                    iconElement.style.color = "blue";
-                                    arquivoElement.classList.remove("disabled");
-                                    arquivoElement.href = pagamento.link;
-                                    arquivoElement.target = "_blank";
-                                } else {
-                                    iconElement.style.color = "gray";
-                                    arquivoElement.href = "#";
-                                    arquivoElement.ariaDisabled = "true";
-                                }
-
-                                const arquivoElementCompr = document.getElementById("linkArquivoComprovante");
-                                const iconElementCompr = document.getElementById("iconArquivoComprovante");
-
-                                if (pagamento.linkHolerite) {
-                                    iconElementCompr.style.color = "blue";
-                                    arquivoElementCompr.classList.remove("disabled");
-                                    arquivoElementCompr.href = pagamento.linkHolerite;
-                                    arquivoElementCompr.target = "_blank";
-                                } else {
-                                    iconElementCompr.style.color = "gray";
-                                    arquivoElementCompr.href = "#";
-                                    arquivoElementCompr.ariaDisabled = "true";
-                                }
-
-                                const pagamentoModal = new bootstrap.Modal(document.getElementById("pagamentoModal"));
-                                pagamentoModal.show();
-                            });
-
-                            tbody.appendChild(row);
-                        }
-                    });
-
-                    conteudoExtrato.appendChild(tabela);
-
-                    // Adiciona o botão "Mais Informações" se houver mais de 5 itens
-                    if (pagamentos.length > limiteExibicao) {
-                        const botaoMais = document.createElement("button");
-                        botaoMais.classList.add("btn", "btn-secondary", "mt-3");
-                        botaoMais.textContent = "Mais Informações";
-
-                        botaoMais.addEventListener("click", () => {
-                            for (let i = limiteExibicao; i < pagamentos.length; i++) {
-                                const pagamento = pagamentos[i];
-
-                                const row = document.createElement("tr");
-
-                                row.innerHTML = `
-                                    <td>${pagamento.colaborador}</td>
-                                    <td>${pagamento.data}</td>
-                                    <td>${pagamento.descricao}</td>
-                                    <td>#${pagamento.idDoc}</td>
-                                    <td>R$ ${pagamento.valordePagamento}</td>
-                                    <td>${pagamento.situacao}</td>
-                                    <td>
-                                        <button class="btn btn-primary btn-sm">Ver</button>
-                                    </td>
-                                `;
-
-                                row.querySelector("button").addEventListener("click", () => {
-                                    document.getElementById("colaborador").textContent = pagamento.colaborador;
-                                    document.getElementById("valordePagamento").textContent = pagamento.valordePagamento;
-                                    document.getElementById("descricao").textContent = pagamento.descricao;
-                                    document.getElementById("dataRegistro").textContent = pagamento.data;
-                                    document.getElementById("situacao").textContent = pagamento.situacao;
-
-                                    const arquivoElement = document.getElementById("linkArquivo");
-                                    const iconElement = document.getElementById("iconArquivo");
-
-                                    if (pagamento.link) {
-                                        iconElement.style.color = "blue";
-                                        arquivoElement.classList.remove("disabled");
-                                        arquivoElement.href = pagamento.link;
-                                        arquivoElement.target = "_blank";
-                                    } else {
-                                        iconElement.style.color = "gray";
-                                        arquivoElement.href = "#";
-                                        arquivoElement.ariaDisabled = "true";
-                                    }
-
-                                    const arquivoElementCompr = document.getElementById("linkArquivoComprovante");
-                                    const iconElementCompr = document.getElementById("iconArquivoComprovante");
-
-                                    if (pagamento.linkHolerite) {
-                                        iconElementCompr.style.color = "blue";
-                                        arquivoElementCompr.classList.remove("disabled");
-                                        arquivoElementCompr.href = pagamento.linkHolerite;
-                                        arquivoElementCompr.target = "_blank";
-                                    } else {
-                                        iconElementCompr.style.color = "gray";
-                                        arquivoElementCompr.href = "#";
-                                        arquivoElementCompr.ariaDisabled = "true";
-                                    }
-
-                                    const pagamentoModal = new bootstrap.Modal(document.getElementById("pagamentoModal"));
-                                    pagamentoModal.show();
-                                });
-
-                                tbody.appendChild(row);
-                            }
-
-                            botaoMais.style.display = "none"; // Oculta o botão "Mais Informações" após o clique
-                        });
-
-                        conteudoExtrato.appendChild(botaoMais);
-                    }
-                } catch (error) {
-                    console.error("Erro ao carregar pagamentos: ", error);
-                }
-            } else {
-                mostrarAlerta("Erro ao carregar os pagamentos. Verificar com o RH", 2);
-            }
-        },
-        error: function (error) {
-            esconderSpinner();
-            console.error("Erro na requisição AJAX:", error);
-        },
+      conteudoExtrato.appendChild(tabela);
+// Adiciona o evento click aos botões "Ver"
+conteudoExtrato.querySelectorAll("button[data-pagamento]").forEach(button => {
+    button.addEventListener("click", () => {
+      const pagamento = JSON.parse(button.getAttribute("data-pagamento"));
+      abrirModalPagamento(pagamento);
     });
-}
+  });
+      // Adiciona o botão "Mais Informações" se houver mais de 5 itens
+      if (pagamentos.length > 5) {
+        adicionarBotaoMaisInformacoes(conteudoExtrato, pagamentos);
+      }
+    }
+
+    function criarLinhaPagamento(pagamento) {
+      
+      return `
+    <tr>
+      <td>${pagamento.colaborador}</td>
+      <td>${pagamento.data}</td>
+      <td>${pagamento.descricao}</td>
+      <td>R$ ${pagamento.valordePagamento}</td>
+      <td>${pagamento.situacao}</td>
+      <td>${pagamento.tipoRegistro}</td>
+      <td>${pagamento.dataCompetenciaRPC}</td>
+      <td>
+<button class="btn btn-primary btn-sm"
+data-bs-toggle="modal"
+data-bs-target="#pagamentoModal"
+data-pagamento='${JSON.stringify(pagamento)}'>Ver</button>
+      </td>
+    </tr>
+  `;
+    }
+
+
+    function abrirModalPagamento(pagamento) {
+      document.getElementById("colaborador").textContent = pagamento.colaborador;
+      document.getElementById("valordePagamento").textContent = pagamento.valordePagamento;
+      document.getElementById("descricao").textContent = pagamento.descricao;
+      document.getElementById("dataRegistro").textContent = pagamento.data;
+      document.getElementById("situacao").textContent = pagamento.situacao;
+
+      configurarLink("linkArquivo", "iconArquivo", pagamento.link);
+      configurarLink("linkArquivoComprovante", "iconArquivoComprovante", null);// Nao exibir por enqanto
+
+      const pagamentoModal = new bootstrap.Modal(document.getElementById("pagamentoModal"));
+      pagamentoModal.show();
+    }
+
+    function configurarLink(linkId, iconId, url) {
+      const linkElement = document.getElementById(linkId);
+      const iconElement = document.getElementById(iconId);
+
+      if (url) {
+        iconElement.style.color = "blue";
+        linkElement.classList.remove("disabled");
+        linkElement.href = url;
+        linkElement.target = "_blank";
+      } else {
+        iconElement.style.color = "gray";
+        linkElement.href = "#";
+        linkElement.ariaDisabled = "true";
+      }
+    }
+
+    function adicionarBotaoMaisInformacoes(container, pagamentos) {
+      const botaoMais = document.createElement("button");
+      botaoMais.classList.add("btn", "btn-secondary", "mt-3");
+      botaoMais.textContent = "Mais Informações";
+
+      botaoMais.addEventListener("click", () => {
+        const tbody = document.querySelector("#dataTableIDPG tbody");
+        tbody.innerHTML += pagamentos.slice(5).map(pagamento => criarLinhaPagamento(pagamento)).join("");
+        botaoMais.style.display = "none"; // Oculta o botão "Mais Informações" após o clique
+      });
+
+      container.appendChild(botaoMais);
+    }
+
+    function configurarDataTables() {
+      $(document).ready(function () {
+        if (!$.fn.DataTable.isDataTable("#dataTableIDPG")) {
+          $("#dataTableIDPG").DataTable({
+            destroy: true,
+            deferRender: true,
+            scrollCollapse: true,
+            scroller: true,
+            scrollY: 350,
+            scrollX: true,
+            autoWidth: false,
+            order: [[3, "desc"]],
+            columnDefs: [{ targets: [1,2,3,4,5,6,7], className: "dt-body-center", width: "50px", }],
+            language: {
+              lengthMenu: "Exibir _MENU_ registros por pagina",
+              search: "Bucar:",
+              paginate: {
+                first: "Primeira",
+                last: "Ultima",
+                next: "Proxima",
+                previous: "Anterior",
+              },
+            },
+            
+          });
+        }
+      });
+    }
 
     // Função para fechar o PDF dentro do iframe
     function fecharPDFPG() {
@@ -6600,9 +6577,33 @@ function carregarFichaPagamentos() {
       }
     }
   </script>
+          <script id="Animação">
+            document.addEventListener("DOMContentLoaded", () => {
+    gsap.registerPlugin(TextPlugin);
+  
+    // Seleciona todos os elementos que possuem a classe "animarTexto"
+    const elementosParaAnimar = document.querySelectorAll(".animarTexto");
+  
+    // Cria uma linha do tempo para controlar as animações em sequência
+    const timeline = gsap.timeline({ delay: 0.5 });
+  
+    // Itera sobre cada elemento e anima o texto usando o valor de "data-texto"
+    elementosParaAnimar.forEach((elemento) => {
+      const texto = elemento.getAttribute("data-texto"); // Obtém o texto do atributo data-texto
+      
+      // Configura a animação para o elemento atual
+      timeline.fromTo(
+        elemento, 
+        { opacity: 0, text: "" }, 
+        { opacity: 1, text: texto, duration: 2, ease: "power2.inOut", delay: 0.5 }
+      );
+    });
+  });
+  
+          </script>
   <!-- Fazer teste -->
   <script>
-    // chamaTemplate("registroPagamentosColaboradores");
+    // chamaTemplate("menuInicial");
     controlarExibicaoAccordion();
   </script>
   <script id="ScriptAuxi">
